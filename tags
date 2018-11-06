@@ -24,6 +24,7 @@ APP_ID	src/applications/PingApplication.java	/^	public static final String APP_I
 APP_PACKAGE	src/core/SimScenario.java	/^	private static final String APP_PACKAGE = "applications.";$/;"	f	class:SimScenario	file:
 AT_HOME_MODE	src/movement/HomeActivityMovement.java	/^	private static final int AT_HOME_MODE = 1;$/;"	f	class:HomeActivityMovement	file:
 AT_OFFICE_MODE	src/movement/OfficeActivityMovement.java	/^	private static final int AT_OFFICE_MODE = 1;$/;"	f	class:OfficeActivityMovement	file:
+AUCTION_PERIOD_S	src/core/SimScenario.java	/^    public static final String AUCTION_PERIOD_S = "auctionPeriod";$/;"	f	class:SimScenario
 AUTO_REFRESH_DELAY	src/gui/NodeChooser.java	/^	private static final int AUTO_REFRESH_DELAY = 100;$/;"	f	class:NodeChooser	file:
 AUTO_REFRESH_DELAY	src/gui/RoutingInfoWindow.java	/^	private static final int AUTO_REFRESH_DELAY = 1000;$/;"	f	class:RoutingInfoWindow	file:
 AbstractRouterTest	src/test/AbstractRouterTest.java	/^public abstract class AbstractRouterTest extends TestCase {$/;"	c
@@ -51,6 +52,7 @@ BETA_S	src/routing/ProphetV2Router.java	/^	public static final String BETA_S = "
 BG_COLOR	src/gui/playfield/MapGraphic.java	/^	private final Color BG_COLOR = Color.WHITE;$/;"	f	class:MapGraphic	file:
 BINARY_EXT	src/input/BinaryEventsReader.java	/^	public static final String BINARY_EXT = ".binee";$/;"	f	class:BinaryEventsReader
 BINARY_MODE	src/routing/SprayAndWaitRouter.java	/^	public static final String BINARY_MODE = "binaryMode";$/;"	f	class:SprayAndWaitRouter
+BUCKET_COUNT_SETTING	src/report/JumpSizeDistributionReport.java	/^	public static final String BUCKET_COUNT_SETTING = "bucketCount";$/;"	f	class:JumpSizeDistributionReport
 BUFFER_REPORT_INTERVAL	src/report/BufferOccupancyReport.java	/^	public static final String BUFFER_REPORT_INTERVAL = "occupancyInterval";$/;"	f	class:BufferOccupancyReport
 BUFFER_SIZE	src/test/AbstractRouterTest.java	/^	protected static final int BUFFER_SIZE = 100;$/;"	f	class:AbstractRouterTest
 BUS_CONTROL_SYSTEM_NR	src/movement/BusControlSystem.java	/^	public static final String BUS_CONTROL_SYSTEM_NR = "busControlSystemNr";$/;"	f	class:BusControlSystem
@@ -142,6 +144,8 @@ DEFAULT_BETA	src/routing/ProphetRouter.java	/^	public static final double DEFAUL
 DEFAULT_BETA	src/routing/ProphetRouterWithEstimation.java	/^	public static final double DEFAULT_BETA = 0.25;$/;"	f	class:ProphetRouterWithEstimation
 DEFAULT_BETA	src/routing/ProphetV2Router.java	/^	public static final double DEFAULT_BETA = 0.9;$/;"	f	class:ProphetV2Router
 DEFAULT_BUFFER_REPORT_INTERVAL	src/report/BufferOccupancyReport.java	/^	public static final int DEFAULT_BUFFER_REPORT_INTERVAL = 5;$/;"	f	class:BufferOccupancyReport
+DEFAULT_GAMMA	src/routing/ProphetRouter.java	/^	public static final double DEFAULT_GAMMA = 0.98;$/;"	f	class:ProphetRouter
+DEFAULT_GAMMA	src/routing/ProphetV2Router.java	/^	public static final double DEFAULT_GAMMA = 0.999885791;$/;"	f	class:ProphetV2Router
 DEFAULT_GNUPLOT	src/report/NodeDensityReport.java	/^	public static final boolean DEFAULT_GNUPLOT = false;$/;"	f	class:NodeDensityReport
 DEFAULT_GNUPLOT_FILE_EXTENSION	src/report/NodeDensityReport.java	/^	public static final String DEFAULT_GNUPLOT_FILE_EXTENSION = "png";$/;"	f	class:NodeDensityReport
 DEFAULT_GNUPLOT_TERMINAL	src/report/NodeDensityReport.java	/^	public static final String DEFAULT_GNUPLOT_TERMINAL =$/;"	f	class:NodeDensityReport
@@ -292,9 +296,9 @@ FROM_SPOLICY_S	src/routing/util/MessageTransferAcceptPolicy.java	/^	public stati
 FirstContactRouter	src/routing/FirstContactRouter.java	/^	protected FirstContactRouter(FirstContactRouter r) {$/;"	m	class:FirstContactRouter
 FirstContactRouter	src/routing/FirstContactRouter.java	/^	public FirstContactRouter(Settings s) {$/;"	m	class:FirstContactRouter
 FirstContactRouter	src/routing/FirstContactRouter.java	/^public class FirstContactRouter extends ActiveRouter {$/;"	c
-GAMMA	src/routing/ProphetRouter.java	/^	public static final double GAMMA = 0.98;$/;"	f	class:ProphetRouter
 GAMMA	src/routing/ProphetRouterWithEstimation.java	/^	public static final double GAMMA = 0.98;$/;"	f	class:ProphetRouterWithEstimation
-GAMMA	src/routing/ProphetV2Router.java	/^	public static final double GAMMA = 0.999885791;$/;"	f	class:ProphetV2Router
+GAMMA_S	src/routing/ProphetRouter.java	/^	public static final String GAMMA_S = "gamma";$/;"	f	class:ProphetRouter
+GAMMA_S	src/routing/ProphetV2Router.java	/^	public static final String GAMMA_S = "gamma";$/;"	f	class:ProphetV2Router
 GAPPNAME_S	src/core/SimScenario.java	/^	public static final String GAPPNAME_S = "application";$/;"	f	class:SimScenario
 GNUPLOT_FILE_EXTENSION_SETTING	src/report/NodeDensityReport.java	/^	public static final String GNUPLOT_FILE_EXTENSION_SETTING =$/;"	f	class:NodeDensityReport
 GNUPLOT_SETTING	src/report/NodeDensityReport.java	/^	public static final String GNUPLOT_SETTING = "outputGnuplot";$/;"	f	class:NodeDensityReport
@@ -377,6 +381,8 @@ InterContactTimesReport	src/report/InterContactTimesReport.java	/^public class I
 InterferenceLimitedInterface	src/interfaces/InterferenceLimitedInterface.java	/^	public InterferenceLimitedInterface(InterferenceLimitedInterface ni) {$/;"	m	class:InterferenceLimitedInterface
 InterferenceLimitedInterface	src/interfaces/InterferenceLimitedInterface.java	/^	public InterferenceLimitedInterface(Settings s) {$/;"	m	class:InterferenceLimitedInterface
 InterferenceLimitedInterface	src/interfaces/InterferenceLimitedInterface.java	/^public class InterferenceLimitedInterface extends NetworkInterface {$/;"	c
+JumpSizeDistributionReport	src/report/JumpSizeDistributionReport.java	/^	public JumpSizeDistributionReport() {$/;"	m	class:JumpSizeDistributionReport
+JumpSizeDistributionReport	src/report/JumpSizeDistributionReport.java	/^public final class JumpSizeDistributionReport$/;"	c
 LINEAR_FORMATION_NS	src/movement/LinearFormation.java	/^	public static final String LINEAR_FORMATION_NS = "LinearFormation.";$/;"	f	class:LinearFormation
 LINEAR_MOVEMENT_NS	src/movement/LinearMovement.java	/^	public static final String LINEAR_MOVEMENT_NS = "LinearMovement.";$/;"	f	class:LinearMovement
 LINESTRING	src/input/WKTReader.java	/^	public static final String LINESTRING = "LINESTRING";$/;"	f	class:WKTReader
@@ -554,8 +560,10 @@ NROF_INTTYPES_S	src/core/SimScenario.java	/^	public static final String NROF_INT
 NROF_MCBCS_S	src/routing/util/MessageTransferAcceptPolicy.java	/^	public static final String NROF_MCBCS_S = "nrofMCBACs";$/;"	f	class:MessageTransferAcceptPolicy
 NROF_PRELOAD_S	src/movement/ExternalMovement.java	/^	public static final String NROF_PRELOAD_S = "nrofPreload";$/;"	f	class:ExternalMovement
 NROF_REPORT_S	src/ui/DTNSimUI.java	/^	public static final String NROF_REPORT_S = "Report.nrofReports";$/;"	f	class:DTNSimUI
+NROF_SERVICES_S	src/core/SimScenario.java	/^    public static final String NROF_SERVICES_S = "nrofServices";$/;"	f	class:SimScenario
 NROF_SETTING	src/input/EventQueueHandler.java	/^	public static final String NROF_SETTING = "nrof";$/;"	f	class:EventQueueHandler
 NROF_TST_NODES	src/test/WKTReaderTest.java	/^	private final int NROF_TST_NODES = 9;$/;"	f	class:WKTReaderTest	file:
+NROF_VM_S	src/core/SimScenario.java	/^	public static final String NROF_VM_S = "nrofVMs";$/;"	f	class:SimScenario
 NR_OF_MEETING_SPOTS_SETTING	src/movement/EveningActivityMovement.java	/^	public static final String NR_OF_MEETING_SPOTS_SETTING = "nrOfMeetingSpots";$/;"	f	class:EveningActivityMovement
 NR_OF_OFFICES_SETTING	src/movement/OfficeActivityMovement.java	/^	public static final String NR_OF_OFFICES_SETTING = "nrOfOffices";$/;"	f	class:OfficeActivityMovement
 NS_CMD_S	src/report/MovementNs2Report.java	/^	public static final String NS_CMD_S = "nsCmd";$/;"	f	class:MovementNs2Report
@@ -671,6 +679,7 @@ Q_MODE_RANDOM	src/routing/MessageRouter.java	/^	public static final int Q_MODE_R
 RANDOMIZE_UPDATES_S	src/core/World.java	/^	public static final String RANDOMIZE_UPDATES_S = "randomizeUpdateOrder";$/;"	f	class:World
 RANGE_DELIMETER	src/core/DTNSim.java	/^	public static final String RANGE_DELIMETER = ":";$/;"	f	class:DTNSim
 RANGE_ID	src/core/NetworkInterface.java	/^	public static final String RANGE_ID = "Network.radioRange";$/;"	f	class:NetworkInterface
+RAW_OUTPUT_SETTING	src/report/JumpSizeDistributionReport.java	/^	public static final String RAW_OUTPUT_SETTING = "outputRawData";$/;"	f	class:JumpSizeDistributionReport
 RCV_OK	src/routing/MessageRouter.java	/^	public static final int RCV_OK = 0;$/;"	f	class:MessageRouter
 READY_MODE	src/movement/HomeActivityMovement.java	/^	private static final int READY_MODE = 2;$/;"	f	class:HomeActivityMovement	file:
 REF_COLOR	src/gui/playfield/ScaleReferenceGraphic.java	/^	private final Color REF_COLOR = Color.BLACK;$/;"	f	class:ScaleReferenceGraphic	file:
@@ -691,6 +700,8 @@ ROUTE_TYPE_S	src/movement/MapRouteMovement.java	/^	public static final String RO
 ROUTING_PACKAGE	src/core/SimScenario.java	/^	private static final String ROUTING_PACKAGE = "routing.";$/;"	f	class:SimScenario	file:
 ROWS_S	src/movement/GridLocation.java	/^	public static final String ROWS_S = "rows";$/;"	f	class:GridLocation
 RS_S	src/test/SettingsTest.java	/^	private String RS_S = "runSetting";$/;"	f	class:SettingsTest	file:
+RadiusOfGyrationReport	src/report/RadiusOfGyrationReport.java	/^	public RadiusOfGyrationReport() {$/;"	m	class:RadiusOfGyrationReport
+RadiusOfGyrationReport	src/report/RadiusOfGyrationReport.java	/^public final class RadiusOfGyrationReport$/;"	c
 RandomDirection	src/movement/RandomDirection.java	/^    public RandomDirection( RandomDirection other ) {$/;"	m	class:RandomDirection
 RandomDirection	src/movement/RandomDirection.java	/^    public RandomDirection( Settings settings ) {$/;"	m	class:RandomDirection
 RandomDirection	src/movement/RandomDirection.java	/^public class RandomDirection$/;"	c
@@ -724,6 +735,8 @@ SECONDS_IN_UNIT_S	src/routing/ProphetV2Router.java	/^	public static final String
 SEND	src/input/StandardEventsReader.java	/^	public static final String SEND = "S";$/;"	f	class:StandardEventsReader
 SENDING	src/input/MessageRelayEvent.java	/^	public static final int SENDING = 1;$/;"	f	class:MessageRelayEvent
 SEND_QUEUE_MODE_S	src/routing/MessageRouter.java	/^	public static final String SEND_QUEUE_MODE_S = "sendQueue";$/;"	f	class:MessageRouter
+SERVICE_EXECTIME_S	src/core/SimScenario.java	/^	public static final String SERVICE_EXECTIME_S = "executionTime";$/;"	f	class:SimScenario
+SERVICE_NS	src/core/SimScenario.java	/^	public static final String SERVICE_NS = "Service";$/;"	f	class:SimScenario
 SETTINGS_NAMESPACE	src/input/EventQueueHandler.java	/^	public static final String SETTINGS_NAMESPACE = "Events";$/;"	f	class:EventQueueHandler
 SETTINGS_NAMESPACE	src/input/ExternalEventsQueue.java	/^	public static final String SETTINGS_NAMESPACE = "ExternalEvents";$/;"	f	class:ExternalEventsQueue
 SETTING_OUTPUT_S	src/core/Settings.java	/^	public static final String SETTING_OUTPUT_S = "Settings.output";$/;"	f	class:Settings
@@ -898,6 +911,8 @@ UpdateListener	src/core/UpdateListener.java	/^public interface UpdateListener {$
 VALID_OPERATORS	src/core/ArithmeticCondition.java	/^	private static final String VALID_OPERATORS = "><=";$/;"	f	class:ArithmeticCondition	file:
 VBRConnection	src/core/VBRConnection.java	/^   public VBRConnection(DTNHost fromNode, NetworkInterface fromInterface,$/;"	m	class:VBRConnection
 VBRConnection	src/core/VBRConnection.java	/^public class VBRConnection extends Connection {$/;"	c
+VM	src/core/VM.java	/^    public VM() {$/;"	m	class:VM
+VM	src/core/VM.java	/^public class VM {$/;"	c
 WAIT_TIME	src/movement/MovementModel.java	/^	public static final String WAIT_TIME = "waitTime";$/;"	f	class:MovementModel
 WALKING_HOME_MODE	src/movement/HomeActivityMovement.java	/^	private static final int WALKING_HOME_MODE = 0;$/;"	f	class:HomeActivityMovement	file:
 WALKING_TO_MEETING_SPOT_MODE	src/movement/EveningActivityMovement.java	/^	private static final int WALKING_TO_MEETING_SPOT_MODE = 0;$/;"	f	class:EveningActivityMovement	file:
@@ -1041,6 +1056,8 @@ applications	src/routing/MessageRouter.java	/^	private HashMap<String, Collectio
 areDisconnected	src/report/ContactsDuringAnICTReport.java	/^	private boolean[][] areDisconnected;$/;"	f	class:ContactsDuringAnICTReport	file:
 assertNrofUpdates	src/test/WorldTest.java	/^	private void assertNrofUpdates(int nrof) {$/;"	m	class:WorldTest	file:
 assertValidRange	src/core/Settings.java	/^	public void assertValidRange(int range[], String sname)$/;"	m	class:Settings
+auctionPeriod	src/core/DTNHost.java	/^    public static double auctionPeriod = 10.0;$/;"	f	class:DTNHost
+auctionPeriod	src/core/SimScenario.java	/^    double auctionPeriod;$/;"	f	class:SimScenario
 autoClear	src/gui/playfield/PlayField.java	/^	private void autoClear() {$/;"	m	class:PlayField	file:
 autoClearOverlay	src/gui/SimMenuBar.java	/^	private JCheckBoxMenuItem autoClearOverlay;$/;"	f	class:SimMenuBar	file:
 autoClearOverlay	src/gui/playfield/PlayField.java	/^	private boolean autoClearOverlay;	\/\/ automatically clear overlay graphics$/;"	f	class:PlayField	file:
@@ -1059,6 +1076,7 @@ beta	src/routing/ProphetV2Router.java	/^	private double beta;$/;"	f	class:Prophe
 bgColor	src/gui/playfield/PlayField.java	/^	private Color bgColor = Color.WHITE;$/;"	f	class:PlayField	file:
 bidirectionalPaths	src/input/WKTMapReader.java	/^	private boolean bidirectionalPaths = true;$/;"	f	class:WKTMapReader	file:
 blacklistedMessages	src/routing/MessageRouter.java	/^	private HashMap<String, Object> blacklistedMessages;$/;"	f	class:MessageRouter	file:
+bucketCount	src/report/JumpSizeDistributionReport.java	/^	private final int bucketCount;$/;"	f	class:JumpSizeDistributionReport	file:
 bufferSize	src/routing/MessageRouter.java	/^	private long bufferSize;$/;"	f	class:MessageRouter	file:
 bundle_list	src/input/DTN2Events.java	/^	private Map<String, Bundle>			bundle_list;$/;"	f	class:DTN2Events	file:
 bundles	src/core/DTN2Manager.java	/^	private static Map<String, Bundle>		bundles = null;$/;"	f	class:DTN2Manager	file:
@@ -1179,6 +1197,7 @@ compareTo	src/core/Message.java	/^	public int compareTo(Message m) {$/;"	m	class
 compareTo	src/input/ExternalEvent.java	/^	public int compareTo(ExternalEvent other) {$/;"	m	class:ExternalEvent
 compareTo	src/movement/map/MapNode.java	/^	public int compareTo(MapNode o) {$/;"	m	class:MapNode
 compareTo	src/report/AdjacencyGraphvizReport.java	/^		public int compareTo(Object o) {$/;"	m	class:AdjacencyGraphvizReport.ConnectionInfo
+completionTime	src/core/VM.java	/^    private double completionTime;$/;"	f	class:VM	file:
 con	src/test/ConnectionTest.java	/^	private void con(DTNHost from, DTNHost to) {$/;"	m	class:ConnectionTest	file:
 conColor	src/gui/playfield/NodeGraphic.java	/^	private static Color conColor = Color.BLACK;$/;"	f	class:NodeGraphic	file:
 conCount	src/test/ConnectionTest.java	/^	private int conCount;$/;"	f	class:ConnectionTest	file:
@@ -1246,9 +1265,12 @@ core	src/core/SimError.java	/^package core;$/;"	p
 core	src/core/SimScenario.java	/^package core;$/;"	p
 core	src/core/UpdateListener.java	/^package core;$/;"	p
 core	src/core/VBRConnection.java	/^package core;$/;"	p
+core	src/core/VM.java	/^package core;$/;"	p
 core	src/core/World.java	/^package core;$/;"	p
 costsForMessages	src/routing/MaxPropRouter.java	/^	private Map<Integer, Double> costsForMessages;$/;"	f	class:MaxPropRouter	file:
 costsForMessages	src/routing/MaxPropRouterWithEstimation.java	/^	private Map<Integer, Double> costsForMessages;$/;"	f	class:MaxPropRouterWithEstimation	file:
+count	addPoints.py	/^				count = count + 1$/;"	v
+count	addPoints.py	/^			count = 0$/;"	v
 countRange	src/routing/LifeRouter.java	/^	private int countRange[];$/;"	f	class:LifeRouter	file:
 createCheckItem	src/gui/SimMenuBar.java	/^	private JCheckBoxMenuItem createCheckItem(Container c,String txt,$/;"	m	class:SimMenuBar	file:
 createConnection	src/core/NetworkInterface.java	/^	public abstract void createConnection(NetworkInterface anotherInterface);$/;"	m	class:NetworkInterface
@@ -1301,6 +1323,7 @@ currentspeed	src/core/VBRConnection.java	/^	private int currentspeed = 0;$/;"	f	
 custodyFraction	src/routing/WaveRouter.java	/^	private double custodyFraction;$/;"	f	class:WaveRouter	file:
 custodyMessages	src/routing/WaveRouter.java	/^	private Map<String, Double> custodyMessages;$/;"	f	class:WaveRouter	file:
 d	src/test/ScheduleDijkstraTest.java	/^	ScheduleDijkstra d;$/;"	f	class:ScheduleDijkstraTest
+data	addPoints.py	/^	data = F.readlines()$/;"	v
 debug	toolkit/Common.pm	/^sub debug {$/;"	s
 debugLevel	src/core/Debug.java	/^	private static int debugLevel = 0;$/;"	f	class:Debug	file:
 delays	src/report/MessageDelayReport.java	/^	private List<Double> delays;$/;"	f	class:MessageDelayReport	file:
@@ -1330,6 +1353,8 @@ disconnectLocation	src/test/AbstractRouterTest.java	/^	protected static final Co
 distance	src/core/Coord.java	/^	public double distance(Coord other) {$/;"	m	class:Coord
 distance	src/movement/HomeActivityMovement.java	/^	private int distance;$/;"	f	class:HomeActivityMovement	file:
 distance	src/movement/OfficeActivityMovement.java	/^	private int distance;$/;"	f	class:OfficeActivityMovement	file:
+distance	src/report/RadiusOfGyrationReport.java	/^	private static double distance($/;"	m	class:RadiusOfGyrationReport	file:
+distance	writePoints.py	/^                distance = int(sys.argv[3])$/;"	v
 distances	src/movement/map/DijkstraPathFinder.java	/^	private DistanceMap distances;$/;"	f	class:DijkstraPathFinder	file:
 distancesFromStart	src/routing/maxprop/MaxPropDijkstra.java	/^	private DistanceMap distancesFromStart;$/;"	f	class:MaxPropDijkstra	file:
 divisionHeight	src/report/NodeDensityReport.java	/^	private final double divisionHeight;$/;"	f	class:NodeDensityReport	file:
@@ -1345,6 +1370,7 @@ done	src/report/CreatedMessagesReport.java	/^	public void done() {$/;"	m	class:C
 done	src/report/DeliveredMessagesReport.java	/^	public void done() {$/;"	m	class:DeliveredMessagesReport
 done	src/report/DistanceDelayReport.java	/^	public void done() {$/;"	m	class:DistanceDelayReport
 done	src/report/EncountersVSUniqueEncountersReport.java	/^	public void done() {$/;"	m	class:EncountersVSUniqueEncountersReport
+done	src/report/JumpSizeDistributionReport.java	/^	public final void done() {$/;"	m	class:JumpSizeDistributionReport
 done	src/report/MessageDelayReport.java	/^	public void done() {$/;"	m	class:MessageDelayReport
 done	src/report/MessageDeliveryReport.java	/^	public void done() {$/;"	m	class:MessageDeliveryReport
 done	src/report/MessageGraphvizReport.java	/^	public void done() {$/;"	m	class:MessageGraphvizReport
@@ -1352,6 +1378,7 @@ done	src/report/MessageReport.java	/^	public void done() {$/;"	m	class:MessageRe
 done	src/report/MessageStatsReport.java	/^	public void done() {$/;"	m	class:MessageStatsReport
 done	src/report/NodeDensityReport.java	/^	public void done() {$/;"	m	class:NodeDensityReport
 done	src/report/PingAppReporter.java	/^	public void done() {$/;"	m	class:PingAppReporter
+done	src/report/RadiusOfGyrationReport.java	/^	public final void done() {$/;"	m	class:RadiusOfGyrationReport
 done	src/report/Report.java	/^	public void done() {$/;"	m	class:Report
 done	src/report/TotalEncountersReport.java	/^	public void done() {$/;"	m	class:TotalEncountersReport
 done	src/report/UniqueEncountersReport.java	/^	public void done() {$/;"	m	class:UniqueEncountersReport
@@ -1421,10 +1448,14 @@ eventsLeftInBuffer	src/input/ExternalEventsQueue.java	/^	public int eventsLeftIn
 example	toolkit/getStats.pl	/^example:$/;"	l
 example	toolkit/messageLocationAnimator.pl	/^example:$/;"	l
 exchangeDeliverableMessages	src/routing/ActiveRouter.java	/^	protected Connection exchangeDeliverableMessages() {$/;"	m	class:ActiveRouter
+execTimes	src/core/DTNHost.java	/^    public static List<Double> execTimes;$/;"	f	class:DTNHost
 farAway	src/test/AbstractRouterTest.java	/^	protected Coord farAway = new Coord(100000,100000);$/;"	f	class:AbstractRouterTest
 ffwButton	src/gui/GUIControls.java	/^	private JButton ffwButton;$/;"	f	class:GUIControls	file:
 field	src/gui/DTNSimGUI.java	/^	private PlayField field;$/;"	f	class:DTNSimGUI	file:
 field	src/gui/SimMenuBar.java	/^	private PlayField field;$/;"	f	class:SimMenuBar	file:
+filename	addPoints.py	/^	filename = "Manchester_test"$/;"	v
+filename	addPoints.py	/^	filename = sys.argv[3]$/;"	v
+filename	writePoints.py	/^            filename = sys.argv[2]$/;"	v
 filterNode	src/gui/nodefilter/NodeFilter.java	/^	public boolean filterNode(DTNHost node);$/;"	m	interface:NodeFilter
 filterNode	src/gui/nodefilter/NodeMessageFilter.java	/^	public boolean filterNode(DTNHost node) {$/;"	m	class:NodeMessageFilter
 filters	src/gui/NodeChooser.java	/^	private Vector<NodeFilter> filters;$/;"	f	class:NodeChooser	file:
@@ -1455,7 +1486,9 @@ fromInterface	src/core/Connection.java	/^	protected NetworkInterface fromInterfa
 fromNode	src/core/Connection.java	/^	protected DTNHost fromNode;$/;"	f	class:Connection
 fromReceivePolicy	src/routing/util/MessageTransferAcceptPolicy.java	/^	private Range[] fromReceivePolicy = null;$/;"	f	class:MessageTransferAcceptPolicy	file:
 fromSendPolicy	src/routing/util/MessageTransferAcceptPolicy.java	/^	private Range[] fromSendPolicy = null;$/;"	f	class:MessageTransferAcceptPolicy	file:
+gamma	src/routing/ProphetRouter.java	/^	private double gamma;$/;"	f	class:ProphetRouter	file:
 gamma	src/routing/ProphetRouterWithEstimation.java	/^	private double gamma;$/;"	f	class:ProphetRouterWithEstimation	file:
+gamma	src/routing/ProphetV2Router.java	/^	private double gamma;$/;"	f	class:ProphetV2Router	file:
 generateConnections	src/test/AdjacencyGraphvizReportTest.java	/^	private void generateConnections() {$/;"	m	class:AdjacencyGraphvizReportTest	file:
 generateConnections	src/test/ContactTimesReportTest.java	/^	private void generateConnections(TestUtils utils) {$/;"	m	class:ContactTimesReportTest	file:
 generateMessages	src/test/MessageGraphvizReportTest.java	/^	private void generateMessages() {$/;"	m	class:MessageGraphvizReportTest	file:
@@ -1466,6 +1499,8 @@ generateWaitTime	src/movement/ExtendedMovementModel.java	/^	protected double gen
 generateWaitTime	src/movement/HomeActivityMovement.java	/^	protected double generateWaitTime() {$/;"	m	class:HomeActivityMovement
 generateWaitTime	src/movement/MovementModel.java	/^	protected double generateWaitTime() {$/;"	m	class:MovementModel
 generateWaitTime	src/movement/OfficeActivityMovement.java	/^	protected double generateWaitTime() {$/;"	m	class:OfficeActivityMovement
+generate_points	writePoints.py	/^def generate_points(coordinates, distance):$/;"	f
+geometricCenter	src/report/RadiusOfGyrationReport.java	/^	private static double[] geometricCenter($/;"	m	class:RadiusOfGyrationReport	file:
 get	src/movement/map/DijkstraPathFinder.java	/^		public double get(MapNode node) {$/;"	m	class:DijkstraPathFinder.DistanceMap
 get	src/routing/maxprop/MaxPropDijkstra.java	/^		public double get(Integer node) {$/;"	m	class:MaxPropDijkstra.DistanceMap
 get	src/routing/schedule/ScheduleDijkstra.java	/^		public double get(Integer node) {$/;"	m	class:ScheduleDijkstra.TimeMap
@@ -1495,6 +1530,7 @@ getClass	src/core/Settings.java	/^	private Class<?> getClass(String name) {$/;"	
 getClosestCoordinate	src/movement/BusTravellerMovement.java	/^	private static Coord getClosestCoordinate(List<Coord> allCoords,$/;"	m	class:BusTravellerMovement	file:
 getComBus	src/core/DTNHost.java	/^	public ModuleCommunicationBus getComBus() {$/;"	m	class:DTNHost
 getComBus	src/movement/MovementModel.java	/^	public ModuleCommunicationBus getComBus() {$/;"	m	class:MovementModel
+getCompletionTime	src/core/VM.java	/^    public double getCompletionTime()$/;"	m	class:VM
 getCondition	src/core/Settings.java	/^	public ArithmeticCondition getCondition(String name) {$/;"	m	class:Settings
 getConnected	src/routing/schedule/ScheduleOracle.java	/^	public List<ScheduleEntry> getConnected(int from, double time) {$/;"	m	class:ScheduleOracle
 getConnectionTime	src/report/ContactTimesReport.java	/^		public double getConnectionTime() {$/;"	m	class:ContactTimesReport.ConnectionInfo
@@ -1668,6 +1704,7 @@ getMinX	src/input/ExternalPathMovementReader.java	/^	public double getMinX() {$/
 getMinY	src/input/ExternalMovementReader.java	/^	public double getMinY() {$/;"	m	class:ExternalMovementReader
 getMinY	src/input/ExternalPathMovementReader.java	/^	public double getMinY() {$/;"	m	class:ExternalPathMovementReader
 getMoreInfo	src/routing/util/RoutingInfo.java	/^	public List<RoutingInfo> getMoreInfo() {$/;"	m	class:RoutingInfo
+getMovementModel	src/core/DTNHost.java	/^    public MovementModel getMovementModel() {$/;"	m	class:DTNHost
 getMultiplier	src/core/Settings.java	/^	private int getMultiplier(String value) {$/;"	m	class:Settings	file:
 getName	src/core/SimScenario.java	/^	public String getName() {$/;"	m	class:SimScenario
 getNameSpace	src/core/Settings.java	/^	public String getNameSpace() {$/;"	m	class:Settings
@@ -1821,7 +1858,10 @@ getWorldSizeY	src/core/SimScenario.java	/^	public int getWorldSizeY() {$/;"	m	cl
 getWorldSizeY	src/test/WorldTest.java	/^		public int getWorldSizeY() {$/;"	m	class:WorldTest.TestScenario
 getX	src/core/Coord.java	/^	public double getX() {$/;"	m	class:Coord
 getY	src/core/Coord.java	/^	public double getY() {$/;"	m	class:Coord
+getnrofServices	src/core/DTNHost.java	/^    public static int getnrofServices() {$/;"	m	class:DTNHost
 ginterfaces	src/interfaces/ConnectivityGrid.java	/^	private HashMap<NetworkInterface, GridCell> ginterfaces;$/;"	f	class:ConnectivityGrid	file:
+gn	addPoints.py	/^				gn = gn + 1 $/;"	v
+gn	addPoints.py	/^			gn = (int)(groups)$/;"	v
 gnuplot	src/report/NodeDensityReport.java	/^	private final boolean gnuplot;$/;"	f	class:NodeDensityReport	file:
 gnuplotFileExtension	src/report/NodeDensityReport.java	/^	private final String gnuplotFileExtension;$/;"	f	class:NodeDensityReport	file:
 gnuplotTerminal	src/report/NodeDensityReport.java	/^	private final String gnuplotTerminal;$/;"	f	class:NodeDensityReport	file:
@@ -1831,8 +1871,12 @@ granularity	src/report/ContactTimesReport.java	/^	protected double granularity;$
 granularity	src/report/MessageLocationReport.java	/^	protected final int granularity;$/;"	f	class:MessageLocationReport
 granularity	src/report/SnapshotReport.java	/^	protected final int granularity;$/;"	f	class:SnapshotReport
 gridobjects	src/interfaces/ConnectivityGrid.java	/^	static HashMap<Integer,ConnectivityGrid> gridobjects;$/;"	f	class:ConnectivityGrid
+group	addPoints.py	/^				group = "Group" + (str)(gn) + "."$/;"	v
 groupChooser	src/gui/NodeChooser.java	/^	private JComboBox groupChooser;$/;"	f	class:NodeChooser	file:
 groupId	src/test/TestUtils.java	/^	private String groupId = "h";$/;"	f	class:TestUtils	file:
+groups	addPoints.py	/^			groups = d$/;"	v
+groups	addPoints.py	/^			groups = groups.split()$/;"	v
+groups	addPoints.py	/^			groups = groups[2]$/;"	v
 gui	src/gui/DTNSimGUI.java	/^package gui;$/;"	p
 gui	src/gui/EventLogControl.java	/^package gui;$/;"	p
 gui	src/gui/EventLogControlPanel.java	/^package gui;$/;"	p
@@ -1901,6 +1945,7 @@ hopCounts	src/report/MessageStatsReport.java	/^	private List<Integer> hopCounts;
 horizontalCount	src/report/NodeDensityReport.java	/^	private final int horizontalCount;$/;"	f	class:NodeDensityReport	file:
 host	src/core/DTN2Manager.java	/^		public DTNHost	host;$/;"	f	class:DTN2Manager.EIDHost
 host	src/core/NetworkInterface.java	/^	protected DTNHost host = null;$/;"	f	class:NetworkInterface
+host	src/core/VM.java	/^    private DTNHost host;$/;"	f	class:VM	file:
 host	src/gui/RoutingInfoWindow.java	/^	private DTNHost host;$/;"	f	class:RoutingInfoWindow	file:
 host	src/movement/MovementModel.java	/^	protected DTNHost host;$/;"	f	class:MovementModel
 host	src/routing/MessageRouter.java	/^	private DTNHost host;$/;"	f	class:MessageRouter	file:
@@ -2037,6 +2082,7 @@ input	src/input/StandardEventsReader.java	/^package input;$/;"	p
 input	src/input/WKTMapReader.java	/^package input;$/;"	p
 input	src/input/WKTReader.java	/^package input;$/;"	p
 inputFileName	src/movement/ExternalMovement.java	/^	private static String inputFileName;$/;"	f	class:ExternalMovement	file:
+instantiateService	src/core/VM.java	/^    public void instantiateService(int service) {$/;"	m	class:VM
 interfaceId	src/input/ConnectionEvent.java	/^	protected String interfaceId;$/;"	f	class:ConnectionEvent
 interfaces	src/interfaces/ConnectivityGrid.java	/^		private ArrayList<NetworkInterface> interfaces;$/;"	f	class:ConnectivityGrid.GridCell	file:
 interfaces	src/interfaces/ConnectivityGrid.java	/^package interfaces;$/;"	p
@@ -2113,11 +2159,14 @@ isUp	src/input/ConnectionEvent.java	/^	protected boolean isUp;$/;"	f	class:Conne
 isWarmup	src/report/Report.java	/^	protected boolean isWarmup() {$/;"	m	class:Report
 isWarmupID	src/report/Report.java	/^	protected boolean isWarmupID(String id) {$/;"	m	class:Report
 isWithinRange	src/core/NetworkInterface.java	/^	protected boolean isWithinRange(NetworkInterface anotherInterface) {$/;"	m	class:NetworkInterface
+is_idle	src/core/VM.java	/^    public boolean is_idle(){$/;"	m	class:VM
+is_stationary	src/core/DTNHost.java	/^    public boolean is_stationary;$/;"	f	class:DTNHost
 k	src/util/ParetoRNG.java	/^	private double k; \/\/ coefficient$/;"	f	class:ParetoRNG	file:
 key	src/util/Tuple.java	/^	private K key;$/;"	f	class:Tuple	file:
 lastAgeUpdate	src/routing/ProphetRouter.java	/^	private double lastAgeUpdate;$/;"	f	class:ProphetRouter	file:
 lastAgeUpdate	src/routing/ProphetRouterWithEstimation.java	/^	private double lastAgeUpdate;$/;"	f	class:ProphetRouterWithEstimation	file:
 lastAgeUpdate	src/routing/ProphetV2Router.java	/^	private double lastAgeUpdate;$/;"	f	class:ProphetV2Router	file:
+lastAuctionPeriod	src/core/DTNHost.java	/^    public static double lastAuctionPeriod = 0.0;$/;"	f	class:DTNHost
 lastCostFrom	src/routing/MaxPropRouter.java	/^	private DTNHost lastCostFrom;$/;"	f	class:MaxPropRouter	file:
 lastCostFrom	src/routing/MaxPropRouterWithEstimation.java	/^	private DTNHost lastCostFrom;$/;"	f	class:MaxPropRouterWithEstimation	file:
 lastDropped	src/test/MessageChecker.java	/^	private Boolean lastDropped;$/;"	f	class:MessageChecker	file:
@@ -2165,6 +2214,9 @@ latestPath	src/movement/ExternalMovement.java	/^	private Path latestPath;$/;"	f	
 latestPathStartTime	src/movement/ExternalMovement.java	/^	private double latestPathStartTime;$/;"	f	class:ExternalMovement	file:
 layout	src/gui/EventLogControlPanel.java	/^	private GridBagLayout layout;$/;"	f	class:EventLogControlPanel	file:
 layout	src/gui/EventLogPanel.java	/^	private GridLayout layout;$/;"	f	class:EventLogPanel	file:
+li	addPoints.py	/^				li = li.split()$/;"	v
+lines	addPoints.py	/^				lines = SF.readlines()$/;"	v
+lines	addPoints.py	/^			lines =[]$/;"	v
 listeners	src/core/ModuleCommunicationBus.java	/^	private HashMap<String, List<ModuleCommunicationListener>> listeners;$/;"	f	class:ModuleCommunicationBus	file:
 loadObject	src/core/Settings.java	/^	private Object loadObject(String className, Class<?>[] argsClass,$/;"	m	class:Settings	file:
 loc	src/movement/GridLocation.java	/^	private Coord loc;$/;"	f	class:GridLocation	file:
@@ -2195,12 +2247,14 @@ map	src/test/MapBasedMovementTest.java	/^	private SimMap map;$/;"	f	class:MapBas
 map	src/test/MapNodeTest.java	/^	private SimMap map;$/;"	f	class:MapNodeTest	file:
 mapGraphic	src/gui/playfield/PlayField.java	/^	private MapGraphic mapGraphic;$/;"	f	class:PlayField	file:
 mapping	src/test/MaxPropDijkstraTest.java	/^	private Map<Integer, MeetingProbabilitySet> mapping;$/;"	f	class:MaxPropDijkstraTest	file:
+math	writePoints.py	/^import math$/;"	i
 max	src/util/Range.java	/^	private double max;$/;"	f	class:Range	file:
 maxBound	src/movement/map/SimMap.java	/^	private Coord maxBound;$/;"	f	class:SimMap	file:
 maxDistance	src/movement/RandomWalk.java	/^	private double maxDistance;$/;"	f	class:RandomWalk	file:
 maxGroupSize	src/movement/EveningActivityMovement.java	/^	private int maxGroupSize;$/;"	f	class:EveningActivityMovement	file:
 maxHostRange	src/core/SimScenario.java	/^	private double maxHostRange;$/;"	f	class:SimScenario	file:
 maxID	src/input/ExternalPathMovementReader.java	/^	private int	maxID;$/;"	f	class:ExternalPathMovementReader	file:
+maxJump	src/report/JumpSizeDistributionReport.java	/^	private static double maxJump($/;"	m	class:JumpSizeDistributionReport	file:
 maxNrofEvents	src/gui/EventLogPanel.java	/^	private int maxNrofEvents;$/;"	f	class:EventLogPanel	file:
 maxPathLength	src/movement/MapBasedMovement.java	/^	protected int maxPathLength = 100;$/;"	f	class:MapBasedMovement
 maxSetSize	src/routing/maxprop/MeetingProbabilitySet.java	/^    private int maxSetSize;$/;"	f	class:MeetingProbabilitySet	file:
@@ -2441,6 +2495,8 @@ newMessage	src/test/MessageChecker.java	/^	public void newMessage(Message m) {$/
 newNode	src/test/DijkstraPathFinderTest.java	/^	private MapNode newNode(double x, double y) {$/;"	m	class:DijkstraPathFinderTest	file:
 newOrders	src/movement/ExtendedMovementModel.java	/^	public abstract boolean newOrders();$/;"	m	class:ExtendedMovementModel
 newOrders	src/movement/WorkingDayMovement.java	/^	public boolean newOrders() {$/;"	m	class:WorkingDayMovement
+newfile	addPoints.py	/^			newfile = filename + "_st_" + str(num) + ".txt"$/;"	v
+newfile	writePoints.py	/^            newfile = sys.argv[5]$/;"	v
 next	src/test/MessageChecker.java	/^	public boolean next() {$/;"	m	class:MessageChecker
 nextAddress	src/core/DTNHost.java	/^	private static int nextAddress = 0;$/;"	f	class:DTNHost	file:
 nextEvent	src/input/DTN2Events.java	/^	public ExternalEvent nextEvent() {$/;"	m	class:DTN2Events
@@ -2485,11 +2541,13 @@ nextTrips	src/movement/EveningActivityControlSystem.java	/^	private EveningTrip[
 nextType	src/input/WKTReader.java	/^	protected String nextType() throws IOException {$/;"	m	class:WKTReader
 nextUniqueId	src/core/Message.java	/^	private static int nextUniqueId;$/;"	f	class:Message	file:
 nextWpIndex	src/movement/Path.java	/^	private int nextWpIndex;$/;"	f	class:Path	file:
+nf	addPoints.py	/^			nf = open(newfile,'w')$/;"	v
 node	src/gui/playfield/NodeGraphic.java	/^	private DTNHost node;$/;"	f	class:NodeGraphic	file:
 nodeArray	src/report/MovementNs2Report.java	/^	private String nodeArray;$/;"	f	class:MovementNs2Report	file:
 nodeCount	src/movement/GridLocation.java	/^	private int nodeCount;$/;"	f	class:GridLocation	file:
 nodeCount	src/movement/LinearFormation.java	/^	private int nodeCount; \/** how many nodes in this formation *\/$/;"	f	class:LinearFormation	file:
 nodeCount	src/movement/LinearMovement.java	/^	private int nodeCount; \/** how many nodes in this formation *\/$/;"	f	class:LinearMovement	file:
+nodeNames	src/report/RadiusOfGyrationReport.java	/^	private final String[] nodeNames;$/;"	f	class:RadiusOfGyrationReport	file:
 nodeRelationships	src/report/UniqueEncountersReport.java	/^	private int[][] nodeRelationships;$/;"	f	class:UniqueEncountersReport	file:
 nodeType	src/input/WKTMapReader.java	/^	private int nodeType = -1;$/;"	f	class:WKTMapReader	file:
 nodes	src/input/WKTMapReader.java	/^	private Hashtable<Coord, MapNode> nodes;$/;"	f	class:WKTMapReader	file:
@@ -2502,6 +2560,8 @@ notifyConnectionListeners	src/core/NetworkInterface.java	/^	private void notifyC
 notifyKey	src/test/ModuleCommunicationBusTest.java	/^	private String notifyKey;$/;"	f	class:ModuleCommunicationBusTest	file:
 notifyListeners	src/core/ModuleCommunicationBus.java	/^	private void notifyListeners(String key, Object newValue) {$/;"	m	class:ModuleCommunicationBus	file:
 notifyValue	src/test/ModuleCommunicationBusTest.java	/^	private Object notifyValue;$/;"	f	class:ModuleCommunicationBusTest	file:
+np	addPoints.py	/^import numpy as np$/;"	i
+np	writePoints.py	/^import numpy as np$/;"	i
 nrOfMeetingSpots	src/movement/EveningActivityMovement.java	/^	private static int nrOfMeetingSpots = 10;$/;"	f	class:EveningActivityMovement	file:
 nrOfOffices	src/movement/OfficeActivityMovement.java	/^	private static int nrOfOffices = 50;$/;"	f	class:OfficeActivityMovement	file:
 nrof	src/test/ConnectionTest.java	/^	private int nrof = 5;$/;"	f	class:ConnectionTest	file:
@@ -2526,10 +2586,15 @@ nrofResponseReqCreated	src/report/MessageStatsReport.java	/^	private int nrofRes
 nrofSamples	src/routing/ProphetRouterWithEstimation.java	/^	private int nrofSamples;$/;"	f	class:ProphetRouterWithEstimation	file:
 nrofSamplesENC	src/routing/MaxPropRouterWithEstimation.java	/^	private int nrofSamplesENC;$/;"	f	class:MaxPropRouterWithEstimation	file:
 nrofSamplesIET	src/routing/MaxPropRouterWithEstimation.java	/^	private int nrofSamplesIET;$/;"	f	class:MaxPropRouterWithEstimation	file:
+nrofServices	src/core/DTNHost.java	/^    private static int nrofServices = 0;$/;"	f	class:DTNHost	file:
+nrofServices	src/core/SimScenario.java	/^	int nrofServices;$/;"	f	class:SimScenario
 nrofStarted	src/report/MessageStatsReport.java	/^	private int nrofStarted;$/;"	f	class:MessageStatsReport	file:
 nrofTotENC	src/routing/MaxPropRouterWithEstimation.java	/^	private int nrofTotENC;$/;"	f	class:MaxPropRouterWithEstimation	file:
 nrofUpdate	src/test/TestDTNHost.java	/^	public int nrofUpdate = 0;$/;"	f	class:TestDTNHost
+nrofVMs	src/core/DTNHost.java	/^    private int nrofVMs;$/;"	f	class:DTNHost	file:
 nsCmd	src/report/MovementNs2Report.java	/^	private String nsCmd;$/;"	f	class:MovementNs2Report	file:
+num	addPoints.py	/^			num = len(lines)$/;"	v
+num	writePoints.py	/^            num = int(sys.argv[4])$/;"	v
 number	src/core/ArithmeticCondition.java	/^	private double number;$/;"	f	class:ArithmeticCondition	file:
 numberOfTransmissions	src/interfaces/InterferenceLimitedInterface.java	/^	protected int numberOfTransmissions;$/;"	f	class:InterferenceLimitedInterface
 officeLocation	src/movement/OfficeActivityMovement.java	/^	private Coord officeLocation;$/;"	f	class:OfficeActivityMovement	file:
@@ -2573,6 +2638,7 @@ outFileName	src/report/Report.java	/^	private String outFileName;$/;"	f	class:Re
 outputGnuplotPrefix	src/report/NodeDensityReport.java	/^	private void outputGnuplotPrefix() {$/;"	m	class:NodeDensityReport	file:
 outputGnuplotSuffix	src/report/NodeDensityReport.java	/^	private void outputGnuplotSuffix(final int sampleCount) {$/;"	m	class:NodeDensityReport	file:
 outputInterval	src/report/Report.java	/^	private double outputInterval;$/;"	f	class:Report	file:
+outputRawData	src/report/JumpSizeDistributionReport.java	/^	private final boolean outputRawData;$/;"	f	class:JumpSizeDistributionReport	file:
 outputSetting	src/core/Settings.java	/^	private static void outputSetting(String setting) {$/;"	m	class:Settings	file:
 overlayGraphics	src/gui/playfield/PlayField.java	/^	private List<PlayFieldGraphic> overlayGraphics;$/;"	f	class:PlayField	file:
 ownCarProb	src/movement/WorkingDayMovement.java	/^	private double ownCarProb;$/;"	f	class:WorkingDayMovement	file:
@@ -2596,6 +2662,7 @@ parseMultilinestring	src/input/WKTReader.java	/^	protected List<List<Coord>> par
 parseNrofRuns	src/core/DTNSim.java	/^	private static int[] parseNrofRuns(String arg) {$/;"	m	class:DTNSim	file:
 parsePoint	src/input/WKTReader.java	/^	protected Coord parsePoint() throws IOException {$/;"	m	class:WKTReader
 parseRunSetting	src/core/Settings.java	/^	private static String parseRunSetting(String value) {$/;"	m	class:Settings	file:
+parseWKT	writePoints.py	/^def parseWKT(filename):$/;"	f
 passive	src/applications/PingApplication.java	/^	private boolean passive = false;$/;"	f	class:PingApplication	file:
 path	src/core/DTNHost.java	/^	private Path path;$/;"	f	class:DTNHost	file:
 path	src/core/Message.java	/^	private List<DTNHost> path;$/;"	f	class:Message	file:
@@ -2625,12 +2692,15 @@ playUntilButton	src/gui/GUIControls.java	/^	private JButton playUntilButton;$/;"
 playUntilTime	src/gui/GUIControls.java	/^	private double playUntilTime;$/;"	f	class:GUIControls	file:
 poiLists	src/movement/map/PointsOfInterest.java	/^	private ArrayList<List<MapNode>> poiLists;$/;"	f	class:PointsOfInterest	file:
 poiProbs	src/movement/map/PointsOfInterest.java	/^	private List<Tuple<Double, Integer>> poiProbs;$/;"	f	class:PointsOfInterest	file:
+points	writePoints.py	/^                points = generate_points(pos, distance)$/;"	v
 pois	src/movement/ShortestPathMapBasedMovement.java	/^	private PointsOfInterest pois;$/;"	f	class:ShortestPathMapBasedMovement	file:
 pois	src/test/PointsOfInterestTest.java	/^	private PointsOfInterest pois;$/;"	f	class:PointsOfInterestTest	file:
 policy	src/routing/ActiveRouter.java	/^	private MessageTransferAcceptPolicy policy;$/;"	f	class:ActiveRouter	file:
 pongSize	src/applications/PingApplication.java	/^	private int		pongSize=1;$/;"	f	class:PingApplication	file:
 pongsReceived	src/report/PingAppReporter.java	/^	private int pongsSent=0, pongsReceived=0;$/;"	f	class:PingAppReporter	file:
 pongsSent	src/report/PingAppReporter.java	/^	private int pongsSent=0, pongsReceived=0;$/;"	f	class:PingAppReporter	file:
+pos	addPoints.py	/^			pos =[[0 for x in range(2)] for y in range((int)(num))]$/;"	v
+pos	writePoints.py	/^                pos = parseWKT(filename)$/;"	v
 precision	src/report/Report.java	/^	private int precision;$/;"	f	class:Report	file:
 preds	src/routing/ProphetRouter.java	/^	private Map<DTNHost, Double> preds;$/;"	f	class:ProphetRouter	file:
 preds	src/routing/ProphetRouterWithEstimation.java	/^	private Map<DTNHost, Double> preds;$/;"	f	class:ProphetRouterWithEstimation	file:
@@ -2639,6 +2709,7 @@ prefix	src/report/Report.java	/^	private String prefix = "";$/;"	f	class:Report	
 prevHops	src/routing/schedule/ScheduleDijkstra.java	/^	private Map<Integer, ScheduleEntry> prevHops;$/;"	f	class:ScheduleDijkstra	file:
 prevNodes	src/movement/map/DijkstraPathFinder.java	/^	private Map<MapNode, MapNode> prevNodes;$/;"	f	class:DijkstraPathFinder	file:
 prevNodes	src/routing/maxprop/MaxPropDijkstra.java	/^	private Map<Integer, Integer> prevNodes;$/;"	f	class:MaxPropDijkstra	file:
+previousLocations	src/report/JumpSizeDistributionReport.java	/^	private final Coord[] previousLocations;$/;"	f	class:JumpSizeDistributionReport	file:
 print	src/core/DTNSim.java	/^	private static void print(String txt) {$/;"	m	class:DTNSim	file:
 print	src/ui/DTNSimTextUI.java	/^	private void print(String txt) {$/;"	m	class:DTNSimTextUI	file:
 printHeader	src/report/DistanceDelayReport.java	/^	private void printHeader() {$/;"	m	class:DistanceDelayReport	file:
@@ -2683,6 +2754,7 @@ r1	src/test/MaxPropRouterTest.java	/^	private MaxPropRouter r1,r2,r3,r4;$/;"	f	c
 r2	src/test/MaxPropRouterTest.java	/^	private MaxPropRouter r1,r2,r3,r4;$/;"	f	class:MaxPropRouterTest	file:
 r3	src/test/MaxPropRouterTest.java	/^	private MaxPropRouter r1,r2,r3,r4;$/;"	f	class:MaxPropRouterTest	file:
 r4	src/test/MaxPropRouterTest.java	/^	private MaxPropRouter r1,r2,r3,r4;$/;"	f	class:MaxPropRouterTest	file:
+random	writePoints.py	/^import random$/;"	i
 randomCoord	src/movement/ClusterMovement.java	/^	protected Coord randomCoord() {$/;"	m	class:ClusterMovement
 randomCoord	src/movement/RandomWaypoint.java	/^	protected Coord randomCoord() {$/;"	m	class:RandomWaypoint
 randomGenerator	src/routing/ProphetV2Router.java	/^	Random randomGenerator = new Random();$/;"	f	class:ProphetV2Router
@@ -2807,6 +2879,7 @@ report	src/report/EncountersVSUniqueEncountersReport.java	/^package report;$/;"	
 report	src/report/EnergyLevelReport.java	/^package report;$/;"	p
 report	src/report/EventLogReport.java	/^package report;$/;"	p
 report	src/report/InterContactTimesReport.java	/^package report;$/;"	p
+report	src/report/JumpSizeDistributionReport.java	/^package report;$/;"	p
 report	src/report/LocationSnapshotReport.java	/^package report;$/;"	p
 report	src/report/MessageAvailabilityReport.java	/^package report;$/;"	p
 report	src/report/MessageCopyCountReport.java	/^package report;$/;"	p
@@ -2820,6 +2893,7 @@ report	src/report/MovementListenerTestReport.java	/^package report;$/;"	p
 report	src/report/MovementNs2Report.java	/^package report;$/;"	p
 report	src/report/NodeDensityReport.java	/^package report;$/;"	p
 report	src/report/PingAppReporter.java	/^package report;$/;"	p
+report	src/report/RadiusOfGyrationReport.java	/^package report;$/;"	p
 report	src/report/Report.java	/^package report;$/;"	p
 report	src/report/SamplingReport.java	/^package report;$/;"	p
 report	src/report/SnapshotReport.java	/^package report;$/;"	p
@@ -2858,6 +2932,8 @@ responseSize	src/input/MessageCreateEvent.java	/^	private int responseSize;$/;"	
 restoreNameSpace	src/core/Settings.java	/^	public void restoreNameSpace() {$/;"	m	class:Settings
 restoreSecondaryNamespace	src/core/Settings.java	/^	public void restoreSecondaryNamespace() {$/;"	m	class:Settings
 restoreSubNameSpace	src/core/Settings.java	/^	public void restoreSubNameSpace() {$/;"	m	class:Settings
+rintx	writePoints.py	/^                    rintx = random.randint(0,sizex)$/;"	v
+rinty	writePoints.py	/^                    rinty = random.randint(0,sizey)$/;"	v
 rng	src/applications/PingApplication.java	/^	private Random	rng;$/;"	f	class:PingApplication	file:
 rng	src/core/NetworkInterface.java	/^	private static Random rng;$/;"	f	class:NetworkInterface	file:
 rng	src/input/MessageEventGenerator.java	/^	protected Random rng;$/;"	f	class:MessageEventGenerator
@@ -2907,9 +2983,15 @@ runSim	src/ui/DTNSimUI.java	/^	protected abstract void runSim();$/;"	m	class:DTN
 runTestPoiSelection	src/test/PointsOfInterestTest.java	/^	public void runTestPoiSelection(double[] poiProbs, int rngSeed) throws Exception {$/;"	m	class:PointsOfInterestTest
 s	src/test/MapBasedMovementTest.java	/^	private TestSettings s;$/;"	f	class:MapBasedMovementTest	file:
 s	src/test/SettingsTest.java	/^	private Settings s;$/;"	f	class:SettingsTest	file:
+sample	src/report/JumpSizeDistributionReport.java	/^	protected void sample(final List <DTNHost> hosts) {$/;"	m	class:JumpSizeDistributionReport
 sample	src/report/NodeDensityReport.java	/^	protected void sample(final List<DTNHost> hosts) {$/;"	m	class:NodeDensityReport
+sample	src/report/RadiusOfGyrationReport.java	/^	protected void sample(List<DTNHost> hosts) {$/;"	m	class:RadiusOfGyrationReport
 sample	src/report/SamplingReport.java	/^	protected abstract void sample(final List<DTNHost> hosts);$/;"	m	class:SamplingReport
+sampleCounts	src/report/JumpSizeDistributionReport.java	/^	private final int[] sampleCounts;$/;"	f	class:JumpSizeDistributionReport	file:
+sampleCounts	src/report/RadiusOfGyrationReport.java	/^	private final int[] sampleCounts;$/;"	f	class:RadiusOfGyrationReport	file:
+samples	src/report/JumpSizeDistributionReport.java	/^	private final double[][] samples;$/;"	f	class:JumpSizeDistributionReport	file:
 samples	src/report/NodeDensityReport.java	/^	private final List<int[][]> samples;$/;"	f	class:NodeDensityReport	file:
+samples	src/report/RadiusOfGyrationReport.java	/^	private final double[][][] samples;$/;"	f	class:RadiusOfGyrationReport	file:
 samplingInterval	src/movement/ExternalMovement.java	/^	private static double samplingInterval;$/;"	f	class:ExternalMovement	file:
 sc	src/test/MessageTest.java	/^	private SimClock sc;$/;"	f	class:MessageTest	file:
 sc	src/test/ScheduledUpdatesQueueTest.java	/^	private SimClock sc = SimClock.getInstance();$/;"	f	class:ScheduledUpdatesQueueTest	file:
@@ -2948,6 +3030,7 @@ sentMessages	src/routing/MaxPropRouter.java	/^	private Map<DTNHost, Set<String>>
 sepsField	src/gui/GUIControls.java	/^	private JLabel sepsField;	\/\/ simulated events per second field$/;"	f	class:GUIControls	file:
 serialVersionUID	src/routing/schedule/ScheduleEntry.java	/^	private static final long serialVersionUID = 42L;$/;"	f	class:ScheduleEntry	file:
 serialVersionUID	src/routing/schedule/ScheduleOracle.java	/^	private static final long serialVersionUID = 42L;$/;"	f	class:ScheduleOracle	file:
+service	src/core/VM.java	/^    private int service;$/;"	f	class:VM	file:
 setAllHosts	src/report/AdjacencyGraphvizReport.java	/^	public void setAllHosts(Collection<DTNHost> hosts) {$/;"	m	class:AdjacencyGraphvizReport
 setAlpha	src/routing/maxprop/MeetingProbabilitySet.java	/^	public void setAlpha(double alpha) {$/;"	m	class:MeetingProbabilitySet
 setAppID	src/core/Application.java	/^	public void setAppID(String appID) {$/;"	m	class:Application
@@ -3081,6 +3164,7 @@ setUpWith	src/test/PointsOfInterestTest.java	/^	protected void setUpWith(double[
 setUpWith	src/test/WKTReaderTest.java	/^	private WKTMapReader setUpWith(Reader input) {$/;"	m	class:WKTReaderTest	file:
 setUpWithGranularity	src/test/ContactTimesReportTest.java	/^	private void setUpWithGranularity(double gran) throws IOException {$/;"	m	class:ContactTimesReportTest	file:
 setWaitTimeAtEnd	src/movement/EveningTrip.java	/^	public void setWaitTimeAtEnd(double waitTimeAtEnd) {$/;"	m	class:EveningTrip
+setnrofServices	src/core/DTNHost.java	/^    public static void setnrofServices(int nrofServices) {$/;"	m	class:DTNHost
 settings	src/test/TestUtils.java	/^	private TestSettings settings;$/;"	f	class:TestUtils	file:
 setup	src/core/DTN2Manager.java	/^	public static void setup(World world) {$/;"	m	class:DTN2Manager
 setupHost	src/test/MapBasedMovementTest.java	/^	private DTNHost setupHost() {$/;"	m	class:MapBasedMovementTest	file:
@@ -3119,6 +3203,8 @@ size	src/test/ConnectionTest.java	/^	private int size[] = {50, 75, 100, 200, 100
 sizeRange	src/input/MessageEventGenerator.java	/^	private int[] sizeRange;$/;"	f	class:MessageEventGenerator	file:
 sizeX	src/core/World.java	/^	private int sizeX;$/;"	f	class:World	file:
 sizeY	src/core/World.java	/^	private int sizeY;$/;"	f	class:World	file:
+sizex	writePoints.py	/^            sizex = int(sys.argv[2])$/;"	v
+sizey	writePoints.py	/^            sizey = int(sys.argv[3])$/;"	v
 skipAllWhitespace	src/input/WKTReader.java	/^	protected char skipAllWhitespace(Reader r) throws IOException {$/;"	m	class:WKTReader
 skipUntil	src/input/WKTReader.java	/^	protected void skipUntil(Reader r, char until) throws IOException {$/;"	m	class:WKTReader
 smallFont	src/gui/EventLogControlPanel.java	/^	private Font smallFont = new Font("sans",Font.PLAIN,11);$/;"	f	class:EventLogControlPanel	file:
@@ -3147,12 +3233,14 @@ startTransfer	src/core/Connection.java	/^	public abstract int startTransfer(DTNH
 startTransfer	src/core/VBRConnection.java	/^	public int startTransfer(DTNHost from, Message m) {$/;"	m	class:VBRConnection
 startTransfer	src/routing/ActiveRouter.java	/^	protected int startTransfer(Message m, Connection con) {$/;"	m	class:ActiveRouter
 startedWorkingTime	src/movement/OfficeActivityMovement.java	/^	private int startedWorkingTime;$/;"	f	class:OfficeActivityMovement	file:
+stat_filename	addPoints.py	/^			stat_filename = sys.argv[2]$/;"	v
 state	src/movement/BusTravellerMovement.java	/^		private int state;$/;"	f	class:BusTravellerMovement.ContinueBusTripDecider	file:
 state	src/movement/BusTravellerMovement.java	/^	private int state;$/;"	f	class:BusTravellerMovement	file:
 stateChanged	src/gui/GUIControls.java	/^	public void stateChanged(ChangeEvent e) {$/;"	m	class:GUIControls
 stdinput	src/test/ExternalEventsQueueTest.java	/^	private final String[] stdinput = {$/;"	f	class:ExternalEventsQueueTest	file:
 step	src/gui/GUIControls.java	/^	private boolean step;$/;"	f	class:GUIControls	file:
 stepButton	src/gui/GUIControls.java	/^	private JButton stepButton;$/;"	f	class:GUIControls	file:
+stepx	writePoints.py	/^                stepx = sizex % (num\/2)$/;"	v
 stops	src/movement/BusMovement.java	/^	private List<Coord> stops;$/;"	f	class:BusMovement	file:
 stops	src/movement/map/MapRoute.java	/^	private List<MapNode> stops;$/;"	f	class:MapRoute	file:
 storeToBinaryFile	src/input/BinaryEventsReader.java	/^	public static void storeToBinaryFile(String fileName,$/;"	m	class:BinaryEventsReader
@@ -3160,6 +3248,8 @@ subscribe	src/core/ModuleCommunicationBus.java	/^	public void subscribe(String k
 suite	src/test/AllTests.java	/^	public static Test suite() {$/;"	m	class:AllTests
 suq	src/test/ScheduledUpdatesQueueTest.java	/^	private ScheduledUpdatesQueue suq;$/;"	f	class:ScheduledUpdatesQueueTest	file:
 switchFfw	src/gui/GUIControls.java	/^	private void switchFfw() {$/;"	m	class:GUIControls	file:
+sys	addPoints.py	/^import sys$/;"	i
+sys	writePoints.py	/^import sys$/;"	i
 systems	src/movement/BusControlSystem.java	/^	private static HashMap<Integer, BusControlSystem> systems;$/;"	f	class:BusControlSystem	file:
 takeBus	src/movement/BusTravellerMovement.java	/^	private boolean takeBus;$/;"	f	class:BusTravellerMovement	file:
 takeScreenShot	src/gui/GUIControls.java	/^	private void takeScreenShot() {$/;"	m	class:GUIControls	file:
@@ -3427,9 +3517,11 @@ tryOtherMessages	src/routing/ProphetRouter.java	/^	private Tuple<Message, Connec
 tryOtherMessages	src/routing/ProphetRouterWithEstimation.java	/^	private Tuple<Message, Connection> tryOtherMessages() {$/;"	m	class:ProphetRouterWithEstimation	file:
 tryOtherMessages	src/routing/ProphetV2Router.java	/^	private Tuple<Message, Connection> tryOtherMessages() {$/;"	m	class:ProphetV2Router	file:
 ts	src/test/AbstractRouterTest.java	/^	protected static TestSettings ts = new TestSettings();$/;"	f	class:AbstractRouterTest
+type	addPoints.py	/^		type = sys.argv[1]$/;"	v
 type	src/movement/map/MapNode.java	/^	private int type;$/;"	f	class:MapNode	file:
 type	src/movement/map/MapRoute.java	/^	private int type; \/\/ type of the route$/;"	f	class:MapRoute	file:
 type	src/test/MessageChecker.java	/^		private String type;$/;"	f	class:MessageChecker.MsgCheckerEvent	file:
+type	writePoints.py	/^        type = sys.argv[1]$/;"	v
 typeToBitMask	src/movement/map/MapNode.java	/^	private int typeToBitMask(int type) {$/;"	m	class:MapNode	file:
 ui	src/ui/DTNSimTextUI.java	/^package ui;$/;"	p
 ui	src/ui/DTNSimUI.java	/^package ui;$/;"	p
@@ -3554,6 +3646,7 @@ via	src/routing/schedule/ScheduleEntry.java	/^	private int via;$/;"	f	class:Sche
 visited	src/movement/map/DijkstraPathFinder.java	/^	private Set<MapNode> visited;$/;"	f	class:DijkstraPathFinder	file:
 visited	src/routing/maxprop/MaxPropDijkstra.java	/^	private Set<Integer> visited;$/;"	f	class:MaxPropDijkstra	file:
 visited	src/routing/schedule/ScheduleDijkstra.java	/^	private Set<Integer> visited;$/;"	f	class:ScheduleDijkstra	file:
+vms	src/core/DTNHost.java	/^    private List<VM> vms;$/;"	f	class:DTNHost	file:
 w	src/gui/playfield/PlayField.java	/^	private World w;$/;"	f	class:PlayField	file:
 wait	src/gui/DTNSimGUI.java	/^	private void wait(int ms) {$/;"	m	class:DTNSimGUI	file:
 waitTimeAtEnd	src/movement/EveningTrip.java	/^	private double waitTimeAtEnd;$/;"	f	class:EveningTrip	file:

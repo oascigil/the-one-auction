@@ -34,6 +34,8 @@ public class Message implements Comparable<Message> {
 	private double timeCreated;
 	/** Initial TTL of the message */
 	private int initTtl;
+    /** Service identifier for a Request */
+    private int service;
 
 	/** if a response to this message is required, this is the size of the
 	 * response message (or 0 if no response is requested) */
@@ -360,4 +362,11 @@ public class Message implements Comparable<Message> {
 		this.appID = appID;
 	}
 
+    public void setService(int service) {
+        this.service = service;
+    }
+
+    public int getService() {
+        return this.service;
+    }
 }
