@@ -9,7 +9,10 @@ Scenario.updateInterval = 0.1
 # 43200s == 12h
 Scenario.endTime = 43200
 Scenario.nrofServices = 100
-Scenario.auctionPeriod = 10.0
+
+# Define new application
+auctionApp.type = AuctionApplication
+auctionApp.auctionPeriod = 10.0
 
 ## Interface-specific settings:
 # type : which interface class the interface belongs to

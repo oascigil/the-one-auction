@@ -3,7 +3,8 @@ package routing;
 import core.Settings;
 
 /** 
-* Router that will deliver messages to the current connected Stationary node (if there is any).
+* Router that will deliver messages to the closest connected Stationary node, if there the To address is empty.
+* Otherwise, route message to the intended destination.
 */
 public class DeliverToBS extends ActiveRouter {
 

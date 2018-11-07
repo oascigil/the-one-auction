@@ -42,7 +42,6 @@ public class SimScenario implements Serializable {
 	/** number of services -setting id ({@value})*/
     public static final String NROF_SERVICES_S = "nrofServices";
     /** period length of auction execution */
-    public static final String AUCTION_PERIOD_S = "auctionPeriod";
 
 	/** namespace for interface type settings ({@value}) */
 	public static final String INTTYPE_NS = "Interface";
@@ -102,8 +101,6 @@ public class SimScenario implements Serializable {
 	int nrofGroups;
 	/** number of services (to instantiate) */
 	int nrofServices;
-    /** period length at which auctions repeat */
-    double auctionPeriod;
 	/** Width of the world */
 	private int worldSizeX;
 	/** Height of the world */
@@ -148,9 +145,7 @@ public class SimScenario implements Serializable {
 		Settings s = new Settings(SCENARIO_NS);
 		nrofGroups = s.getInt(NROF_GROUPS_S);
         nrofServices = s.getInt(NROF_SERVICES_S);
-        auctionPeriod = s.getDouble(AUCTION_PERIOD_S);
         DTNHost.setnrofServices(nrofServices);
-        DTNHost.auctionPeriod = auctionPeriod;
 
 		this.name = s.valueFillString(s.getSetting(NAME_S));
 		this.endTime = s.getDouble(END_TIME_S);
