@@ -12,7 +12,7 @@ import core.World;
  * Simple Server Application to run tasks for Client Applications.
 */
 
-public class ServerApplication extends Application {
+public class ServerApp extends Application {
     /** Execution time for a request */
     public static final String EXECUTION_TIME_S = "execTime";
     /** Service type for the application */
@@ -37,11 +37,11 @@ public class ServerApplication extends Application {
 	 *
 	 * @param s	Settings to use for initializing the application.
 	 */
-	public ServerApplication(Settings s) {
+	public ServerApp(Settings s) {
         if (s.contains(EXECUTION_TIME_S)) {
             this.execTime = s.getDouble(EXECUTION_TIME_S);
         }
-        if (s.contains(SERVICE_TYPE_S) {
+        if (s.contains(SERVICE_TYPE_S)) {
             this.serviceType = s.getInt(SERVICE_TYPE_S);
         }
         this.isBusy = false;
@@ -50,6 +50,24 @@ public class ServerApplication extends Application {
         this.respMsgSize = 1;
         this.appId = "ServerApp" + this.serviceType;
     }
+	/**
+	 * Copy-constructor
+	 *
+	 * @param a
+	 */
+     public ServerApp(ServerApp a) {
+        super(a);
+        this.isBusy = a.isBusy;
+        this.serviceType = a.serviceType;
+        this.reqMsg = a.reqMsg;
+        this.respMsgSize = a.respMsgSize;
+        this.appId = a.appId;
+     }
+	
+    @Override
+	public Application replicate() {
+		return new ServerApp(this);
+	}
 
 	/**
 	 * Handles an incoming message. If the message is a request message, then start executing the task.
@@ -67,7 +85,7 @@ public class ServerApplication extends Application {
             this.completionTime = SimClock.getTime() + this.execTime;
             this.isBusy = true;
         }
-
+        return null;
     }
 
 	/**
@@ -80,9 +98,9 @@ public class ServerApplication extends Application {
         double time = SimClock.getTime();
         if (time >= this.completionTime && this.isBusy) {
             //Send a response back to the requestor
-			Message m = new Message(host, reqmsg.getFrom(), reqmsg.getId(), this.respMsgSize);
+			Message m = new Message(host, reqMsg.getFrom(), reqMsg.getId(), this.respMsgSize);
             m.addProperty("type", "serverResponse");
-            m.setAppID = this.appId;
+            m.setAppID(this.appId);
 			host.createNewMessage(m);
 			super.sendEventToListeners("SentResponse", null, host);
             this.isBusy = false;

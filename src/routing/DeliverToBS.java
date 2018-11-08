@@ -12,9 +12,18 @@ public class DeliverToBS extends ActiveRouter {
         super(s);
     }
 
+    public DeliverToBS(DeliverToBS r) {
+        super(r);
+    }
+
     @Override
     public void update() {
         super.update();
     }
+	
+    @Override
+	public DeliverToBS replicate() {
+		return new DeliverToBS(this);
+	}
 }
 

@@ -63,7 +63,7 @@ public class BSInterface extends DistanceCapacityInterface {
         DTNHost fromHost = this.getHost();
 		for (NetworkInterface i : interfaces) {
             DTNHost toHost = i.getHost();
-            if (toHost.is_stationary) {
+            if ((!fromHost.is_stationary && toHost.is_stationary) || (fromHost.is_stationary && !toHost.is_stationary)) {
                 double dist = fromHost.getLocation().distance(toHost.getLocation());
                 if (dist < min_distance) {
                     min_distance = dist;

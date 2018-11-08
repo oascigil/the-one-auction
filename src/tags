@@ -24,6 +24,7 @@ APP_ID	applications/PingApplication.java	/^	public static final String APP_ID = 
 APP_PACKAGE	core/SimScenario.java	/^	private static final String APP_PACKAGE = "applications.";$/;"	f	class:SimScenario	file:
 AT_HOME_MODE	movement/HomeActivityMovement.java	/^	private static final int AT_HOME_MODE = 1;$/;"	f	class:HomeActivityMovement	file:
 AT_OFFICE_MODE	movement/OfficeActivityMovement.java	/^	private static final int AT_OFFICE_MODE = 1;$/;"	f	class:OfficeActivityMovement	file:
+AUCTION_PERIOD_S	applications/AuctionApplication.java	/^    public static final String AUCTION_PERIOD_S = "auctionPeriod";$/;"	f	class:AuctionApplication
 AUTO_REFRESH_DELAY	gui/NodeChooser.java	/^	private static final int AUTO_REFRESH_DELAY = 100;$/;"	f	class:NodeChooser	file:
 AUTO_REFRESH_DELAY	gui/RoutingInfoWindow.java	/^	private static final int AUTO_REFRESH_DELAY = 1000;$/;"	f	class:RoutingInfoWindow	file:
 AbstractRouterTest	test/AbstractRouterTest.java	/^public abstract class AbstractRouterTest extends TestCase {$/;"	c
@@ -44,6 +45,9 @@ Application	core/Application.java	/^public abstract class Application {$/;"	c
 ApplicationListener	core/ApplicationListener.java	/^public interface ApplicationListener {$/;"	i
 ArithmeticCondition	core/ArithmeticCondition.java	/^	public ArithmeticCondition(String cond) {$/;"	m	class:ArithmeticCondition
 ArithmeticCondition	core/ArithmeticCondition.java	/^public class ArithmeticCondition {$/;"	c
+AuctionApplication	applications/AuctionApplication.java	/^    public AuctionApplication(AuctionApplication a) {$/;"	m	class:AuctionApplication
+AuctionApplication	applications/AuctionApplication.java	/^    public AuctionApplication(Settings s) {$/;"	m	class:AuctionApplication
+AuctionApplication	applications/AuctionApplication.java	/^public class AuctionApplication extends Application {$/;"	c
 BATCH_MODE_FLAG	core/DTNSim.java	/^	public static final String BATCH_MODE_FLAG = "-b";$/;"	f	class:DTNSim
 BETA_S	routing/ProphetRouter.java	/^	public static final String BETA_S = "beta";$/;"	f	class:ProphetRouter
 BETA_S	routing/ProphetRouterWithEstimation.java	/^	public static final String BETA_S = "beta";$/;"	f	class:ProphetRouterWithEstimation
@@ -51,6 +55,9 @@ BETA_S	routing/ProphetV2Router.java	/^	public static final String BETA_S = "beta
 BG_COLOR	gui/playfield/MapGraphic.java	/^	private final Color BG_COLOR = Color.WHITE;$/;"	f	class:MapGraphic	file:
 BINARY_EXT	input/BinaryEventsReader.java	/^	public static final String BINARY_EXT = ".binee";$/;"	f	class:BinaryEventsReader
 BINARY_MODE	routing/SprayAndWaitRouter.java	/^	public static final String BINARY_MODE = "binaryMode";$/;"	f	class:SprayAndWaitRouter
+BSInterface	interfaces/BSInterface.java	/^    public BSInterface(BSInterface ni ) {$/;"	m	class:BSInterface
+BSInterface	interfaces/BSInterface.java	/^    public BSInterface(Settings s) {$/;"	m	class:BSInterface
+BSInterface	interfaces/BSInterface.java	/^public class BSInterface extends DistanceCapacityInterface {$/;"	c
 BUCKET_COUNT_SETTING	report/JumpSizeDistributionReport.java	/^	public static final String BUCKET_COUNT_SETTING = "bucketCount";$/;"	f	class:JumpSizeDistributionReport
 BUFFER_REPORT_INTERVAL	report/BufferOccupancyReport.java	/^	public static final String BUFFER_REPORT_INTERVAL = "occupancyInterval";$/;"	f	class:BufferOccupancyReport
 BUFFER_SIZE	test/AbstractRouterTest.java	/^	protected static final int BUFFER_SIZE = 100;$/;"	f	class:AbstractRouterTest
@@ -98,6 +105,8 @@ CUSTODY_S	routing/WaveRouter.java	/^	public static final String CUSTODY_S = "cus
 CarMovement	movement/CarMovement.java	/^	public CarMovement(CarMovement proto) {$/;"	m	class:CarMovement
 CarMovement	movement/CarMovement.java	/^	public CarMovement(Settings settings) {$/;"	m	class:CarMovement
 CarMovement	movement/CarMovement.java	/^public class CarMovement extends MapBasedMovement implements$/;"	c
+ClientApplication	applications/ClientApp.java	/^    public ClientApplication(Settings s) {$/;"	m	class:ClientApplication
+ClientApplication	applications/ClientApp.java	/^public class ClientApplication extends Application {$/;"	c
 ClusterMovement	movement/ClusterMovement.java	/^	private ClusterMovement(ClusterMovement cmv) {$/;"	m	class:ClusterMovement	file:
 ClusterMovement	movement/ClusterMovement.java	/^	public ClusterMovement(Settings s) {$/;"	m	class:ClusterMovement
 ClusterMovement	movement/ClusterMovement.java	/^public class ClusterMovement extends RandomWaypoint {$/;"	c
@@ -190,6 +199,8 @@ DTNSimTextUI	ui/DTNSimTextUI.java	/^public class DTNSimTextUI extends DTNSimUI {
 DTNSimUI	ui/DTNSimUI.java	/^	public DTNSimUI() {$/;"	m	class:DTNSimUI
 DTNSimUI	ui/DTNSimUI.java	/^public abstract class DTNSimUI {$/;"	c
 Debug	core/Debug.java	/^public class Debug {$/;"	c
+DeliverToBS	routing/DeliverToBS.java	/^    public DeliverToBS (Settings s) {$/;"	m	class:DeliverToBS
+DeliverToBS	routing/DeliverToBS.java	/^public class DeliverToBS extends ActiveRouter {$/;"	c
 DeliveredMessagesReport	report/DeliveredMessagesReport.java	/^	public DeliveredMessagesReport() {$/;"	m	class:DeliveredMessagesReport
 DeliveredMessagesReport	report/DeliveredMessagesReport.java	/^public class DeliveredMessagesReport extends Report implements MessageListener {$/;"	c
 DijkstraPathFinder	movement/map/DijkstraPathFinder.java	/^	public DijkstraPathFinder(int [] okMapNodes) {$/;"	m	class:DijkstraPathFinder
@@ -227,6 +238,7 @@ EVENING_ACTIVITY_CONTROL_SYSTEM_NR_SETTING	movement/EveningActivityMovement.java
 EVENING_ACTIVITY_MODE	movement/EveningActivityMovement.java	/^	private static final int EVENING_ACTIVITY_MODE = 1;$/;"	f	class:EveningActivityMovement	file:
 EVENING_ACTIVITY_MODE	movement/WorkingDayMovement.java	/^	private static final int EVENING_ACTIVITY_MODE = 5;$/;"	f	class:WorkingDayMovement	file:
 EVENTS_RE_S	gui/EventLogPanel.java	/^	public static final String EVENTS_RE_S = "REfilter";$/;"	f	class:EventLogPanel
+EXECUTION_TIME_S	applications/ServerApp.java	/^    public static final String EXECUTION_TIME_S = "execTime";$/;"	f	class:ServerApplication
 EXPECTED_INTERFACE_COUNT	interfaces/ConnectivityGrid.java	/^		private static final int EXPECTED_INTERFACE_COUNT = 5;$/;"	f	class:ConnectivityGrid.GridCell	file:
 EXTERNAL_MOVEMENT_NS	movement/ExternalMovement.java	/^	public static final String EXTERNAL_MOVEMENT_NS = "ExternalMovement";$/;"	f	class:ExternalMovement
 EncountersVSUniqueEncountersReport	report/EncountersVSUniqueEncountersReport.java	/^	public EncountersVSUniqueEncountersReport() {$/;"	m	class:EncountersVSUniqueEncountersReport
@@ -559,8 +571,10 @@ NROF_INTTYPES_S	core/SimScenario.java	/^	public static final String NROF_INTTYPE
 NROF_MCBCS_S	routing/util/MessageTransferAcceptPolicy.java	/^	public static final String NROF_MCBCS_S = "nrofMCBACs";$/;"	f	class:MessageTransferAcceptPolicy
 NROF_PRELOAD_S	movement/ExternalMovement.java	/^	public static final String NROF_PRELOAD_S = "nrofPreload";$/;"	f	class:ExternalMovement
 NROF_REPORT_S	ui/DTNSimUI.java	/^	public static final String NROF_REPORT_S = "Report.nrofReports";$/;"	f	class:DTNSimUI
+NROF_SERVICES_S	core/SimScenario.java	/^    public static final String NROF_SERVICES_S = "nrofServices";$/;"	f	class:SimScenario
 NROF_SETTING	input/EventQueueHandler.java	/^	public static final String NROF_SETTING = "nrof";$/;"	f	class:EventQueueHandler
 NROF_TST_NODES	test/WKTReaderTest.java	/^	private final int NROF_TST_NODES = 9;$/;"	f	class:WKTReaderTest	file:
+NROF_VM_S	core/SimScenario.java	/^	public static final String NROF_VM_S = "nrofVMs";$/;"	f	class:SimScenario
 NR_OF_MEETING_SPOTS_SETTING	movement/EveningActivityMovement.java	/^	public static final String NR_OF_MEETING_SPOTS_SETTING = "nrOfMeetingSpots";$/;"	f	class:EveningActivityMovement
 NR_OF_OFFICES_SETTING	movement/OfficeActivityMovement.java	/^	public static final String NR_OF_OFFICES_SETTING = "nrOfOffices";$/;"	f	class:OfficeActivityMovement
 NS_CMD_S	report/MovementNs2Report.java	/^	public static final String NS_CMD_S = "nsCmd";$/;"	f	class:MovementNs2Report
@@ -732,6 +746,9 @@ SECONDS_IN_UNIT_S	routing/ProphetV2Router.java	/^	public static final String SEC
 SEND	input/StandardEventsReader.java	/^	public static final String SEND = "S";$/;"	f	class:StandardEventsReader
 SENDING	input/MessageRelayEvent.java	/^	public static final int SENDING = 1;$/;"	f	class:MessageRelayEvent
 SEND_QUEUE_MODE_S	routing/MessageRouter.java	/^	public static final String SEND_QUEUE_MODE_S = "sendQueue";$/;"	f	class:MessageRouter
+SERVICE_EXECTIME_S	core/SimScenario.java	/^	public static final String SERVICE_EXECTIME_S = "executionTime";$/;"	f	class:SimScenario
+SERVICE_NS	core/SimScenario.java	/^	public static final String SERVICE_NS = "Service";$/;"	f	class:SimScenario
+SERVICE_TYPE_S	applications/ServerApp.java	/^    public static final String SERVICE_TYPE_S = "serviceType";$/;"	f	class:ServerApplication
 SETTINGS_NAMESPACE	input/EventQueueHandler.java	/^	public static final String SETTINGS_NAMESPACE = "Events";$/;"	f	class:EventQueueHandler
 SETTINGS_NAMESPACE	input/ExternalEventsQueue.java	/^	public static final String SETTINGS_NAMESPACE = "ExternalEvents";$/;"	f	class:ExternalEventsQueue
 SETTING_OUTPUT_S	core/Settings.java	/^	public static final String SETTING_OUTPUT_S = "Settings.output";$/;"	f	class:Settings
@@ -777,6 +794,8 @@ ScheduleOracle	routing/schedule/ScheduleOracle.java	/^public class ScheduleOracl
 ScheduledUpdatesQueue	input/ScheduledUpdatesQueue.java	/^	public ScheduledUpdatesQueue(){$/;"	m	class:ScheduledUpdatesQueue
 ScheduledUpdatesQueue	input/ScheduledUpdatesQueue.java	/^public class ScheduledUpdatesQueue implements EventQueue {$/;"	c
 ScheduledUpdatesQueueTest	test/ScheduledUpdatesQueueTest.java	/^public class ScheduledUpdatesQueueTest extends TestCase {$/;"	c
+ServerApplication	applications/ServerApp.java	/^	public ServerApplication(Settings s) {$/;"	m	class:ServerApplication
+ServerApplication	applications/ServerApp.java	/^public class ServerApplication extends Application {$/;"	c
 Settings	core/Settings.java	/^	public Settings() {$/;"	m	class:Settings
 Settings	core/Settings.java	/^	public Settings(String namespace) {$/;"	m	class:Settings
 Settings	core/Settings.java	/^public class Settings {$/;"	c
@@ -1028,12 +1047,17 @@ alpha	routing/MaxPropRouterWithEstimation.java	/^	private double alpha;$/;"	f	cl
 alpha	routing/maxprop/MeetingProbabilitySet.java	/^	private double alpha;$/;"	f	class:MeetingProbabilitySet	file:
 appID	core/Application.java	/^	public String	appID	= null;$/;"	f	class:Application
 appID	core/Message.java	/^	private String	appID;$/;"	f	class:Message	file:
+appId	applications/ServerApp.java	/^	public String appId;$/;"	f	class:ServerApplication
 appListeners	core/SimScenario.java	/^	private List<ApplicationListener> appListeners;$/;"	f	class:SimScenario	file:
+applications	applications/AuctionApplication.java	/^package applications;$/;"	p
+applications	applications/ClientApp.java	/^package applications;$/;"	p
 applications	applications/PingApplication.java	/^package applications;$/;"	p
+applications	applications/ServerApp.java	/^package applications;$/;"	p
 applications	routing/MessageRouter.java	/^	private HashMap<String, Collection<Application>> applications = null;$/;"	f	class:MessageRouter	file:
 areDisconnected	report/ContactsDuringAnICTReport.java	/^	private boolean[][] areDisconnected;$/;"	f	class:ContactsDuringAnICTReport	file:
 assertNrofUpdates	test/WorldTest.java	/^	private void assertNrofUpdates(int nrof) {$/;"	m	class:WorldTest	file:
 assertValidRange	core/Settings.java	/^	public void assertValidRange(int range[], String sname)$/;"	m	class:Settings
+auctionPeriod	core/DTNHost.java	/^    public static double auctionPeriod = 10.0;$/;"	f	class:DTNHost
 autoClear	gui/playfield/PlayField.java	/^	private void autoClear() {$/;"	m	class:PlayField	file:
 autoClearOverlay	gui/SimMenuBar.java	/^	private JCheckBoxMenuItem autoClearOverlay;$/;"	f	class:SimMenuBar	file:
 autoClearOverlay	gui/playfield/PlayField.java	/^	private boolean autoClearOverlay;	\/\/ automatically clear overlay graphics$/;"	f	class:PlayField	file:
@@ -1173,7 +1197,8 @@ compareTo	core/Message.java	/^	public int compareTo(Message m) {$/;"	m	class:Mes
 compareTo	input/ExternalEvent.java	/^	public int compareTo(ExternalEvent other) {$/;"	m	class:ExternalEvent
 compareTo	movement/map/MapNode.java	/^	public int compareTo(MapNode o) {$/;"	m	class:MapNode
 compareTo	report/AdjacencyGraphvizReport.java	/^		public int compareTo(Object o) {$/;"	m	class:AdjacencyGraphvizReport.ConnectionInfo
-completionTime	core/VM.java	/^    private int completionTime;$/;"	f	class:VM	file:
+completionTime	applications/ServerApp.java	/^    private double completionTime;$/;"	f	class:ServerApplication	file:
+completionTime	core/VM.java	/^    private double completionTime;$/;"	f	class:VM	file:
 con	test/ConnectionTest.java	/^	private void con(DTNHost from, DTNHost to) {$/;"	m	class:ConnectionTest	file:
 conColor	gui/playfield/NodeGraphic.java	/^	private static Color conColor = Color.BLACK;$/;"	f	class:NodeGraphic	file:
 conCount	test/ConnectionTest.java	/^	private int conCount;$/;"	f	class:ConnectionTest	file:
@@ -1417,6 +1442,8 @@ eventsFile	input/ExternalEventsQueue.java	/^	private File eventsFile;$/;"	f	clas
 eventsLeft	input/BinaryEventsReader.java	/^	private int eventsLeft;$/;"	f	class:BinaryEventsReader	file:
 eventsLeftInBuffer	input/ExternalEventsQueue.java	/^	public int eventsLeftInBuffer() {$/;"	m	class:ExternalEventsQueue
 exchangeDeliverableMessages	routing/ActiveRouter.java	/^	protected Connection exchangeDeliverableMessages() {$/;"	m	class:ActiveRouter
+execTime	applications/ServerApp.java	/^    private double execTime;$/;"	f	class:ServerApplication	file:
+execTimes	core/DTNHost.java	/^    public static List<Double> execTimes;$/;"	f	class:DTNHost
 farAway	test/AbstractRouterTest.java	/^	protected Coord farAway = new Coord(100000,100000);$/;"	f	class:AbstractRouterTest
 ffwButton	gui/GUIControls.java	/^	private JButton ffwButton;$/;"	f	class:GUIControls	file:
 field	gui/DTNSimGUI.java	/^	private PlayField field;$/;"	f	class:DTNSimGUI	file:
@@ -1494,6 +1521,7 @@ getClass	core/Settings.java	/^	private Class<?> getClass(String name) {$/;"	m	cl
 getClosestCoordinate	movement/BusTravellerMovement.java	/^	private static Coord getClosestCoordinate(List<Coord> allCoords,$/;"	m	class:BusTravellerMovement	file:
 getComBus	core/DTNHost.java	/^	public ModuleCommunicationBus getComBus() {$/;"	m	class:DTNHost
 getComBus	movement/MovementModel.java	/^	public ModuleCommunicationBus getComBus() {$/;"	m	class:MovementModel
+getCompletionTime	core/VM.java	/^    public double getCompletionTime()$/;"	m	class:VM
 getCondition	core/Settings.java	/^	public ArithmeticCondition getCondition(String name) {$/;"	m	class:Settings
 getConnected	routing/schedule/ScheduleOracle.java	/^	public List<ScheduleEntry> getConnected(int from, double time) {$/;"	m	class:ScheduleOracle
 getConnectionTime	report/ContactTimesReport.java	/^		public double getConnectionTime() {$/;"	m	class:ContactTimesReport.ConnectionInfo
@@ -1667,6 +1695,7 @@ getMinX	input/ExternalPathMovementReader.java	/^	public double getMinX() {$/;"	m
 getMinY	input/ExternalMovementReader.java	/^	public double getMinY() {$/;"	m	class:ExternalMovementReader
 getMinY	input/ExternalPathMovementReader.java	/^	public double getMinY() {$/;"	m	class:ExternalPathMovementReader
 getMoreInfo	routing/util/RoutingInfo.java	/^	public List<RoutingInfo> getMoreInfo() {$/;"	m	class:RoutingInfo
+getMovementModel	core/DTNHost.java	/^    public MovementModel getMovementModel() {$/;"	m	class:DTNHost
 getMultiplier	core/Settings.java	/^	private int getMultiplier(String value) {$/;"	m	class:Settings	file:
 getName	core/SimScenario.java	/^	public String getName() {$/;"	m	class:SimScenario
 getNameSpace	core/Settings.java	/^	public String getNameSpace() {$/;"	m	class:Settings
@@ -1761,6 +1790,7 @@ getScale	gui/playfield/PlayFieldGraphic.java	/^	public static double getScale() 
 getScenarioName	report/Report.java	/^	protected String getScenarioName() {$/;"	m	class:Report
 getSecondaryNameSpace	core/Settings.java	/^	public String getSecondaryNameSpace() {$/;"	m	class:Settings
 getSeed	applications/PingApplication.java	/^	public int getSeed() {$/;"	m	class:PingApplication
+getService	core/Message.java	/^    public int getService() {$/;"	m	class:Message
 getSetting	core/Settings.java	/^	public String getSetting(String name) {$/;"	m	class:Settings
 getSetting	core/Settings.java	/^	public String getSetting(String name, String defaultValue) {$/;"	m	class:Settings
 getSettings	report/Report.java	/^	protected Settings getSettings() {$/;"	m	class:Report
@@ -1818,6 +1848,7 @@ getWorldSizeY	core/SimScenario.java	/^	public int getWorldSizeY() {$/;"	m	class:
 getWorldSizeY	test/WorldTest.java	/^		public int getWorldSizeY() {$/;"	m	class:WorldTest.TestScenario
 getX	core/Coord.java	/^	public double getX() {$/;"	m	class:Coord
 getY	core/Coord.java	/^	public double getY() {$/;"	m	class:Coord
+getnrofServices	core/DTNHost.java	/^    public static int getnrofServices() {$/;"	m	class:DTNHost
 ginterfaces	interfaces/ConnectivityGrid.java	/^	private HashMap<NetworkInterface, GridCell> ginterfaces;$/;"	f	class:ConnectivityGrid	file:
 gnuplot	report/NodeDensityReport.java	/^	private final boolean gnuplot;$/;"	f	class:NodeDensityReport	file:
 gnuplotFileExtension	report/NodeDensityReport.java	/^	private final String gnuplotFileExtension;$/;"	f	class:NodeDensityReport	file:
@@ -1875,7 +1906,10 @@ h3	test/TotalContactTimeReportTest.java	/^	private DTNHost h1, h2, h3;$/;"	f	cla
 h4	test/AbstractRouterTest.java	/^	protected DTNHost h4;$/;"	f	class:AbstractRouterTest
 h5	test/AbstractRouterTest.java	/^	protected DTNHost h5;$/;"	f	class:AbstractRouterTest
 h6	test/AbstractRouterTest.java	/^	protected DTNHost h6;$/;"	f	class:AbstractRouterTest
+handle	applications/AuctionApplication.java	/^	public Message handle(Message msg, DTNHost host) {$/;"	m	class:AuctionApplication
+handle	applications/ClientApp.java	/^    public Message handle(Message msg, DTNHost host) {$/;"	m	class:ClientApplication
 handle	applications/PingApplication.java	/^	public Message handle(Message msg, DTNHost host) {$/;"	m	class:PingApplication
+handle	applications/ServerApp.java	/^	public Message handle(Message msg, DTNHost host) {$/;"	m	class:ServerApplication
 handle	core/Application.java	/^	public abstract Message handle(Message msg, DTNHost host);$/;"	m	class:Application
 hasEnergy	routing/ActiveRouter.java	/^	public boolean hasEnergy() {$/;"	m	class:ActiveRouter
 hasMessage	routing/MessageRouter.java	/^	public boolean hasMessage(String id) {$/;"	m	class:MessageRouter
@@ -2036,6 +2070,7 @@ input	input/WKTReader.java	/^package input;$/;"	p
 inputFileName	movement/ExternalMovement.java	/^	private static String inputFileName;$/;"	f	class:ExternalMovement	file:
 instantiateService	core/VM.java	/^    public void instantiateService(int service) {$/;"	m	class:VM
 interfaceId	input/ConnectionEvent.java	/^	protected String interfaceId;$/;"	f	class:ConnectionEvent
+interfaces	interfaces/BSInterface.java	/^package interfaces;$/;"	p
 interfaces	interfaces/ConnectivityGrid.java	/^		private ArrayList<NetworkInterface> interfaces;$/;"	f	class:ConnectivityGrid.GridCell	file:
 interfaces	interfaces/ConnectivityGrid.java	/^package interfaces;$/;"	p
 interfaces	interfaces/ConnectivityOptimizer.java	/^package interfaces;$/;"	p
@@ -2059,6 +2094,7 @@ isActive	util/ActivenessHandler.java	/^	public boolean isActive(int offset) {$/;
 isBinary	routing/SprayAndWaitRouter.java	/^	protected boolean isBinary;$/;"	f	class:SprayAndWaitRouter
 isBinaryEeFile	input/BinaryEventsReader.java	/^	public static boolean isBinaryEeFile(File file) {$/;"	m	class:BinaryEventsReader
 isBlacklistedMessage	routing/MessageRouter.java	/^	protected boolean isBlacklistedMessage(String id) {$/;"	m	class:MessageRouter
+isBusy	applications/ServerApp.java	/^    private boolean isBusy;$/;"	f	class:ServerApplication	file:
 isCancelled	core/World.java	/^	private boolean isCancelled;$/;"	f	class:World	file:
 isConnected	core/NetworkInterface.java	/^	protected boolean isConnected(NetworkInterface netinterface) {$/;"	m	class:NetworkInterface
 isDeliveredMessage	routing/MessageRouter.java	/^	protected boolean isDeliveredMessage(Message m) {$/;"	m	class:MessageRouter
@@ -2111,12 +2147,15 @@ isUp	input/ConnectionEvent.java	/^	protected boolean isUp;$/;"	f	class:Connectio
 isWarmup	report/Report.java	/^	protected boolean isWarmup() {$/;"	m	class:Report
 isWarmupID	report/Report.java	/^	protected boolean isWarmupID(String id) {$/;"	m	class:Report
 isWithinRange	core/NetworkInterface.java	/^	protected boolean isWithinRange(NetworkInterface anotherInterface) {$/;"	m	class:NetworkInterface
-is_idle	core/VM.java	/^    public boolean is_idle()$/;"	m	class:VM
+is_idle	core/VM.java	/^    public boolean is_idle(){$/;"	m	class:VM
+is_stationary	core/DTNHost.java	/^    public boolean is_stationary;$/;"	f	class:DTNHost
 k	util/ParetoRNG.java	/^	private double k; \/\/ coefficient$/;"	f	class:ParetoRNG	file:
 key	util/Tuple.java	/^	private K key;$/;"	f	class:Tuple	file:
 lastAgeUpdate	routing/ProphetRouter.java	/^	private double lastAgeUpdate;$/;"	f	class:ProphetRouter	file:
 lastAgeUpdate	routing/ProphetRouterWithEstimation.java	/^	private double lastAgeUpdate;$/;"	f	class:ProphetRouterWithEstimation	file:
 lastAgeUpdate	routing/ProphetV2Router.java	/^	private double lastAgeUpdate;$/;"	f	class:ProphetV2Router	file:
+lastAuction	applications/AuctionApplication.java	/^    private double lastAuction = 0.0;$/;"	f	class:AuctionApplication	file:
+lastAuctionPeriod	core/DTNHost.java	/^    public static double lastAuctionPeriod = 0.0;$/;"	f	class:DTNHost
 lastCostFrom	routing/MaxPropRouter.java	/^	private DTNHost lastCostFrom;$/;"	f	class:MaxPropRouter	file:
 lastCostFrom	routing/MaxPropRouterWithEstimation.java	/^	private DTNHost lastCostFrom;$/;"	f	class:MaxPropRouterWithEstimation	file:
 lastDropped	test/MessageChecker.java	/^	private Boolean lastDropped;$/;"	f	class:MessageChecker	file:
@@ -2527,13 +2566,15 @@ nrofResponseReqCreated	report/MessageStatsReport.java	/^	private int nrofRespons
 nrofSamples	routing/ProphetRouterWithEstimation.java	/^	private int nrofSamples;$/;"	f	class:ProphetRouterWithEstimation	file:
 nrofSamplesENC	routing/MaxPropRouterWithEstimation.java	/^	private int nrofSamplesENC;$/;"	f	class:MaxPropRouterWithEstimation	file:
 nrofSamplesIET	routing/MaxPropRouterWithEstimation.java	/^	private int nrofSamplesIET;$/;"	f	class:MaxPropRouterWithEstimation	file:
+nrofServices	core/DTNHost.java	/^    private static int nrofServices = 0;$/;"	f	class:DTNHost	file:
+nrofServices	core/SimScenario.java	/^	int nrofServices;$/;"	f	class:SimScenario
 nrofStarted	report/MessageStatsReport.java	/^	private int nrofStarted;$/;"	f	class:MessageStatsReport	file:
 nrofTotENC	routing/MaxPropRouterWithEstimation.java	/^	private int nrofTotENC;$/;"	f	class:MaxPropRouterWithEstimation	file:
 nrofUpdate	test/TestDTNHost.java	/^	public int nrofUpdate = 0;$/;"	f	class:TestDTNHost
+nrofVMs	core/DTNHost.java	/^    private int nrofVMs;$/;"	f	class:DTNHost	file:
 nsCmd	report/MovementNs2Report.java	/^	private String nsCmd;$/;"	f	class:MovementNs2Report	file:
 number	core/ArithmeticCondition.java	/^	private double number;$/;"	f	class:ArithmeticCondition	file:
 numberOfTransmissions	interfaces/InterferenceLimitedInterface.java	/^	protected int numberOfTransmissions;$/;"	f	class:InterferenceLimitedInterface
-numberOfVMs	core/DTNHost.java	/^    private numberOfVMs;$/;"	f	class:DTNHost	file:
 officeLocation	movement/OfficeActivityMovement.java	/^	private Coord officeLocation;$/;"	f	class:OfficeActivityMovement	file:
 officeMaxWaitTime	movement/OfficeActivityMovement.java	/^	private double officeMaxWaitTime;$/;"	f	class:OfficeActivityMovement	file:
 officeMinWaitTime	movement/OfficeActivityMovement.java	/^	private double officeMinWaitTime;$/;"	f	class:OfficeActivityMovement	file:
@@ -2739,6 +2780,7 @@ replicate	applications/PingApplication.java	/^	public Application replicate() {$
 replicate	core/Application.java	/^	public abstract Application replicate();$/;"	m	class:Application
 replicate	core/Message.java	/^	public Message replicate() {$/;"	m	class:Message
 replicate	core/NetworkInterface.java	/^	abstract public NetworkInterface replicate();$/;"	m	class:NetworkInterface
+replicate	interfaces/BSInterface.java	/^    public NetworkInterface replicate()	{$/;"	m	class:BSInterface
 replicate	interfaces/DistanceCapacityInterface.java	/^	public NetworkInterface replicate()	{$/;"	m	class:DistanceCapacityInterface
 replicate	interfaces/InterferenceLimitedInterface.java	/^	public NetworkInterface replicate() {$/;"	m	class:InterferenceLimitedInterface
 replicate	interfaces/SimpleBroadcastInterface.java	/^	public NetworkInterface replicate()	{$/;"	m	class:SimpleBroadcastInterface
@@ -2824,6 +2866,7 @@ reportedMessages	report/MessageLocationReport.java	/^	protected HashSet<String> 
 reportedNodes	report/SnapshotReport.java	/^	protected HashSet<Integer> reportedNodes;$/;"	f	class:SnapshotReport
 reporter	core/DTN2Manager.java	/^	private static DTN2Reporter				reporter = null;$/;"	f	class:DTN2Manager	file:
 reports	ui/DTNSimUI.java	/^	protected Vector<Report> reports;$/;"	f	class:DTNSimUI
+reqMsg	applications/ServerApp.java	/^    private Message reqMsg;$/;"	f	class:ServerApplication	file:
 requestDeliverableMessages	core/DTNHost.java	/^	public boolean requestDeliverableMessages(Connection con) {$/;"	m	class:DTNHost
 requestDeliverableMessages	routing/ActiveRouter.java	/^	public boolean requestDeliverableMessages(Connection con) {$/;"	m	class:ActiveRouter
 requestDeliverableMessages	routing/MessageRouter.java	/^	public boolean requestDeliverableMessages(Connection con) {$/;"	m	class:MessageRouter
@@ -2846,6 +2889,7 @@ reset	test/MessageChecker.java	/^	public void reset() {$/;"	m	class:MessageCheck
 resetForNextRun	core/DTNSim.java	/^	private static void resetForNextRun() {$/;"	m	class:DTNSim	file:
 resetList	core/DTNSim.java	/^	private static List<Class<?>> resetList = new ArrayList<Class<?>>();$/;"	f	class:DTNSim	file:
 resetState	movement/BusTravellerMovement.java	/^		private void resetState() {$/;"	m	class:BusTravellerMovement.ContinueBusTripDecider	file:
+respMsgSize	applications/ServerApp.java	/^    private int respMsgSize;$/;"	f	class:ServerApplication	file:
 responseSize	core/Message.java	/^	private int responseSize;$/;"	f	class:Message	file:
 responseSize	input/MessageCreateEvent.java	/^	private int responseSize;$/;"	f	class:MessageCreateEvent	file:
 restoreNameSpace	core/Settings.java	/^	public void restoreNameSpace() {$/;"	m	class:Settings
@@ -2865,6 +2909,7 @@ route	movement/MapRouteMovement.java	/^	private MapRoute route;$/;"	f	class:MapR
 router	core/DTNHost.java	/^	private MessageRouter router;$/;"	f	class:DTNHost	file:
 routerProto	test/AbstractRouterTest.java	/^	protected MessageRouter routerProto;$/;"	f	class:AbstractRouterTest
 routing	routing/ActiveRouter.java	/^package routing;$/;"	p
+routing	routing/DeliverToBS.java	/^package routing;$/;"	p
 routing	routing/DirectDeliveryRouter.java	/^package routing;$/;"	p
 routing	routing/EpidemicOracleRouter.java	/^package routing;$/;"	p
 routing	routing/EpidemicRouter.java	/^package routing;$/;"	p
@@ -2947,7 +2992,9 @@ sentMessages	routing/MaxPropRouter.java	/^	private Map<DTNHost, Set<String>> sen
 sepsField	gui/GUIControls.java	/^	private JLabel sepsField;	\/\/ simulated events per second field$/;"	f	class:GUIControls	file:
 serialVersionUID	routing/schedule/ScheduleEntry.java	/^	private static final long serialVersionUID = 42L;$/;"	f	class:ScheduleEntry	file:
 serialVersionUID	routing/schedule/ScheduleOracle.java	/^	private static final long serialVersionUID = 42L;$/;"	f	class:ScheduleOracle	file:
+service	core/Message.java	/^    private int service;$/;"	f	class:Message	file:
 service	core/VM.java	/^    private int service;$/;"	f	class:VM	file:
+serviceType	applications/ServerApp.java	/^    private int serviceType;$/;"	f	class:ServerApplication	file:
 setAllHosts	report/AdjacencyGraphvizReport.java	/^	public void setAllHosts(Collection<DTNHost> hosts) {$/;"	m	class:AdjacencyGraphvizReport
 setAlpha	routing/maxprop/MeetingProbabilitySet.java	/^	public void setAlpha(double alpha) {$/;"	m	class:MeetingProbabilitySet
 setAppID	core/Application.java	/^	public void setAppID(String appID) {$/;"	m	class:Application
@@ -3040,6 +3087,7 @@ setScale	gui/playfield/PlayField.java	/^	public void setScale(double scale) {$/;
 setScale	gui/playfield/PlayFieldGraphic.java	/^	public static void setScale(double newScale) {$/;"	m	class:PlayFieldGraphic
 setSecondaryNamespace	core/Settings.java	/^	public void setSecondaryNamespace(String namespace) {$/;"	m	class:Settings
 setSeed	applications/PingApplication.java	/^	public void setSeed(int seed) {$/;"	m	class:PingApplication
+setService	core/Message.java	/^    public void setService(int service) {$/;"	m	class:Message
 setShowEvent	gui/EventLogControl.java	/^	public void setShowEvent(boolean show) {$/;"	m	class:EventLogControl
 setShowMapGraphic	gui/playfield/PlayField.java	/^	public void setShowMapGraphic(boolean show) {$/;"	m	class:PlayField
 setSimTime	gui/GUIControls.java	/^	public void setSimTime(double time) {$/;"	m	class:GUIControls
@@ -3081,6 +3129,7 @@ setUpWith	test/PointsOfInterestTest.java	/^	protected void setUpWith(double[] po
 setUpWith	test/WKTReaderTest.java	/^	private WKTMapReader setUpWith(Reader input) {$/;"	m	class:WKTReaderTest	file:
 setUpWithGranularity	test/ContactTimesReportTest.java	/^	private void setUpWithGranularity(double gran) throws IOException {$/;"	m	class:ContactTimesReportTest	file:
 setWaitTimeAtEnd	movement/EveningTrip.java	/^	public void setWaitTimeAtEnd(double waitTimeAtEnd) {$/;"	m	class:EveningTrip
+setnrofServices	core/DTNHost.java	/^    public static void setnrofServices(int nrofServices) {$/;"	m	class:DTNHost
 settings	test/TestUtils.java	/^	private TestSettings settings;$/;"	f	class:TestUtils	file:
 setup	core/DTN2Manager.java	/^	public static void setup(World world) {$/;"	m	class:DTN2Manager
 setupHost	test/MapBasedMovementTest.java	/^	private DTNHost setupHost() {$/;"	m	class:MapBasedMovementTest	file:
@@ -3366,6 +3415,7 @@ toString	input/MessageDeleteEvent.java	/^	public String toString() {$/;"	m	class
 toString	input/MessageEvent.java	/^	public String toString() {$/;"	m	class:MessageEvent
 toString	input/MessageRelayEvent.java	/^	public String toString() {$/;"	m	class:MessageRelayEvent
 toString	input/ScheduledUpdatesQueue.java	/^	public String toString() {$/;"	m	class:ScheduledUpdatesQueue
+toString	interfaces/BSInterface.java	/^	public String toString() {$/;"	m	class:BSInterface
 toString	interfaces/ConnectivityGrid.java	/^		public String toString() {$/;"	m	class:ConnectivityGrid.GridCell
 toString	interfaces/ConnectivityGrid.java	/^	public String toString() {$/;"	m	class:ConnectivityGrid
 toString	interfaces/DistanceCapacityInterface.java	/^	public String toString() {$/;"	m	class:DistanceCapacityInterface
@@ -3442,7 +3492,10 @@ unvisited	movement/map/DijkstraPathFinder.java	/^	private Queue<MapNode> unvisit
 unvisited	routing/maxprop/MaxPropDijkstra.java	/^	private Queue<Integer> unvisited;$/;"	f	class:MaxPropDijkstra	file:
 unvisited	routing/schedule/ScheduleDijkstra.java	/^	private Queue<Integer> unvisited;$/;"	f	class:ScheduleDijkstra	file:
 upInterval	test/WorldTest.java	/^	private double upInterval = 0.1;$/;"	f	class:WorldTest	file:
+update	applications/AuctionApplication.java	/^	public void update(DTNHost host) {$/;"	m	class:AuctionApplication
+update	applications/ClientApp.java	/^	public void update(DTNHost host) {$/;"	m	class:ClientApplication
 update	applications/PingApplication.java	/^	public void update(DTNHost host) {$/;"	m	class:PingApplication
+update	applications/ServerApp.java	/^	public void update(DTNHost host) {$/;"	m	class:ServerApplication
 update	core/Application.java	/^	public abstract void update(DTNHost host);$/;"	m	class:Application
 update	core/Connection.java	/^	public void update() {};$/;"	m	class:Connection
 update	core/DTNHost.java	/^	public void update(boolean simulateConnections) {$/;"	m	class:DTNHost
@@ -3450,10 +3503,12 @@ update	core/NetworkInterface.java	/^	abstract public void update();$/;"	m	class:
 update	core/VBRConnection.java	/^	public void update() {$/;"	m	class:VBRConnection
 update	core/World.java	/^	public void update () {$/;"	m	class:World
 update	gui/DTNSimGUI.java	/^    public void update(boolean forcedUpdate) {$/;"	m	class:DTNSimGUI
+update	interfaces/BSInterface.java	/^	public void update() {$/;"	m	class:BSInterface
 update	interfaces/DistanceCapacityInterface.java	/^	public void update() {$/;"	m	class:DistanceCapacityInterface
 update	interfaces/InterferenceLimitedInterface.java	/^	public void update() {$/;"	m	class:InterferenceLimitedInterface
 update	interfaces/SimpleBroadcastInterface.java	/^	public void update() {$/;"	m	class:SimpleBroadcastInterface
 update	routing/ActiveRouter.java	/^	public void update() {$/;"	m	class:ActiveRouter
+update	routing/DeliverToBS.java	/^    public void update() {$/;"	m	class:DeliverToBS
 update	routing/DirectDeliveryRouter.java	/^	public void update() {$/;"	m	class:DirectDeliveryRouter
 update	routing/EpidemicOracleRouter.java	/^	public void update() {$/;"	m	class:EpidemicOracleRouter
 update	routing/EpidemicRouter.java	/^	public void update() {$/;"	m	class:EpidemicRouter

@@ -12,13 +12,28 @@ import core.World;
  * Simple Client application to request tasks to be executed by Server Applications.
 */
 
-public class ClientApplication extends Application {
+public class ClientApp extends Application {
 
 
-    public ClientApplication(Settings s) {
+    public ClientApp(Settings s) {
 
 
     }
+	
+    /**
+	 * Copy-constructor
+	 *
+	 * @param a
+	 */
+     public ClientApp(ClientApp a) {
+        super(a);
+
+     }
+	
+    @Override
+	public Application replicate() {
+		return new ClientApp(this);
+	}
 	
     /**
 	 * Handles an incoming message. If the message is a ServerResponse message, then report.
@@ -34,6 +49,8 @@ public class ClientApplication extends Application {
             //report the completion time, etc.
 
         }
+
+        return null;
     }
 	/**
 	 * Send request messages to the Server Applications. 
