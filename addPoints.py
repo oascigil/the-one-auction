@@ -1,8 +1,6 @@
 import numpy as np
 import sys
 
-# Usage: ./addPoints -st locations_file settings_file
-
 if(len(sys.argv) >=3):
 	filename = sys.argv[3]
 else:
@@ -48,7 +46,7 @@ with open((filename), 'r') as F:
 			for d in data:
 				nf.write(d)
 			nf.write("\n")
-			gn = (int)(groups)
+			gn = (int)(groups) 
 			for p in pos:
 				#print(p[0])
 				gn = gn + 1 

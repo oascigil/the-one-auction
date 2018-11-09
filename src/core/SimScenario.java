@@ -343,7 +343,7 @@ public class SimScenario implements Serializable {
 			double exec_time = s.getDouble(SERVICE_EXECTIME_S);
             execTimes.add(exec_time);
         }
-        DTNHost.execTimes.addAll(execTimes);
+        DTNHost.execTimes = execTimes;
         
 		for (int i=1; i<=nrofGroups; i++) {
 			List<NetworkInterface> interfaces =

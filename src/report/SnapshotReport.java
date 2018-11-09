@@ -12,20 +12,24 @@ import core.Settings;
 import core.UpdateListener;
 
 /**
- * Node snapshot report superclass. Reports some characteristic of all 
- * (or only some, see {@link #REPORTED_NODES}) nodes every 
- * configurable-amount-of seconds (see {@link #GRANULARITY}).
+ * Node snapshot report superclass. Reports some characteristic of all (or only
+ * some, see {@link #REPORTED_NODES}) nodes every configurable-amount-of seconds
+ * (see {@link #GRANULARITY}).
  */
 public abstract class SnapshotReport extends Report implements UpdateListener {
-	/** Reporting granularity -setting id ({@value}).
-	 * Defines the interval how often (seconds) a new snapshot is created */
+	/**
+	 * Reporting granularity -setting id ({@value}). Defines the interval how often
+	 * (seconds) a new snapshot is created
+	 */
 	public static final String GRANULARITY = "granularity";
-	/** Optional reported nodes (comma separated list of network addresses).
-	 * By default all nodes are reported. */
+	/**
+	 * Optional reported nodes (comma separated list of network addresses). By
+	 * default all nodes are reported.
+	 */
 	public static final String REPORTED_NODES = "nodes";
 	/** value of the granularity setting */
 	protected final int granularity;
-	/** time of last update*/
+	/** time of last update */
 	protected double lastUpdate;
 	/** Networks addresses (integers) of the nodes which are reported */
 	protected HashSet<Integer> reportedNodes;
@@ -43,9 +47,8 @@ public abstract class SnapshotReport extends Report implements UpdateListener {
 			for (Integer nodeId : settings.getCsvInts(REPORTED_NODES)) {
 				this.reportedNodes.add(nodeId);
 			}
-		}
-		else {
-            System.out.println("reported nodes is set to null");
+		} else {
+			// System.out.println("reported nodes is set to null");
 			this.reportedNodes = null;
 		}
 
@@ -53,8 +56,9 @@ public abstract class SnapshotReport extends Report implements UpdateListener {
 	}
 
 	/**
-	 * Initiates a new snapshot if "granularity" seconds have passed since the 
-	 * last snapshot.
+	 * Initiates a new snapshot if "granularity" seconds have passed since the last
+	 * snapshot.
+	 * 
 	 * @param hosts All the hosts in the world
 	 */
 	public void updated(List<DTNHost> hosts) {
@@ -68,25 +72,25 @@ public abstract class SnapshotReport extends Report implements UpdateListener {
 			this.lastUpdate = simTime - simTime % granularity;
 		}
 	}
-	
-	
+
 	/**
 	 * Writes the snapshot information of one single host
+	 * 
 	 * @param host
 	 */
 	abstract protected void writeSnapshot(DTNHost host);
 
 	/**
-	 * Creates a snapshot of all hosts by writing time stamp and calling 
+	 * Creates a snapshot of all hosts by writing time stamp and calling
 	 * {@link #writeSnapshot(DTNHost)} for each host that is in the list of
 	 * requested nodes
+	 * 
 	 * @param hosts The list of hosts in the world
 	 */
 	protected void createSnapshot(List<DTNHost> hosts) {
-		write ("[" + (int)getSimTime() + "]"); /* simulation time stamp */
+		write("[" + (int) getSimTime() + "]"); /* simulation time stamp */
 		for (DTNHost h : hosts) {
-			if (this.reportedNodes != null &&
-				!this.reportedNodes.contains(h.getAddress())) {
+			if (this.reportedNodes != null && !this.reportedNodes.contains(h.getAddress())) {
 				continue; /* node not in the list */
 			}
 			writeSnapshot(h);

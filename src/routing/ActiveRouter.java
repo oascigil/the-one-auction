@@ -62,7 +62,7 @@ public abstract class ActiveRouter extends MessageRouter {
 		this.deleteDelivered = s.getBoolean(DELETE_DELIVERED_S, false);
 
 		if (s.contains(EnergyModel.INIT_ENERGY_S)) {
-            System.out.println("Here");
+            //System.out.println("Here");
 			this.energy = new EnergyModel(s);
 		} else {
 			this.energy = null; /* no energy model */

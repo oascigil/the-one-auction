@@ -22,15 +22,15 @@ auctionApp.auctionPeriod = 10.0
 # transmitRange : range of the interface (meters)
 
 # "Bluetooth" interface for all nodes
-btInterface.type = SimpleBroadcastInterface
+wifiInterface.type = BSInterface
 # Transmit speed of 2 Mbps = 250kBps
-btInterface.transmitSpeed = 250k
-btInterface.transmitRange = 10
+wifiInterface.transmitSpeed = 6750k
+wifiInterface.transmitRange = 30
 
 # High speed, long range, interface for group 4
-highspeedInterface.type = SimpleBroadcastInterface
-highspeedInterface.transmitSpeed = 10M
-highspeedInterface.transmitRange = 1000
+backhaul.type = SimpleBroadcastInterface
+backhaul.transmitSpeed = 1000M
+backhaul.transmitRange = 1000
 
 # Define 6 different node groups
 Scenario.nrofHostGroups = 6
@@ -39,7 +39,6 @@ Scenario.nrofHostGroups = 6
 Scenario.nrofServices = 2
 
 Service.executionTime = 10.0
-Service1.executionTime = 10.0
 
 ## Group-specific settings:
 # groupID : Group's identifier. Used as the prefix of host names
@@ -68,7 +67,7 @@ Group.bufferSize = 5M
 Group.waitTime = 0, 120
 # All nodes have the bluetooth interface
 Group.nrofInterfaces = 1
-Group.interface1 = btInterface
+Group.interface1 = wifiInterface
 # Walking speeds
 Group.speed = 0.5, 1.5
 # Message TTL of 300 minutes (5 hours)
@@ -83,10 +82,11 @@ Group.Energy.value = 100
 
 
 Group.nrofHosts = 40
+Group.nrofVMs = 2
 
 # group1 (pedestrians) specific settings
 Group1.groupID = p
-Group1.numOfVMs = 2
+Group1.nrofVMs = 2
 
 # group2 specific settings
 Group2.groupID = c
@@ -94,7 +94,7 @@ Group2.groupID = c
 Group2.okMaps = 1
 # 10-50 km/h
 Group2.speed = 2.7, 13.9
-Group2.numOfVMs = 2
+Group2.nrofVMs = 2
 
 # another group of pedestrians
 Group3.groupID = w

@@ -32,7 +32,10 @@ def generate_points(coordinates, distance):
 
         d = math.sqrt(math.pow(x_delta,2) + math.pow(y_delta,2))
         print "Distance: " + repr(d)
-        m = y_delta/x_delta
+        if x_delta == 0:
+            m = 1
+        else:
+            m = y_delta/x_delta
 
         alpha = math.atan2(y_delta, x_delta) # in radians
         if distance < d:
