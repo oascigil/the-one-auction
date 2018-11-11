@@ -87,10 +87,13 @@ public class DTNHost implements Comparable<DTNHost> {
 		// create instances by replicating the prototypes
 		this.movement = mmProto.replicate();
         
-        if (this.movement instanceof StationaryMovement)
+        //if (this.movement instanceof StationaryMovement)
+		if(groupId.equals("a"))
             this.is_stationary = true;
         else
             this.is_stationary = false;
+
+		System.out.println(groupId +" "+is_stationary);
 
 		this.movement.setComBus(comBus);
 		this.movement.setHost(this);
