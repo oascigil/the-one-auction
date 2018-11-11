@@ -70,6 +70,7 @@ Service.executionTime = 10.0
 # Common settings for all groups
 Group.movementModel = ShortestPathMapBasedMovement
 Group.router = EpidemicRouter
+#Group.router = DirectDeliveryRouter
 Group.bufferSize = 5M
 Group.waitTime = 0, 120
 # All nodes have the bluetooth interface
@@ -100,6 +101,7 @@ Group1.routeType = 1
 Group1.nrofInterfaces = 2
 Group1.interface1 = wifiInterface
 Group1.interface2 = backhaul
+Group1.router = APRouter
 
 
 # group1 (pedestrians) specific settings
