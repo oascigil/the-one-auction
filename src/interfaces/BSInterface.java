@@ -36,7 +36,8 @@ public class BSInterface extends DistanceCapacityInterface {
 	public void update() {
 		if (optimizer == null) {
 			return; /* nothing to do */
-		}
+        }
+		
 
 		// First break the old ones
 		optimizer.updateLocation(this);
@@ -50,6 +51,7 @@ public class BSInterface extends DistanceCapacityInterface {
 			if (!isWithinRange(anotherInterface)) {
 				disconnect(con,anotherInterface);
 				connections.remove(i);
+
 			}
 			else {
 				i++;

@@ -17,6 +17,8 @@ public class ServerApp extends Application {
     public static final String EXECUTION_TIME_S = "execTime";
     /** Service type for the application */
     public static final String SERVICE_TYPE_S = "serviceType";
+
+    //private vars
     /** Execution time of the application service  */
     private double execTime;
     /** Completion time of the current task being executed */
@@ -31,6 +33,8 @@ public class ServerApp extends Application {
     private int respMsgSize;
 	/** Application ID */
 	public String appId;
+    /** Have we sent auction request */
+    public boolean isServerAuctionRequestSent;
 
 	/**
 	 * Creates a new server application with the given settings.
@@ -45,10 +49,11 @@ public class ServerApp extends Application {
             this.serviceType = s.getInt(SERVICE_TYPE_S);
         }
         this.isBusy = false;
-        this.completionTime = SimClock.getTime();
+        this.completionTime = 0.0; 
         this.reqMsg = null;
         this.respMsgSize = 1;
         this.appId = "ServerApp" + this.serviceType;
+        this.isServerAuctionRequestSent = false;
     }
 	/**
 	 * Copy-constructor
@@ -84,6 +89,7 @@ public class ServerApp extends Application {
 		if (msg.getTo()==host && type.equalsIgnoreCase("clientRequest")) {
             this.completionTime = SimClock.getTime() + this.execTime;
             this.isBusy = true;
+            this.isServerAuctionRequestSent = false;
         }
         return null;
     }
@@ -99,11 +105,21 @@ public class ServerApp extends Application {
         if (time >= this.completionTime && this.isBusy) {
             //Send a response back to the requestor
 			Message m = new Message(host, reqMsg.getFrom(), reqMsg.getId(), this.respMsgSize);
-            m.addProperty("type", "serverResponse");
+            m.addProperty("type", "execResponse");
             m.setAppID(this.appId);
 			host.createNewMessage(m);
-			super.sendEventToListeners("SentResponse", null, host);
+			super.sendEventToListeners("SentExecResponse", null, host);
             this.isBusy = false;
+        }
+        if (!this.isBusy && !this.isServerAuctionRequestSent) {
+            this.isServerAuctionRequestSent = true;
+            double currTime = SimClock.getTime();
+            Message m = new Message(host, null, "server" + host.getName(), 1);
+            m.addProperty("type", "serverAuctionRequest");
+            m.addProperty("serviceType", this.serviceType);
+			host.createNewMessage(m);
+			super.sendEventToListeners("SentServerAuctionRequest", null, host);
+
         }
     }
 }
