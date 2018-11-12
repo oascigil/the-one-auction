@@ -245,12 +245,16 @@ public class ConnectivityGrid extends ConnectivityOptimizer {
 			GridCell[] neighbors =
 				getNeighborCellsByCoord(ni.getLocation());
 			for (int i=0; i < neighbors.length; i++) {
-                ArrayList<NetworkInterface> ifaces = neighbors[i].getInterfaces();
+                /*ArrayList<NetworkInterface> ifaces = neighbors[i].getInterfaces();
                 if (ifaces.size() <= 0)
                     continue;
                 DTNHost h = ifaces.get(0).getHost();
-                if (!h.is_stationary)
+
+                if (!h.is_stationary) {//&&ni.getHost().is_stationary) {
                     continue;
+                    }
+                System.out.println("ConnectivityGrid "+ni.getHost()+" "+h);*/
+
 				niList.addAll(neighbors[i].getInterfaces());
 			}
 		}

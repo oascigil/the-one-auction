@@ -90,7 +90,11 @@ public class SimpleBroadcastInterface extends NetworkInterface {
 		Collection<NetworkInterface> interfaces =
 			optimizer.getNearInterfaces(this);
 		for (NetworkInterface i : interfaces) {
-			connect(i);
+			//if((!this.getHost().is_stationary&&i.getHost().is_stationary)||(this.getHost().is_stationary&&!i.getHost().is_stationary)) {
+				System.out.println("SimpleBroadcastInterface "+this.getHost()+" "+i.getHost());
+				connect(i);
+			//}
+			
 		}
 	}
 
