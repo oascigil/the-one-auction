@@ -28,7 +28,8 @@ wifiInterface.type = BSInterface
 #wifiInterface.transmitRange = 30
 
 wifiInterface.transmitSpeeds = 6750k, 6750k, 6750k, 6000k, 6000k, 4500k, 3000k, 2250k, 1500k, 1125k, 750k, 250k, 125k
-wifiInterface.transmitRange = 300 #91
+wifiInterface.transmitRange = 300
+# wifiInterface.transmitRange = 91
 
 # dummy speed
 wifiInterface.transmitSpeed = 0

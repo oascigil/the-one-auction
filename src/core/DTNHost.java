@@ -51,6 +51,8 @@ public class DTNHost implements Comparable<DTNHost> {
 	static {
 		DTNSim.registerForReset(DTNHost.class.getCanonicalName());
 		reset();
+        attachmentPoints = new HashMap<DTNHost, DTNHost>();
+        auctioneers = new HashMap<DTNHost, DTNHost>();
 	}
 
 	/**
