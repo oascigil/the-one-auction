@@ -14,6 +14,8 @@ import movement.Path;
 import routing.MessageRouter;
 import routing.util.RoutingInfo;
 
+import java.util.HashMap;
+
 import static core.Constants.DEBUG;
 
 /**
@@ -24,7 +26,10 @@ public class DTNHost implements Comparable<DTNHost> {
     private static int nrofServices = 0;
     public static double auctionPeriod = 10.0;
     public static double lastAuctionPeriod = 0.0;
-    public static List<Double> execTimes;
+    /** Mapping of mobile hosts to stationary APs (i.e., attachment point) */
+    public static HashMap<DTNHost, DTNHost> attachmentPoints;
+    /** Mapping of application/service to the auctioneer AP */
+    public static HashMap<DTNHost, DTNHost> auctioneers;
 	private int address;
 
 	private Coord location; 	// where is the host
@@ -40,10 +45,8 @@ public class DTNHost implements Comparable<DTNHost> {
 	private List<MovementListener> movListeners;
 	private List<NetworkInterface> net;
 	private ModuleCommunicationBus comBus;
-    private List<VM> vms;
-    private int nrofVMs;
     /** is the node a stationary one (i.e., base station) */
-    public boolean is_stationary;
+    public boolean isStationary;
 
 	static {
 		DTNSim.registerForReset(DTNHost.class.getCanonicalName());
@@ -64,13 +67,12 @@ public class DTNHost implements Comparable<DTNHost> {
 			List<MovementListener> movLs,
 			String groupId, List<NetworkInterface> interf,
 			ModuleCommunicationBus comBus,
-			MovementModel mmProto, MessageRouter mRouterProto,  int nrofVMs) {
+			MovementModel mmProto, MessageRouter mRouterProto) {
 		this.comBus = comBus;
 		this.location = new Coord(0,0);
 		this.address = getNextAddress();
 		this.name = groupId+address;
 		this.net = new ArrayList<NetworkInterface>();
-        this.nrofVMs = nrofVMs;
 
 		for (NetworkInterface i : interf) {
 			NetworkInterface ni = i.replicate();
@@ -89,11 +91,11 @@ public class DTNHost implements Comparable<DTNHost> {
         
         //if (this.movement instanceof StationaryMovement)
 		if(groupId.equals("a"))
-            this.is_stationary = true;
+            this.isStationary = true;
         else
-            this.is_stationary = false;
+            this.isStationary = false;
 
-		System.out.println(groupId +" "+is_stationary);
+		System.out.println(groupId +" "+isStationary);
 
 		this.movement.setComBus(comBus);
 		this.movement.setHost(this);

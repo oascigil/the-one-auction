@@ -47,11 +47,21 @@ public class BSInterface extends DistanceCapacityInterface {
 
 			// all connections should be up at this stage
 			assert con.isUp() : "Connection " + con + " was down!";
-
 			if (!isWithinRange(anotherInterface)) {
 				disconnect(con,anotherInterface);
 				connections.remove(i);
+                DTNHost fromHost = this.getHost();
+                DTNHost toHost = anotherInterface.getHost();
+                DTNHost mobileHost = null;
+                if (!fromHost.isStationary) 
+                    mobileHost = fromHost;
+                else if (!toHost.isStationary) 
+                    mobileHost = toHost;
+                
+                assert mobileHost != null : "Invalid BSInterface connection between two stationary or mobile hosts detected";
 
+                Object retValue = DTNHost.attachmentPoints.remove(mobileHost);
+                assert retValue != null : "Connection failed to be inserted into attachmentPoints mapping";
 			}
 			else {
 				i++;
@@ -65,7 +75,7 @@ public class BSInterface extends DistanceCapacityInterface {
         DTNHost fromHost = this.getHost();
 		for (NetworkInterface i : interfaces) {
             DTNHost toHost = i.getHost();
-            if ((!fromHost.is_stationary && toHost.is_stationary) || (fromHost.is_stationary && !toHost.is_stationary)) {
+            if ((!fromHost.isStationary && toHost.isStationary) || (fromHost.isStationary && !toHost.isStationary)) {
                 double dist = fromHost.getLocation().distance(toHost.getLocation());
                 if (dist < min_distance) {
                     min_distance = dist;
@@ -73,8 +83,21 @@ public class BSInterface extends DistanceCapacityInterface {
                 }
             }
 		}
-        if (closestInterface != null)
+        if (closestInterface != null) {
     	    connect(closestInterface);
+            DTNHost toHost = closestInterface.getHost();
+            DTNHost mobileHost = null;
+            DTNHost stationaryHost = null;
+            if (!fromHost.isStationary && toHost.isStationary) {
+                mobileHost = fromHost;
+                stationaryHost = toHost;
+            }
+            else if (!toHost.isStationary && fromHost.isStationary) {
+                mobileHost = toHost;
+                stationaryHost = fromHost;
+            }
+            DTNHost.attachmentPoints.put(mobileHost, stationaryHost);
+        }
 
 		/* update all connections */
 		for (Connection con : getConnections()) {

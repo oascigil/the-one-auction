@@ -11,6 +11,22 @@ import sys
 import random
 import math
 
+def check_distance_with_existing(x_new, y_new, points, distance):
+    
+    for x, y in points:
+        if dist(x,y, float(x_new), float(y_new)) < distance/2:
+            return False 
+
+    return True
+
+def dist(x1, y1, x2, y2):
+    x_delta = float(x1)-float(x2)
+    y_delta = float(y1)-float(y2)
+
+    d = math.sqrt(math.pow(x_delta,2) + math.pow(y_delta,2))
+
+    return d
+
 def generate_points(coordinates, distance):
     points = []
     indx  = 0
@@ -27,11 +43,11 @@ def generate_points(coordinates, distance):
             break
         x = float(x)
         y = float(y)
-        x_delta = abs(x1-x)
-        y_delta = abs(y1-y)
 
-        d = math.sqrt(math.pow(x_delta,2) + math.pow(y_delta,2))
-        print "Distance: " + repr(d)
+        d = dist(x, y, x1, y1)
+        x_delta = abs(x-x1)
+        y_delta = abs(y-y1)
+        
         if x_delta == 0:
             m = 1
         else:
@@ -51,10 +67,13 @@ def generate_points(coordinates, distance):
                     y_betw += math.sin(alpha)*distance
                 else:
                     y_betw -= math.sin(alpha)*distance
-                points.append([x_betw, y_betw])
+
+                if check_distance_with_existing(x_betw, y_betw, points, distance):
+                    points.append([x_betw, y_betw])
                 total_distance += distance
         else:
-            points.append([x1, y1])
+            if check_distance_with_existing(x1, y1, points, distance):
+                points.append([x1, y1])
 
     return points
             

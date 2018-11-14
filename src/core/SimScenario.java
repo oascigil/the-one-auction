@@ -78,7 +78,7 @@ public class SimScenario implements Serializable {
 	/** namespace for Service settings ({@value})*/
 	public static final String SERVICE_EXECTIME_S = "executionTime";
 	/** number of VMs in the group -setting id ({@value})*/
-	public static final String NROF_VM_S = "nrofVMs";
+	//public static final String NROF_VM_S = "nrofVMs";
 
 	/** package where to look for movement models */
 	private static final String MM_PACKAGE = "movement.";
@@ -335,7 +335,7 @@ public class SimScenario implements Serializable {
 	protected void createHosts() {
 		this.hosts = new ArrayList<DTNHost>();
         
-        // Read the services
+        /* Read the services
         ArrayList<Double> execTimes = new ArrayList<Double>();
 		for (int i=1; i<=nrofServices; i++) {
 			Settings s = new Settings(SERVICE_NS+i);
@@ -343,7 +343,7 @@ public class SimScenario implements Serializable {
 			double exec_time = s.getDouble(SERVICE_EXECTIME_S);
             execTimes.add(exec_time);
         }
-        DTNHost.execTimes = execTimes;
+        DTNHost.execTimes = execTimes;*/
         
 		for (int i=1; i<=nrofGroups; i++) {
 			List<NetworkInterface> interfaces =
@@ -354,7 +354,7 @@ public class SimScenario implements Serializable {
 			int nrofHosts = s.getInt(NROF_HOSTS_S);
 			int nrofInterfaces = s.getInt(NROF_INTERF_S);
 			int appCount;
-            int numOfVMs = s.getInt(NROF_VM_S);
+            //int numOfVMs = s.getInt(NROF_VM_S);
 
 			// creates prototypes of MessageRouter and MovementModel
 			MovementModel mmProto =
@@ -422,7 +422,7 @@ public class SimScenario implements Serializable {
 				// new instances of movement model and message router
 				DTNHost host = new DTNHost(this.messageListeners,
 						this.movementListeners,	gid, interfaces, comBus,
-						mmProto, mRouterProto, numOfVMs);
+						mmProto, mRouterProto);
 				hosts.add(host);
 			}
 		}

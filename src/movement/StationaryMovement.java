@@ -26,6 +26,12 @@ public class StationaryMovement extends MovementModel {
 
 		coords = s.getCsvInts(LOCATION_S, 2);
 		this.loc = new Coord(coords[0],coords[1]);
+
+        //Onur: below is some ugly code to translate coordinates copied from /map/MapRoute.java
+        this.loc.setLocation(loc.getX(), -loc.getY());
+        this.loc.translate(-2550186.3236131626, 6674388.38925647);
+        System.out.println("MaXx = " + getMaxX() + " MaxY = " + getMaxY());
+        System.out.println("Adding Stationary coordinate: " + this.loc);
 	}
 
 	/**
