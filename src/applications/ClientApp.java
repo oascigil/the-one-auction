@@ -19,14 +19,12 @@ public class ClientApp extends Application {
     public static final String REQUEST_MSG_SIZE_S = "taskReqMsgSize";
     /** Request Sending Frequency (send one every x secs) */
     public static final String REQUEST_FREQUENCY_S = "taskReqFreq";
-    /** Number of Services */
-    public static final String NROF_SERVICES_S = "nrofServices";
 	
     // Private vars
     private int reqMsgSize;
+    private int lastRequestedService=0;
     private double reqSendingFreq;
     private double lastReqSentTime;
-    private int nrofServices;
     private Random rng;
 
     public ClientApp(Settings s) {
@@ -43,15 +41,9 @@ public class ClientApp extends Application {
         else {
             this.reqSendingFreq = 10;
         }
-        if (s.contains(NROF_SERVICES_S)) {
-            this.nrofServices = s.getInt(NROF_SERVICES_S);
-        }
-        else {
-            this.nrofServices = 10;
-        }
 
         this.lastReqSentTime = 0.0;
-        this.rng = new Random(this.nrofServices);
+        this.rng = new Random(Application.nrofServices);
     }
 	
     /**
@@ -84,6 +76,7 @@ public class ClientApp extends Application {
 			String id = "TaskRequest" + SimClock.getIntTime() + "-" + serverHost.getAddress();
             Message m = new Message(host, serverHost, id, 1);
             m.addProperty("type", "clientRequest");
+            m.addProperty("serviceType", this.lastRequestedService);
 			host.createNewMessage(m);
 			super.sendEventToListeners("GotAuctionResult", null, host);
 			super.sendEventToListeners("SentClientRequest", null, host);
@@ -102,11 +95,13 @@ public class ClientApp extends Application {
 	@Override
 	public void update(DTNHost host) {
         double currTime = SimClock.getTime();
+        //Send a request to the auctionApp periodically for a random service type
+        // TODO implement popularity distributions for services (Dennis has Zipf dist. code)
         if ((this.lastReqSentTime == 0.0) || (this.lastReqSentTime - currTime > this.reqSendingFreq)) {
-            int service = rng.nextInt(this.nrofServices);
+            this.lastRequestedService = rng.nextInt(Application.nrofServices);
             Message m = new Message(host, null, "client" + host.getName(), 1);
             m.addProperty("type", "clientAuctionRequest");
-            m.addProperty("serviceType", service);
+            m.addProperty("serviceType", lastRequestedService);
 			host.createNewMessage(m);
 			super.sendEventToListeners("SentClientAuctionRequest", null, host);
             this.lastReqSentTime = currTime;

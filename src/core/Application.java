@@ -6,6 +6,7 @@ package core;
 
 import java.util.List;
 
+import java.util.ArrayList;
 /**
  * <p>
  * Base class for applications. Nodes that have an application running will
@@ -37,6 +38,11 @@ public abstract class Application {
 	private List<ApplicationListener> aListeners = null;
 
 	public String	appID	= null;
+
+    // Static vars related to services and auction
+    public static int nrofServices;
+    public static ArrayList<Double> execTimes;
+    public static double auctionPeriod = 10.0;
 
 	public Application(){
 	}

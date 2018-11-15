@@ -16,6 +16,8 @@ import movement.MovementModel;
 import movement.map.SimMap;
 import routing.MessageRouter;
 
+import core.Application;
+
 /**
  * A simulation scenario used for getting and storing the settings of a
  * simulation run.
@@ -145,7 +147,7 @@ public class SimScenario implements Serializable {
 		Settings s = new Settings(SCENARIO_NS);
 		nrofGroups = s.getInt(NROF_GROUPS_S);
         nrofServices = s.getInt(NROF_SERVICES_S);
-        DTNHost.setnrofServices(nrofServices);
+        Application.nrofServices = nrofServices; 
 
 		this.name = s.valueFillString(s.getSetting(NAME_S));
 		this.endTime = s.getDouble(END_TIME_S);
@@ -335,15 +337,15 @@ public class SimScenario implements Serializable {
 	protected void createHosts() {
 		this.hosts = new ArrayList<DTNHost>();
         
-        /* Read the services
+        //Read the services
         ArrayList<Double> execTimes = new ArrayList<Double>();
 		for (int i=1; i<=nrofServices; i++) {
 			Settings s = new Settings(SERVICE_NS+i);
 			s.setSecondaryNamespace(SERVICE_NS);
 			double exec_time = s.getDouble(SERVICE_EXECTIME_S);
-            execTimes.add(exec_time);
+            Application.execTimes.add(exec_time);
         }
-        DTNHost.execTimes = execTimes;*/
+        Application.execTimes = execTimes;
         
 		for (int i=1; i<=nrofGroups; i++) {
 			List<NetworkInterface> interfaces =

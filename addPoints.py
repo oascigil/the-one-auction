@@ -1,10 +1,23 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import sys
+import random
+import re 
 
-# Usage ./addPoints -st locations.txt default_settings.txt
+def RepresentsInt(s):
+    try: 
+        int(s)
+        return True
+    except ValueError:
+        return False
+
+
+# Usage ./addPoints -st locations.txt default_settings.txt num_services
+num_services = 0
 if(len(sys.argv) >=3):
     filename = sys.argv[3]
+    if (len(sys.argv) >= 4):
+        nrofServices = int(sys.argv[4])
 else:
     filename = "Manchester_test"
 with open((filename), 'r') as F:
@@ -16,8 +29,9 @@ with open((filename), 'r') as F:
             print(groups)
             groups = groups.split()
             groups = groups[2]
-            print(groups)   
-
+            print(groups)  
+            
+    nrofGroups = 0
     print "This is the name of the script: ", sys.argv[0]
     print "Number of arguments: ", len(sys.argv)
     print "The arguments are: " , str(sys.argv)
@@ -45,9 +59,63 @@ with open((filename), 'r') as F:
             newfile = filename + "_st_" + str(num) + ".txt"
             print("Writing to: " + newfile)
             nf = open(newfile,'w')
+            s = set()
             for d in data:
                 nf.write(d)
+                if "Group" in d and "#" not in d: 
+                    x = re.split(r'(\Group+|\.+|]+)', d)
+                    if len(x) >= 2 and RepresentsInt(x[2]):
+                        group_number = int(x[2])
+                        if group_number not in s:
+                            s.add(group_number)  
+                            nf.write("Group" + str(group_number) + ".nrofApplications = 2\n")
+                            nf.write("Group" + str(group_number) + ".application1 = clientApp" + str(group_number) + "\n")
+                            nf.write("Group" + str(group_number) + ".application2 = serverApp" + str(group_number) + "\n")
+                            nrofGroups += 1
             nf.write("\n")
+            # Application Settings
+            auctionPeriod = 10.0
+            exec_time_low = 30.0
+            exec_time_high = 30.0
+            # Service Settings
+            nrofServices = 3
+            auction_apps = []
+            server_apps = []
+            services = range(nrofServices)
+            # Client app settings
+            taskFreq = 10.0
+            taskReqMsgSz = 100
+            
+            nf.write("# service setttings\n")
+            nf.write("Scenario.nrofServices = " + str(nrofServices) + "\n")
+            for i in range(nrofServices):
+                nf.write("Service" + str(i) + ".executionTime = " + str(random.uniform(exec_time_low, exec_time_high)) + "\n")
+            nf.write("\n")
+            
+            nf.write("# auction app setttings\n")
+            for i in range(nrofServices):
+                nf.write("auctionApp" + repr(i) + ".type = AuctionApplication\n")
+                nf.write("auctionApp" + repr(i) + ".auctionPeriod = " + repr(auctionPeriod) + "\n")
+                nf.write("auctionApp" + repr(i) + ".serviceType = " + str(i) + "\n\n")
+                auction_apps.append("auctionApp" + str(i))
+            
+            nf.write("# Server apps")
+            for i in range(nrofGroups):
+                nf.write("serverApp" + repr(i) + ".type = ServerApp\n")
+                random_subset = [services[j] for j in sorted(random.sample(xrange(len(services)), random.randint(1, len(services))))]
+                subset = ','.join(map(str, random_subset)) 
+                nf.write("serverApp" + repr(i) + ".serviceTypes = " + subset + "\n") 
+                server_apps.append("serverApp" + str(i))
+                nf.write("\n")
+
+            nf.write("# Client apps")
+            nf.write("\n")
+            for i in range(nrofGroups):
+                nf.write("clientApp" + str(i) + ".type = ClientApp\n")
+                nf.write("clientApp" + str(i) + ".taskReqFreq = " + str(taskFreq) + "\n")
+                nf.write("clientApp" + str(i) + ".taskReqMsgSize = " + str(taskReqMsgSz) + "\n")
+                nf.write("\n")
+
             gn = (int)(groups) 
             for p in pos:
                 #print(p[0])
@@ -61,6 +129,14 @@ with open((filename), 'r') as F:
                 nf.write(group + "interface1 = wifiInterface\n")
                 nf.write(group + "interface2 = backhaul\n")
                 nf.write(group + "router = APRouter\n")
+                if len(auction_apps) > 0:
+                    nf.write(group + "nrofApplications = 1\n")
+                    auctionApp = random.choice(auction_apps)
+                    auction_apps.remove(auctionApp)
+                    nf.write(group + "application1 = " + auctionApp + "\n")
+                else:
+                    nf.write(group + "nrofApplications = 0\n")
+                    
                 nf.write("\n")              
                 
         elif(type == '-so'):

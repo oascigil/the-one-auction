@@ -7,26 +7,22 @@ import core.Settings;
 import core.SimClock;
 import core.SimScenario;
 import core.World;
-
+import java.util.ArrayList;
 /**
  * Simple Server Application to run tasks for Client Applications.
 */
 
 public class ServerApp extends Application {
-    /** Execution time for a request */
-    public static final String EXECUTION_TIME_S = "execTime";
-    /** Service type for the application */
-    public static final String SERVICE_TYPE_S = "serviceType";
+    /** Service types for the application  */
+    public static final String SERVICE_TYPE_S = "serviceTypes";
 
     //private vars
-    /** Execution time of the application service  */
-    private double execTime;
     /** Completion time of the current task being executed */
     private double completionTime;
     /** Flag to indicate if the application is currently busy executing */
     private boolean isBusy;
-    /** Type of the service that application provides */
-    private int serviceType;
+    /** The services that this application provides to ClientApps */
+    private ArrayList<Double> services;
     /** Request message that is currently being executed */
     private Message reqMsg;
     /** Size of the response message */
@@ -42,17 +38,16 @@ public class ServerApp extends Application {
 	 * @param s	Settings to use for initializing the application.
 	 */
 	public ServerApp(Settings s) {
-        if (s.contains(EXECUTION_TIME_S)) {
-            this.execTime = s.getDouble(EXECUTION_TIME_S);
-        }
         if (s.contains(SERVICE_TYPE_S)) {
-            this.serviceType = s.getInt(SERVICE_TYPE_S);
+            double[] array = s.getCsvDoubles(SERVICE_TYPE_S);
+            this.services = new ArrayList<Double>();
+            for(double d : array ) this.services.add(d);
         }
         this.isBusy = false;
         this.completionTime = 0.0; 
         this.reqMsg = null;
         this.respMsgSize = 1;
-        this.appId = "ServerApp" + this.serviceType;
+        this.appId = "ServerApp" + this.services;
         this.isServerAuctionRequestSent = false;
     }
 	/**
@@ -63,7 +58,7 @@ public class ServerApp extends Application {
      public ServerApp(ServerApp a) {
         super(a);
         this.isBusy = a.isBusy;
-        this.serviceType = a.serviceType;
+        this.services = a.services;
         this.reqMsg = a.reqMsg;
         this.respMsgSize = a.respMsgSize;
         this.appId = a.appId;
@@ -87,7 +82,8 @@ public class ServerApp extends Application {
 
         //Start execution if we are the recipient
 		if (msg.getTo()==host && type.equalsIgnoreCase("clientRequest")) {
-            this.completionTime = SimClock.getTime() + this.execTime;
+            int service = (int) msg.getProperty("serviceType");
+            this.completionTime = SimClock.getTime() + Application.execTimes.get(service);
             this.isBusy = true;
             this.isServerAuctionRequestSent = false;
         }
@@ -116,7 +112,7 @@ public class ServerApp extends Application {
             double currTime = SimClock.getTime();
             Message m = new Message(host, null, "server" + host.getName(), 1);
             m.addProperty("type", "serverAuctionRequest");
-            m.addProperty("serviceType", this.serviceType);
+            m.addProperty("serviceTypes", this.services);
 			host.createNewMessage(m);
 			super.sendEventToListeners("SentServerAuctionRequest", null, host);
 

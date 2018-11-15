@@ -23,9 +23,6 @@ import static core.Constants.DEBUG;
  */
 public class DTNHost implements Comparable<DTNHost> {
 	private static int nextAddress = 0;
-    private static int nrofServices = 0;
-    public static double auctionPeriod = 10.0;
-    public static double lastAuctionPeriod = 0.0;
     /** Mapping of mobile hosts to stationary APs (i.e., attachment point) */
     public static HashMap<DTNHost, DTNHost> attachmentPoints;
     /** Mapping of application/service to the auctioneer AP */
@@ -569,20 +566,6 @@ public class DTNHost implements Comparable<DTNHost> {
 		return this.getAddress() - h.getAddress();
 	}
     
-    /**
-    * Sets the number of services.
-    */
-    public static void setnrofServices(int nrofServices) {
-        nrofServices = nrofServices;
-    }
-
-    /**
-    * Gets the number of services.
-    */
-    public static int getnrofServices() {
-        return nrofServices;
-    }
-
     public MovementModel getMovementModel() {
         return this.movement;
     }

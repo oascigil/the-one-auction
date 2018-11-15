@@ -243,7 +243,6 @@ EVENING_ACTIVITY_CONTROL_SYSTEM_NR_SETTING	movement/EveningActivityMovement.java
 EVENING_ACTIVITY_MODE	movement/EveningActivityMovement.java	/^	private static final int EVENING_ACTIVITY_MODE = 1;$/;"	f	class:EveningActivityMovement	file:
 EVENING_ACTIVITY_MODE	movement/WorkingDayMovement.java	/^	private static final int EVENING_ACTIVITY_MODE = 5;$/;"	f	class:WorkingDayMovement	file:
 EVENTS_RE_S	gui/EventLogPanel.java	/^	public static final String EVENTS_RE_S = "REfilter";$/;"	f	class:EventLogPanel
-EXECUTION_TIME_S	applications/ServerApp.java	/^    public static final String EXECUTION_TIME_S = "execTime";$/;"	f	class:ServerApp
 EXPECTED_INTERFACE_COUNT	interfaces/ConnectivityGrid.java	/^		private static final int EXPECTED_INTERFACE_COUNT = 5;$/;"	f	class:ConnectivityGrid.GridCell	file:
 EXTERNAL_MOVEMENT_NS	movement/ExternalMovement.java	/^	public static final String EXTERNAL_MOVEMENT_NS = "ExternalMovement";$/;"	f	class:ExternalMovement
 EncountersVSUniqueEncountersReport	report/EncountersVSUniqueEncountersReport.java	/^	public EncountersVSUniqueEncountersReport() {$/;"	m	class:EncountersVSUniqueEncountersReport
@@ -576,7 +575,6 @@ NROF_INTTYPES_S	core/SimScenario.java	/^	public static final String NROF_INTTYPE
 NROF_MCBCS_S	routing/util/MessageTransferAcceptPolicy.java	/^	public static final String NROF_MCBCS_S = "nrofMCBACs";$/;"	f	class:MessageTransferAcceptPolicy
 NROF_PRELOAD_S	movement/ExternalMovement.java	/^	public static final String NROF_PRELOAD_S = "nrofPreload";$/;"	f	class:ExternalMovement
 NROF_REPORT_S	ui/DTNSimUI.java	/^	public static final String NROF_REPORT_S = "Report.nrofReports";$/;"	f	class:DTNSimUI
-NROF_SERVICES_S	applications/ClientApp.java	/^    public static final String NROF_SERVICES_S = "nrofServices";$/;"	f	class:ClientApp
 NROF_SERVICES_S	core/SimScenario.java	/^    public static final String NROF_SERVICES_S = "nrofServices";$/;"	f	class:SimScenario
 NROF_SETTING	input/EventQueueHandler.java	/^	public static final String NROF_SETTING = "nrof";$/;"	f	class:EventQueueHandler
 NROF_TST_NODES	test/WKTReaderTest.java	/^	private final int NROF_TST_NODES = 9;$/;"	f	class:WKTReaderTest	file:
@@ -756,7 +754,7 @@ SEND_QUEUE_MODE_S	routing/MessageRouter.java	/^	public static final String SEND_
 SERVICE_EXECTIME_S	core/SimScenario.java	/^	public static final String SERVICE_EXECTIME_S = "executionTime";$/;"	f	class:SimScenario
 SERVICE_NS	core/SimScenario.java	/^	public static final String SERVICE_NS = "Service";$/;"	f	class:SimScenario
 SERVICE_TYPE_S	applications/AuctionApplication.java	/^    public static final String SERVICE_TYPE_S = "serviceType";$/;"	f	class:AuctionApplication
-SERVICE_TYPE_S	applications/ServerApp.java	/^    public static final String SERVICE_TYPE_S = "serviceType";$/;"	f	class:ServerApp
+SERVICE_TYPE_S	applications/ServerApp.java	/^    public static final String SERVICE_TYPE_S = "serviceTypes";$/;"	f	class:ServerApp
 SETTINGS_NAMESPACE	input/EventQueueHandler.java	/^	public static final String SETTINGS_NAMESPACE = "Events";$/;"	f	class:EventQueueHandler
 SETTINGS_NAMESPACE	input/ExternalEventsQueue.java	/^	public static final String SETTINGS_NAMESPACE = "ExternalEvents";$/;"	f	class:ExternalEventsQueue
 SETTING_OUTPUT_S	core/Settings.java	/^	public static final String SETTING_OUTPUT_S = "Settings.output";$/;"	f	class:Settings
@@ -1068,7 +1066,7 @@ attachmentPoint	routing/DeliverToBS.java	/^    public static HashMap<DTNHost, DT
 attachmentPoints	core/DTNHost.java	/^    public static HashMap<DTNHost, DTNHost> attachmentPoints;$/;"	f	class:DTNHost
 auctionMsgSize	applications/AuctionApplication.java	/^    private int auctionMsgSize;$/;"	f	class:AuctionApplication	file:
 auctionPeriod	applications/AuctionApplication.java	/^    private double auctionPeriod;$/;"	f	class:AuctionApplication	file:
-auctionPeriod	core/DTNHost.java	/^    public static double auctionPeriod = 10.0;$/;"	f	class:DTNHost
+auctionPeriod	core/Application.java	/^    public static double auctionPeriod = 10.0;$/;"	f	class:Application
 auctioneers	core/DTNHost.java	/^    public static HashMap<DTNHost, DTNHost> auctioneers;$/;"	f	class:DTNHost
 autoClear	gui/playfield/PlayField.java	/^	private void autoClear() {$/;"	m	class:PlayField	file:
 autoClearOverlay	gui/SimMenuBar.java	/^	private JCheckBoxMenuItem autoClearOverlay;$/;"	f	class:SimMenuBar	file:
@@ -1453,7 +1451,7 @@ eventsFile	input/ExternalEventsQueue.java	/^	private File eventsFile;$/;"	f	clas
 eventsLeft	input/BinaryEventsReader.java	/^	private int eventsLeft;$/;"	f	class:BinaryEventsReader	file:
 eventsLeftInBuffer	input/ExternalEventsQueue.java	/^	public int eventsLeftInBuffer() {$/;"	m	class:ExternalEventsQueue
 exchangeDeliverableMessages	routing/ActiveRouter.java	/^	protected Connection exchangeDeliverableMessages() {$/;"	m	class:ActiveRouter
-execTime	applications/ServerApp.java	/^    private double execTime;$/;"	f	class:ServerApp	file:
+execTimes	core/Application.java	/^    public static ArrayList<Double> execTimes;$/;"	f	class:Application
 execute_auction	applications/AuctionApplication.java	/^    private void execute_auction(DTNHost host) {$/;"	m	class:AuctionApplication	file:
 farAway	test/AbstractRouterTest.java	/^	protected Coord farAway = new Coord(100000,100000);$/;"	f	class:AbstractRouterTest
 ffwButton	gui/GUIControls.java	/^	private JButton ffwButton;$/;"	f	class:GUIControls	file:
@@ -1859,7 +1857,6 @@ getWorldSizeY	core/SimScenario.java	/^	public int getWorldSizeY() {$/;"	m	class:
 getWorldSizeY	test/WorldTest.java	/^		public int getWorldSizeY() {$/;"	m	class:WorldTest.TestScenario
 getX	core/Coord.java	/^	public double getX() {$/;"	m	class:Coord
 getY	core/Coord.java	/^	public double getY() {$/;"	m	class:Coord
-getnrofServices	core/DTNHost.java	/^    public static int getnrofServices() {$/;"	m	class:DTNHost
 ginterfaces	interfaces/ConnectivityGrid.java	/^	private HashMap<NetworkInterface, GridCell> ginterfaces;$/;"	f	class:ConnectivityGrid	file:
 gnuplot	report/NodeDensityReport.java	/^	private final boolean gnuplot;$/;"	f	class:NodeDensityReport	file:
 gnuplotFileExtension	report/NodeDensityReport.java	/^	private final String gnuplotFileExtension;$/;"	f	class:NodeDensityReport	file:
@@ -2163,7 +2160,6 @@ key	util/Tuple.java	/^	private K key;$/;"	f	class:Tuple	file:
 lastAgeUpdate	routing/ProphetRouter.java	/^	private double lastAgeUpdate;$/;"	f	class:ProphetRouter	file:
 lastAgeUpdate	routing/ProphetRouterWithEstimation.java	/^	private double lastAgeUpdate;$/;"	f	class:ProphetRouterWithEstimation	file:
 lastAgeUpdate	routing/ProphetV2Router.java	/^	private double lastAgeUpdate;$/;"	f	class:ProphetV2Router	file:
-lastAuctionPeriod	core/DTNHost.java	/^    public static double lastAuctionPeriod = 0.0;$/;"	f	class:DTNHost
 lastAuctionTime	applications/AuctionApplication.java	/^    private double lastAuctionTime;$/;"	f	class:AuctionApplication	file:
 lastCostFrom	routing/MaxPropRouter.java	/^	private DTNHost lastCostFrom;$/;"	f	class:MaxPropRouter	file:
 lastCostFrom	routing/MaxPropRouterWithEstimation.java	/^	private DTNHost lastCostFrom;$/;"	f	class:MaxPropRouterWithEstimation	file:
@@ -2576,8 +2572,7 @@ nrofResponseReqCreated	report/MessageStatsReport.java	/^	private int nrofRespons
 nrofSamples	routing/ProphetRouterWithEstimation.java	/^	private int nrofSamples;$/;"	f	class:ProphetRouterWithEstimation	file:
 nrofSamplesENC	routing/MaxPropRouterWithEstimation.java	/^	private int nrofSamplesENC;$/;"	f	class:MaxPropRouterWithEstimation	file:
 nrofSamplesIET	routing/MaxPropRouterWithEstimation.java	/^	private int nrofSamplesIET;$/;"	f	class:MaxPropRouterWithEstimation	file:
-nrofServices	applications/ClientApp.java	/^    private int nrofServices;$/;"	f	class:ClientApp	file:
-nrofServices	core/DTNHost.java	/^    private static int nrofServices = 0;$/;"	f	class:DTNHost	file:
+nrofServices	core/Application.java	/^    public static int nrofServices;$/;"	f	class:Application
 nrofServices	core/SimScenario.java	/^	int nrofServices;$/;"	f	class:SimScenario
 nrofStarted	report/MessageStatsReport.java	/^	private int nrofStarted;$/;"	f	class:MessageStatsReport	file:
 nrofTotENC	routing/MaxPropRouterWithEstimation.java	/^	private int nrofTotENC;$/;"	f	class:MaxPropRouterWithEstimation	file:
@@ -3014,7 +3009,7 @@ serialVersionUID	routing/schedule/ScheduleOracle.java	/^	private static final lo
 serverRequests	applications/AuctionApplication.java	/^    ArrayList<Message> serverRequests;$/;"	f	class:AuctionApplication
 service	core/Message.java	/^    private int service;$/;"	f	class:Message	file:
 serviceType	applications/AuctionApplication.java	/^    private int serviceType;$/;"	f	class:AuctionApplication	file:
-serviceType	applications/ServerApp.java	/^    private int serviceType;$/;"	f	class:ServerApp	file:
+services	applications/ServerApp.java	/^    private ArrayList<Double> services;$/;"	f	class:ServerApp	file:
 setAllHosts	report/AdjacencyGraphvizReport.java	/^	public void setAllHosts(Collection<DTNHost> hosts) {$/;"	m	class:AdjacencyGraphvizReport
 setAlpha	routing/maxprop/MeetingProbabilitySet.java	/^	public void setAlpha(double alpha) {$/;"	m	class:MeetingProbabilitySet
 setAppID	core/Application.java	/^	public void setAppID(String appID) {$/;"	m	class:Application
@@ -3149,7 +3144,6 @@ setUpWith	test/PointsOfInterestTest.java	/^	protected void setUpWith(double[] po
 setUpWith	test/WKTReaderTest.java	/^	private WKTMapReader setUpWith(Reader input) {$/;"	m	class:WKTReaderTest	file:
 setUpWithGranularity	test/ContactTimesReportTest.java	/^	private void setUpWithGranularity(double gran) throws IOException {$/;"	m	class:ContactTimesReportTest	file:
 setWaitTimeAtEnd	movement/EveningTrip.java	/^	public void setWaitTimeAtEnd(double waitTimeAtEnd) {$/;"	m	class:EveningTrip
-setnrofServices	core/DTNHost.java	/^    public static void setnrofServices(int nrofServices) {$/;"	m	class:DTNHost
 settings	test/TestUtils.java	/^	private TestSettings settings;$/;"	f	class:TestUtils	file:
 setup	core/DTN2Manager.java	/^	public static void setup(World world) {$/;"	m	class:DTN2Manager
 setupHost	test/MapBasedMovementTest.java	/^	private DTNHost setupHost() {$/;"	m	class:MapBasedMovementTest	file:
