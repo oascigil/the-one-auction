@@ -8,6 +8,7 @@ import core.SimClock;
 import core.SimScenario;
 import core.World;
 import java.util.ArrayList;
+import java.util.List;
 /**
  * Simple Server Application to run tasks for Client Applications.
 */
@@ -22,7 +23,7 @@ public class ServerApp extends Application {
     /** Flag to indicate if the application is currently busy executing */
     private boolean isBusy;
     /** The services that this application provides to ClientApps */
-    private ArrayList<Double> services;
+    private ArrayList<Integer> services;
     /** Request message that is currently being executed */
     private Message reqMsg;
     /** Size of the response message */
@@ -39,9 +40,9 @@ public class ServerApp extends Application {
 	 */
 	public ServerApp(Settings s) {
         if (s.contains(SERVICE_TYPE_S)) {
-            double[] array = s.getCsvDoubles(SERVICE_TYPE_S);
-            this.services = new ArrayList<Double>();
-            for(double d : array ) this.services.add(d);
+            int[] array = s.getCsvInts(SERVICE_TYPE_S);
+            this.services = new ArrayList<Integer>();
+            for(int d : array ) this.services.add(d);
         }
         this.isBusy = false;
         this.completionTime = 0.0; 
@@ -110,12 +111,20 @@ public class ServerApp extends Application {
         if (!this.isBusy && !this.isServerAuctionRequestSent) {
             this.isServerAuctionRequestSent = true;
             double currTime = SimClock.getTime();
-            Message m = new Message(host, null, "server" + host.getName(), 1);
-            m.addProperty("type", "serverAuctionRequest");
-            m.addProperty("serviceTypes", this.services);
-			host.createNewMessage(m);
-			super.sendEventToListeners("SentServerAuctionRequest", null, host);
-
+            //Send an offer for each auctioneer
+            for (int s : this.services) {
+                List<DTNHost> destList = DTNHost.auctioneers.get(s);
+                
+                assert (destList != null ) : "Tried to use a service with no auctioneers: " + s;
+                
+                //TODO pick the closest one
+                DTNHost dest = destList.get(0);
+                Message m = new Message(host, dest, "server" + host.getName(), 1);
+                m.addProperty("type", "serverAuctionRequest");
+                m.addProperty("serviceTypes", this.services);
+	    		host.createNewMessage(m);
+		    	super.sendEventToListeners("SentServerAuctionRequest", null, host);
+            }
         }
     }
 }

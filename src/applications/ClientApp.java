@@ -8,6 +8,7 @@ import core.SimClock;
 import core.SimScenario;
 import core.World;
 import java.util.Random;
+import java.util.List;
 
 /**
  * Simple Client application to request tasks to be executed by Server Applications.
@@ -82,7 +83,7 @@ public class ClientApp extends Application {
 			super.sendEventToListeners("SentClientRequest", null, host);
         }
 		if (msg.getTo()==host && type.equalsIgnoreCase("execResponse")) {
-
+        
         }
 
         return null;
@@ -99,7 +100,12 @@ public class ClientApp extends Application {
         // TODO implement popularity distributions for services (Dennis has Zipf dist. code)
         if ((this.lastReqSentTime == 0.0) || (this.lastReqSentTime - currTime > this.reqSendingFreq)) {
             this.lastRequestedService = rng.nextInt(Application.nrofServices);
-            Message m = new Message(host, null, "client" + host.getName(), 1);
+            List<DTNHost> destList = DTNHost.auctioneers.get(this.lastRequestedService);
+            
+            assert (destList != null ) : "Tried to use a service with no auctioneers: " + this.lastRequestedService;
+            //TODO pick the closest one
+            DTNHost dest = destList.get(0);
+            Message m = new Message(host, dest, "client" + host.getName(), 1);
             m.addProperty("type", "clientAuctionRequest");
             m.addProperty("serviceType", lastRequestedService);
 			host.createNewMessage(m);
