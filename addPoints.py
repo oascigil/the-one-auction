@@ -94,26 +94,26 @@ with open((filename), 'r') as F:
             
             nf.write("# auction app setttings\n")
             for i in range(nrofServices):
-                nf.write("auctionApp" + repr(i) + ".type = AuctionApplication\n")
-                nf.write("auctionApp" + repr(i) + ".auctionPeriod = " + repr(auctionPeriod) + "\n")
-                nf.write("auctionApp" + repr(i) + ".serviceType = " + str(i) + "\n\n")
-                auction_apps.append("auctionApp" + str(i))
+                nf.write("auctionApp" + repr(i+1) + ".type = AuctionApplication\n")
+                nf.write("auctionApp" + repr(i+1) + ".auctionPeriod = " + repr(auctionPeriod) + "\n")
+                nf.write("auctionApp" + repr(i+1) + ".serviceType = " + str(i) + "\n\n")
+                auction_apps.append("auctionApp" + str(i+1))
             
             nf.write("# Server apps")
             for i in range(nrofGroups):
-                nf.write("serverApp" + repr(i) + ".type = ServerApp\n")
+                nf.write("serverApp" + repr(i+1) + ".type = ServerApp\n")
                 random_subset = [services[j] for j in sorted(random.sample(xrange(len(services)), random.randint(1, len(services))))]
                 subset = ','.join(map(str, random_subset)) 
-                nf.write("serverApp" + repr(i) + ".serviceTypes = " + subset + "\n") 
-                server_apps.append("serverApp" + str(i))
+                nf.write("serverApp" + repr(i+1) + ".serviceTypes = " + subset + "\n") 
+                server_apps.append("serverApp" + str(i+1))
                 nf.write("\n")
 
             nf.write("# Client apps")
             nf.write("\n")
             for i in range(nrofGroups):
-                nf.write("clientApp" + str(i) + ".type = ClientApp\n")
-                nf.write("clientApp" + str(i) + ".taskReqFreq = " + str(taskFreq) + "\n")
-                nf.write("clientApp" + str(i) + ".taskReqMsgSize = " + str(taskReqMsgSz) + "\n")
+                nf.write("clientApp" + str(i+1) + ".type = ClientApp\n")
+                nf.write("clientApp" + str(i+1) + ".taskReqFreq = " + str(taskFreq) + "\n")
+                nf.write("clientApp" + str(i+1) + ".taskReqMsgSize = " + str(taskReqMsgSz) + "\n")
                 nf.write("\n")
 
             gn = (int)(groups) 

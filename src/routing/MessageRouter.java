@@ -10,8 +10,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 import core.Application;
+import applications.AuctionApplication;
 import core.Connection;
 import core.DTNHost;
 import core.Message;
@@ -628,6 +630,19 @@ public abstract class MessageRouter {
 			this.applications.put(app.getAppID(),
 					new LinkedList<Application>());
 		}
+        // update auctioneers
+        if (app instanceof AuctionApplication) {
+            int service = ((AuctionApplication) app).getServiceType();
+            List<DTNHost> l = (List<DTNHost>) DTNHost.auctioneers.get(service);
+            if (l == null) {
+                l = new ArrayList<DTNHost>();
+                l.add(this.getHost());
+                DTNHost.auctioneers.put(service, l);
+            }
+            else {
+                l.add(this.getHost());
+            }
+        }
 		this.applications.get(app.getAppID()).add(app);
 	}
 

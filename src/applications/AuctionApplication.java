@@ -117,4 +117,8 @@ public class AuctionApplication extends Application {
         this.clientRequests.clear();
         this.serverRequests.clear();
     }
+
+    public int getServiceType() {
+        return this.serviceType;
+    }
 }
