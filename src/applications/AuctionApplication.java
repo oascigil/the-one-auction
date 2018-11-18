@@ -26,6 +26,8 @@ public class AuctionApplication extends Application {
     /** List of server request messages received during the current auctionPeriod */
     ArrayList<Message> serverRequests;
 
+	/** Application ID */
+	public static final String APP_ID = "ucl.AuctionApplication";
     //private vars
     private int auctionMsgSize;
 
@@ -45,6 +47,7 @@ public class AuctionApplication extends Application {
         this.clientRequests = new ArrayList<Message>();
         this.serverRequests = new ArrayList<Message>();
         this.auctionMsgSize = 10; //TODO read this from Settings
+		super.setAppID(APP_ID);
     }
 	
 	/**

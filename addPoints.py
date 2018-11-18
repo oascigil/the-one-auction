@@ -99,7 +99,7 @@ with open((filename), 'r') as F:
                 nf.write("auctionApp" + repr(i+1) + ".serviceType = " + str(i) + "\n\n")
                 auction_apps.append("auctionApp" + str(i+1))
             
-            nf.write("# Server apps")
+            nf.write("# Server apps\n")
             for i in range(nrofGroups):
                 nf.write("serverApp" + repr(i+1) + ".type = ServerApp\n")
                 random_subset = [services[j] for j in sorted(random.sample(xrange(len(services)), random.randint(1, len(services))))]
@@ -108,8 +108,7 @@ with open((filename), 'r') as F:
                 server_apps.append("serverApp" + str(i+1))
                 nf.write("\n")
 
-            nf.write("# Client apps")
-            nf.write("\n")
+            nf.write("# Client apps\n")
             for i in range(nrofGroups):
                 nf.write("clientApp" + str(i+1) + ".type = ClientApp\n")
                 nf.write("clientApp" + str(i+1) + ".taskReqFreq = " + str(taskFreq) + "\n")

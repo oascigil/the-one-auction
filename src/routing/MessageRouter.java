@@ -630,8 +630,10 @@ public abstract class MessageRouter {
 			this.applications.put(app.getAppID(),
 					new LinkedList<Application>());
 		}
+        System.out.println("HERE" + app.getAppID());
         // update auctioneers
         if (app instanceof AuctionApplication) {
+            System.out.println("HERE");
             int service = ((AuctionApplication) app).getServiceType();
             List<DTNHost> l = (List<DTNHost>) DTNHost.auctioneers.get(service);
             if (l == null) {

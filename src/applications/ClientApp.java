@@ -21,6 +21,9 @@ public class ClientApp extends Application {
     /** Request Sending Frequency (send one every x secs) */
     public static final String REQUEST_FREQUENCY_S = "taskReqFreq";
 	
+	/** Application ID */
+	public static final String APP_ID = "ucl.ClientApp";
+
     // Private vars
     private int reqMsgSize;
     private int lastRequestedService=0;
@@ -45,6 +48,7 @@ public class ClientApp extends Application {
 
         this.lastReqSentTime = 0.0;
         this.rng = new Random(Application.nrofServices);
+		super.setAppID(APP_ID);
     }
 	
     /**
@@ -54,7 +58,10 @@ public class ClientApp extends Application {
 	 */
      public ClientApp(ClientApp a) {
         super(a);
-
+        this.rng = a.rng;
+        this.reqMsgSize = a.reqMsgSize;
+        this.reqSendingFreq = a.reqSendingFreq;
+        this.lastReqSentTime = a.lastReqSentTime;
      }
 	
     @Override
@@ -99,10 +106,13 @@ public class ClientApp extends Application {
         //Send a request to the auctionApp periodically for a random service type
         // TODO implement popularity distributions for services (Dennis has Zipf dist. code)
         if ((this.lastReqSentTime == 0.0) || (this.lastReqSentTime - currTime > this.reqSendingFreq)) {
-            this.lastRequestedService = rng.nextInt(Application.nrofServices);
+            this.lastRequestedService = this.rng.nextInt(Application.nrofServices);
             List<DTNHost> destList = DTNHost.auctioneers.get(this.lastRequestedService);
-            
+            //assertions are not enabled by default: use -ea flag
             assert (destList != null ) : "Tried to use a service with no auctioneers: " + this.lastRequestedService;
+            System.out.println("Service: " + this.lastRequestedService + " is empty");
+            System.out.println("Destlist: " + destList);
+            System.out.println("auctioneers: " + DTNHost.auctioneers);
             //TODO pick the closest one
             DTNHost dest = destList.get(0);
             Message m = new Message(host, dest, "client" + host.getName(), 1);

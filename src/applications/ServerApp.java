@@ -32,6 +32,8 @@ public class ServerApp extends Application {
 	public String appId;
     /** Have we sent auction request */
     public boolean isServerAuctionRequestSent;
+	/** Application ID */
+	public static final String APP_ID = "ucl.ServerApp";
 
 	/**
 	 * Creates a new server application with the given settings.
@@ -50,6 +52,7 @@ public class ServerApp extends Application {
         this.respMsgSize = 1;
         this.appId = "ServerApp" + this.services;
         this.isServerAuctionRequestSent = false;
+		super.setAppID(APP_ID);
     }
 	/**
 	 * Copy-constructor

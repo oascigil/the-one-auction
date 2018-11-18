@@ -343,7 +343,7 @@ public class SimScenario implements Serializable {
 			Settings s = new Settings(SERVICE_NS+i);
 			s.setSecondaryNamespace(SERVICE_NS);
 			double exec_time = s.getDouble(SERVICE_EXECTIME_S);
-            Application.execTimes.add(exec_time);
+            execTimes.add(exec_time);
         }
         Application.execTimes = execTimes;
         
