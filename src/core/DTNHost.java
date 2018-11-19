@@ -94,7 +94,7 @@ public class DTNHost implements Comparable<DTNHost> {
         else
             this.isStationary = false;
 
-		System.out.println(groupId +" "+isStationary);
+		//System.out.println(groupId +" "+isStationary);
 
 		this.movement.setComBus(comBus);
 		this.movement.setHost(this);

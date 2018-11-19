@@ -81,6 +81,7 @@ public class ServerApp extends Application {
 	 */
 	@Override
 	public Message handle(Message msg, DTNHost host) {
+		System.out.println("Server app received "+msg.getId());
 		String type = (String)msg.getProperty("type");
 		if (type==null) return msg; 
 
@@ -104,10 +105,11 @@ public class ServerApp extends Application {
         double time = SimClock.getTime();
         if (time >= this.completionTime && this.isBusy) {
             //Send a response back to the requestor
-			Message m = new Message(host, reqMsg.getFrom(), reqMsg.getId(), this.respMsgSize);
+			Message m = new Message(host, reqMsg.getFrom(), reqMsg.getId()+"Response", this.respMsgSize);
             m.addProperty("type", "execResponse");
             m.setAppID(this.appId);
 			host.createNewMessage(m);
+            m.setAppID(ClientApp.APP_ID);
 			super.sendEventToListeners("SentExecResponse", null, host);
             this.isBusy = false;
         }
@@ -119,12 +121,13 @@ public class ServerApp extends Application {
                 List<DTNHost> destList = DTNHost.auctioneers.get(s);
                 
                 assert (destList != null ) : "Tried to use a service with no auctioneers: " + s;
-                
+                System.out.println("Auction server "+destList.get(0));
                 //TODO pick the closest one
                 DTNHost dest = destList.get(0);
-                Message m = new Message(host, dest, "server" + host.getName(), 1);
+                Message m = new Message(host, dest, "serverAuctionRequest" + host.getName(), 1);
                 m.addProperty("type", "serverAuctionRequest");
-                m.addProperty("serviceTypes", this.services);
+                m.addProperty("serviceTypes", s);
+                m.setAppID(AuctionApplication.APP_ID);
 	    		host.createNewMessage(m);
 		    	super.sendEventToListeners("SentServerAuctionRequest", null, host);
             }

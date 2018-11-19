@@ -130,6 +130,7 @@ public abstract class ActiveRouter extends MessageRouter {
 	@Override
 	public int receiveMessage(Message m, DTNHost from) {
 		int recvCheck = checkReceiving(m, from);
+		//System.out.println("Message received at host "+this.getHost()+" with id "+m.getId());
 		if (recvCheck != RCV_OK) {
 			return recvCheck;
 		}

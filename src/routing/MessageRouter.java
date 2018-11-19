@@ -153,12 +153,40 @@ public abstract class MessageRouter {
 	 * @param mListeners The message listeners
 	 */
 	public void init(DTNHost host, List<MessageListener> mListeners) {
+		
 		this.incomingMessages = new HashMap<String, Message>();
 		this.messages = new HashMap<String, Message>();
 		this.deliveredMessages = new HashMap<String, Message>();
 		this.blacklistedMessages = new HashMap<String, Object>();
 		this.mListeners = mListeners;
 		this.host = host;
+		
+		//System.out.println("AppCollection "+applications.size());
+		for (Collection<Application> apps : applications.values()) {
+			//System.out.println("Apps "+apps.size());
+			for (Application app : apps) {
+				//System.out.println("Apps1 "+app.appID);
+				if (app instanceof AuctionApplication) {
+		            //System.out.println("HERE");
+		            int service = ((AuctionApplication) app).getServiceType();
+		            //System.out.println("Add auction type "+service);
+		            List<DTNHost> l = (List<DTNHost>) DTNHost.auctioneers.get(service);
+		            if (l == null) {
+		                l = new ArrayList<DTNHost>();
+		                l.add(this.getHost());
+		            }
+		            else {
+		                l.add(this.getHost());
+		            }
+		            //ßSystem.out.println("Add auction list "+l);
+		
+		            DTNHost.auctioneers.put(service, l);
+		
+		        }
+			}
+		}
+		
+		
 	}
 
 	/**
@@ -366,9 +394,11 @@ public abstract class MessageRouter {
 
 		// Pass the message to the application (if any) and get outgoing message
 		Message outgoing = incoming;
+		System.out.println("Sending msg to "+incoming.getId()+" "+incoming.getTo()+" "+incoming.getAppID());
 		for (Application app : getApplications(incoming.getAppID())) {
 			// Note that the order of applications is significant
 			// since the next one gets the output of the previous.
+			System.out.println("App handle "+app);
 			outgoing = app.handle(outgoing, this.host);
 			if (outgoing == null) break; // Some app wanted to drop the message
 		}
@@ -627,24 +657,11 @@ public abstract class MessageRouter {
 	 */
 	public void addApplication(Application app) {
 		if (!this.applications.containsKey(app.getAppID())) {
+
 			this.applications.put(app.getAppID(),
 					new LinkedList<Application>());
 		}
-        System.out.println("HERE" + app.getAppID());
-        // update auctioneers
-        if (app instanceof AuctionApplication) {
-            System.out.println("HERE");
-            int service = ((AuctionApplication) app).getServiceType();
-            List<DTNHost> l = (List<DTNHost>) DTNHost.auctioneers.get(service);
-            if (l == null) {
-                l = new ArrayList<DTNHost>();
-                l.add(this.getHost());
-                DTNHost.auctioneers.put(service, l);
-            }
-            else {
-                l.add(this.getHost());
-            }
-        }
+        
 		this.applications.get(app.getAppID()).add(app);
 	}
 

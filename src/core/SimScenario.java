@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import applications.AuctionApplication;
 import movement.MapBasedMovement;
 import movement.MovementModel;
 import movement.map.SimMap;
@@ -403,6 +404,11 @@ public class SimScenario implements Serializable {
 					protoApp.setAppListeners(this.appListeners);
 					// Set the proto application in proto router
 					//mRouterProto.setApplication(protoApp);
+					System.out.println("Server: "+protoApp.appID);
+					if (protoApp instanceof AuctionApplication) {
+						//System.out.println("HERE");
+						System.out.println("Add app "+((AuctionApplication) protoApp).getServiceType());
+					}
 					mRouterProto.addApplication(protoApp);
 				} catch (SettingsError se) {
 					// Failed to create an application for this group

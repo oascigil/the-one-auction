@@ -43,6 +43,7 @@ public class AuctionApplication extends Application {
         if (s.contains(SERVICE_TYPE_S)) {
             this.serviceType = s.getInt(SERVICE_TYPE_S);
         }
+        System.out.println("New Service type "+serviceType);
         this.lastAuctionTime = 0.0;
         this.clientRequests = new ArrayList<Message>();
         this.serverRequests = new ArrayList<Message>();
@@ -61,6 +62,7 @@ public class AuctionApplication extends Application {
         this.lastAuctionTime = a.lastAuctionTime;
         this.clientRequests = a.clientRequests;
         this.serverRequests = a.serverRequests;
+        this.serviceType  = a.serviceType;
     }
 	
     @Override
@@ -76,6 +78,7 @@ public class AuctionApplication extends Application {
 	 */
 	@Override
 	public Message handle(Message msg, DTNHost host) {
+		System.out.println("Auction app received "+msg.getId());
 		String type = (String)msg.getProperty("type");
 		if (type==null) return msg; // Not a ping/pong message
 
@@ -113,6 +116,7 @@ public class AuctionApplication extends Application {
             Message m = new Message(host, clientMsg.getFrom(), clientMsg.getId(), this.auctionMsgSize);
             m.addProperty("type", "clientAuctionResponse");
             m.addProperty("auctionResult", serverMsg.getFrom());
+            m.setAppID(ClientApp.APP_ID);
 			host.createNewMessage(m);
 			super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }

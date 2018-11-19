@@ -5,11 +5,14 @@
 package routing;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import core.Connection;
+import core.DTNHost;
 import core.Message;
 import core.Settings;
+import util.Tuple;
 
 /**
  * Epidemic message router with drop-oldest buffer and only single transferring
@@ -62,24 +65,63 @@ public class APRouter extends ActiveRouter {
 	 * accepted a message.
 	 */
 	protected Connection tryMessagestoAps(){
-		List<Connection> connections = getConnections();
-		if (connections.size() == 0 || this.getNrofMessages() == 0) {
+		List<Connection> connections = getApConnected();
+
+		if (connections.size() == 0) {
 			return null;
 		}
-		List<Connection> apConnections = new ArrayList<Connection>();
-		for(Connection con : connections)
+
+		@SuppressWarnings(value = "unchecked")
+		Tuple<Message, Connection> t =
+			tryMessagesForConnected(sortByQueueMode(getMessagesForApConnected()));
+
+		if (t != null) {
+			return t.getValue(); // started transfer
+		}
+
+
+		return null;
+	}
+	
+	/**
+	 * Returns a list of connections this host currently has with other hosts.
+	 * @return a list of connections this host currently has with other hosts
+	 */
+	protected List<Connection> getApConnected() {
+		List<Connection> connections = new ArrayList<Connection>();
+		for(Connection con :  getHost().getConnections())
 		{
-			if(con.getOtherNode(getHost()).toString().startsWith("a")) {
-			System.out.println("APRouter "+con.getOtherNode(getHost()));
-			apConnections.add(con);
+			if(con.getOtherNode(getHost()).isStationary)
+				connections.add(con);
+		}
+		
+		return connections;
+	}
+	
+	/**
+	 * Returns a list of message-connections tuples of the messages whose
+	 * recipient is some host that we're connected to at the moment.
+	 * @return a list of message-connections tuples
+	 */
+	protected List<Tuple<Message, Connection>> getMessagesForApConnected() {
+		if (getNrofMessages() == 0 || getConnections().size() == 0) {
+			/* no messages -> empty list */
+			return new ArrayList<Tuple<Message, Connection>>(0);
+		}
+
+		List<Tuple<Message, Connection>> forTuples =
+			new ArrayList<Tuple<Message, Connection>>();
+		for (Message m : getMessageCollection()) {
+			for (Connection con : getConnections()) {
+				DTNHost to = con.getOtherNode(getHost());
+				DTNHost msgTo = getHost().attachmentPoints.get(m.getTo());
+				if(msgTo==to&&to.isStationary) {
+					forTuples.add(new Tuple<Message, Connection>(m,con));
+				}
 			}
 		}
 
-		List<Message> messages =
-			new ArrayList<Message>(this.getMessageCollection());
-		this.sortByQueueMode(messages);
-
-		return tryMessagesToConnections(messages, apConnections);
+		return forTuples;
 	}
 
 
