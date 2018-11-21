@@ -8,11 +8,6 @@ Scenario.simulateConnections = true
 Scenario.updateInterval = 0.1
 # 43200s == 12h
 Scenario.endTime = 43200
-Scenario.nrofServices = 100
-
-# Define new application
-auctionApp.type = AuctionApplication
-auctionApp.auctionPeriod = 10.0
 
 ## Interface-specific settings:
 # type : which interface class the interface belongs to
@@ -41,11 +36,6 @@ backhaul.transmitRange = 10000
 
 # Define 6 different node groups
 Scenario.nrofHostGroups = 6
-
-# Define number of Services
-Scenario.nrofServices = 2
-
-Service.executionTime = 10.0
 
 ## Group-specific settings:
 # groupID : Group's identifier. Used as the prefix of host names

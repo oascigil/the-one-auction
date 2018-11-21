@@ -64,7 +64,7 @@ Service.executionTime = 10.0
 
 # Common settings for all groups
 Group.movementModel = ShortestPathMapBasedMovement
-Group.router = EpidemicRouter
+Group.router = DeliverToBS
 #Group.router = DirectDeliveryRouter
 Group.bufferSize = 5M
 Group.waitTime = 0, 120

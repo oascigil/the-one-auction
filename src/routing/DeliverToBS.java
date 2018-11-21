@@ -1,8 +1,13 @@
 package routing;
 
 import core.Settings;
+import core.Connection;
 import core.DTNHost;
+import core.Message;
+
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 /** 
 * Router that will deliver messages to the closest connected Stationary node, if there the To address is empty.
 * Otherwise, route message to the intended destination.
@@ -20,8 +25,26 @@ public class DeliverToBS extends ActiveRouter {
 
     @Override
     public void update() {
-        super.update();
+    	super.update();
+		if (isTransferring() || !canStartTransfer()) {
+			return; // transferring, don't try other connections yet
+		}
+
+		// Try first the messages that can be delivered to final recipient
+		if (exchangeDeliverableMessages() != null) {
+			return; // started a transfer, don't try others (yet)
+		}
+
+		// then try any/all message to any/all connection
+		this.tryAllMessagesToAllConnections();
     }
+	
+	@Override
+	protected void transferDone(Connection con) {
+		Message m = con.getMessage();
+		this.deleteMessage(m.getId(), false); // delete from buffer
+	}
+
 	
     @Override
 	public DeliverToBS replicate() {

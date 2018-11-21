@@ -78,8 +78,8 @@ public class AuctionApplication extends Application {
 	 */
 	@Override
 	public Message handle(Message msg, DTNHost host) {
-		System.out.println("Auction app received "+msg.getId());
 		String type = (String)msg.getProperty("type");
+		//System.out.println("Auction app received "+msg.getId()+" "+type);
 		if (type==null) return msg; // Not a ping/pong message
 
         if (type.equalsIgnoreCase("clientAuctionRequest")) {
@@ -106,20 +106,34 @@ public class AuctionApplication extends Application {
     }
 
     private void execute_auction(DTNHost host) {
-        int len = Math.min(clientRequests.size(), serverRequests.size());
+        //int len = Math.min(clientRequests.size(), serverRequests.size());
+		//System.out.println("Execute action "+clientRequests.size()+" "+serverRequests.size()+" "+len);
         double currTime = SimClock.getTime();
-        for (int indx = 0; indx < len; indx++)
+        
+        for(int indx= 0; indx < clientRequests.size();indx++)
         {
             Message clientMsg = clientRequests.get(indx);
-            Message serverMsg = serverRequests.get(indx);
-            //Send an Auction response to the clientApp
-            Message m = new Message(host, clientMsg.getFrom(), clientMsg.getId(), this.auctionMsgSize);
-            m.addProperty("type", "clientAuctionResponse");
-            m.addProperty("auctionResult", serverMsg.getFrom());
-            m.setAppID(ClientApp.APP_ID);
-			host.createNewMessage(m);
-			super.sendEventToListeners("SentClientAuctionResponse", null, host);
+            for(int i=0;i<serverRequests.size();i++)
+            {
+            	if(clientMsg.getFrom()!=serverRequests.get(i).getFrom())
+            	{
+            		Message serverMsg = serverRequests.get(i);
+                    //Send an Auction response to the clientApp
+                    Message m = new Message(host, clientMsg.getFrom(), clientMsg.getId(), this.auctionMsgSize);
+                    m.addProperty("type", "clientAuctionResponse");
+                    m.addProperty("auctionResult", serverMsg.getFrom());
+                    m.setAppID(ClientApp.APP_ID);
+        			host.createNewMessage(m);
+        			System.out.println(SimClock.getTime()+" Execute action from "+host+" to "+ clientMsg.getFrom()+" with result "+serverMsg.getFrom()+" "+clientMsg.getId());
+        			super.sendEventToListeners("SentClientAuctionResponse", null, host);
+        			serverRequests.remove(i);
+        			break;
+            	}
+            }
+         
         }
+        clientRequests.clear();
+
         this.lastAuctionTime = currTime;
         this.clientRequests.clear();
         this.serverRequests.clear();

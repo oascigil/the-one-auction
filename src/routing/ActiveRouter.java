@@ -361,6 +361,7 @@ public abstract class ActiveRouter extends MessageRouter {
 			for (Connection con : getConnections()) {
 				DTNHost to = con.getOtherNode(getHost());
 				if (m.getTo() == to) {
+					//System.out.println(getHost()+ " send message "+m.getId()+" type "+m.getProperty("type")+" "+m.getTo());
 					forTuples.add(new Tuple<Message, Connection>(m,con));
 				}
 			}

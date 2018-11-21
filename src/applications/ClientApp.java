@@ -76,7 +76,7 @@ public class ClientApp extends Application {
 	 * @param host	host to which the application instance is attached
 	 */
     public Message handle(Message msg, DTNHost host) {
-		System.out.println("Client app received "+msg.getId());
+		System.out.println("Client app received "+msg.getId()+" "+msg.getProperty("type")+" "+msg.getTo());
 		String type = (String)msg.getProperty("type");
         DTNHost serverHost = (DTNHost) msg.getProperty("auctionResult");
 		if (type==null) return msg; 
@@ -88,6 +88,7 @@ public class ClientApp extends Application {
             m.addProperty("serviceType", this.lastRequestedService);
             m.setAppID(ServerApp.APP_ID);
 			host.createNewMessage(m);
+            System.out.println(SimClock.getTime()+" Client app "+host+" sent message "+m.getId()+" to "+m.getTo());
 			super.sendEventToListeners("GotAuctionResult", null, host);
 			super.sendEventToListeners("SentClientRequest", null, host);
         }
@@ -109,14 +110,14 @@ public class ClientApp extends Application {
         // TODO implement popularity distributions for services (Dennis has Zipf dist. code)
         if ((this.lastReqSentTime == 0.0) || (this.lastReqSentTime - currTime > this.reqSendingFreq)) {
             this.lastRequestedService = this.rng.nextInt(Application.nrofServices);
-            System.out.println("Destlist for service "+this.lastRequestedService);
+            //System.out.println("Destlist for service "+this.lastRequestedService);
             List<DTNHost> destList = DTNHost.auctioneers.get(this.lastRequestedService);
             //assertions are not enabled by default: use -ea flag
             assert (destList != null ) : "Tried to use a service with no auctioneers: " + this.lastRequestedService;
-            System.out.println("Destlist: " + DTNHost.auctioneers);
-            System.out.println("Service: " + this.lastRequestedService + " is empty");
-            System.out.println("Destlist: " + destList);
-            System.out.println("auctioneers: " + DTNHost.auctioneers);
+            //System.out.println("Destlist: " + DTNHost.auctioneers);
+            //System.out.println("Service: " + this.lastRequestedService + " is empty");
+            //System.out.println("Destlist: " + destList);
+            //System.out.println("auctioneers: " + DTNHost.auctioneers);
             //TODO pick the closest one
             DTNHost dest = destList.get(0);
             Message m = new Message(host, dest, "clientAuctionRequest" + host.getName(), 1);
@@ -124,6 +125,7 @@ public class ClientApp extends Application {
             m.addProperty("serviceType", lastRequestedService);
             m.setAppID(AuctionApplication.APP_ID);
 			host.createNewMessage(m);
+            System.out.println(currTime+" Client app "+host+" sent message "+m.getId()+" to "+m.getTo());
 			super.sendEventToListeners("SentClientAuctionRequest", null, host);
             this.lastReqSentTime = currTime;
         }

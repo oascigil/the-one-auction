@@ -81,7 +81,7 @@ public class ServerApp extends Application {
 	 */
 	@Override
 	public Message handle(Message msg, DTNHost host) {
-		System.out.println("Server app received "+msg.getId());
+		System.out.println(SimClock.getTime()+" Server app received "+msg.getId()+" "+msg.getProperty("type")+" "+msg.getTo());
 		String type = (String)msg.getProperty("type");
 		if (type==null) return msg; 
 
@@ -91,6 +91,7 @@ public class ServerApp extends Application {
             this.completionTime = SimClock.getTime() + Application.execTimes.get(service);
             this.isBusy = true;
             this.isServerAuctionRequestSent = false;
+            reqMsg = msg;
         }
         return null;
     }
@@ -110,6 +111,7 @@ public class ServerApp extends Application {
             m.setAppID(this.appId);
 			host.createNewMessage(m);
             m.setAppID(ClientApp.APP_ID);
+            System.out.println(SimClock.getTime()+" Server app "+host+" sent message "+m.getId()+" to "+m.getTo());
 			super.sendEventToListeners("SentExecResponse", null, host);
             this.isBusy = false;
         }
@@ -121,7 +123,7 @@ public class ServerApp extends Application {
                 List<DTNHost> destList = DTNHost.auctioneers.get(s);
                 
                 assert (destList != null ) : "Tried to use a service with no auctioneers: " + s;
-                System.out.println("Auction server "+destList.get(0));
+                //System.out.println("Auction server "+destList.get(0));
                 //TODO pick the closest one
                 DTNHost dest = destList.get(0);
                 Message m = new Message(host, dest, "serverAuctionRequest" + host.getName(), 1);
@@ -129,6 +131,7 @@ public class ServerApp extends Application {
                 m.addProperty("serviceTypes", s);
                 m.setAppID(AuctionApplication.APP_ID);
 	    		host.createNewMessage(m);
+	            System.out.println(SimClock.getTime()+" Server app "+host+" sent message "+m.getId()+" to "+m.getTo());
 		    	super.sendEventToListeners("SentServerAuctionRequest", null, host);
             }
         }

@@ -38,6 +38,12 @@ public class APRouter extends ActiveRouter {
 		super(r);
 		//TODO: copy epidemic settings here (if any)
 	}
+	
+	@Override
+	protected void transferDone(Connection con) {
+		Message m = con.getMessage();
+		this.deleteMessage(m.getId(), false); // delete from buffer
+	}
 
 	@Override
 	public void update() {
@@ -116,6 +122,7 @@ public class APRouter extends ActiveRouter {
 				DTNHost to = con.getOtherNode(getHost());
 				DTNHost msgTo = getHost().attachmentPoints.get(m.getTo());
 				if(msgTo==to&&to.isStationary) {
+					//System.out.println(getHost()+" APRouter send message "+m.getId()+" type "+m.getProperty("type")+" "+m.getTo());
 					forTuples.add(new Tuple<Message, Connection>(m,con));
 				}
 			}
