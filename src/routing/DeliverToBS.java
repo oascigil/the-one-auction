@@ -1,6 +1,7 @@
 package routing;
 
 import core.Settings;
+import core.SimClock;
 import core.Connection;
 import core.DTNHost;
 import core.Message;
@@ -39,12 +40,20 @@ public class DeliverToBS extends ActiveRouter {
 		this.tryAllMessagesToAllConnections();
     }
 	
-	@Override
+	/*@Override
 	protected void transferDone(Connection con) {
 		Message m = con.getMessage();
+		System.out.println(SimClock.getTime()+" Transfer done "+getHost()+" received "+m.getId()+" "+m.getProperty("type")+" from "+m.getFrom());
 		this.deleteMessage(m.getId(), false); // delete from buffer
+	}*/
+    
+	@Override
+	public Message messageTransferred(String id, DTNHost from) {
+		Message m = super.messageTransferred(id, from);
+		System.out.println(SimClock.getTime()+" DelivertoBS Transfer done "+getHost()+" from "+from+" received "+m.getId()+" "+m.getProperty("type")+" from "+m.getFrom());
+		from.getRouter().deleteMessage(m.getId(),false);
+		return m;
 	}
-
 	
     @Override
 	public DeliverToBS replicate() {

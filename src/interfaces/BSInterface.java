@@ -4,6 +4,7 @@ import java.util.Collection;
 import core.Connection;
 import core.NetworkInterface;
 import core.Settings;
+import core.SimClock;
 import core.VBRConnection;
 import core.DTNHost;
 
@@ -53,6 +54,8 @@ public class BSInterface extends DistanceCapacityInterface {
                 DTNHost fromHost = this.getHost();
                 DTNHost toHost = anotherInterface.getHost();
                 DTNHost mobileHost = null;
+				System.out.println(SimClock.getTime()+" Connection down from "+fromHost+" to "+toHost);
+
                 if (!fromHost.isStationary) 
                     mobileHost = fromHost;
                 else if (!toHost.isStationary) 
@@ -96,12 +99,31 @@ public class BSInterface extends DistanceCapacityInterface {
                 mobileHost = toHost;
                 stationaryHost = fromHost;
             }
-            DTNHost.attachmentPoints.put(mobileHost, stationaryHost);
+
         }
 
 		/* update all connections */
 		for (Connection con : getConnections()) {
 			con.update();
+		}
+	}
+	
+	/**
+	 * Tries to connect this host to another host. The other host must be
+	 * active and within range of this host for the connection to succeed.
+	 * @param anotherInterface The interface to connect to
+	 */
+	public void connect(NetworkInterface anotherInterface) {
+		if (isScanning()
+				&& anotherInterface.getHost().isRadioActive()
+				&& isWithinRange(anotherInterface)
+				&& !isConnected(anotherInterface)
+				&& (this != anotherInterface)) {
+			System.out.println(SimClock.getTime()+" Connection up from "+fromHost+" to "+toHost);
+            DTNHost.attachmentPoints.put(mobileHost, stationaryHost);
+			Connection con = new VBRConnection(this.host, this,
+					anotherInterface.getHost(), anotherInterface);
+			connect(con,anotherInterface);
 		}
 	}
 	

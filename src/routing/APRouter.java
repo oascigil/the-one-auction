@@ -12,6 +12,7 @@ import core.Connection;
 import core.DTNHost;
 import core.Message;
 import core.Settings;
+import core.SimClock;
 import util.Tuple;
 
 /**
@@ -39,12 +40,21 @@ public class APRouter extends ActiveRouter {
 		//TODO: copy epidemic settings here (if any)
 	}
 	
-	@Override
+	/*@Override
 	protected void transferDone(Connection con) {
 		Message m = con.getMessage();
+		System.out.println(SimClock.getTime()+" APRouter Transfer done "+getHost()+" received "+m.getId()+" "+m.getProperty("type")+" from "+m.getFrom());
 		this.deleteMessage(m.getId(), false); // delete from buffer
+	}*/
+	
+	@Override
+	public Message messageTransferred(String id, DTNHost from) {
+		Message m = super.messageTransferred(id, from);
+		System.out.println(SimClock.getTime()+" APRouter Transfer done "+getHost()+" from "+from+" received "+m.getId()+" "+m.getProperty("type")+" from "+m.getFrom());
+		from.getRouter().deleteMessage(m.getId(),false);
+		return m;
 	}
-
+	
 	@Override
 	public void update() {
 		super.update();
@@ -130,7 +140,6 @@ public class APRouter extends ActiveRouter {
 
 		return forTuples;
 	}
-
 
 
 	@Override

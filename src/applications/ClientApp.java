@@ -76,7 +76,7 @@ public class ClientApp extends Application {
 	 * @param host	host to which the application instance is attached
 	 */
     public Message handle(Message msg, DTNHost host) {
-		System.out.println("Client app received "+msg.getId()+" "+msg.getProperty("type")+" "+msg.getTo());
+		System.out.println(SimClock.getTime()+ " Client app "+host+" received "+msg.getId()+" "+msg.getProperty("type")+" "+msg.getTo());
 		String type = (String)msg.getProperty("type");
         DTNHost serverHost = (DTNHost) msg.getProperty("auctionResult");
 		if (type==null) return msg; 
@@ -95,6 +95,7 @@ public class ClientApp extends Application {
 		if (msg.getTo()==host && type.equalsIgnoreCase("execResponse")) {
         
         }
+        host.getMessageCollection().remove(msg);
 
         return null;
     }

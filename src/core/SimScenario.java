@@ -340,7 +340,7 @@ public class SimScenario implements Serializable {
         
         //Read the services
         ArrayList<Double> execTimes = new ArrayList<Double>();
-		for (int i=1; i<=nrofServices; i++) {
+		for (int i=0; i<nrofServices; i++) {
 			Settings s = new Settings(SERVICE_NS+i);
 			s.setSecondaryNamespace(SERVICE_NS);
 			double exec_time = s.getDouble(SERVICE_EXECTIME_S);

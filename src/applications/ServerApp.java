@@ -81,7 +81,7 @@ public class ServerApp extends Application {
 	 */
 	@Override
 	public Message handle(Message msg, DTNHost host) {
-		System.out.println(SimClock.getTime()+" Server app received "+msg.getId()+" "+msg.getProperty("type")+" "+msg.getTo());
+		System.out.println(SimClock.getTime()+" Server app "+host+" received "+msg.getId()+" "+msg.getProperty("type")+" "+msg.getTo());
 		String type = (String)msg.getProperty("type");
 		if (type==null) return msg; 
 
@@ -93,6 +93,8 @@ public class ServerApp extends Application {
             this.isServerAuctionRequestSent = false;
             reqMsg = msg;
         }
+        host.getMessageCollection().remove(msg);
+
         return null;
     }
 

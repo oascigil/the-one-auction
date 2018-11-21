@@ -79,16 +79,17 @@ public class AuctionApplication extends Application {
 	@Override
 	public Message handle(Message msg, DTNHost host) {
 		String type = (String)msg.getProperty("type");
+		System.out.println(SimClock.getTime()+" Auction app "+host+" received "+msg.getId()+" "+msg.getProperty("type")+" from "+msg.getFrom());
 		//System.out.println("Auction app received "+msg.getId()+" "+type);
 		if (type==null) return msg; // Not a ping/pong message
 
         if (type.equalsIgnoreCase("clientAuctionRequest")) {
             clientRequests.add(msg.replicate());
         }
-        
         if (type.equalsIgnoreCase("serverAuctionRequest")) {
             serverRequests.add(msg.replicate());
         }
+        host.getMessageCollection().remove(msg);
 
         return null;
     }
@@ -124,7 +125,7 @@ public class AuctionApplication extends Application {
                     m.addProperty("auctionResult", serverMsg.getFrom());
                     m.setAppID(ClientApp.APP_ID);
         			host.createNewMessage(m);
-        			System.out.println(SimClock.getTime()+" Execute action from "+host+" to "+ clientMsg.getFrom()+" with result "+serverMsg.getFrom()+" "+clientMsg.getId());
+        			System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ clientMsg.getFrom()+" with result "+serverMsg.getFrom()+" "+clientMsg.getId());
         			super.sendEventToListeners("SentClientAuctionResponse", null, host);
         			serverRequests.remove(i);
         			break;

@@ -9,6 +9,9 @@ Scenario.updateInterval = 0.1
 # 43200s == 12h
 Scenario.endTime = 43200
 
+Events.nrof=0
+
+
 ## Interface-specific settings:
 # type : which interface class the interface belongs to
 # For different types, the sub-parameters are interface-specific
@@ -59,7 +62,7 @@ Scenario.nrofHostGroups = 6
 
 # Common settings for all groups
 Group.movementModel = ShortestPathMapBasedMovement
-Group.router = EpidemicRouter
+Group.router = DeliverToBS
 #Group.router = DirectDeliveryRouter
 Group.bufferSize = 5M
 Group.waitTime = 0, 120

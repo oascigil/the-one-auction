@@ -178,7 +178,7 @@ public abstract class MessageRouter {
 		            else {
 		                l.add(this.getHost());
 		            }
-		            //ßSystem.out.println("Add auction list "+l);
+		            //System.out.println("Add auction list "+l);
 		
 		            DTNHost.auctioneers.put(service, l);
 		
