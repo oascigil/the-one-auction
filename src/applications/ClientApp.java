@@ -30,6 +30,7 @@ public class ClientApp extends Application {
     private double reqSendingFreq;
     private double lastReqSentTime;
     private Random rng;
+    private int requestId = 1;
 
     public ClientApp(Settings s) {
         if (s.contains(REQUEST_MSG_SIZE_S)) {
@@ -121,7 +122,8 @@ public class ClientApp extends Application {
             //System.out.println("auctioneers: " + DTNHost.auctioneers);
             //TODO pick the closest one
             DTNHost dest = destList.get(0);
-            Message m = new Message(host, dest, "clientAuctionRequest" + host.getName(), 1);
+            Message m = new Message(host, dest, "clientAuctionRequest" + host.getName()+"-"+requestId, 1);
+            requestId++;
             m.addProperty("type", "clientAuctionRequest");
             m.addProperty("serviceType", lastRequestedService);
             m.setAppID(AuctionApplication.APP_ID);

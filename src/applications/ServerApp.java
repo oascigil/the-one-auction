@@ -34,7 +34,7 @@ public class ServerApp extends Application {
     public boolean isServerAuctionRequestSent;
 	/** Application ID */
 	public static final String APP_ID = "ucl.ServerApp";
-
+	private int requestId=1;
 	/**
 	 * Creates a new server application with the given settings.
 	 *
@@ -128,7 +128,8 @@ public class ServerApp extends Application {
                 //System.out.println("Auction server "+destList.get(0));
                 //TODO pick the closest one
                 DTNHost dest = destList.get(0);
-                Message m = new Message(host, dest, "serverAuctionRequest" + host.getName(), 1);
+                Message m = new Message(host, dest, "serverAuctionRequest" + host.getName()+"-"+requestId, 1);
+                requestId++;
                 m.addProperty("type", "serverAuctionRequest");
                 m.addProperty("serviceTypes", s);
                 m.setAppID(AuctionApplication.APP_ID);
