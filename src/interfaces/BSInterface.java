@@ -1,4 +1,4 @@
-package interfaces;
+	package interfaces;
 
 import java.util.Collection;
 import core.Connection;
@@ -100,6 +100,9 @@ public class BSInterface extends DistanceCapacityInterface {
                 stationaryHost = fromHost;
             }
 
+			//System.out.println(SimClock.getTime()+" Connection up from "+fromHost+" to "+toHost);
+            DTNHost.attachmentPoints.put(mobileHost, stationaryHost);
+
         }
 
 		/* update all connections */
@@ -119,8 +122,7 @@ public class BSInterface extends DistanceCapacityInterface {
 				&& isWithinRange(anotherInterface)
 				&& !isConnected(anotherInterface)
 				&& (this != anotherInterface)) {
-			System.out.println(SimClock.getTime()+" Connection up from "+fromHost+" to "+toHost);
-            DTNHost.attachmentPoints.put(mobileHost, stationaryHost);
+			
 			Connection con = new VBRConnection(this.host, this,
 					anotherInterface.getHost(), anotherInterface);
 			connect(con,anotherInterface);

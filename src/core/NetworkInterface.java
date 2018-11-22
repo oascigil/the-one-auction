@@ -317,7 +317,7 @@ abstract public class NetworkInterface implements ModuleCommunicationListener {
 	 */
 	protected void connect(Connection con, NetworkInterface anotherInterface) {
 		this.connections.add(con);
-		System.out.println(SimClock.getTime()+" NetworkInterface Connection up from "+this.host+" to "+anotherInterface.getHost());
+		//System.out.println(SimClock.getTime()+" NetworkInterface Connection up from "+this.host+" to "+anotherInterface.getHost());
 		notifyConnectionListeners(CON_UP, anotherInterface.getHost());
 
 		// set up bidirectional connection
