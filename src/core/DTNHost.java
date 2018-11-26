@@ -317,6 +317,14 @@ public class DTNHost implements Comparable<DTNHost> {
 		return null;
 	}
 
+    /** 
+    * Returns a hash code for this host
+    * (actually a hash of the String made of the name of host)
+    */
+    public int hashCode() {
+        return this.name.hashCode();
+    }
+
 	/**
 	 * Force a connection event
 	 */

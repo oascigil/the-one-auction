@@ -44,7 +44,6 @@ public class SimScenario implements Serializable {
 	public static final String SIM_CON_S = "simulateConnections";
 	/** number of services -setting id ({@value})*/
     public static final String NROF_SERVICES_S = "nrofServices";
-    /** period length of auction execution */
 
 	/** namespace for interface type settings ({@value}) */
 	public static final String INTTYPE_NS = "Interface";
@@ -80,6 +79,8 @@ public class SimScenario implements Serializable {
 	public static final String GAPPNAME_S = "application";
 	/** namespace for Service settings ({@value})*/
 	public static final String SERVICE_EXECTIME_S = "executionTime";
+	/** namespace for Service settings ({@value})*/
+	public static final String SERVICE_MIN_QOS_S = "minQoS";
 	/** number of VMs in the group -setting id ({@value})*/
 	//public static final String NROF_VM_S = "nrofVMs";
 
@@ -148,6 +149,8 @@ public class SimScenario implements Serializable {
 		Settings s = new Settings(SCENARIO_NS);
 		nrofGroups = s.getInt(NROF_GROUPS_S);
         nrofServices = s.getInt(NROF_SERVICES_S);
+        //auctionPeriod = s.getDouble(AUCTION_PERIOD_S);
+        //Application.auctionPeriod = auctionPeriod;
         Application.nrofServices = nrofServices; 
 
 		this.name = s.valueFillString(s.getSetting(NAME_S));
@@ -340,13 +343,17 @@ public class SimScenario implements Serializable {
         
         //Read the services
         ArrayList<Double> execTimes = new ArrayList<Double>();
+        ArrayList<Double> minQoSList = new ArrayList<Double>();
 		for (int i=0; i<nrofServices; i++) {
 			Settings s = new Settings(SERVICE_NS+i);
 			s.setSecondaryNamespace(SERVICE_NS);
 			double exec_time = s.getDouble(SERVICE_EXECTIME_S);
+			double minQoS = s.getDouble(SERVICE_MIN_QOS_S);
+            minQoSList.add(minQoS);
             execTimes.add(exec_time);
         }
         Application.execTimes = execTimes;
+        Application.minQoS = minQoSList;
         
 		for (int i=1; i<=nrofGroups; i++) {
 			List<NetworkInterface> interfaces =
@@ -407,7 +414,7 @@ public class SimScenario implements Serializable {
 					System.out.println("Server: "+protoApp.appID);
 					if (protoApp instanceof AuctionApplication) {
 						//System.out.println("HERE");
-						System.out.println("Add app "+((AuctionApplication) protoApp).getServiceType());
+						System.out.println("Add app "+((AuctionApplication) protoApp).getServiceTypes());
 					}
 					mRouterProto.addApplication(protoApp);
 				} catch (SettingsError se) {

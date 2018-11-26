@@ -7,29 +7,36 @@ import core.Settings;
 import core.SimClock;
 import core.SimScenario;
 import core.World;
+import core.Coord;
 import static java.lang.Math.min;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AuctionApplication extends Application {
-    /** Auction period length */
-    public static final String AUCTION_PERIOD_S = "auctionPeriod";
-    /** Auction service type (i.e., for application-specific auction) */
-    public static final String SERVICE_TYPE_S = "serviceType";
+    /** Service types for the Auction  */
+    public static final String SERVICE_TYPE_S = "serviceTypes";
+    /** Service types for the Auction  */
+    public static final double speedOfLight = 180000;
+    /** List of client request messages received during the current auctionPeriod */
+    public ArrayList<Message> clientRequests;
+    /** List of server request messages received during the current auctionPeriod */
+    public ArrayList<Message> serverRequests;
+
+    //Private vars
+    /** Minimum QoS Requirement of Services  */
+    private HashMap<Integer, Double> q_minPerLLA = new HashMap();
+    /** Upper-bound on the QoS Requirement of Services  */
+    private HashMap<Integer, Double> q_maxPerLLA = new HashMap();
+    /** Client/Server Application that this auction belongs to */
+    private int [] services;
     /** Last time that an auction was executed */
     private double lastAuctionTime;
-    /** Period duration (i.e., every AuctionPeriod sec., repeat the auction) */
-    private double auctionPeriod;
-    /** Client/Server Application that this auction belongs to */
-    private int serviceType;
-    /** List of client request messages received during the current auctionPeriod */
-    ArrayList<Message> clientRequests;
-    /** List of server request messages received during the current auctionPeriod */
-    ArrayList<Message> serverRequests;
+    /** Size of the message sent to auction */
+    private int auctionMsgSize;
 
+    // Static vars
 	/** Application ID */
 	public static final String APP_ID = "ucl.AuctionApplication";
-    //private vars
-    private int auctionMsgSize;
 
 	/**
 	 * Creates a new auction application with the given settings.
@@ -37,17 +44,14 @@ public class AuctionApplication extends Application {
 	 * @param s	Settings to use for initializing the application.
 	 */
     public AuctionApplication(Settings s) {
-        if (s.contains(AUCTION_PERIOD_S)) {
-            this.auctionPeriod = s.getDouble(AUCTION_PERIOD_S);
-        }
         if (s.contains(SERVICE_TYPE_S)) {
-            this.serviceType = s.getInt(SERVICE_TYPE_S);
+            this.services = s.getCsvInts(SERVICE_TYPE_S);
         }
-        System.out.println("New Service type "+serviceType);
-        this.lastAuctionTime = 0.0;
+        System.out.println("New Service types "+ this.services);
         this.clientRequests = new ArrayList<Message>();
         this.serverRequests = new ArrayList<Message>();
         this.auctionMsgSize = 10; //TODO read this from Settings
+        this.lastAuctionTime = 0.0;
 		super.setAppID(APP_ID);
     }
 	
@@ -62,7 +66,7 @@ public class AuctionApplication extends Application {
         this.lastAuctionTime = a.lastAuctionTime;
         this.clientRequests = a.clientRequests;
         this.serverRequests = a.serverRequests;
-        this.serviceType  = a.serviceType;
+        this.services = a.services;
     }
 	
     @Override
@@ -93,6 +97,7 @@ public class AuctionApplication extends Application {
 
         return null;
     }
+
 	/**
 	 * Pairs clients and servers through an auction
 	 *
@@ -103,6 +108,7 @@ public class AuctionApplication extends Application {
         double currTime = SimClock.getTime();
         if (currTime - this.lastAuctionTime > this.auctionPeriod) {
             execute_auction(host);
+            this.lastAuctionTime = currTime;
         }
     }
 
@@ -110,37 +116,90 @@ public class AuctionApplication extends Application {
         //int len = Math.min(clientRequests.size(), serverRequests.size());
 		//System.out.println("Execute action "+clientRequests.size()+" "+serverRequests.size()+" "+len);
         double currTime = SimClock.getTime();
-        
+        this.lastAuctionTime = currTime;
+        HashMap<Integer, ArrayList<DTNHost>>  LLAs_Users_Association = new HashMap();
+        HashMap<DTNHost, Integer>  user_LLA_Association = new HashMap();
+        HashMap<Integer, ArrayList<DTNHost>> LLAs_Devices_Association = new HashMap();
+        HashMap<DTNHost, ArrayList<Integer>> device_LLAs_Association = new HashMap();
+
+        assert (Application.nrofServices == Application.minQoS.size()) : "Discrepancy between nrofServices and minQoS size"; 
+        boolean controlMessageFlag = false, controlAuctionMessageFlag = false;
+
+        for(int indx : this.services)
+        {
+            double minQoS = Application.minQoS.get(indx);
+            q_minPerLLA.put(indx, minQoS);
+            q_maxPerLLA.put(indx, 100.0);
+        }
+
         for(int indx= 0; indx < clientRequests.size();indx++)
         {
             Message clientMsg = clientRequests.get(indx);
-            for(int i=0;i<serverRequests.size();i++)
-            {
-            	if(clientMsg.getFrom()!=serverRequests.get(i).getFrom())
-            	{
-            		Message serverMsg = serverRequests.get(i);
-                    //Send an Auction response to the clientApp
-                    Message m = new Message(host, clientMsg.getFrom(), clientMsg.getId(), this.auctionMsgSize);
-                    m.addProperty("type", "clientAuctionResponse");
-                    m.addProperty("auctionResult", serverMsg.getFrom());
-                    m.setAppID(ClientApp.APP_ID);
-        			host.createNewMessage(m);
-        			System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ clientMsg.getFrom()+" with result "+serverMsg.getFrom()+" "+clientMsg.getId());
-        			super.sendEventToListeners("SentClientAuctionResponse", null, host);
-        			serverRequests.remove(i);
-        			break;
-            	}
+            DTNHost clientHost = clientMsg.getFrom();
+            int serviceType = (int) clientMsg.getProperty("serviceType");
+            ArrayList<DTNHost> l = LLAs_Users_Association.get(serviceType);
+            if (l == null) {
+                l = new ArrayList<DTNHost>();
+                l.add(clientHost);
+                LLAs_Users_Association.put(serviceType, l);
             }
-         
+            else {
+                l.add(clientHost);
+            }
+            user_LLA_Association.put(clientHost, serviceType);
         }
-        clientRequests.clear();
 
-        this.lastAuctionTime = currTime;
+        for(int i=0;i<serverRequests.size();i++)
+        {
+            Message serverMsg = serverRequests.get(i);
+            DTNHost serverHost = serverMsg.getFrom();
+            int serviceType = (int) serverMsg.getProperty("serviceType");
+            ArrayList<DTNHost> devicesList = LLAs_Devices_Association.get(serviceType);
+            if (devicesList == null) {
+                devicesList = new ArrayList<DTNHost>();
+                devicesList.add(serverHost);
+                LLAs_Devices_Association.put(serviceType, devicesList);
+            }
+            else {
+                devicesList.add(serverHost);
+            }
+            ArrayList<Integer> deviceServices = device_LLAs_Association.get(serverHost);
+            if (deviceServices == null) {
+                deviceServices = new ArrayList<Integer>();
+                deviceServices.add(serviceType);
+                device_LLAs_Association.put(serverHost, deviceServices);
+            }
+            else {
+                deviceServices.add(serviceType);
+            }
+        }
+
+        HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency = new HashMap();
+        
+        for(int indx= 0; indx < clientRequests.size();indx++) { 
+            Message clientMsg = clientRequests.get(indx);
+            DTNHost clientHost = clientMsg.getFrom();
+            Coord clientCoord = clientHost.getLocation();
+            HashMap<DTNHost, Double> clientDistances = new HashMap();
+            user_device_Latency.put(clientHost, clientDistances);
+            for(int i=0;i<serverRequests.size();i++) {
+                Message serverMsg = serverRequests.get(i);
+                DTNHost serverHost = serverMsg.getFrom();
+                Coord serverCoord = serverHost.getLocation();
+                double dist = clientCoord.distance(serverCoord);
+                double latency = dist/this.speedOfLight;
+                clientDistances.put(serverHost, latency);
+            }
+        }
+        DEEM mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency);
+    	mechanism.createMarkets(controlMessageFlag);
+    	DEEM_Results results = mechanism.executeMechanism(controlMessageFlag,controlAuctionMessageFlag);
+
         this.clientRequests.clear();
         this.serverRequests.clear();
     }
 
-    public int getServiceType() {
-        return this.serviceType;
+    public int [] getServiceTypes() {
+        return this.services;
     }
 }

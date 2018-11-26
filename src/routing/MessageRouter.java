@@ -168,8 +168,18 @@ public abstract class MessageRouter {
 				//System.out.println("Apps1 "+app.appID);
 				if (app instanceof AuctionApplication) {
 		            //System.out.println("HERE");
-		            int service = ((AuctionApplication) app).getServiceType();
+		            int [] services = ((AuctionApplication) app).getServiceTypes();
 		            //System.out.println("Add auction type "+service);
+                    for (int s : services) {
+		                List<DTNHost> l = (List<DTNHost>) DTNHost.auctioneers.get(s);
+                        if (l == null) {
+                            l = new ArrayList<DTNHost>();
+                        }
+                        l.add(this.getHost());
+		                DTNHost.auctioneers.put(s, l);
+                    }
+                    /* OLD Code:
+
 		            List<DTNHost> l = (List<DTNHost>) DTNHost.auctioneers.get(service);
 		            if (l == null) {
 		                l = new ArrayList<DTNHost>();
@@ -181,12 +191,10 @@ public abstract class MessageRouter {
 		            //System.out.println("Add auction list "+l);
 		
 		            DTNHost.auctioneers.put(service, l);
-		
+		            */
 		        }
 			}
 		}
-		
-		
 	}
 
 	/**

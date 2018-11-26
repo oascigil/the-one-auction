@@ -126,6 +126,7 @@ public class ClientApp extends Application {
             requestId++;
             m.addProperty("type", "clientAuctionRequest");
             m.addProperty("serviceType", lastRequestedService);
+            m.addProperty("location", host.getLocation());
             m.setAppID(AuctionApplication.APP_ID);
 			host.createNewMessage(m);
             System.out.println(currTime+" Client app "+host+" sent message "+m.getId()+" to "+m.getTo());

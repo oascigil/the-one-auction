@@ -41,8 +41,9 @@ public abstract class Application {
 
     // Static vars related to services and auction
     public static int nrofServices;
+    public static int auctionPeriod;
     public static ArrayList<Double> execTimes;
-    public static double auctionPeriod = 10.0;
+    public static ArrayList<Double> minQoS;
 
 	public Application(){
 	}

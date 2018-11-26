@@ -132,6 +132,7 @@ public class ServerApp extends Application {
                 requestId++;
                 m.addProperty("type", "serverAuctionRequest");
                 m.addProperty("serviceTypes", s);
+                m.addProperty("location", host.getLocation());
                 m.setAppID(AuctionApplication.APP_ID);
 	    		host.createNewMessage(m);
 	            System.out.println(SimClock.getTime()+" Server app "+host+" sent message "+m.getId()+" to "+m.getTo());

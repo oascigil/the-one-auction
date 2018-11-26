@@ -90,14 +90,18 @@ with open((filename), 'r') as F:
             nf.write("Scenario.nrofServices = " + str(nrofServices) + "\n")
             for i in range(nrofServices):
                 nf.write("Service" + str(i) + ".executionTime = " + str(random.uniform(exec_time_low, exec_time_high)) + "\n")
+                nf.write("Service" + str(i) + ".minQoS = " + str(random.uniform(0, 100)) + "\n");
             nf.write("\n")
             
             nf.write("# auction app setttings\n")
+            nf.write("auctionApp0.type = AuctionApplication\n")
+            nf.write("auctionApp0.auctionPeriod = " + repr(auctionPeriod) + "\n")
+            nf.write("auctionApp0.serviceTypes = ")
             for i in range(nrofServices):
-                nf.write("auctionApp" + repr(i+1) + ".type = AuctionApplication\n")
-                nf.write("auctionApp" + repr(i+1) + ".auctionPeriod = " + repr(auctionPeriod) + "\n")
-                nf.write("auctionApp" + repr(i+1) + ".serviceType = " + str(i) + "\n\n")
-                auction_apps.append("auctionApp" + str(i+1))
+                auction_apps.append(str(i))
+                if i != nrofServices-1:
+                    nf.write(",")
+            nf.write("\n\n")
             
             nf.write("# Server apps\n")
             for i in range(nrofGroups):

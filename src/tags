@@ -20,14 +20,16 @@ ALPHA_S	routing/MaxPropRouter.java	/^	public static final String ALPHA_S = "alph
 APPCOUNT_S	core/SimScenario.java	/^	public static final String APPCOUNT_S = "nrofApplications";$/;"	f	class:SimScenario
 APPTYPE_NS	core/SimScenario.java	/^	public static final String APPTYPE_NS = "Application";$/;"	f	class:SimScenario
 APPTYPE_S	core/SimScenario.java	/^	public static final String APPTYPE_S = "type";$/;"	f	class:SimScenario
+APP_ID	applications/AuctionApplication.java	/^	public static final String APP_ID = "ucl.AuctionApplication";$/;"	f	class:AuctionApplication
+APP_ID	applications/ClientApp.java	/^	public static final String APP_ID = "ucl.ClientApp";$/;"	f	class:ClientApp
 APP_ID	applications/PingApplication.java	/^	public static final String APP_ID = "fi.tkk.netlab.PingApplication";$/;"	f	class:PingApplication
+APP_ID	applications/ServerApp.java	/^	public static final String APP_ID = "ucl.ServerApp";$/;"	f	class:ServerApp
 APP_PACKAGE	core/SimScenario.java	/^	private static final String APP_PACKAGE = "applications.";$/;"	f	class:SimScenario	file:
 APRouter	routing/APRouter.java	/^	protected APRouter(APRouter r) {$/;"	m	class:APRouter
 APRouter	routing/APRouter.java	/^	public APRouter(Settings s) {$/;"	m	class:APRouter
 APRouter	routing/APRouter.java	/^public class APRouter extends ActiveRouter {$/;"	c
 AT_HOME_MODE	movement/HomeActivityMovement.java	/^	private static final int AT_HOME_MODE = 1;$/;"	f	class:HomeActivityMovement	file:
 AT_OFFICE_MODE	movement/OfficeActivityMovement.java	/^	private static final int AT_OFFICE_MODE = 1;$/;"	f	class:OfficeActivityMovement	file:
-AUCTION_PERIOD_S	applications/AuctionApplication.java	/^    public static final String AUCTION_PERIOD_S = "auctionPeriod";$/;"	f	class:AuctionApplication
 AUTO_REFRESH_DELAY	gui/NodeChooser.java	/^	private static final int AUTO_REFRESH_DELAY = 100;$/;"	f	class:NodeChooser	file:
 AUTO_REFRESH_DELAY	gui/RoutingInfoWindow.java	/^	private static final int AUTO_REFRESH_DELAY = 1000;$/;"	f	class:RoutingInfoWindow	file:
 AbstractRouterTest	test/AbstractRouterTest.java	/^public abstract class AbstractRouterTest extends TestCase {$/;"	c
@@ -51,6 +53,7 @@ ArithmeticCondition	core/ArithmeticCondition.java	/^public class ArithmeticCondi
 AuctionApplication	applications/AuctionApplication.java	/^    public AuctionApplication(AuctionApplication a) {$/;"	m	class:AuctionApplication
 AuctionApplication	applications/AuctionApplication.java	/^    public AuctionApplication(Settings s) {$/;"	m	class:AuctionApplication
 AuctionApplication	applications/AuctionApplication.java	/^public class AuctionApplication extends Application {$/;"	c
+B	applications/VEDAuction.java	/^	DTNHost B[];\/\/B: set of bidders. integer IDs$/;"	f	class:VEDAuction
 BATCH_MODE_FLAG	core/DTNSim.java	/^	public static final String BATCH_MODE_FLAG = "-b";$/;"	f	class:DTNSim
 BETA_S	routing/ProphetRouter.java	/^	public static final String BETA_S = "beta";$/;"	f	class:ProphetRouter
 BETA_S	routing/ProphetRouterWithEstimation.java	/^	public static final String BETA_S = "beta";$/;"	f	class:ProphetRouterWithEstimation
@@ -150,6 +153,12 @@ CreatedMessagesReport	report/CreatedMessagesReport.java	/^	public CreatedMessage
 CreatedMessagesReport	report/CreatedMessagesReport.java	/^public class CreatedMessagesReport extends Report implements MessageListener {$/;"	c
 DAY_LENGTH	movement/HomeActivityMovement.java	/^	private static final int DAY_LENGTH = 86000;$/;"	f	class:HomeActivityMovement	file:
 DEBUG	core/Constants.java	/^	public static final boolean DEBUG = false;$/;"	f	class:Constants
+DEEM	applications/DEEM.java	/^	public DEEM(){$/;"	m	class:DEEM
+DEEM	applications/DEEM.java	/^	public DEEM(HashMap<Integer,Double> q_minPerLLA,$/;"	m	class:DEEM
+DEEM	applications/DEEM.java	/^class DEEM{$/;"	c
+DEEM_Results	applications/DEEM_Results.java	/^    public DEEM_Results() {$/;"	m	class:DEEM_Results
+DEEM_Results	applications/DEEM_Results.java	/^    public DEEM_Results(int numberOfIterations,HashMap<DTNHost,DTNHost> userDeviceAssociation,HashMap<DTNHost,Integer> deviceLLAExecution,HashMap<DTNHost,Double> p,HashMap<DTNHost,Double> QoSGainPerUser,HashMap<DTNHost,Double> QoSPerUser) {$/;"	m	class:DEEM_Results
+DEEM_Results	applications/DEEM_Results.java	/^public class DEEM_Results{$/;"	c
 DEFAULT_ALPHA	routing/MaxPropRouter.java	/^	public static final double DEFAULT_ALPHA = 1.0;$/;"	f	class:MaxPropRouter
 DEFAULT_ALPHA	routing/MaxPropRouterWithEstimation.java	/^	public static final double DEFAULT_ALPHA = 1.0;$/;"	f	class:MaxPropRouterWithEstimation
 DEFAULT_BETA	routing/ProphetRouter.java	/^	public static final double DEFAULT_BETA = 0.25;$/;"	f	class:ProphetRouter
@@ -308,6 +317,7 @@ FONT_SIZE	gui/playfield/ScaleReferenceGraphic.java	/^	private final int FONT_SIZ
 FONT_TYPE	gui/EventLogPanel.java	/^	private static final String FONT_TYPE = "monospaced";$/;"	f	class:EventLogPanel	file:
 FROM_RPOLICY_S	routing/util/MessageTransferAcceptPolicy.java	/^	public static final String FROM_RPOLICY_S = "fromReceivePolicy";$/;"	f	class:MessageTransferAcceptPolicy
 FROM_SPOLICY_S	routing/util/MessageTransferAcceptPolicy.java	/^	public static final String FROM_SPOLICY_S = "fromSendPolicy";$/;"	f	class:MessageTransferAcceptPolicy
+FindUnivAllocItems	applications/VEDAuction.java	/^	private ArrayList<DTNHost> FindUnivAllocItems(HashMap<DTNHost,ArrayList<DTNHost>> D,HashMap<DTNHost,DTNHost> X,boolean controlMessageFlag){$/;"	m	class:VEDAuction	file:
 FirstContactRouter	routing/FirstContactRouter.java	/^	protected FirstContactRouter(FirstContactRouter r) {$/;"	m	class:FirstContactRouter
 FirstContactRouter	routing/FirstContactRouter.java	/^	public FirstContactRouter(Settings s) {$/;"	m	class:FirstContactRouter
 FirstContactRouter	routing/FirstContactRouter.java	/^public class FirstContactRouter extends ActiveRouter {$/;"	c
@@ -354,6 +364,7 @@ HOST_RANGE_S	input/MessageEventGenerator.java	/^	public static final String HOST
 HomeActivityMovement	movement/HomeActivityMovement.java	/^	public HomeActivityMovement(HomeActivityMovement proto) {$/;"	m	class:HomeActivityMovement
 HomeActivityMovement	movement/HomeActivityMovement.java	/^	public HomeActivityMovement(Settings settings) {$/;"	m	class:HomeActivityMovement
 HomeActivityMovement	movement/HomeActivityMovement.java	/^public class HomeActivityMovement extends MapBasedMovement$/;"	c
+I	applications/VEDAuction.java	/^	DTNHost I[];\/\/I: set of items, integer IDs$/;"	f	class:VEDAuction
 ICON_FFW	gui/GUIControls.java	/^	private static final String ICON_FFW = "FastForward16.gif";$/;"	f	class:GUIControls	file:
 ICON_PAUSE	gui/GUIControls.java	/^	private static final String ICON_PAUSE = "Pause16.gif";$/;"	f	class:GUIControls	file:
 ICON_PLAY	gui/GUIControls.java	/^	private static final String ICON_PLAY = "Play16.gif";$/;"	f	class:GUIControls	file:
@@ -401,6 +412,8 @@ JumpSizeDistributionReport	report/JumpSizeDistributionReport.java	/^public final
 LINEAR_FORMATION_NS	movement/LinearFormation.java	/^	public static final String LINEAR_FORMATION_NS = "LinearFormation.";$/;"	f	class:LinearFormation
 LINEAR_MOVEMENT_NS	movement/LinearMovement.java	/^	public static final String LINEAR_MOVEMENT_NS = "LinearMovement.";$/;"	f	class:LinearMovement
 LINESTRING	input/WKTReader.java	/^	public static final String LINESTRING = "LINESTRING";$/;"	f	class:WKTReader
+LLAs_Devices_Association	applications/DEEM.java	/^	HashMap<Integer, ArrayList<DTNHost>>  LLAs_Devices_Association;$/;"	f	class:DEEM
+LLAs_Users_Association	applications/DEEM.java	/^	HashMap<Integer,ArrayList<DTNHost>>  LLAs_Users_Association;$/;"	f	class:DEEM
 LOCATION_S	movement/GridLocation.java	/^	public static final String LOCATION_S = "location";$/;"	f	class:GridLocation
 LOCATION_S	movement/StationaryMovement.java	/^	public static final String LOCATION_S = "nodeLocation";$/;"	f	class:StationaryMovement
 LOG_BUTTON_BG	gui/EventLogPanel.java	/^	private static final Color LOG_BUTTON_BG = Color.WHITE;$/;"	f	class:EventLogPanel	file:
@@ -690,6 +703,10 @@ ProphetV2Router	routing/ProphetV2Router.java	/^	public ProphetV2Router(Settings 
 ProphetV2Router	routing/ProphetV2Router.java	/^public class ProphetV2Router extends ActiveRouter {$/;"	c
 Q_MODE_FIFO	routing/MessageRouter.java	/^	public static final int Q_MODE_FIFO = 2;$/;"	f	class:MessageRouter
 Q_MODE_RANDOM	routing/MessageRouter.java	/^	public static final int Q_MODE_RANDOM = 1;$/;"	f	class:MessageRouter
+QoSGainPerUser	applications/DEEM.java	/^	private HashMap<DTNHost,Double> QoSGainPerUser(HashMap<DTNHost,DTNHost> userDeviceAssociation){$/;"	m	class:DEEM	file:
+QoSGainPerUser	applications/DEEM_Results.java	/^    public final HashMap<DTNHost,Double> QoSGainPerUser;$/;"	f	class:DEEM_Results
+QoSPerUser	applications/DEEM.java	/^	private HashMap<DTNHost,Double> QoSPerUser(HashMap<DTNHost, DTNHost> userDeviceAssociation){$/;"	m	class:DEEM	file:
+QoSPerUser	applications/DEEM_Results.java	/^    public final HashMap<DTNHost,Double> QoSPerUser;$/;"	f	class:DEEM_Results
 RANDOMIZE_UPDATES_S	core/World.java	/^	public static final String RANDOMIZE_UPDATES_S = "randomizeUpdateOrder";$/;"	f	class:World
 RANGE_DELIMETER	core/DTNSim.java	/^	public static final String RANGE_DELIMETER = ":";$/;"	f	class:DTNSim
 RANGE_ID	core/NetworkInterface.java	/^	public static final String RANGE_ID = "Network.radioRange";$/;"	f	class:NetworkInterface
@@ -752,8 +769,9 @@ SEND	input/StandardEventsReader.java	/^	public static final String SEND = "S";$/
 SENDING	input/MessageRelayEvent.java	/^	public static final int SENDING = 1;$/;"	f	class:MessageRelayEvent
 SEND_QUEUE_MODE_S	routing/MessageRouter.java	/^	public static final String SEND_QUEUE_MODE_S = "sendQueue";$/;"	f	class:MessageRouter
 SERVICE_EXECTIME_S	core/SimScenario.java	/^	public static final String SERVICE_EXECTIME_S = "executionTime";$/;"	f	class:SimScenario
+SERVICE_MIN_QOS_S	core/SimScenario.java	/^	public static final String SERVICE_MIN_QOS_S = "minQoS";$/;"	f	class:SimScenario
 SERVICE_NS	core/SimScenario.java	/^	public static final String SERVICE_NS = "Service";$/;"	f	class:SimScenario
-SERVICE_TYPE_S	applications/AuctionApplication.java	/^    public static final String SERVICE_TYPE_S = "serviceType";$/;"	f	class:AuctionApplication
+SERVICE_TYPE_S	applications/AuctionApplication.java	/^    public static final String SERVICE_TYPE_S = "serviceTypes";$/;"	f	class:AuctionApplication
 SERVICE_TYPE_S	applications/ServerApp.java	/^    public static final String SERVICE_TYPE_S = "serviceTypes";$/;"	f	class:ServerApp
 SETTINGS_NAMESPACE	input/EventQueueHandler.java	/^	public static final String SETTINGS_NAMESPACE = "Events";$/;"	f	class:EventQueueHandler
 SETTINGS_NAMESPACE	input/ExternalEventsQueue.java	/^	public static final String SETTINGS_NAMESPACE = "ExternalEvents";$/;"	f	class:ExternalEventsQueue
@@ -915,6 +933,12 @@ UpdateListener	core/UpdateListener.java	/^public interface UpdateListener {$/;"	
 VALID_OPERATORS	core/ArithmeticCondition.java	/^	private static final String VALID_OPERATORS = "><=";$/;"	f	class:ArithmeticCondition	file:
 VBRConnection	core/VBRConnection.java	/^   public VBRConnection(DTNHost fromNode, NetworkInterface fromInterface,$/;"	m	class:VBRConnection
 VBRConnection	core/VBRConnection.java	/^public class VBRConnection extends Connection {$/;"	c
+VEDAuction	applications/VEDAuction.java	/^    public VEDAuction(){$/;"	m	class:VEDAuction
+VEDAuction	applications/VEDAuction.java	/^    public VEDAuction(DTNHost[] B, DTNHost[] I,HashMap<DTNHost, HashMap<DTNHost, Double>> vMatrix,HashMap<DTNHost,Double> p,HashMap<DTNHost, Double> r, double dp, Integer defaulLocationIdentifier, Integer marketID){ $/;"	m	class:VEDAuction
+VEDAuction	applications/VEDAuction.java	/^class VEDAuction{$/;"	c
+VEDAuctionResult	applications/VEDAuctionResult.java	/^    public VEDAuctionResult() {$/;"	m	class:VEDAuctionResult
+VEDAuctionResult	applications/VEDAuctionResult.java	/^    public VEDAuctionResult(int numberOfIterations,HashMap<DTNHost, DTNHost> X,HashMap<DTNHost,Double> p) {$/;"	m	class:VEDAuctionResult
+VEDAuctionResult	applications/VEDAuctionResult.java	/^public class VEDAuctionResult {$/;"	c
 WAIT_TIME	movement/MovementModel.java	/^	public static final String WAIT_TIME = "waitTime";$/;"	f	class:MovementModel
 WALKING_HOME_MODE	movement/HomeActivityMovement.java	/^	private static final int WALKING_HOME_MODE = 0;$/;"	f	class:HomeActivityMovement	file:
 WALKING_TO_MEETING_SPOT_MODE	movement/EveningActivityMovement.java	/^	private static final int WALKING_TO_MEETING_SPOT_MODE = 0;$/;"	f	class:EveningActivityMovement	file:
@@ -944,6 +968,7 @@ WorkingDayMovement	movement/WorkingDayMovement.java	/^public class WorkingDayMov
 World	core/World.java	/^	public World(List<DTNHost> hosts, int sizeX, int sizeY,$/;"	m	class:World
 World	core/World.java	/^public class World {$/;"	c
 WorldTest	test/WorldTest.java	/^public class WorldTest extends TestCase {$/;"	c
+X	applications/VEDAuctionResult.java	/^    public final HashMap<DTNHost, DTNHost> X;\/\/Assignment$/;"	f	class:VEDAuctionResult
 X_COUNT_SETTING	report/NodeDensityReport.java	/^	public static final String X_COUNT_SETTING = "xCount";$/;"	f	class:NodeDensityReport
 X_POS	gui/playfield/ScaleReferenceGraphic.java	/^	private final int X_POS = 20;$/;"	f	class:ScaleReferenceGraphic	file:
 Y_COUNT_SETTING	report/NodeDensityReport.java	/^	public static final String Y_COUNT_SETTING = "yCount";$/;"	f	class:NodeDensityReport
@@ -1040,6 +1065,7 @@ allEventsRead	input/ExternalEventsQueue.java	/^	private boolean allEventsRead = 
 allHomes	movement/HomeActivityMovement.java	/^	private List<Coord> allHomes;$/;"	f	class:HomeActivityMovement	file:
 allHosts	report/AdjacencyGraphvizReport.java	/^	private Collection<DTNHost> allHosts;$/;"	f	class:AdjacencyGraphvizReport	file:
 allHosts	test/TestUtils.java	/^	private List<DTNHost> allHosts;$/;"	f	class:TestUtils	file:
+allLLAvMatrix	applications/DEEM.java	/^	HashMap<Integer ,HashMap<DTNHost, HashMap<DTNHost, Double>>> allLLAvMatrix; \/\/<LLA_ID,HashMap<user_id, HashMap<LLA_instances_device, Valuation>>>$/;"	f	class:DEEM
 allMembersPresent	movement/EveningTrip.java	/^	public boolean allMembersPresent() {$/;"	m	class:EveningTrip
 allNodes	gui/NodeChooser.java	/^	private List<DTNHost> allNodes;$/;"	f	class:NodeChooser	file:
 allOffices	movement/OfficeActivityMovement.java	/^	private List<Coord> allOffices;$/;"	f	class:OfficeActivityMovement	file:
@@ -1056,18 +1082,23 @@ appId	applications/ServerApp.java	/^	public String appId;$/;"	f	class:ServerApp
 appListeners	core/SimScenario.java	/^	private List<ApplicationListener> appListeners;$/;"	f	class:SimScenario	file:
 applications	applications/AuctionApplication.java	/^package applications;$/;"	p
 applications	applications/ClientApp.java	/^package applications;$/;"	p
+applications	applications/DEEM.java	/^package applications;$/;"	p
+applications	applications/DEEM_Results.java	/^package applications;$/;"	p
 applications	applications/PingApplication.java	/^package applications;$/;"	p
 applications	applications/ServerApp.java	/^package applications;$/;"	p
+applications	applications/VEDAuction.java	/^package applications;$/;"	p
+applications	applications/VEDAuctionResult.java	/^package applications;$/;"	p
 applications	routing/MessageRouter.java	/^	private HashMap<String, Collection<Application>> applications = null;$/;"	f	class:MessageRouter	file:
 areDisconnected	report/ContactsDuringAnICTReport.java	/^	private boolean[][] areDisconnected;$/;"	f	class:ContactsDuringAnICTReport	file:
 assertNrofUpdates	test/WorldTest.java	/^	private void assertNrofUpdates(int nrof) {$/;"	m	class:WorldTest	file:
 assertValidRange	core/Settings.java	/^	public void assertValidRange(int range[], String sname)$/;"	m	class:Settings
 attachmentPoint	routing/DeliverToBS.java	/^    public static HashMap<DTNHost, DTNHost> attachmentPoint;$/;"	f	class:DeliverToBS
 attachmentPoints	core/DTNHost.java	/^    public static HashMap<DTNHost, DTNHost> attachmentPoints;$/;"	f	class:DTNHost
+auctionExecution	applications/VEDAuction.java	/^	public VEDAuctionResult auctionExecution(boolean controlMessageFlag){$/;"	m	class:VEDAuction
 auctionMsgSize	applications/AuctionApplication.java	/^    private int auctionMsgSize;$/;"	f	class:AuctionApplication	file:
-auctionPeriod	applications/AuctionApplication.java	/^    private double auctionPeriod;$/;"	f	class:AuctionApplication	file:
-auctionPeriod	core/Application.java	/^    public static double auctionPeriod = 10.0;$/;"	f	class:Application
-auctioneers	core/DTNHost.java	/^    public static HashMap<DTNHost, DTNHost> auctioneers;$/;"	f	class:DTNHost
+auctionPeriod	core/Application.java	/^    public static int auctionPeriod;$/;"	f	class:Application
+auctioneers	core/DTNHost.java	/^    public static HashMap<Integer, List<DTNHost>> auctioneers;$/;"	f	class:DTNHost
+augmenting_paths_bfs	applications/VEDAuction.java	/^	private boolean augmenting_paths_bfs(HashMap<DTNHost,ArrayList<DTNHost>> D,ArrayList<DTNHost> E,HashMap<DTNHost, DTNHost> X_temp,boolean controlMessageFlag){$/;"	m	class:VEDAuction	file:
 autoClear	gui/playfield/PlayField.java	/^	private void autoClear() {$/;"	m	class:PlayField	file:
 autoClearOverlay	gui/SimMenuBar.java	/^	private JCheckBoxMenuItem autoClearOverlay;$/;"	f	class:SimMenuBar	file:
 autoClearOverlay	gui/playfield/PlayField.java	/^	private boolean autoClearOverlay;	\/\/ automatically clear overlay graphics$/;"	f	class:PlayField	file:
@@ -1168,7 +1199,7 @@ clearMsgOnFly	core/Connection.java	/^	protected void clearMsgOnFly() {$/;"	m	cla
 clearNodeFilters	gui/SimMenuBar.java	/^	private JMenuItem clearNodeFilters;$/;"	f	class:SimMenuBar	file:
 clearOverlay	gui/SimMenuBar.java	/^	private JMenuItem clearOverlay;$/;"	f	class:SimMenuBar	file:
 clearOverlays	gui/playfield/PlayField.java	/^	public void clearOverlays() {$/;"	m	class:PlayField
-clientRequests	applications/AuctionApplication.java	/^    ArrayList<Message> clientRequests;$/;"	f	class:AuctionApplication
+clientRequests	applications/AuctionApplication.java	/^    public ArrayList<Message> clientRequests;$/;"	f	class:AuctionApplication
 clock	core/SimClock.java	/^	private static SimClock clock = null;$/;"	f	class:SimClock	file:
 clock	test/AbstractRouterTest.java	/^	protected SimClock clock;$/;"	f	class:AbstractRouterTest
 clock	test/ActivenessHandlerTest.java	/^	private SimClock clock;$/;"	f	class:ActivenessHandlerTest	file:
@@ -1218,6 +1249,7 @@ conUpCheck	gui/EventLogPanel.java	/^	private EventLogControl conUpCheck;$/;"	f	c
 connect	core/DTNHost.java	/^	public void connect(DTNHost h) {$/;"	m	class:DTNHost
 connect	core/NetworkInterface.java	/^	protected void connect(Connection con, NetworkInterface anotherInterface) {$/;"	m	class:NetworkInterface
 connect	core/NetworkInterface.java	/^	public abstract void connect(NetworkInterface anotherInterface);$/;"	m	class:NetworkInterface
+connect	interfaces/BSInterface.java	/^	public void connect(NetworkInterface anotherInterface) {$/;"	m	class:BSInterface
 connect	interfaces/DistanceCapacityInterface.java	/^	public void connect(NetworkInterface anotherInterface) {$/;"	m	class:DistanceCapacityInterface
 connect	interfaces/InterferenceLimitedInterface.java	/^	public void connect(NetworkInterface anotherInterface) {$/;"	m	class:InterferenceLimitedInterface
 connect	interfaces/SimpleBroadcastInterface.java	/^	public void connect(NetworkInterface anotherInterface) {$/;"	m	class:SimpleBroadcastInterface
@@ -1296,6 +1328,7 @@ createHosts	core/SimScenario.java	/^	protected void createHosts() {$/;"	m	class:
 createHosts	test/WorldTest.java	/^		protected void createHosts() {$/;"	m	class:WorldTest.TestScenario
 createImageIcon	gui/GUIControls.java	/^	private ImageIcon createImageIcon(String path) {$/;"	m	class:GUIControls	file:
 createIntializedObject	core/Settings.java	/^	public Object createIntializedObject(String className) {$/;"	m	class:Settings
+createMarkets	applications/DEEM.java	/^	public void createMarkets(boolean controlMessageFlag){$/;"	m	class:DEEM
 createMenuItem	gui/SimMenuBar.java	/^	private JMenuItem createMenuItem(Container c, String txt) {$/;"	m	class:SimMenuBar	file:
 createNewMessage	core/DTNHost.java	/^	public void createNewMessage(Message m) {$/;"	m	class:DTNHost
 createNewMessage	routing/ActiveRouter.java	/^	public boolean createNewMessage(Message m) {$/;"	m	class:ActiveRouter
@@ -1332,6 +1365,8 @@ custodyFraction	routing/WaveRouter.java	/^	private double custodyFraction;$/;"	f
 custodyMessages	routing/WaveRouter.java	/^	private Map<String, Double> custodyMessages;$/;"	f	class:WaveRouter	file:
 d	test/ScheduleDijkstraTest.java	/^	ScheduleDijkstra d;$/;"	f	class:ScheduleDijkstraTest
 debugLevel	core/Debug.java	/^	private static int debugLevel = 0;$/;"	f	class:Debug	file:
+defaulLocationIdentifier	applications/DEEM.java	/^	static Integer defaulLocationIdentifier  = null; \/\/"veryVeryDistantCloud";$/;"	f	class:DEEM
+defaulLocationIdentifier	applications/VEDAuction.java	/^	Integer defaulLocationIdentifier;\/\/defaultLocationIdentifier: -1$/;"	f	class:VEDAuction
 delays	report/MessageDelayReport.java	/^	private List<Double> delays;$/;"	f	class:MessageDelayReport	file:
 deleteAckedMessages	routing/MaxPropRouter.java	/^	private void deleteAckedMessages() {$/;"	m	class:MaxPropRouter	file:
 deleteAckedMessages	routing/MaxPropRouterWithEstimation.java	/^	private void deleteAckedMessages() {$/;"	m	class:MaxPropRouterWithEstimation	file:
@@ -1350,6 +1385,9 @@ destMin	applications/PingApplication.java	/^	private int		destMin=0;$/;"	f	class
 destination	core/DTNHost.java	/^	private Coord destination;	\/\/ where is it going$/;"	f	class:DTNHost	file:
 destination	movement/EveningTrip.java	/^	private Coord destination;$/;"	f	class:EveningTrip	file:
 destroyConnection	core/NetworkInterface.java	/^	public void destroyConnection(NetworkInterface anotherInterface) {$/;"	m	class:NetworkInterface
+deviceLLAExecution	applications/DEEM.java	/^	HashMap<DTNHost, Integer> deviceLLAExecution;$/;"	f	class:DEEM
+deviceLLAExecution	applications/DEEM_Results.java	/^    public final HashMap<DTNHost,Integer> deviceLLAExecution;\/\/Assignment$/;"	f	class:DEEM_Results
+device_LLAs_Association	applications/DEEM.java	/^	HashMap<DTNHost, ArrayList<Integer>>  device_LLAs_Association;$/;"	f	class:DEEM
 dijkstra	routing/MaxPropRouter.java	/^	private MaxPropDijkstra dijkstra;$/;"	f	class:MaxPropRouter	file:
 dijkstra	routing/MaxPropRouterWithEstimation.java	/^	private MaxPropDijkstra dijkstra;$/;"	f	class:MaxPropRouterWithEstimation	file:
 disc	test/TotalContactTimeReportTest.java	/^	private void disc(DTNHost host) {$/;"	m	class:TotalContactTimeReportTest	file:
@@ -1390,6 +1428,8 @@ done	report/UniqueEncountersReport.java	/^	public void done() {$/;"	m	class:Uniq
 done	test/TotalContactTimeReportTest.java	/^	private void done() throws Exception {$/;"	m	class:TotalContactTimeReportTest	file:
 done	ui/DTNSimUI.java	/^	public void done() {$/;"	m	class:DTNSimUI
 doneTiming	core/Debug.java	/^	public static void doneTiming() {$/;"	m	class:Debug
+dp	applications/DEEM.java	/^	static double dp              = 1.0;$/;"	f	class:DEEM
+dp	applications/VEDAuction.java	/^	double dp;\/\/dp: price increment in price adjustment$/;"	f	class:VEDAuction
 draw	gui/playfield/MapGraphic.java	/^	public void draw(Graphics2D g2) {$/;"	m	class:MapGraphic
 draw	gui/playfield/MessageGraphic.java	/^	public void draw(Graphics2D g2) {$/;"	m	class:MessageGraphic
 draw	gui/playfield/NodeGraphic.java	/^	public void draw(Graphics2D g2) {$/;"	m	class:NodeGraphic
@@ -1450,8 +1490,10 @@ events	input/DTN2Events.java	/^	private Queue<ExternalEvent>	events;$/;"	f	class
 eventsFile	input/ExternalEventsQueue.java	/^	private File eventsFile;$/;"	f	class:ExternalEventsQueue	file:
 eventsLeft	input/BinaryEventsReader.java	/^	private int eventsLeft;$/;"	f	class:BinaryEventsReader	file:
 eventsLeftInBuffer	input/ExternalEventsQueue.java	/^	public int eventsLeftInBuffer() {$/;"	m	class:ExternalEventsQueue
+excessSupplyIdentification	applications/VEDAuction.java	/^	private void excessSupplyIdentification(HashMap<DTNHost,ArrayList<DTNHost>> D,HashMap<DTNHost, DTNHost> X, ArrayList<DTNHost> S,boolean controlMessageFlag){$/;"	m	class:VEDAuction	file:
 exchangeDeliverableMessages	routing/ActiveRouter.java	/^	protected Connection exchangeDeliverableMessages() {$/;"	m	class:ActiveRouter
 execTimes	core/Application.java	/^    public static ArrayList<Double> execTimes;$/;"	f	class:Application
+executeMechanism	applications/DEEM.java	/^	public DEEM_Results executeMechanism(boolean controlMessageFlag,boolean controlAuctionMessageFlag){$/;"	m	class:DEEM
 execute_auction	applications/AuctionApplication.java	/^    private void execute_auction(DTNHost host) {$/;"	m	class:AuctionApplication	file:
 farAway	test/AbstractRouterTest.java	/^	protected Coord farAway = new Coord(100000,100000);$/;"	f	class:AbstractRouterTest
 ffwButton	gui/GUIControls.java	/^	private JButton ffwButton;$/;"	f	class:GUIControls	file:
@@ -1461,6 +1503,7 @@ filterNode	gui/nodefilter/NodeFilter.java	/^	public boolean filterNode(DTNHost n
 filterNode	gui/nodefilter/NodeMessageFilter.java	/^	public boolean filterNode(DTNHost node) {$/;"	m	class:NodeMessageFilter
 filters	gui/NodeChooser.java	/^	private Vector<NodeFilter> filters;$/;"	f	class:NodeChooser	file:
 finalizeTransfer	core/Connection.java	/^	public void finalizeTransfer() {$/;"	m	class:Connection
+findTheDemandCorrespondence	applications/VEDAuction.java	/^	private void findTheDemandCorrespondence(HashMap<DTNHost,ArrayList<DTNHost>> D,boolean controlMessageFlag){$/;"	m	class:VEDAuction	file:
 firstStopIndex	movement/MapRouteMovement.java	/^	private int firstStopIndex = -1;$/;"	f	class:MapRouteMovement	file:
 fix	report/MovementNs2Report.java	/^	private String fix(double val) {$/;"	m	class:MovementNs2Report	file:
 fixFile	test/PointsOfInterestTest.java	/^	private String fixFile(String fileName) {$/;"	m	class:PointsOfInterestTest	file:
@@ -1469,6 +1512,7 @@ focusOnClick	gui/SimMenuBar.java	/^	private JCheckBoxMenuItem focusOnClick;$/;"	
 focusOnClick	gui/playfield/PlayField.java	/^	private boolean focusOnClick;$/;"	f	class:PlayField	file:
 font	gui/EventLogPanel.java	/^	private Font font;	\/\/ font used in log entries$/;"	f	class:EventLogPanel	file:
 forceConnection	core/DTNHost.java	/^	public void forceConnection(DTNHost anotherHost, String interfaceId,$/;"	m	class:DTNHost
+ford_Fulkerson	applications/VEDAuction.java	/^	private void ford_Fulkerson(HashMap<DTNHost,ArrayList<DTNHost>> D,$/;"	m	class:VEDAuction	file:
 format	report/Report.java	/^	protected String format(double value) {$/;"	m	class:Report
 from	core/Message.java	/^	private DTNHost from;$/;"	f	class:Message	file:
 from	gui/playfield/MessageGraphic.java	/^	private DTNHost from;$/;"	f	class:MessageGraphic	file:
@@ -1510,6 +1554,7 @@ getAllHosts	test/TestUtils.java	/^	public List<DTNHost> getAllHosts() {$/;"	m	cl
 getAllInterfaces	interfaces/ConnectivityGrid.java	/^	public Collection<NetworkInterface> getAllInterfaces() {$/;"	m	class:ConnectivityGrid
 getAllInterfaces	interfaces/ConnectivityOptimizer.java	/^	abstract public Collection<NetworkInterface> getAllInterfaces();$/;"	m	class:ConnectivityOptimizer
 getAllProbs	routing/maxprop/MeetingProbabilitySet.java	/^	public Map<Integer, Double> getAllProbs() {$/;"	m	class:MeetingProbabilitySet
+getApConnected	routing/APRouter.java	/^	protected List<Connection> getApConnected() {$/;"	m	class:APRouter
 getAppID	core/Application.java	/^	public String getAppID() {$/;"	m	class:Application
 getAppID	core/Message.java	/^	public String getAppID() {$/;"	m	class:Message
 getAppListeners	core/Application.java	/^	public List<ApplicationListener> getAppListeners(){$/;"	m	class:Application
@@ -1692,6 +1737,7 @@ getMessage	core/Connection.java	/^	public Message getMessage() {$/;"	m	class:Con
 getMessage	routing/MessageRouter.java	/^	protected Message getMessage(String id) {$/;"	m	class:MessageRouter
 getMessageCollection	core/DTNHost.java	/^	public Collection<Message> getMessageCollection() {$/;"	m	class:DTNHost
 getMessageCollection	routing/MessageRouter.java	/^	public Collection<Message> getMessageCollection() {$/;"	m	class:MessageRouter
+getMessagesForApConnected	routing/APRouter.java	/^	protected List<Tuple<Message, Connection>> getMessagesForApConnected() {$/;"	m	class:APRouter
 getMessagesForConnected	routing/ActiveRouter.java	/^	protected List<Tuple<Message, Connection>> getMessagesForConnected() {$/;"	m	class:ActiveRouter
 getMessagesWithCopiesLeft	routing/SprayAndWaitRouter.java	/^	protected List<Message> getMessagesWithCopiesLeft() {$/;"	m	class:SprayAndWaitRouter
 getMinBound	movement/map/SimMap.java	/^	public Coord getMinBound() {$/;"	m	class:SimMap
@@ -1800,6 +1846,7 @@ getScenarioName	report/Report.java	/^	protected String getScenarioName() {$/;"	m
 getSecondaryNameSpace	core/Settings.java	/^	public String getSecondaryNameSpace() {$/;"	m	class:Settings
 getSeed	applications/PingApplication.java	/^	public int getSeed() {$/;"	m	class:PingApplication
 getService	core/Message.java	/^    public int getService() {$/;"	m	class:Message
+getServiceTypes	applications/AuctionApplication.java	/^    public int [] getServiceTypes() {$/;"	m	class:AuctionApplication
 getSetting	core/Settings.java	/^	public String getSetting(String name) {$/;"	m	class:Settings
 getSetting	core/Settings.java	/^	public String getSetting(String name, String defaultValue) {$/;"	m	class:Settings
 getSettings	report/Report.java	/^	protected Settings getSettings() {$/;"	m	class:Report
@@ -1923,6 +1970,7 @@ hasEnergy	routing/ActiveRouter.java	/^	public boolean hasEnergy() {$/;"	m	class:
 hasMessage	routing/MessageRouter.java	/^	public boolean hasMessage(String id) {$/;"	m	class:MessageRouter
 hasNext	movement/Path.java	/^	public boolean hasNext() {$/;"	m	class:Path
 hashCode	core/Coord.java	/^	public int hashCode() {$/;"	m	class:Coord
+hashCode	core/DTNHost.java	/^    public int hashCode() {$/;"	m	class:DTNHost
 hashCode	report/AdjacencyGraphvizReport.java	/^		public int hashCode() {$/;"	m	class:AdjacencyGraphvizReport.ConnectionInfo
 hashCode	report/ContactTimesReport.java	/^		public int hashCode() {$/;"	m	class:ContactTimesReport.ConnectionInfo
 headingFont	gui/EventLogControlPanel.java	/^	private Font headingFont = new Font("sans",Font.BOLD,11);$/;"	f	class:EventLogControlPanel	file:
@@ -2076,7 +2124,7 @@ input	input/WKTMapReader.java	/^package input;$/;"	p
 input	input/WKTReader.java	/^package input;$/;"	p
 inputFileName	movement/ExternalMovement.java	/^	private static String inputFileName;$/;"	f	class:ExternalMovement	file:
 interfaceId	input/ConnectionEvent.java	/^	protected String interfaceId;$/;"	f	class:ConnectionEvent
-interfaces	interfaces/BSInterface.java	/^package interfaces;$/;"	p
+interfaces	interfaces/BSInterface.java	/^	package interfaces;$/;"	p
 interfaces	interfaces/ConnectivityGrid.java	/^		private ArrayList<NetworkInterface> interfaces;$/;"	f	class:ConnectivityGrid.GridCell	file:
 interfaces	interfaces/ConnectivityGrid.java	/^package interfaces;$/;"	p
 interfaces	interfaces/ConnectivityOptimizer.java	/^package interfaces;$/;"	p
@@ -2180,6 +2228,7 @@ lastRecord	report/SamplingReport.java	/^	private double lastRecord = Double.MIN_
 lastReportTime	report/Report.java	/^	private double lastReportTime;$/;"	f	class:Report	file:
 lastReportedTime	report/TotalContactTimeReport.java	/^	private double lastReportedTime;$/;"	f	class:TotalContactTimeReport	file:
 lastReqSentTime	applications/ClientApp.java	/^    private double lastReqSentTime;$/;"	f	class:ClientApp	file:
+lastRequestedService	applications/ClientApp.java	/^    private int lastRequestedService=0;$/;"	f	class:ClientApp	file:
 lastScanTime	core/NetworkInterface.java	/^	private double lastScanTime;$/;"	f	class:NetworkInterface	file:
 lastSimTime	gui/GUIControls.java	/^	private double lastSimTime;$/;"	f	class:GUIControls	file:
 lastTimeStamp	input/ExternalMovementReader.java	/^	private double lastTimeStamp = -1;$/;"	f	class:ExternalMovementReader	file:
@@ -2239,6 +2288,8 @@ map	test/MapBasedMovementTest.java	/^	private SimMap map;$/;"	f	class:MapBasedMo
 map	test/MapNodeTest.java	/^	private SimMap map;$/;"	f	class:MapNodeTest	file:
 mapGraphic	gui/playfield/PlayField.java	/^	private MapGraphic mapGraphic;$/;"	f	class:PlayField	file:
 mapping	test/MaxPropDijkstraTest.java	/^	private Map<Integer, MeetingProbabilitySet> mapping;$/;"	f	class:MaxPropDijkstraTest	file:
+marketID	applications/VEDAuction.java	/^	Integer marketID;$/;"	f	class:VEDAuction
+markets	applications/DEEM.java	/^	ArrayList<VEDAuction> markets;$/;"	f	class:DEEM
 max	util/Range.java	/^	private double max;$/;"	f	class:Range	file:
 maxBound	movement/map/SimMap.java	/^	private Coord maxBound;$/;"	f	class:SimMap	file:
 maxDistance	movement/RandomWalk.java	/^	private double maxDistance;$/;"	f	class:RandomWalk	file:
@@ -2260,6 +2311,7 @@ maxX	movement/MovementModel.java	/^	private int maxX;$/;"	f	class:MovementModel	
 maxY	input/ExternalMovementReader.java	/^	private double maxY;$/;"	f	class:ExternalMovementReader	file:
 maxY	input/ExternalPathMovementReader.java	/^	private double maxY;$/;"	f	class:ExternalPathMovementReader	file:
 maxY	movement/MovementModel.java	/^	private int maxY;$/;"	f	class:MovementModel	file:
+maximumLatency	applications/DEEM.java	/^	static double maximumLatency  = 100.0;\/\/in ms$/;"	f	class:DEEM
 mbm	test/MapBasedMovementTest.java	/^	private MapBasedMovement mbm;$/;"	f	class:MapBasedMovementTest	file:
 mc	test/AbstractRouterTest.java	/^	protected MessageChecker mc;$/;"	f	class:AbstractRouterTest
 mcl	test/ModuleCommunicationBusTest.java	/^	private ModuleCommunicationListener mcl;$/;"	f	class:ModuleCommunicationBusTest	file:
@@ -2326,7 +2378,9 @@ messageTransferred	report/MessageDeliveryReport.java	/^	public void messageTrans
 messageTransferred	report/MessageGraphvizReport.java	/^	public void messageTransferred(Message m, DTNHost from,$/;"	m	class:MessageGraphvizReport
 messageTransferred	report/MessageReport.java	/^	public void messageTransferred(Message m, DTNHost from, DTNHost to,$/;"	m	class:MessageReport
 messageTransferred	report/MessageStatsReport.java	/^	public void messageTransferred(Message m, DTNHost from, DTNHost to,$/;"	m	class:MessageStatsReport
+messageTransferred	routing/APRouter.java	/^	public Message messageTransferred(String id, DTNHost from) {$/;"	m	class:APRouter
 messageTransferred	routing/ActiveRouter.java	/^	public Message messageTransferred(String id, DTNHost from) {$/;"	m	class:ActiveRouter
+messageTransferred	routing/DeliverToBS.java	/^	public Message messageTransferred(String id, DTNHost from) {$/;"	m	class:DeliverToBS
 messageTransferred	routing/EpidemicOracleRouter.java	/^	public Message messageTransferred(String id, DTNHost from) {$/;"	m	class:EpidemicOracleRouter
 messageTransferred	routing/MaxPropRouter.java	/^	public Message messageTransferred(String id, DTNHost from) {$/;"	m	class:MaxPropRouter
 messageTransferred	routing/MaxPropRouterWithEstimation.java	/^	public Message messageTransferred(String id, DTNHost from) {$/;"	m	class:MaxPropRouterWithEstimation
@@ -2341,6 +2395,7 @@ minBound	movement/map/SimMap.java	/^	private Coord minBound;$/;"	f	class:SimMap	
 minDistance	movement/RandomWalk.java	/^	private double minDistance;$/;"	f	class:RandomWalk	file:
 minGroupSize	movement/EveningActivityMovement.java	/^	private int minGroupSize;$/;"	f	class:EveningActivityMovement	file:
 minPathLength	movement/MapBasedMovement.java	/^	protected int minPathLength = 10;$/;"	f	class:MapBasedMovement
+minQoS	core/Application.java	/^    public static ArrayList<Double> minQoS;$/;"	f	class:Application
 minSpeed	movement/MovementModel.java	/^	protected double minSpeed;$/;"	f	class:MovementModel
 minTime	input/ExternalMovementReader.java	/^	private double minTime;$/;"	f	class:ExternalMovementReader	file:
 minTime	input/ExternalPathMovementReader.java	/^	private double minTime;$/;"	f	class:ExternalPathMovementReader	file:
@@ -2349,6 +2404,7 @@ minX	input/ExternalMovementReader.java	/^	private double minX;$/;"	f	class:Exter
 minX	input/ExternalPathMovementReader.java	/^	private double minX;$/;"	f	class:ExternalPathMovementReader	file:
 minY	input/ExternalMovementReader.java	/^	private double minY;$/;"	f	class:ExternalMovementReader	file:
 minY	input/ExternalPathMovementReader.java	/^	private double minY;$/;"	f	class:ExternalPathMovementReader	file:
+minimumLatency	applications/DEEM.java	/^	static double minimumLatency  = 0.0;\/\/in ms$/;"	f	class:DEEM
 mirror	movement/map/SimMap.java	/^	public void mirror() {$/;"	m	class:SimMap
 ml	test/DistanceDelayReportTest.java	/^	private Vector<MessageListener> ml;$/;"	f	class:DistanceDelayReportTest	file:
 mode	movement/EveningActivityMovement.java	/^	private int mode;$/;"	f	class:EveningActivityMovement	file:
@@ -2579,6 +2635,8 @@ nrofTotENC	routing/MaxPropRouterWithEstimation.java	/^	private int nrofTotENC;$/
 nrofUpdate	test/TestDTNHost.java	/^	public int nrofUpdate = 0;$/;"	f	class:TestDTNHost
 nsCmd	report/MovementNs2Report.java	/^	private String nsCmd;$/;"	f	class:MovementNs2Report	file:
 number	core/ArithmeticCondition.java	/^	private double number;$/;"	f	class:ArithmeticCondition	file:
+numberOfIterations	applications/DEEM_Results.java	/^	public final int numberOfIterations;$/;"	f	class:DEEM_Results
+numberOfIterations	applications/VEDAuctionResult.java	/^	public final int numberOfIterations;$/;"	f	class:VEDAuctionResult
 numberOfTransmissions	interfaces/InterferenceLimitedInterface.java	/^	protected int numberOfTransmissions;$/;"	f	class:InterferenceLimitedInterface
 officeLocation	movement/OfficeActivityMovement.java	/^	private Coord officeLocation;$/;"	f	class:OfficeActivityMovement	file:
 officeMaxWaitTime	movement/OfficeActivityMovement.java	/^	private double officeMaxWaitTime;$/;"	f	class:OfficeActivityMovement	file:
@@ -2614,6 +2672,10 @@ outputRawData	report/JumpSizeDistributionReport.java	/^	private final boolean ou
 outputSetting	core/Settings.java	/^	private static void outputSetting(String setting) {$/;"	m	class:Settings	file:
 overlayGraphics	gui/playfield/PlayField.java	/^	private List<PlayFieldGraphic> overlayGraphics;$/;"	f	class:PlayField	file:
 ownCarProb	movement/WorkingDayMovement.java	/^	private double ownCarProb;$/;"	f	class:WorkingDayMovement	file:
+p	applications/DEEM.java	/^	HashMap<DTNHost, Double> p;\/\/device prices$/;"	f	class:DEEM
+p	applications/DEEM_Results.java	/^    public final HashMap<DTNHost,Double> p;$/;"	f	class:DEEM_Results
+p	applications/VEDAuction.java	/^	HashMap<DTNHost,Double> p;\/\/p: price array for each item$/;"	f	class:VEDAuction
+p	applications/VEDAuctionResult.java	/^    public final HashMap<DTNHost,Double> p;$/;"	f	class:VEDAuctionResult
 p	core/Debug.java	/^	public static void p(String txt) {$/;"	m	class:Debug
 p	core/Debug.java	/^	public static void p(String txt, int level) {$/;"	m	class:Debug
 p	core/Debug.java	/^	public static void p(String txt, int level, boolean timestamp) {$/;"	m	class:Debug
@@ -2676,6 +2738,7 @@ prevHops	routing/schedule/ScheduleDijkstra.java	/^	private Map<Integer, Schedule
 prevNodes	movement/map/DijkstraPathFinder.java	/^	private Map<MapNode, MapNode> prevNodes;$/;"	f	class:DijkstraPathFinder	file:
 prevNodes	routing/maxprop/MaxPropDijkstra.java	/^	private Map<Integer, Integer> prevNodes;$/;"	f	class:MaxPropDijkstra	file:
 previousLocations	report/JumpSizeDistributionReport.java	/^	private final Coord[] previousLocations;$/;"	f	class:JumpSizeDistributionReport	file:
+pricesForThisMarket	applications/DEEM.java	/^	private HashMap<DTNHost,Double> pricesForThisMarket(Integer LLA_ID){$/;"	m	class:DEEM	file:
 print	core/DTNSim.java	/^	private static void print(String txt) {$/;"	m	class:DTNSim	file:
 print	ui/DTNSimTextUI.java	/^	private void print(String txt) {$/;"	m	class:DTNSimTextUI	file:
 printHeader	report/DistanceDelayReport.java	/^	private void printHeader() {$/;"	m	class:DistanceDelayReport	file:
@@ -2707,9 +2770,15 @@ put	routing/schedule/ScheduleDijkstra.java	/^		public void put(Integer node, dou
 putSetting	test/TestSettings.java	/^	public void putSetting(String key, String value) {$/;"	m	class:TestSettings
 putToIncomingBuffer	routing/MessageRouter.java	/^	protected void putToIncomingBuffer(Message m, DTNHost from) {$/;"	m	class:MessageRouter
 putToQueue	input/ScheduledUpdatesQueue.java	/^	private void putToQueue(ExternalEvent ee) {$/;"	m	class:ScheduledUpdatesQueue	file:
+q_maxPerLLA	applications/AuctionApplication.java	/^    private HashMap<Integer, Double> q_maxPerLLA = new HashMap();$/;"	f	class:AuctionApplication	file:
+q_maxPerLLA	applications/DEEM.java	/^	HashMap<Integer, Double> q_maxPerLLA;$/;"	f	class:DEEM
+q_minPerLLA	applications/AuctionApplication.java	/^    private HashMap<Integer, Double> q_minPerLLA = new HashMap();$/;"	f	class:AuctionApplication	file:
+q_minPerLLA	applications/DEEM.java	/^	HashMap<Integer, Double> q_minPerLLA;$/;"	f	class:DEEM
 queue	input/ExternalEventsQueue.java	/^	private List<ExternalEvent> queue;$/;"	f	class:ExternalEventsQueue	file:
 queue	test/MessageChecker.java	/^	private ArrayList<MsgCheckerEvent> queue;$/;"	f	class:MessageChecker	file:
 queues	input/EventQueueHandler.java	/^	private List<EventQueue> queues;$/;"	f	class:EventQueueHandler	file:
+r	applications/DEEM.java	/^	HashMap<DTNHost, Double> r;\/\/device reserved prices$/;"	f	class:DEEM
+r	applications/VEDAuction.java	/^	HashMap<DTNHost, Double> r;\/\/r: reserved price array for each item$/;"	f	class:VEDAuction
 r	test/AdjacencyGraphvizReportTest.java	/^	private AdjacencyGraphvizReport r;$/;"	f	class:AdjacencyGraphvizReportTest	file:
 r	test/DijkstraPathFinderTest.java	/^	private DijkstraPathFinder r;$/;"	f	class:DijkstraPathFinderTest	file:
 r	test/DistanceDelayReportTest.java	/^	private DistanceDelayReport r;$/;"	f	class:DistanceDelayReportTest	file:
@@ -2882,7 +2951,10 @@ reqSendingFreq	applications/ClientApp.java	/^    private double reqSendingFreq;$
 requestDeliverableMessages	core/DTNHost.java	/^	public boolean requestDeliverableMessages(Connection con) {$/;"	m	class:DTNHost
 requestDeliverableMessages	routing/ActiveRouter.java	/^	public boolean requestDeliverableMessages(Connection con) {$/;"	m	class:ActiveRouter
 requestDeliverableMessages	routing/MessageRouter.java	/^	public boolean requestDeliverableMessages(Connection con) {$/;"	m	class:MessageRouter
+requestId	applications/ClientApp.java	/^    private int requestId = 1;$/;"	f	class:ClientApp	file:
+requestId	applications/ServerApp.java	/^	private int requestId=1;$/;"	f	class:ServerApp	file:
 requestMsg	core/Message.java	/^	private Message requestMsg;$/;"	f	class:Message	file:
+reservedPricesForThisMarket	applications/DEEM.java	/^	private HashMap<DTNHost,Double> reservedPricesForThisMarket(Integer LLA_ID){$/;"	m	class:DEEM	file:
 reset	core/DTNHost.java	/^	public static void reset() {$/;"	m	class:DTNHost
 reset	core/Message.java	/^	public static void reset() {$/;"	m	class:Message
 reset	core/NetworkInterface.java	/^	public static void reset() {$/;"	m	class:NetworkInterface
@@ -2907,6 +2979,7 @@ responseSize	input/MessageCreateEvent.java	/^	private int responseSize;$/;"	f	cl
 restoreNameSpace	core/Settings.java	/^	public void restoreNameSpace() {$/;"	m	class:Settings
 restoreSecondaryNamespace	core/Settings.java	/^	public void restoreSecondaryNamespace() {$/;"	m	class:Settings
 restoreSubNameSpace	core/Settings.java	/^	public void restoreSubNameSpace() {$/;"	m	class:Settings
+returnMarketID	applications/VEDAuction.java	/^	public Integer returnMarketID(){\/\/market ID equivelant to LLA ID$/;"	m	class:VEDAuction
 rng	applications/ClientApp.java	/^    private Random rng;$/;"	f	class:ClientApp	file:
 rng	applications/PingApplication.java	/^	private Random	rng;$/;"	f	class:PingApplication	file:
 rng	core/NetworkInterface.java	/^	private static Random rng;$/;"	f	class:NetworkInterface	file:
@@ -3006,10 +3079,10 @@ sentMessages	routing/MaxPropRouter.java	/^	private Map<DTNHost, Set<String>> sen
 sepsField	gui/GUIControls.java	/^	private JLabel sepsField;	\/\/ simulated events per second field$/;"	f	class:GUIControls	file:
 serialVersionUID	routing/schedule/ScheduleEntry.java	/^	private static final long serialVersionUID = 42L;$/;"	f	class:ScheduleEntry	file:
 serialVersionUID	routing/schedule/ScheduleOracle.java	/^	private static final long serialVersionUID = 42L;$/;"	f	class:ScheduleOracle	file:
-serverRequests	applications/AuctionApplication.java	/^    ArrayList<Message> serverRequests;$/;"	f	class:AuctionApplication
+serverRequests	applications/AuctionApplication.java	/^    public ArrayList<Message> serverRequests;$/;"	f	class:AuctionApplication
 service	core/Message.java	/^    private int service;$/;"	f	class:Message	file:
-serviceType	applications/AuctionApplication.java	/^    private int serviceType;$/;"	f	class:AuctionApplication	file:
-services	applications/ServerApp.java	/^    private ArrayList<Double> services;$/;"	f	class:ServerApp	file:
+services	applications/AuctionApplication.java	/^    private int [] services;$/;"	f	class:AuctionApplication	file:
+services	applications/ServerApp.java	/^    private ArrayList<Integer> services;$/;"	f	class:ServerApp	file:
 setAllHosts	report/AdjacencyGraphvizReport.java	/^	public void setAllHosts(Collection<DTNHost> hosts) {$/;"	m	class:AdjacencyGraphvizReport
 setAlpha	routing/maxprop/MeetingProbabilitySet.java	/^	public void setAlpha(double alpha) {$/;"	m	class:MeetingProbabilitySet
 setAppID	core/Application.java	/^	public void setAppID(String appID) {$/;"	m	class:Application
@@ -3190,6 +3263,7 @@ spacing	movement/GridLocation.java	/^	private double spacing;$/;"	f	class:GridLo
 speed	core/CBRConnection.java	/^	private int speed;$/;"	f	class:CBRConnection	file:
 speed	core/DTNHost.java	/^	private double speed;$/;"	f	class:DTNHost	file:
 speed	test/ConnectionTest.java	/^	private int speed[] = {50, 50, 100, 200, 100};$/;"	f	class:ConnectionTest	file:
+speedOfLight	applications/AuctionApplication.java	/^    public static final double speedOfLight = 180000;$/;"	f	class:AuctionApplication
 speeds	movement/Path.java	/^	private List<Double> speeds;$/;"	f	class:Path	file:
 stage	input/MessageRelayEvent.java	/^	private int stage;$/;"	f	class:MessageRelayEvent	file:
 start	input/ExternalPathMovementReader.java	/^		public double start;$/;"	f	class:ExternalPathMovementReader.ActiveTime
@@ -3563,6 +3637,7 @@ updateLocation	interfaces/ConnectivityGrid.java	/^	public void updateLocation(Ne
 updateLocation	interfaces/ConnectivityOptimizer.java	/^	abstract public void updateLocation(NetworkInterface ni);$/;"	m	class:ConnectivityOptimizer
 updateLogView	gui/EventLogPanel.java	/^	private void updateLogView() {$/;"	m	class:EventLogPanel	file:
 updateMap	input/WKTMapReader.java	/^	private void updateMap(List<Coord> coords) {$/;"	m	class:WKTMapReader	file:
+updateMarketParticipants	applications/VEDAuction.java	/^	public void updateMarketParticipants(DTNHost[] B, DTNHost[] I, HashMap<DTNHost, HashMap<DTNHost, Double>> vMatrix, HashMap<DTNHost,Double> p,HashMap<DTNHost, Double> r){$/;"	m	class:VEDAuction
 updateMeetingProbFor	routing/maxprop/MeetingProbabilitySet.java	/^	public void updateMeetingProbFor(Integer index) {$/;"	m	class:MeetingProbabilitySet
 updateMeetingProbFor	routing/maxprop/MeetingProbabilitySet.java	/^	public void updateMeetingProbFor(Integer index, double iet)	{$/;"	m	class:MeetingProbabilitySet
 updateOrder	core/World.java	/^	private ArrayList<DTNHost> updateOrder;$/;"	f	class:World	file:
@@ -3571,7 +3646,9 @@ updateParams	routing/ProphetRouterWithEstimation.java	/^	private void updatePara
 updatePlayfieldSettings	gui/SimMenuBar.java	/^	private void updatePlayfieldSettings() {$/;"	m	class:SimMenuBar	file:
 updateProperty	core/Message.java	/^	public void updateProperty(String key, Object value) throws SimError {$/;"	m	class:Message
 updateProperty	core/ModuleCommunicationBus.java	/^	public void updateProperty(String key, Object value) throws SimError {$/;"	m	class:ModuleCommunicationBus
+updateReservedPrices	applications/VEDAuction.java	/^	public void updateReservedPrices(HashMap<DTNHost, Double> r){\/\/market ID equivelant to LLA ID$/;"	m	class:VEDAuction
 updateShownNodes	gui/NodeChooser.java	/^	private void updateShownNodes() {$/;"	m	class:NodeChooser	file:
+updateTemporalAssignment	applications/VEDAuction.java	/^	private void updateTemporalAssignment(DTNHost destItemID,HashMap<DTNHost,DTNHost> X_temp,HashMap<DTNHost,DTNHost> BidderLabels,HashMap<DTNHost,DTNHost> ItemLabels){$/;"	m	class:VEDAuction	file:
 updateTransferredBytesAvg	routing/MaxPropRouter.java	/^	private void updateTransferredBytesAvg(int newValue) {$/;"	m	class:MaxPropRouter	file:
 updateTransferredBytesAvg	routing/MaxPropRouterWithEstimation.java	/^	private void updateTransferredBytesAvg(int newValue) {$/;"	m	class:MaxPropRouterWithEstimation	file:
 updateTransitivePreds	routing/ProphetRouter.java	/^	private void updateTransitivePreds(DTNHost host) {$/;"	m	class:ProphetRouter	file:
@@ -3596,6 +3673,11 @@ updated	report/UniqueEncountersReport.java	/^	public void updated(List<DTNHost> 
 updates	input/ScheduledUpdatesQueue.java	/^	private List<ExternalEvent> updates;$/;"	f	class:ScheduledUpdatesQueue	file:
 usageCount	routing/schedule/ScheduleEntry.java	/^	private int usageCount;$/;"	f	class:ScheduleEntry	file:
 useHourDisplay	gui/GUIControls.java	/^	private boolean useHourDisplay = false;$/;"	f	class:GUIControls	file:
+userDeviceAssociation	applications/DEEM.java	/^	HashMap<DTNHost, DTNHost> userDeviceAssociation;$/;"	f	class:DEEM
+userDeviceAssociation	applications/DEEM_Results.java	/^    public final HashMap<DTNHost,DTNHost> userDeviceAssociation;$/;"	f	class:DEEM_Results
+user_Device_QoSGain	applications/DEEM.java	/^	private double user_Device_QoSGain(Integer LLA_ID, DTNHost user_ID, DTNHost device_ID){$/;"	m	class:DEEM	file:
+user_LLA_Association	applications/DEEM.java	/^	HashMap<DTNHost,Integer>  user_LLA_Association;$/;"	f	class:DEEM
+user_device_Latency	applications/DEEM.java	/^	HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency;$/;"	f	class:DEEM
 util	util/ActivenessHandler.java	/^package util;$/;"	p
 util	util/ParetoRNG.java	/^package util;$/;"	p
 util	util/Range.java	/^package util;$/;"	p
@@ -3604,6 +3686,7 @@ utils	test/AbstractRouterTest.java	/^	protected TestUtils utils;$/;"	f	class:Abs
 utils	test/AdjacencyGraphvizReportTest.java	/^	private TestUtils utils;$/;"	f	class:AdjacencyGraphvizReportTest	file:
 utils	test/DistanceDelayReportTest.java	/^	private TestUtils utils;$/;"	f	class:DistanceDelayReportTest	file:
 utils	test/MessageGraphvizReportTest.java	/^	private TestUtils utils;$/;"	f	class:MessageGraphvizReportTest	file:
+vMatrix	applications/VEDAuction.java	/^	HashMap<DTNHost, HashMap<DTNHost, Double>> vMatrix;\/\/vMatrix: user valuation$/;"	f	class:VEDAuction
 value	util/Tuple.java	/^	private V value;$/;"	f	class:Tuple	file:
 valueFillString	core/Settings.java	/^	public String valueFillString(String input) {$/;"	m	class:Settings
 values	core/ModuleCommunicationBus.java	/^	private HashMap<String, Object> values;$/;"	f	class:ModuleCommunicationBus	file:
