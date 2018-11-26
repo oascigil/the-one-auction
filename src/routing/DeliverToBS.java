@@ -50,7 +50,7 @@ public class DeliverToBS extends ActiveRouter {
 	@Override
 	public Message messageTransferred(String id, DTNHost from) {
 		Message m = super.messageTransferred(id, from);
-		System.out.println(SimClock.getTime()+" DelivertoBS Transfer done "+getHost()+" from "+from+" received "+m.getId()+" "+m.getProperty("type")+" from "+m.getFrom());
+		//System.out.println(SimClock.getTime()+" DelivertoBS Transfer done "+getHost()+" from "+from+" received "+m.getId()+" "+m.getProperty("type")+" from "+m.getFrom());
 		from.getRouter().deleteMessage(m.getId(),false);
 		return m;
 	}

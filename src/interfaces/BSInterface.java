@@ -54,7 +54,7 @@ public class BSInterface extends DistanceCapacityInterface {
                 DTNHost fromHost = this.getHost();
                 DTNHost toHost = anotherInterface.getHost();
                 DTNHost mobileHost = null;
-				System.out.println(SimClock.getTime()+" Connection down from "+fromHost+" to "+toHost);
+				//System.out.println(SimClock.getTime()+" Connection down from "+fromHost+" to "+toHost);
 
                 if (!fromHost.isStationary) 
                     mobileHost = fromHost;

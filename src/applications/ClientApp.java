@@ -31,6 +31,7 @@ public class ClientApp extends Application {
     private double lastReqSentTime;
     private Random rng;
     private int requestId = 1;
+    private int taskId = 1;
 
     public ClientApp(Settings s) {
         if (s.contains(REQUEST_MSG_SIZE_S)) {
@@ -83,7 +84,8 @@ public class ClientApp extends Application {
 		if (type==null) return msg; 
 
 		if (msg.getTo()==host && type.equalsIgnoreCase("clientAuctionResponse")) {
-			String id = "TaskRequest" + SimClock.getIntTime() + "-" + serverHost.getAddress();
+			String id = "TaskRequest"+serverHost.getAddress()+"-"+host+"-"+taskId;
+			taskId++;
             Message m = new Message(host, serverHost, id, 1);
             m.addProperty("type", "clientRequest");
             m.addProperty("serviceType", this.lastRequestedService);
