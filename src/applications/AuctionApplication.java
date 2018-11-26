@@ -11,6 +11,7 @@ import core.Coord;
 import static java.lang.Math.min;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class AuctionApplication extends Application {
     /** Service types for the Auction  */
@@ -19,14 +20,16 @@ public class AuctionApplication extends Application {
     public static final double speedOfLight = 180000;
     /** List of client request messages received during the current auctionPeriod */
     public ArrayList<Message> clientRequests;
+    /** Mapping of client host to the last request message received during the current auctionPeriod */
+    public HashMap<DTNHost, Message> clientHostToMessage;
     /** List of server request messages received during the current auctionPeriod */
     public ArrayList<Message> serverRequests;
 
     //Private vars
     /** Minimum QoS Requirement of Services  */
-    private HashMap<Integer, Double> q_minPerLLA = new HashMap();
+    private HashMap<Integer, Double> q_minPerLLA; // = new HashMap();
     /** Upper-bound on the QoS Requirement of Services  */
-    private HashMap<Integer, Double> q_maxPerLLA = new HashMap();
+    private HashMap<Integer, Double> q_maxPerLLA; // = new HashMap();
     /** Client/Server Application that this auction belongs to */
     private int [] services;
     /** Last time that an auction was executed */
@@ -50,8 +53,11 @@ public class AuctionApplication extends Application {
         System.out.println("New Service types "+ this.services);
         this.clientRequests = new ArrayList<Message>();
         this.serverRequests = new ArrayList<Message>();
+        this.clientHostToMessage = new HashMap<DTNHost, Message>();
         this.auctionMsgSize = 10; //TODO read this from Settings
         this.lastAuctionTime = 0.0;
+        this.q_minPerLLA = new HashMap<Integer, Double>();
+        this.q_maxPerLLA = new HashMap<Integer, Double>();
 		super.setAppID(APP_ID);
     }
 	
@@ -66,7 +72,10 @@ public class AuctionApplication extends Application {
         this.lastAuctionTime = a.lastAuctionTime;
         this.clientRequests = a.clientRequests;
         this.serverRequests = a.serverRequests;
+        this.clientHostToMessage = a.clientHostToMessage;
         this.services = a.services;
+        this.q_minPerLLA = a.q_minPerLLA;
+        this.q_maxPerLLA = a.q_maxPerLLA;
     }
 	
     @Override
@@ -88,7 +97,9 @@ public class AuctionApplication extends Application {
 		if (type==null) return msg; // Not a ping/pong message
 
         if (type.equalsIgnoreCase("clientAuctionRequest")) {
-            clientRequests.add(msg.replicate());
+            Message clientMsg = msg.replicate();
+            clientHostToMessage.put(clientMsg.getFrom(), clientMsg);
+            clientRequests.add(clientMsg);
         }
         if (type.equalsIgnoreCase("serverAuctionRequest")) {
             serverRequests.add(msg.replicate());
@@ -194,7 +205,21 @@ public class AuctionApplication extends Application {
         DEEM mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency);
     	mechanism.createMarkets(controlMessageFlag);
     	DEEM_Results results = mechanism.executeMechanism(controlMessageFlag,controlAuctionMessageFlag);
-
+        //Send the messages back to the clients
+        for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
+            DTNHost client = entry.getKey();
+            DTNHost server = entry.getValue();
+            Message clientMsg = this.clientHostToMessage.get(server);
+            String msgId = new String("AuctionResponse_" + client.getName());
+            Message m = new Message(host, client, msgId, this.auctionMsgSize);
+            m.addProperty("type", "clientAuctionResponse");
+            m.addProperty("auctionResult", server);
+            m.setAppID(AuctionApplication.APP_ID);
+            host.createNewMessage(m);
+            System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ client+" with result "+server+" "+ msgId);
+            super.sendEventToListeners("SentClientAuctionResponse", null, host);
+        }
+        this.clientHostToMessage.clear();
         this.clientRequests.clear();
         this.serverRequests.clear();
     }

@@ -97,8 +97,9 @@ with open((filename), 'r') as F:
             nf.write("auctionApp0.type = AuctionApplication\n")
             nf.write("auctionApp0.auctionPeriod = " + repr(auctionPeriod) + "\n")
             nf.write("auctionApp0.serviceTypes = ")
+            auction_apps.append("auctionApp0")
             for i in range(nrofServices):
-                auction_apps.append(str(i))
+                nf.write(str(i))
                 if i != nrofServices-1:
                     nf.write(",")
             nf.write("\n\n")

@@ -39,12 +39,30 @@ class VEDAuction{
 	//Constructor------------------
     public VEDAuction(DTNHost[] B, DTNHost[] I,HashMap<DTNHost, HashMap<DTNHost, Double>> vMatrix,HashMap<DTNHost,Double> p,HashMap<DTNHost, Double> r, double dp, Object defaulLocationIdentifier, Integer marketID){ 
    		this.B = B.clone();
-		this.I = I.clone();
+        if (I != null) {
+		    this.I = I.clone();
+        }
+        else {
+            this.I = null;
+        }
 		this.vMatrix = new HashMap(vMatrix);
-		this.p = new HashMap(p);
-		this.r = new HashMap(r);
-		for (DTNHost itemID:I){
-			if (this.p.get(itemID)<this.r.get(itemID))this.p.put(itemID,this.r.get(itemID));//the initial price is greater or equal to reserved price
+        if (p!=null) {
+		    this.p = new HashMap(p);
+        }
+        else {
+            this.p = null;
+        }
+        if (r!=null) {
+		    this.r = new HashMap(r);
+        }
+        else {
+            this.r = null;
+        }
+        if (I != null)
+        {
+		    for (DTNHost itemID:I){
+			    if (this.p.get(itemID)<this.r.get(itemID))this.p.put(itemID,this.r.get(itemID));//the initial price is greater or equal to reserved price
+            }
 		}
 		this.dp   = dp;
 		this.defaulLocationIdentifier = defaulLocationIdentifier;
@@ -64,11 +82,13 @@ class VEDAuction{
 	}
 	public void updateReservedPrices(HashMap<DTNHost, Double> r){//market ID equivelant to LLA ID
 		this.r=r;
-		for (DTNHost itemID:r.keySet()){
-			if (p.get(itemID)<r.get(itemID)){
-				p.put(itemID,r.get(itemID));
-			}
-		}
+        if (r != null) {
+    		for (DTNHost itemID:r.keySet()){
+	    		if (p.get(itemID)<r.get(itemID)){
+		    		p.put(itemID,r.get(itemID));
+			    }
+		    }
+        }
 	}
 	//-----------------------------------Get/Set methods
 	//Functions-----------------------------------------
@@ -132,18 +152,20 @@ class VEDAuction{
 			ArrayList<DTNHost> bidderDemandCorrespondence = new ArrayList<DTNHost>();
 			maxNetVal  = 0.0;
 			bidderDemandCorrespondence.add((DTNHost) defaulLocationIdentifier);
-			for (DTNHost itemID: I){//for each item
-				if (p.get(itemID)>=r.get(itemID)){//if item available
-					netVal  = vMatrix.get(bidderID).get(itemID)-p.get(itemID);//estimate bidder's net valuation for this item
-					if (netVal>maxNetVal){//clear temporal data structure of bidder's demand correspondence
-						bidderDemandCorrespondence.clear();
-						maxNetVal  = netVal;
-					}
-					if (netVal==maxNetVal){//if this item brings the maximum net valuation, include it in the temporal data structure
-						bidderDemandCorrespondence.add(itemID);
-					}
-				}
-			}
+            if (I != null) {
+			    for (DTNHost itemID: I){//for each item
+				    if (p.get(itemID)>=r.get(itemID)){//if item available
+					    netVal  = vMatrix.get(bidderID).get(itemID)-p.get(itemID);//estimate bidder's net valuation for this item
+					    if (netVal>maxNetVal){//clear temporal data structure of bidder's demand correspondence
+						    bidderDemandCorrespondence.clear();
+    						maxNetVal  = netVal;
+	    				}
+		    			if (netVal==maxNetVal){//if this item brings the maximum net valuation, include it in the temporal data structure
+			    			bidderDemandCorrespondence.add(itemID);
+				    	}
+    				}
+	    		}
+            }
 			D.put(bidderID,bidderDemandCorrespondence);//update demand correspondence
 			if (controlMessageFlag) System.out.println("\t\tUser "+bidderID+"'s D: "+D.get(bidderID)+", max net val: "+String.valueOf(maxNetVal));
 		}
@@ -275,11 +297,13 @@ class VEDAuction{
 		//positive excess demand set is identical to the universally allocated items with positive prices
 		ArrayList<DTNHost> U  = FindUnivAllocItems(D,X,controlMessageFlag);//universally allocated items with positive price
 		//excess supply
-		for(DTNHost itemID:I){//for each item
-			if ((p.get(itemID)>r.get(itemID))&&(!U.contains(itemID))){//if the item has a higher price than its reserved one and is not included in U
-				S.add(itemID);
-			}
-		}
+        if (I != null) {
+    		for(DTNHost itemID:I){//for each item
+	    		if ((p.get(itemID)>r.get(itemID))&&(!U.contains(itemID))){//if the item has a higher price than its reserved one and is not included in U
+		    		S.add(itemID);
+			    }
+		    }
+        }
 	}
 	private ArrayList<DTNHost> FindUnivAllocItems(HashMap<DTNHost,ArrayList<DTNHost>> D,HashMap<DTNHost,DTNHost> X,boolean controlMessageFlag){
 		ArrayList<DTNHost> U = new ArrayList<DTNHost>();//Universally allocated items with positive prices

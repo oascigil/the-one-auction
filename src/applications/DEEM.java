@@ -70,7 +70,7 @@ class DEEM{
 		this.user_device_Latency = new HashMap(user_device_Latency);
 		p  = new HashMap();
 		r  = new HashMap();
-		for(Integer LLA_ID: this.LLAs_Users_Association.keySet()){
+		for(Integer LLA_ID: this.LLAs_Devices_Association.keySet()){
 			for (DTNHost device_ID:this.LLAs_Devices_Association.get(LLA_ID)){
 				p.put(device_ID,0.0);
 				r.put(device_ID,0.0);
@@ -99,17 +99,29 @@ class DEEM{
 			if(controlMessageFlag) System.out.println(LLA_ID);
 			for(DTNHost user_ID:LLAs_Users_Association.get(LLA_ID)){
 				vMatrixForThisUser  = new HashMap();//for this user
-				for (DTNHost device_ID:LLAs_Devices_Association.get(LLA_ID)){
-					QoSGainValuation  = user_Device_QoSGain(LLA_ID,user_ID,device_ID);
-					p.put(device_ID,0.0);
-					vMatrixForThisUser.put(device_ID,QoSGainValuation);
-				}
+                ArrayList<DTNHost> devicesList = LLAs_Devices_Association.getOrDefault(LLA_ID, null);
+                if (devicesList != null) {
+				    //for (DTNHost device_ID:LLAs_Devices_Association.getOrDefault(LLA_ID, null)){
+				    for (DTNHost device_ID:devicesList){
+                        if (device_ID == null) 
+                            continue;
+					    QoSGainValuation  = user_Device_QoSGain(LLA_ID,user_ID,device_ID);
+					    p.put(device_ID,0.0);
+					    vMatrixForThisUser.put(device_ID,QoSGainValuation);
+				    }
+                }
 				if(controlMessageFlag) System.out.println("\tuser_ID: "+user_ID+", QoS gains valuation: "+vMatrixForThisUser.toString());
 				vMatrix.put(user_ID,vMatrixForThisUser);
 			}
 			//create market
 			B  = LLAs_Users_Association.get(LLA_ID).toArray(new DTNHost[LLAs_Users_Association.get(LLA_ID).size()]);
-			I  = LLAs_Devices_Association.get(LLA_ID).toArray(new DTNHost[LLAs_Devices_Association.get(LLA_ID).size()]);
+            ArrayList<DTNHost> devicesList = LLAs_Devices_Association.getOrDefault(LLA_ID, null);
+            if (devicesList != null) {
+    			I  = LLAs_Devices_Association.get(LLA_ID).toArray(new DTNHost[devicesList.size()]);
+            }
+            else {
+                I = null;
+            }
 			//if(controlMessageFlag) System.out.println("\tLLA: "+LLA_ID+", LLA-Users for this App: "+Arrays.toString(B));
 			//if(controlMessageFlag) System.out.println("\tLLA: "+LLA_ID+", LLA-Devices for this App: "+Arrays.toString(I));
 			marketID  = LLA_ID;
@@ -134,23 +146,32 @@ class DEEM{
 		return Math.round((term1+term2*Math.pow(term3,1.0/power))*q_maxPerLLA.get(LLA_ID)-q_minPerLLA.get(LLA_ID));
 	}
 	private HashMap<DTNHost,Double> pricesForThisMarket(Integer LLA_ID){
-		HashMap<DTNHost,Double> market_prices  = new HashMap();
-		for (DTNHost device_ID:LLAs_Devices_Association.get(LLA_ID)){
-			market_prices.put(device_ID,p.get(device_ID));
-		}
-		return market_prices;
+        
+        ArrayList<DTNHost> devicesList = LLAs_Devices_Association.getOrDefault(LLA_ID, null);
+        if (devicesList != null) {
+		    HashMap<DTNHost,Double> market_prices  = new HashMap();
+		    for (DTNHost device_ID:devicesList){
+			    market_prices.put(device_ID,p.get(device_ID));
+		    }
+		    return market_prices;
+        }
+        return null;
 	}
-	private HashMap<DTNHost,Double> reservedPricesForThisMarket(Integer LLA_ID){
-		HashMap<DTNHost,Double> market_reserved_prices  = new HashMap();
-		for (DTNHost device_ID:LLAs_Devices_Association.get(LLA_ID)){
-			if (deviceLLAExecution.get(device_ID)==LLA_ID){//if this is the most profitable market of the device, leave the reserved price as it is
-				market_reserved_prices.put(device_ID,r.get(device_ID));
-			}
-			else{//otherwise try to achieve in another market a slightly higher price
-				market_reserved_prices.put(device_ID,r.get(device_ID)+dp);
-			}
-		}
-		return market_reserved_prices;
+	private HashMap<DTNHost,Double> reservedPricesForThisMarket(Integer LLA_ID) {
+        ArrayList<DTNHost> devicesList = LLAs_Devices_Association.getOrDefault(LLA_ID, null);
+        if (devicesList != null) {
+		    HashMap<DTNHost,Double> market_reserved_prices  = new HashMap();
+		    for (DTNHost device_ID:devicesList){
+			    if (deviceLLAExecution.get(device_ID)==LLA_ID){//if this is the most profitable market of the device, leave the reserved price as it is
+				    market_reserved_prices.put(device_ID,r.get(device_ID));
+			    }
+			    else {//otherwise try to achieve in another market a slightly higher price
+				    market_reserved_prices.put(device_ID,r.get(device_ID)+dp);
+			    }
+		    }
+		    return market_reserved_prices;
+        }
+        return null;
 	}
 	//execute mechanism------------
 	public DEEM_Results executeMechanism(boolean controlMessageFlag,boolean controlAuctionMessageFlag){
@@ -181,18 +202,20 @@ class DEEM{
 				}
 				//Update device-LLA association only if price is higher, also update the reserved price accordingly
 				p_market        = auctionResult.p;//prices of devices from this market
-				for (DTNHost device_ID:p_market.keySet()){
-					if (p_market.get(device_ID)>p.get(device_ID)){//if the price of this device is higher than the one achieved in other markets and the item is assigned to a user
-						if (!setOfDevicesAssignedInTheMarket.contains(device_ID)){//if the device is not assigned
-							continue;//go to next
-						}
-						p.put(device_ID,p_market.get(device_ID));//update price
-						r.put(device_ID,p_market.get(device_ID));//update reserved price
-						deviceLLAExecution.put(device_ID,LLA_ID);//assign the device to this LLA
-						nextMarketExecutionIteration  = true;//re-execute the mechanism for each market
-						if (controlMessageFlag) System.out.println("device's: "+device_ID+", price increased to: "+String.valueOf(p.get(device_ID)));
-					}
-				}
+                if (p_market != null) {
+    				for (DTNHost device_ID:p_market.keySet()){
+	    				if (p_market.get(device_ID)>p.get(device_ID)){//if the price of this device is higher than the one achieved in other markets and the item is assigned to a user
+		    				if (!setOfDevicesAssignedInTheMarket.contains(device_ID)){//if the device is not assigned
+			    				continue;//go to next
+				    		}
+					    	p.put(device_ID,p_market.get(device_ID));//update price
+    						r.put(device_ID,p_market.get(device_ID));//update reserved price
+	    					deviceLLAExecution.put(device_ID,LLA_ID);//assign the device to this LLA
+		    				nextMarketExecutionIteration  = true;//re-execute the mechanism for each market
+			    			if (controlMessageFlag) System.out.println("device's: "+device_ID+", price increased to: "+String.valueOf(p.get(device_ID)));
+				    	}
+				    }
+                }
 				if (controlMessageFlag){
     				System.out.println("------------------Devices Update------------------");
     				System.out.println("Prices: "+p.toString());

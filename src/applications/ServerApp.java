@@ -131,7 +131,7 @@ public class ServerApp extends Application {
                 Message m = new Message(host, dest, "serverAuctionRequest" + host.getName()+"-"+requestId, 1);
                 requestId++;
                 m.addProperty("type", "serverAuctionRequest");
-                m.addProperty("serviceTypes", s);
+                m.addProperty("serviceType", s);
                 m.addProperty("location", host.getLocation());
                 m.setAppID(AuctionApplication.APP_ID);
 	    		host.createNewMessage(m);
