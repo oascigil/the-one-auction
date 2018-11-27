@@ -110,11 +110,13 @@ public class AuctionApplication extends Application {
 		if (type==null) return msg; // Not a ping/pong message
 
         if (type.equalsIgnoreCase("clientAuctionRequest")) {
+        	System.out.println(SimClock.getTime()+" New client request "+clientRequests.size());
             Message clientMsg = msg.replicate();
             clientHostToMessage.put(clientMsg.getFrom(), clientMsg);
             clientRequests.add(clientMsg);
         }
         if (type.equalsIgnoreCase("serverAuctionRequest")) {
+        	System.out.println(SimClock.getTime()+" New server offer "+serverRequests.size());
             serverRequests.add(msg.replicate());
         }
         host.getMessageCollection().remove(msg);
@@ -216,6 +218,7 @@ public class AuctionApplication extends Application {
                 clientDistances.put(serverHost, latency);
             }
         }
+        
         DEEM mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency);
     	mechanism.createMarkets(controlMessageFlag);
     	DEEM_Results results = mechanism.executeMechanism(controlMessageFlag,controlAuctionMessageFlag);
@@ -223,14 +226,14 @@ public class AuctionApplication extends Application {
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost client = entry.getKey();
             DTNHost server = entry.getValue();
-            Message clientMsg = this.clientHostToMessage.get(server);
+            Message clientMsg = this.clientHostToMessage.get(client);
             String msgId = new String("AuctionResponse_" + client.getName());
-            Message m = new Message(host, client, msgId, this.auctionMsgSize);
+            Message m = new Message(host, clientMsg.getFrom(), msgId, this.auctionMsgSize);
             m.addProperty("type", "clientAuctionResponse");
             m.addProperty("auctionResult", server);
-            m.setAppID(AuctionApplication.APP_ID);
+            m.setAppID(ClientApp.APP_ID);
             host.createNewMessage(m);
-            System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ client+" with result "+server+" "+ msgId);
+            System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
         this.clientHostToMessage.clear();

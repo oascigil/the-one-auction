@@ -403,11 +403,11 @@ public abstract class MessageRouter {
 
 		// Pass the message to the application (if any) and get outgoing message
 		Message outgoing = incoming;
-		//System.out.println("Sending msg to "+incoming.getId()+" "+incoming.getTo()+" "+incoming.getAppID());
+		//System.out.println("Sending msg to "+incoming.getId()+" "+incoming.getTo()+" "+incoming.getAppID()+" "+host);
 		for (Application app : getApplications(incoming.getAppID())) {
 			// Note that the order of applications is significant
 			// since the next one gets the output of the previous.
-			//System.out.println("App handle "+app);
+			System.out.println("App handle "+app);
 			outgoing = app.handle(outgoing, this.host);
 			if (outgoing == null) break; // Some app wanted to drop the message
 		}
