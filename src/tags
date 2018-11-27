@@ -934,7 +934,7 @@ VALID_OPERATORS	core/ArithmeticCondition.java	/^	private static final String VAL
 VBRConnection	core/VBRConnection.java	/^   public VBRConnection(DTNHost fromNode, NetworkInterface fromInterface,$/;"	m	class:VBRConnection
 VBRConnection	core/VBRConnection.java	/^public class VBRConnection extends Connection {$/;"	c
 VEDAuction	applications/VEDAuction.java	/^    public VEDAuction(){$/;"	m	class:VEDAuction
-VEDAuction	applications/VEDAuction.java	/^    public VEDAuction(DTNHost[] B, DTNHost[] I,HashMap<DTNHost, HashMap<DTNHost, Double>> vMatrix,HashMap<DTNHost,Double> p,HashMap<DTNHost, Double> r, double dp, Integer defaulLocationIdentifier, Integer marketID){ $/;"	m	class:VEDAuction
+VEDAuction	applications/VEDAuction.java	/^    public VEDAuction(DTNHost[] B, DTNHost[] I,HashMap<DTNHost, HashMap<DTNHost, Double>> vMatrix,HashMap<DTNHost,Double> p,HashMap<DTNHost, Double> r, double dp, Object defaulLocationIdentifier, Integer marketID){ $/;"	m	class:VEDAuction
 VEDAuction	applications/VEDAuction.java	/^class VEDAuction{$/;"	c
 VEDAuctionResult	applications/VEDAuctionResult.java	/^    public VEDAuctionResult() {$/;"	m	class:VEDAuctionResult
 VEDAuctionResult	applications/VEDAuctionResult.java	/^    public VEDAuctionResult(int numberOfIterations,HashMap<DTNHost, DTNHost> X,HashMap<DTNHost,Double> p) {$/;"	m	class:VEDAuctionResult
@@ -1199,6 +1199,7 @@ clearMsgOnFly	core/Connection.java	/^	protected void clearMsgOnFly() {$/;"	m	cla
 clearNodeFilters	gui/SimMenuBar.java	/^	private JMenuItem clearNodeFilters;$/;"	f	class:SimMenuBar	file:
 clearOverlay	gui/SimMenuBar.java	/^	private JMenuItem clearOverlay;$/;"	f	class:SimMenuBar	file:
 clearOverlays	gui/playfield/PlayField.java	/^	public void clearOverlays() {$/;"	m	class:PlayField
+clientHostToMessage	applications/AuctionApplication.java	/^    public HashMap<DTNHost, Message> clientHostToMessage;$/;"	f	class:AuctionApplication
 clientRequests	applications/AuctionApplication.java	/^    public ArrayList<Message> clientRequests;$/;"	f	class:AuctionApplication
 clock	core/SimClock.java	/^	private static SimClock clock = null;$/;"	f	class:SimClock	file:
 clock	test/AbstractRouterTest.java	/^	protected SimClock clock;$/;"	f	class:AbstractRouterTest
@@ -1365,8 +1366,8 @@ custodyFraction	routing/WaveRouter.java	/^	private double custodyFraction;$/;"	f
 custodyMessages	routing/WaveRouter.java	/^	private Map<String, Double> custodyMessages;$/;"	f	class:WaveRouter	file:
 d	test/ScheduleDijkstraTest.java	/^	ScheduleDijkstra d;$/;"	f	class:ScheduleDijkstraTest
 debugLevel	core/Debug.java	/^	private static int debugLevel = 0;$/;"	f	class:Debug	file:
-defaulLocationIdentifier	applications/DEEM.java	/^	static Integer defaulLocationIdentifier  = null; \/\/"veryVeryDistantCloud";$/;"	f	class:DEEM
-defaulLocationIdentifier	applications/VEDAuction.java	/^	Integer defaulLocationIdentifier;\/\/defaultLocationIdentifier: -1$/;"	f	class:VEDAuction
+defaulLocationIdentifier	applications/DEEM.java	/^	static Object defaulLocationIdentifier  = null; \/\/"veryVeryDistantCloud";$/;"	f	class:DEEM
+defaulLocationIdentifier	applications/VEDAuction.java	/^	Object defaulLocationIdentifier;\/\/defaultLocationIdentifier: -1$/;"	f	class:VEDAuction
 delays	report/MessageDelayReport.java	/^	private List<Double> delays;$/;"	f	class:MessageDelayReport	file:
 deleteAckedMessages	routing/MaxPropRouter.java	/^	private void deleteAckedMessages() {$/;"	m	class:MaxPropRouter	file:
 deleteAckedMessages	routing/MaxPropRouterWithEstimation.java	/^	private void deleteAckedMessages() {$/;"	m	class:MaxPropRouterWithEstimation	file:
@@ -2770,9 +2771,9 @@ put	routing/schedule/ScheduleDijkstra.java	/^		public void put(Integer node, dou
 putSetting	test/TestSettings.java	/^	public void putSetting(String key, String value) {$/;"	m	class:TestSettings
 putToIncomingBuffer	routing/MessageRouter.java	/^	protected void putToIncomingBuffer(Message m, DTNHost from) {$/;"	m	class:MessageRouter
 putToQueue	input/ScheduledUpdatesQueue.java	/^	private void putToQueue(ExternalEvent ee) {$/;"	m	class:ScheduledUpdatesQueue	file:
-q_maxPerLLA	applications/AuctionApplication.java	/^    private HashMap<Integer, Double> q_maxPerLLA = new HashMap();$/;"	f	class:AuctionApplication	file:
+q_maxPerLLA	applications/AuctionApplication.java	/^    private HashMap<Integer, Double> q_maxPerLLA; \/\/ = new HashMap();$/;"	f	class:AuctionApplication	file:
 q_maxPerLLA	applications/DEEM.java	/^	HashMap<Integer, Double> q_maxPerLLA;$/;"	f	class:DEEM
-q_minPerLLA	applications/AuctionApplication.java	/^    private HashMap<Integer, Double> q_minPerLLA = new HashMap();$/;"	f	class:AuctionApplication	file:
+q_minPerLLA	applications/AuctionApplication.java	/^    private HashMap<Integer, Double> q_minPerLLA; \/\/ = new HashMap();$/;"	f	class:AuctionApplication	file:
 q_minPerLLA	applications/DEEM.java	/^	HashMap<Integer, Double> q_minPerLLA;$/;"	f	class:DEEM
 queue	input/ExternalEventsQueue.java	/^	private List<ExternalEvent> queue;$/;"	f	class:ExternalEventsQueue	file:
 queue	test/MessageChecker.java	/^	private ArrayList<MsgCheckerEvent> queue;$/;"	f	class:MessageChecker	file:
@@ -2954,7 +2955,7 @@ requestDeliverableMessages	routing/MessageRouter.java	/^	public boolean requestD
 requestId	applications/ClientApp.java	/^    private int requestId = 1;$/;"	f	class:ClientApp	file:
 requestId	applications/ServerApp.java	/^	private int requestId=1;$/;"	f	class:ServerApp	file:
 requestMsg	core/Message.java	/^	private Message requestMsg;$/;"	f	class:Message	file:
-reservedPricesForThisMarket	applications/DEEM.java	/^	private HashMap<DTNHost,Double> reservedPricesForThisMarket(Integer LLA_ID){$/;"	m	class:DEEM	file:
+reservedPricesForThisMarket	applications/DEEM.java	/^	private HashMap<DTNHost,Double> reservedPricesForThisMarket(Integer LLA_ID) {$/;"	m	class:DEEM	file:
 reset	core/DTNHost.java	/^	public static void reset() {$/;"	m	class:DTNHost
 reset	core/Message.java	/^	public static void reset() {$/;"	m	class:Message
 reset	core/NetworkInterface.java	/^	public static void reset() {$/;"	m	class:NetworkInterface
@@ -3302,6 +3303,7 @@ takeBus	movement/BusTravellerMovement.java	/^	private boolean takeBus;$/;"	f	cla
 takeScreenShot	gui/GUIControls.java	/^	private void takeScreenShot() {$/;"	m	class:GUIControls	file:
 targetType	movement/LinearMovement.java	/^	private int targetType;$/;"	f	class:LinearMovement	file:
 targets	test/MaxPropDijkstraTest.java	/^	private Set<Integer> targets;$/;"	f	class:MaxPropDijkstraTest	file:
+taskId	applications/ClientApp.java	/^    private int taskId = 1;$/;"	f	class:ClientApp	file:
 tearDown	test/SettingsTest.java	/^	protected void tearDown() throws Exception {$/;"	m	class:SettingsTest
 tearDownAfterClass	test/DTNHostTest.java	/^  public static void tearDownAfterClass()$/;"	m	class:DTNHostTest
 tearDownAfterClass	test/MovementListenerTest.java	/^	public static void tearDownAfterClass()$/;"	m	class:MovementListenerTest
