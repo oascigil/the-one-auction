@@ -134,7 +134,7 @@ public class AuctionApplication extends Application {
         HashMap<DTNHost, ArrayList<Integer>> device_LLAs_Association = new HashMap();
 
         assert (Application.nrofServices == Application.minQoS.size()) : "Discrepancy between nrofServices and minQoS size"; 
-        boolean controlMessageFlag = false, controlAuctionMessageFlag = false;
+        boolean controlMessageFlag = true, controlAuctionMessageFlag = true;
 
         for(int indx : this.services)
         {

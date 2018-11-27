@@ -111,9 +111,9 @@ class VEDAuction{
     		//Step 2.a: identify the set of items in excess demand with maximum cardinality
     		ford_Fulkerson(D,X,E,controlMessageFlag);
     		//Step 2.b: Apply E-increase policy to items in excess demand (until elimination)
-    		if (controlMessageFlag)System.out.println("\titem prices BEFORE E-INCREASE: "+p.toString());
+    		if (controlMessageFlag && p!=null)System.out.println("\titem prices BEFORE E-INCREASE: "+p.toString());
     		for (DTNHost itemID:E) p.put(itemID,p.get(itemID)+dp);
-    		if (controlMessageFlag){
+    		if (controlMessageFlag && p!=null){
     			System.out.println("\tExcess demand set E: "+E.toString());
     			System.out.println("\titem prices AFTER E-INCREASE: "+p.toString());
     		}
@@ -123,15 +123,15 @@ class VEDAuction{
     		//Step 3.a: Identify the set of items in of excess supply with maximum cardinality
     		excessSupplyIdentification(D,X,S,controlMessageFlag);
     		//Step 3.b: Apply S-decrease policy to items in excess supply (until elimination)
-    		if (controlMessageFlag)System.out.println("\titem prices BEFORE S-DECREASE: "+p.toString());
+    		if (controlMessageFlag && p!=null)System.out.println("\titem prices BEFORE S-DECREASE: "+p.toString());
     		for (DTNHost itemID:S) p.put(itemID,p.get(itemID)-dp);
-    		if (controlMessageFlag){
+    		if (controlMessageFlag && p!=null){
     			System.out.println("\tExcess Supply set S: "+S.toString());
     			System.out.println("\titem prices AFTER S-DECREASE: "+p.toString());
     		}
     		if(S.size()==0){//if VCG equilibrium has been achieved
     			auctionResult  = new VEDAuctionResult(numberOfIterations,X,p);
-    			if (controlMessageFlag){
+    			if (controlMessageFlag && p!=null){
     				System.out.println("\t==================================================");
     				System.out.println("\tIterations#: "+numberOfIterations);
     				System.out.println("\tVCG Assignments: "+X.toString());
