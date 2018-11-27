@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AuctionApplication extends Application {
+    /** Auction period length */
+    public static final String AUCTION_PERIOD_S = "auctionPeriod";
     /** Service types for the Auction  */
     public static final String SERVICE_TYPE_S = "serviceTypes";
     /** Service types for the Auction  */
@@ -36,6 +38,8 @@ public class AuctionApplication extends Application {
     private double lastAuctionTime;
     /** Size of the message sent to auction */
     private int auctionMsgSize;
+    /** Frequency of auctions */
+    private double auctionPeriod;
 
     // Static vars
 	/** Application ID */
@@ -49,6 +53,15 @@ public class AuctionApplication extends Application {
     public AuctionApplication(Settings s) {
         if (s.contains(SERVICE_TYPE_S)) {
             this.services = s.getCsvInts(SERVICE_TYPE_S);
+        }
+        else {
+            System.out.println("Warning: Failed to set the service types in the AuctionApp");
+        }
+        if (s.contains(AUCTION_PERIOD_S)) {
+            this.auctionPeriod = s.getDouble(AUCTION_PERIOD_S);
+        }
+        else {
+            this.auctionPeriod = 1000; //1 second 
         }
         System.out.println("New Service types "+ this.services);
         this.clientRequests = new ArrayList<Message>();
@@ -118,6 +131,7 @@ public class AuctionApplication extends Application {
 	public void update(DTNHost host) {
         double currTime = SimClock.getTime();
         if (currTime - this.lastAuctionTime > this.auctionPeriod) {
+            System.out.println("Executing auction at time: " + currTime + "Auction Period: " + this.auctionPeriod);
             execute_auction(host);
             this.lastAuctionTime = currTime;
         }
@@ -134,7 +148,7 @@ public class AuctionApplication extends Application {
         HashMap<DTNHost, ArrayList<Integer>> device_LLAs_Association = new HashMap();
 
         assert (Application.nrofServices == Application.minQoS.size()) : "Discrepancy between nrofServices and minQoS size"; 
-        boolean controlMessageFlag = true, controlAuctionMessageFlag = true;
+        boolean controlMessageFlag = false, controlAuctionMessageFlag = false;
 
         for(int indx : this.services)
         {

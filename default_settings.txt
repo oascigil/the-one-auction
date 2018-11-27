@@ -231,7 +231,7 @@ Service2.minQoS = 4.4363334798
 
 # auction app setttings
 auctionApp0.type = AuctionApplication
-auctionApp0.auctionPeriod = 10.0
+auctionApp0.auctionPeriod = 1000.0
 auctionApp0.serviceTypes = 0,1,2
 
 # Server apps
