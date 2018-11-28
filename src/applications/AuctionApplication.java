@@ -226,6 +226,7 @@ public class AuctionApplication extends Application {
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost client = entry.getKey();
             DTNHost server = entry.getValue();
+            // Send a response back to the client
             Message clientMsg = this.clientHostToMessage.get(client);
             String msgId = new String("AuctionResponse_" + client.getName());
             Message m = new Message(host, clientMsg.getFrom(), msgId, this.auctionMsgSize);
@@ -235,6 +236,9 @@ public class AuctionApplication extends Application {
             host.createNewMessage(m);
             System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentClientAuctionResponse", null, host);
+
+            //Send a response back to the server
+
         }
         this.clientHostToMessage.clear();
         this.clientRequests.clear();

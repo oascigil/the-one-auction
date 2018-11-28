@@ -26,6 +26,7 @@ class DEEM{
 	HashMap<DTNHost, Double> p;//device prices
 	HashMap<DTNHost, Double> r;//device reserved prices
 	HashMap<DTNHost, DTNHost> userDeviceAssociation;
+	HashMap<DTNHost, DTNHost> deviceUserAssociation;
 	HashMap<DTNHost, Integer> deviceLLAExecution;
     // vMatrix: valuation of users to LLA instances for a specific LLA
 	HashMap<Integer ,HashMap<DTNHost, HashMap<DTNHost, Double>>> allLLAvMatrix; //<LLA_ID,HashMap<user_id, HashMap<LLA_instances_device, Valuation>>>
@@ -49,6 +50,7 @@ class DEEM{
 		p  = new HashMap();
 		r  = new HashMap();
 		userDeviceAssociation = new HashMap();
+        deviceUserAssociation = newHashMap();
 		deviceLLAExecution    = new HashMap();
 		allLLAvMatrix         = new HashMap();
 		markets             = new ArrayList<VEDAuction>();

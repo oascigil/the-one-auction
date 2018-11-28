@@ -78,22 +78,28 @@ public class ClientApp extends Application {
 	 * @param host	host to which the application instance is attached
 	 */
     public Message handle(Message msg, DTNHost host) {
-		System.out.println(SimClock.getTime()+ " Client app "+host+" received "+msg.getId()+" "+msg.getProperty("type")+" "+msg.getTo());
+        double currTime = SimClock.getTime();
+		System.out.println(currTime + " Client app "+host+" received "+msg.getId()+" "+msg.getProperty("type")+" "+msg.getTo());
 		String type = (String)msg.getProperty("type");
         DTNHost serverHost = (DTNHost) msg.getProperty("auctionResult");
 		if (type==null) return msg; 
 
 		if (msg.getTo()==host && type.equalsIgnoreCase("clientAuctionResponse")) {
-			String id = "TaskRequest"+serverHost.getAddress()+"-"+host+"-"+taskId;
-			taskId++;
-            Message m = new Message(host, serverHost, id, 1);
-            m.addProperty("type", "clientRequest");
-            m.addProperty("serviceType", this.lastRequestedService);
-            m.setAppID(ServerApp.APP_ID);
-			host.createNewMessage(m);
-            System.out.println(SimClock.getTime()+" Client app "+host+" sent message "+m.getId()+" to "+m.getTo());
-			super.sendEventToListeners("GotAuctionResult", null, host);
-			super.sendEventToListeners("SentClientRequest", null, host);
+            if (serverHost == null) {
+                System.out.println(currTime + " Client app " + host + " assigned to Cloud");    
+            }
+            else {
+			    String id = "TaskRequest"+serverHost.getAddress()+"-"+host+"-"+taskId;
+    			taskId++;
+                Message m = new Message(host, serverHost, id, 1);
+                m.addProperty("type", "clientRequest");
+                m.addProperty("serviceType", this.lastRequestedService);
+                m.setAppID(ServerApp.APP_ID);
+	    		host.createNewMessage(m);
+                System.out.println(currTime + " Client app "+host+" sent message "+m.getId()+" to "+m.getTo());
+			    super.sendEventToListeners("GotAuctionResult", null, host);
+    			super.sendEventToListeners("SentClientRequest", null, host);
+            }
         }
 		if (msg.getTo()==host && type.equalsIgnoreCase("execResponse")) {
         
