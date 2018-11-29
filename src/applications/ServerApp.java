@@ -85,13 +85,25 @@ public class ServerApp extends Application {
 		String type = (String)msg.getProperty("type");
 		if (type==null) return msg; 
 
-        //Start execution if we are the recipient
+        // Get the task execution request
 		if (msg.getTo()==host && type.equalsIgnoreCase("clientRequest")) {
             int service = (int) msg.getProperty("serviceType");
             this.completionTime = SimClock.getTime() + Application.execTimes.get(service);
             this.isBusy = true;
             this.isServerAuctionRequestSent = false;
             reqMsg = msg;
+        }
+        // Get the auction result
+        if (msg.getTo() == host && type.equalsIgnoreCase("serverAuctionResponse")) {
+            DTNHost clientHost = (DTNHost) msg.getProperty("auctionResult");
+            if(clientHost == null) { //serverApp was not assigned to any client
+                this.isServerAuctionRequestSent = false;
+            }
+            else {
+                if (this.isBusy) {
+                    System.out.println("Warning: This should not happen in ServerApp - Got an auction response while executing another task");
+                }
+            }
         }
         host.getMessageCollection().remove(msg);
 

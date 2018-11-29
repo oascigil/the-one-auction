@@ -8,73 +8,25 @@ import core.SimClock;
 import core.SimScenario;
 import core.World;
 import core.Coord;
+import core.Quartet;
 import static java.lang.Math.min;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Collections;
+import java.util.HashSet;
 
-public class AuctionApplication extends Application {
-    /** Auction period length */
-    public static final String AUCTION_PERIOD_S = "auctionPeriod";
-    /** Service types for the Auction  */
-    public static final String SERVICE_TYPE_S = "serviceTypes";
-    /** Service types for the Auction  */
-    public static final double speedOfLight = 180000;
-    /** List of client request messages received during the current auctionPeriod */
-    public ArrayList<Message> clientRequests;
-    /** Mapping of client host to the last request message received during the current auctionPeriod */
-    public HashMap<DTNHost, Message> clientHostToMessage;
-    /** Mapping of server host to the last request message received during the current auctionPeriod */
-    public HashMap<DTNHost, Message> serverHostToMessage;
-    /** List of server request messages received during the current auctionPeriod */
-    public ArrayList<Message> serverRequests;
-
-    //Private vars
-    /** Minimum QoS Requirement of Services  */
-    public HashMap<Integer, Double> q_minPerLLA; // = new HashMap();
-    /** Upper-bound on the QoS Requirement of Services  */
-    public HashMap<Integer, Double> q_maxPerLLA; // = new HashMap();
-    /** Client/Server Application that this auction belongs to */
-    public int [] services;
-    /** Last time that an auction was executed */
-    public double lastAuctionTime;
-    /** Size of the message sent to auction */
-    public int auctionMsgSize;
-    /** Frequency of auctions */
-    public double auctionPeriod;
-
-    // Static vars
+public class GreedyPairingApp extends AuctionApplication {
 	/** Application ID */
-	public static final String APP_ID = "ucl.AuctionApplication";
+	public static final String APP_ID = "ucl.GreedyPairingApp";
 
 	/**
 	 * Creates a new auction application with the given settings.
 	 *
 	 * @param s	Settings to use for initializing the application.
 	 */
-    public AuctionApplication(Settings s) {
-        if (s.contains(SERVICE_TYPE_S)) {
-            this.services = s.getCsvInts(SERVICE_TYPE_S);
-        }
-        else {
-            System.out.println("Warning: Failed to set the service types in the AuctionApp");
-        }
-        if (s.contains(AUCTION_PERIOD_S)) {
-            this.auctionPeriod = s.getDouble(AUCTION_PERIOD_S);
-        }
-        else {
-            this.auctionPeriod = 1000; //1 second 
-        }
-        System.out.println("New Service types "+ this.services);
-        this.clientRequests = new ArrayList<Message>();
-        this.serverRequests = new ArrayList<Message>();
-        this.clientHostToMessage = new HashMap<DTNHost, Message>();
-        this.serverHostToMessage = new HashMap<DTNHost, Message>();
-        this.auctionMsgSize = 10; //TODO read this from Settings
-        this.lastAuctionTime = 0.0;
-        this.q_minPerLLA = new HashMap<Integer, Double>();
-        this.q_maxPerLLA = new HashMap<Integer, Double>();
-		super.setAppID(APP_ID);
+    public GreedyPairingApp(Settings s) {
+        super(s);
     }
 	
 	/**
@@ -82,22 +34,13 @@ public class AuctionApplication extends Application {
 	 *
 	 * @param a
 	 */
-    public AuctionApplication(AuctionApplication a) {
-		super(a);
-        this.auctionPeriod = a.auctionPeriod;
-        this.lastAuctionTime = a.lastAuctionTime;
-        this.clientRequests = a.clientRequests;
-        this.serverRequests = a.serverRequests;
-        this.clientHostToMessage = a.clientHostToMessage;
-        this.serverHostToMessage = a.serverHostToMessage;
-        this.services = a.services;
-        this.q_minPerLLA = a.q_minPerLLA;
-        this.q_maxPerLLA = a.q_maxPerLLA;
+    public GreedyPairingApp(GreedyPairingApp a) {
+		super((AuctionApplication) a);
     }
 	
     @Override
 	public Application replicate() {
-		return new AuctionApplication(this);
+		return new GreedyPairingApp(this);
 	}
 	
     /**
@@ -139,17 +82,17 @@ public class AuctionApplication extends Application {
 	public void update(DTNHost host) {
         double currTime = SimClock.getTime();
         if (currTime - this.lastAuctionTime > this.auctionPeriod) {
-            System.out.println("Executing auction at time: " + currTime + "Auction Period: " + this.auctionPeriod);
+            System.out.println("Executing greedy pairing at time: " + currTime + "Period: " + this.auctionPeriod);
             execute_auction(host);
             this.lastAuctionTime = currTime;
         }
     }
 
+	@Override
     public void execute_auction(DTNHost host) {
-        //int len = Math.min(clientRequests.size(), serverRequests.size());
-		//System.out.println("Execute action "+clientRequests.size()+" "+serverRequests.size()+" "+len);
         double currTime = SimClock.getTime();
         this.lastAuctionTime = currTime;
+
         HashMap<Integer, ArrayList<DTNHost>>  LLAs_Users_Association = new HashMap();
         HashMap<DTNHost, Integer>  user_LLA_Association = new HashMap();
         HashMap<Integer, ArrayList<DTNHost>> LLAs_Devices_Association = new HashMap();
@@ -227,9 +170,38 @@ public class AuctionApplication extends Application {
         
         DEEM mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency);
     	mechanism.createMarkets(controlMessageFlag);
-    	DEEM_Results results = mechanism.executeMechanism(controlMessageFlag,controlAuctionMessageFlag);
+        ArrayList<Quartet> allValuations = new ArrayList<Quartet>();
+
+        for (Map.Entry<Integer ,HashMap<DTNHost, HashMap<DTNHost, Double>>> outerEntry : mechanism.allLLAvMatrix.entrySet()) {
+            Integer service = outerEntry.getKey();
+            for (Map.Entry<DTNHost, HashMap<DTNHost, Double>> middleEntry : outerEntry.getValue().entrySet()) {
+                DTNHost user = middleEntry.getKey();
+                for (Map.Entry<DTNHost, Double> innerEntry : middleEntry.getValue().entrySet()) {
+                    DTNHost device = innerEntry.getKey();
+                    Double val = innerEntry.getValue();
+                    Quartet aQuartet = new Quartet(val, user, device, service);
+                    allValuations.add(aQuartet);
+                }
+            }
+        }
+
+        Collections.sort(allValuations); //larger to smaller in terms of valuation
+        System.out.println("Sorted Valuations: " + allValuations);
+        
+        HashSet<DTNHost> userSet = new HashSet(user_LLA_Association.keySet());
+        HashSet<DTNHost> deviceSet = new HashSet(device_LLAs_Association.keySet());
+        HashMap<DTNHost, DTNHost> userDeviceAssociation = new HashMap();
+
+        for (Quartet aQuartet : allValuations) {
+            if (userSet.contains(aQuartet.user) && deviceSet.contains(aQuartet.device)) {
+                userDeviceAssociation.put(aQuartet.user, aQuartet.device);
+                userSet.remove(aQuartet.user);
+                deviceSet.remove(aQuartet.device);
+            }
+        }
+
         //Send the auction results back to the clients (null if they are assigned to the cloud)
-        for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
+        for (Map.Entry<DTNHost, DTNHost> entry : userDeviceAssociation.entrySet()) {
             DTNHost client = entry.getKey();
             DTNHost server = entry.getValue();
             // Send a response back to a client
@@ -240,13 +212,26 @@ public class AuctionApplication extends Application {
             m.addProperty("auctionResult", server);
             m.setAppID(ClientApp.APP_ID);
             host.createNewMessage(m);
-            System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
+            System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
-        // Send the auction results back to the servers
-        for (Map.Entry<DTNHost, DTNHost> entry : results.deviceUserAssociation.entrySet()) {
-            DTNHost server = entry.getKey();
-            DTNHost client = entry.getValue();
+        //Notify the unassigned clients 
+        for(DTNHost client : userSet) {
+            DTNHost server = null;
+            // Send a response back to a client
+            Message clientMsg = this.clientHostToMessage.get(client);
+            String msgId = new String("ClientAuctionResponse_" + client.getName());
+            Message m = new Message(host, clientMsg.getFrom(), msgId, this.auctionMsgSize);
+            m.addProperty("type", "clientAuctionResponse");
+            m.addProperty("auctionResult", server);
+            m.setAppID(ClientApp.APP_ID);
+            host.createNewMessage(m);
+            System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
+            super.sendEventToListeners("SentClientAuctionResponse", null, host);
+        }
+        // Notify also the unassigned servers
+        for(DTNHost server : deviceSet) {
+            DTNHost client = null;
             // Send a response back to a server
             Message serverMsg = this.serverHostToMessage.get(server);
             String msgId = new String("serverAuctionResponse_" + server.getName());
@@ -255,7 +240,7 @@ public class AuctionApplication extends Application {
             m.addProperty("auctionResult", client);
             m.setAppID(ServerApp.APP_ID);
             host.createNewMessage(m);
-            System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
+            System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentServerAuctionResponse", null, host);
         }
 
@@ -264,7 +249,4 @@ public class AuctionApplication extends Application {
         this.serverRequests.clear();
     }
 
-    public int [] getServiceTypes() {
-        return this.services;
-    }
 }

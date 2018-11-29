@@ -29,7 +29,7 @@ class DEEM{
 	HashMap<DTNHost, DTNHost> deviceUserAssociation;
 	HashMap<DTNHost, Integer> deviceLLAExecution;
     // vMatrix: valuation of users to LLA instances for a specific LLA
-	HashMap<Integer ,HashMap<DTNHost, HashMap<DTNHost, Double>>> allLLAvMatrix; //<LLA_ID,HashMap<user_id, HashMap<LLA_instances_device, Valuation>>>
+	public HashMap<Integer ,HashMap<DTNHost, HashMap<DTNHost, Double>>> allLLAvMatrix; //<LLA_ID,HashMap<user_id, HashMap<LLA_instances_device, Valuation>>>
 	ArrayList<VEDAuction> markets;
 	//Setting data structures
 	static double minimumLatency  = 0.0;//in ms
@@ -50,7 +50,7 @@ class DEEM{
 		p  = new HashMap();
 		r  = new HashMap();
 		userDeviceAssociation = new HashMap();
-        deviceUserAssociation = newHashMap();
+        deviceUserAssociation = new HashMap();
 		deviceLLAExecution    = new HashMap();
 		allLLAvMatrix         = new HashMap();
 		markets             = new ArrayList<VEDAuction>();
@@ -72,10 +72,12 @@ class DEEM{
 		this.user_device_Latency = new HashMap(user_device_Latency);
 		p  = new HashMap();
 		r  = new HashMap();
+        this.deviceUserAssociation = new HashMap();
 		for(Integer LLA_ID: this.LLAs_Devices_Association.keySet()){
 			for (DTNHost device_ID:this.LLAs_Devices_Association.get(LLA_ID)){
 				p.put(device_ID,0.0);
 				r.put(device_ID,0.0);
+                deviceUserAssociation.put(device_ID, null);
 			}
 		}
 		userDeviceAssociation = new HashMap();
@@ -85,7 +87,7 @@ class DEEM{
 	}
 	//---------------------------------------Contructors
 	//Functions-----------------------------------------
-	public void createMarkets(boolean controlMessageFlag){
+	public void createMarkets(boolean controlMessageFlag) {
 		//create valuations
 		HashMap<DTNHost, HashMap<DTNHost, Double>> vMatrix; //HashMap<user_id, HashMap<LLA_instances_device, Valuation>>
 		HashMap<DTNHost, Double> vMatrixForThisUser;
@@ -103,7 +105,6 @@ class DEEM{
 				vMatrixForThisUser  = new HashMap();//for this user
                 ArrayList<DTNHost> devicesList = LLAs_Devices_Association.getOrDefault(LLA_ID, null);
                 if (devicesList != null) {
-				    //for (DTNHost device_ID:LLAs_Devices_Association.getOrDefault(LLA_ID, null)){
 				    for (DTNHost device_ID:devicesList){
                         if (device_ID == null) 
                             continue;
@@ -200,6 +201,7 @@ class DEEM{
 				setOfDevicesAssignedInTheMarket  = new ArrayList<DTNHost>();
 				for (DTNHost userID:X_market.keySet()){
 					userDeviceAssociation.put(userID,X_market.get(userID));
+                    deviceUserAssociation.put(X_market.get(userID), userID);
 					setOfDevicesAssignedInTheMarket.add(X_market.get(userID));
 				}
 				//Update device-LLA association only if price is higher, also update the reserved price accordingly
@@ -236,7 +238,7 @@ class DEEM{
 			System.out.println("QoS gain per user: "+QoSGainPerUser.toString());
 			System.out.println("QoS per user: "+QoSPerUser.toString());
 		}
-		deem_Results    = new DEEM_Results(numberOfIterations,userDeviceAssociation,deviceLLAExecution,p,QoSGainPerUser,QoSPerUser);
+		deem_Results    = new DEEM_Results(numberOfIterations,userDeviceAssociation, deviceUserAssociation, deviceLLAExecution,p,QoSGainPerUser,QoSPerUser);
 		return deem_Results;
 	}
 

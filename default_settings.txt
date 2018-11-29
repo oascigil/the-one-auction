@@ -230,8 +230,8 @@ Service2.executionTime = 30.0
 Service2.minQoS = 4.4363334798
 
 # auction app setttings
-auctionApp0.type = AuctionApplication
-auctionApp0.auctionPeriod = 1.0
+auctionApp0.type = GreedyPairingApp
+auctionApp0.auctionPeriod = 2.0
 auctionApp0.serviceTypes = 0,1,2
 
 # Server apps
