@@ -27,6 +27,9 @@ public class DTNHost implements Comparable<DTNHost> {
     public static HashMap<DTNHost, DTNHost> attachmentPoints;
     /** Mapping of application/service to a list of auctioneer APs */
     public static HashMap<Integer, List<DTNHost>> auctioneers;
+    
+    public static HashMap<String, Integer> apLatencies;
+
 	private int address;
 
 	private Coord location; 	// where is the host
@@ -50,6 +53,8 @@ public class DTNHost implements Comparable<DTNHost> {
 		reset();
         attachmentPoints = new HashMap<DTNHost, DTNHost>();
         auctioneers = new HashMap<Integer, List<DTNHost>>();
+        apLatencies = new HashMap<String, Integer>();
+
 	}
 
 	/**
