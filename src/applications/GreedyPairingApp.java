@@ -168,6 +168,7 @@ public class GreedyPairingApp extends AuctionApplication {
             }
         }
         
+        HashMap<DTNHost, ArrayList<Double>> deviceValuations = new HashMap();
         DEEM mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency);
     	mechanism.createMarkets(controlMessageFlag);
         ArrayList<Quartet> allValuations = new ArrayList<Quartet>();
@@ -181,27 +182,41 @@ public class GreedyPairingApp extends AuctionApplication {
                     Double val = innerEntry.getValue();
                     Quartet aQuartet = new Quartet(val, user, device, service);
                     allValuations.add(aQuartet);
+                    ArrayList<Double> valArray = deviceValuations.getOrDefault(device, null);
+                    if (valArray == null) {
+                        valArray = new ArrayList<Double>();
+                    }
+                    valArray.add(val);
                 }
             }
         }
 
         Collections.sort(allValuations); //larger to smaller in terms of valuation
-        System.out.println("Sorted Valuations: " + allValuations);
+        //System.out.println("Sorted Valuations: " + allValuations);
         
         HashSet<DTNHost> userSet = new HashSet(user_LLA_Association.keySet());
         HashSet<DTNHost> deviceSet = new HashSet(device_LLAs_Association.keySet());
-        HashMap<DTNHost, DTNHost> userDeviceAssociation = new HashMap();
+        DEEM_Results results = new DEEM_Results();
 
         for (Quartet aQuartet : allValuations) {
             if (userSet.contains(aQuartet.user) && deviceSet.contains(aQuartet.device)) {
-                userDeviceAssociation.put(aQuartet.user, aQuartet.device);
+                results.userDeviceAssociation.put(aQuartet.user, aQuartet.device);
                 userSet.remove(aQuartet.user);
                 deviceSet.remove(aQuartet.device);
+                ArrayList<Double> valArray = deviceValuations.get(aQuartet.device);
+                Collections.sort(valArray);
+                int indx = valArray.indexOf(aQuartet.valuation);
+                double price=0;
+                if (indx < valArray.size()-1) {
+                    price = valArray.get(indx+1);   
+                }
+                results.p.put(aQuartet.device, price);
             }
         }
+        super.sendEventToListeners("AuctionExecutionComplete", results, host);
 
         //Send the auction results back to the clients (null if they are assigned to the cloud)
-        for (Map.Entry<DTNHost, DTNHost> entry : userDeviceAssociation.entrySet()) {
+        for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost client = entry.getKey();
             DTNHost server = entry.getValue();
             // Send a response back to a client

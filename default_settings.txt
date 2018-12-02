@@ -7,7 +7,7 @@ Scenario.name = default_scenario
 Scenario.simulateConnections = true
 Scenario.updateInterval = 0.001
 # 43200s == 12h
-Scenario.endTime = 43200
+Scenario.endTime = 3600
 
 Events.nrof=0
 
