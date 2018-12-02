@@ -43,7 +43,6 @@ public class AuctionApplication extends Application {
     /** Frequency of auctions */
     public double auctionPeriod;
 
-    double localLatency = 10.0;
     // Static vars
 	/** Application ID */
 	public static final String APP_ID = "ucl.AuctionApplication";
@@ -226,11 +225,10 @@ public class AuctionApplication extends Application {
                 /*Coord serverCoord = serverHost.getLocation();
                 double dist = clientCoord.distance(serverCoord);
                 double latency = dist/this.speedOfLight;*/
-                double latency;  
+                double latency = serverHost.getLocalLatency() + clientHost.getLocalLatency();  
                 if(apserver!=apclient)
-                	latency =(Integer)(DTNHost.apLatencies.get(apclient.toString()+"to"+apserver.toString())).intValue()+localLatency;
-                else
-                	latency = localLatency;
+                	latency +=(Integer)(DTNHost.apLatencies.get(apclient.toString()+"to"+apserver.toString())).intValue();
+
                 clientDistances.put(serverHost, latency);
             }
         }

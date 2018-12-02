@@ -48,6 +48,8 @@ public class DTNHost implements Comparable<DTNHost> {
     /** is the node a stationary one (i.e., base station) */
     public boolean isStationary;
 
+    double localLatency = 10.0;
+
 	static {
 		DTNSim.registerForReset(DTNHost.class.getCanonicalName());
 		reset();
@@ -229,6 +231,9 @@ public class DTNHost implements Comparable<DTNHost> {
 		return this.path;
 	}
 
+	public double getLocalLatency() {
+		return localLatency;
+	}
 
 	/**
 	 * Sets the Node's location overriding any location set by movement model
