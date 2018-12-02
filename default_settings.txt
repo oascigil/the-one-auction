@@ -187,7 +187,7 @@ Report.warmup = 0
 Report.reportDir = reports/
 # Report classes to load
 Report.report1 = MessageStatsReport
-Report.report2 = ContactTimesReport
+Report.report2 = AuctionAppReporter
 Report.report3 = EnergyLevelReport
 
 EnergyLevelReport.granularity = 1
@@ -230,7 +230,7 @@ Service2.executionTime = 30.0
 Service2.minQoS = 4.4363334798
 
 # auction app setttings
-auctionApp0.type = GreedyPairingApp
+auctionApp0.type = AuctionApplication
 auctionApp0.auctionPeriod = 2.0
 auctionApp0.serviceTypes = 0,1,2
 

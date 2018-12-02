@@ -201,7 +201,9 @@ class DEEM{
 				setOfDevicesAssignedInTheMarket  = new ArrayList<DTNHost>();
 				for (DTNHost userID:X_market.keySet()){
 					userDeviceAssociation.put(userID,X_market.get(userID));
-                    deviceUserAssociation.put(X_market.get(userID), userID);
+                    if(X_market.get(userID) != null) {
+                        deviceUserAssociation.put(X_market.get(userID), userID);
+                    }
 					setOfDevicesAssignedInTheMarket.add(X_market.get(userID));
 				}
 				//Update device-LLA association only if price is higher, also update the reserved price accordingly

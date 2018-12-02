@@ -301,5 +301,4 @@ public class PingApplication extends Application {
 	public void setPingSize(int pingSize) {
 		this.pingSize = pingSize;
 	}
-
 }

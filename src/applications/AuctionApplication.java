@@ -118,12 +118,14 @@ public class AuctionApplication extends Application {
             Message clientMsg = msg.replicate();
             clientHostToMessage.put(clientMsg.getFrom(), clientMsg);
             clientRequests.add(clientMsg);
+            super.sendEventToListeners("ReceivedClientAuctionRequest", (Object) clientMsg, host);
         }
         if (type.equalsIgnoreCase("serverAuctionRequest")) {
         	System.out.println(SimClock.getTime()+" New server offer "+serverRequests.size());
             Message serverMsg = msg.replicate();
             serverHostToMessage.put(serverMsg.getFrom(), serverMsg);
             serverRequests.add(msg.replicate());
+            super.sendEventToListeners("ReceivedServerAuctionRequest", (Object) serverMsg, host);
         }
         host.getMessageCollection().remove(msg);
 
@@ -228,6 +230,8 @@ public class AuctionApplication extends Application {
         DEEM mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency);
     	mechanism.createMarkets(controlMessageFlag);
     	DEEM_Results results = mechanism.executeMechanism(controlMessageFlag,controlAuctionMessageFlag);
+
+        super.sendEventToListeners("AuctionExecutionComplete", results, host);
         //Send the auction results back to the clients (null if they are assigned to the cloud)
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost client = entry.getKey();
