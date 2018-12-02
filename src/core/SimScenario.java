@@ -9,16 +9,23 @@ import input.EventQueueHandler;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import applications.AuctionApplication;
 import movement.MapBasedMovement;
+import movement.StationaryMovement;
+
 import movement.MovementModel;
 import movement.map.SimMap;
 import routing.MessageRouter;
 
 import core.Application;
 
+import java.util.Map;
+import java.util.Map.Entry;
 /**
  * A simulation scenario used for getting and storing the settings of a
  * simulation run.
@@ -354,7 +361,8 @@ public class SimScenario implements Serializable {
         }
         Application.execTimes = execTimes;
         Application.minQoS = minQoSList;
-        
+
+        HashMap<DTNHost, Coord> apLocations =  new HashMap<DTNHost, Coord>();
 		for (int i=1; i<=nrofGroups; i++) {
 			List<NetworkInterface> interfaces =
 				new ArrayList<NetworkInterface>();
@@ -429,7 +437,7 @@ public class SimScenario implements Serializable {
 				this.simMap = ((MapBasedMovement)mmProto).getMap();
 			}
 
-			// creates hosts of ith group
+
 			for (int j=0; j<nrofHosts; j++) {
 				ModuleCommunicationBus comBus = new ModuleCommunicationBus();
 
@@ -438,9 +446,26 @@ public class SimScenario implements Serializable {
 				DTNHost host = new DTNHost(this.messageListeners,
 						this.movementListeners,	gid, interfaces, comBus,
 						mmProto, mRouterProto);
+				if (mmProto instanceof StationaryMovement) 
+					apLocations.put(host, mmProto.getInitialLocation());
 				hosts.add(host);
 			}
+			
 		}
+		HashMap<DTNHost, Coord> apLocations2 =  new HashMap<DTNHost, Coord>(apLocations);
+		System.out.println("Aps "+apLocations.size());
+
+		for (Map.Entry<DTNHost, Coord> ap1 : apLocations.entrySet()) {			
+				for (Map.Entry<DTNHost, Coord> ap2 : apLocations2.entrySet()) {
+					if(ap1.getKey()!=ap2.getKey()) {
+					DTNHost.apLatencies.put(ap1.getKey().toString()+"to"+ap2.getKey().toString(), Integer.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
+					DTNHost.apLatencies.put(ap2.getKey().toString()+"to"+ap1.getKey().toString(), Integer.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
+					System.out.println(ap1.getKey().toString()+"to"+ap2.getKey().toString()+" "+Integer.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
+					}
+				}
+		}
+		System.out.println("Latencies "+DTNHost.apLatencies.size());
+
 	}
 
 	/**
