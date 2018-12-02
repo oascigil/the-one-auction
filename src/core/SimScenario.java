@@ -460,7 +460,7 @@ public class SimScenario implements Serializable {
 					if(ap1.getKey()!=ap2.getKey()) {
 					DTNHost.apLatencies.put(ap1.getKey().toString()+"to"+ap2.getKey().toString(), Integer.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
 					DTNHost.apLatencies.put(ap2.getKey().toString()+"to"+ap1.getKey().toString(), Integer.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
-					System.out.println(ap1.getKey().toString()+"to"+ap2.getKey().toString()+" "+Integer.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
+					//System.out.println(ap1.getKey().toString()+"to"+ap2.getKey().toString()+" "+Integer.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
 					}
 				}
 		}
