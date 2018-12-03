@@ -51,12 +51,13 @@ public class CBRConnection extends Connection {
 		this.msgFromNode = from;
 		Message newMessage = m.replicate();
 		int retVal = getOtherNode(from).receiveMessage(newMessage, from);
-		double latency = DTNHost.apLatencies.get(from+"to"+getOtherNode(from));
-		System.out.println("AP start transfer "+from + " to "+getOtherNode(from)+" "+latency);
+		//double latency = DTNHost.apLatencies.get(from+"to"+getOtherNode(from));
+		//System.out.println("AP start transfer "+from + " to "+getOtherNode(from)+" "+latency);
 		if (retVal == MessageRouter.RCV_OK) {
 			this.msgOnFly = newMessage;
 			this.transferDoneTime = SimClock.getTime() +
-			(1.0*m.getSize()) / this.speed + latency;
+			//(1.0*m.getSize()) / this.speed + latency;
+			(1.0*m.getSize()) / this.speed ;
 		}
 
 		return retVal;

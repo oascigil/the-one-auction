@@ -398,8 +398,12 @@ public abstract class MessageRouter {
 			throw new SimError("No message with ID " + id + " in the incoming "+
 					"buffer of " + this.host);
 		}
-
-		incoming.setReceiveTime(SimClock.getTime());
+		double latency = 0.0;
+		if(DTNHost.apLatencies.containsKey(from+"to"+this.getHost())) {
+			latency = (Double)(DTNHost.apLatencies.get(from+"to"+this.getHost())).doubleValue()/1000;
+			//System.out.println(SimClock.getTime()+" "+from+" to "+this.getHost()+" "+latency);
+		}
+		incoming.setReceiveTime(SimClock.getTime()+latency);
 
 		// Pass the message to the application (if any) and get outgoing message
 		Message outgoing = incoming;

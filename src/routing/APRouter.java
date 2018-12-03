@@ -56,6 +56,17 @@ public class APRouter extends ActiveRouter {
 	}
 	
 	@Override
+	public int receiveMessage(Message m, DTNHost from) {
+		/*int recvCheck = checkReceiving(m, from);
+		if (recvCheck != RCV_OK) {
+			return recvCheck;
+		}*/
+		//System.out.println(SimClock.getTime() +" APRouter Message received at host "+this.getHost()+" with id "+m.getId());
+
+		// seems OK, start receiving the message
+		return super.receiveMessage(m, from);
+	}
+	@Override
 	public void update() {
 		super.update();
 		if (isTransferring() || !canStartTransfer()) {
@@ -71,6 +82,54 @@ public class APRouter extends ActiveRouter {
 		//this.tryAllMessagesToAllConnections();
 		this.tryMessagestoAps();
 	}
+	
+	protected Connection exchangeDeliverableMessages() {
+		List<Connection> connections = getConnections();
+
+		if (connections.size() == 0) {
+			return null;
+		}
+
+		@SuppressWarnings(value = "unchecked")
+		Tuple<Message, Connection> t =
+			tryMessagesForConnected(sortByQueueMode(getMessagesForConnected()));
+
+		if (t != null) {
+			return t.getValue(); // started transfer
+		}
+
+		// didn't start transfer to any node -> ask messages from connected
+		for (Connection con : connections) {
+			if (con.getOtherNode(getHost()).requestDeliverableMessages(con)) {
+				return con;
+			}
+		}
+
+		return null;
+	}
+	
+	protected List<Tuple<Message, Connection>> getMessagesForConnected() {
+		if (getNrofMessages() == 0 || getConnections().size() == 0) {
+			/* no messages -> empty list */
+			return new ArrayList<Tuple<Message, Connection>>(0);
+		}
+
+		List<Tuple<Message, Connection>> forTuples =
+			new ArrayList<Tuple<Message, Connection>>();
+		for (Message m : getMessageCollection()) {
+			for (Connection con : getConnections()) {
+				DTNHost to = con.getOtherNode(getHost());
+				if (m.getTo() == to) {
+					//System.out.println(SimClock.getTime()+ " send message "+m.getId()+" type "+m.getProperty("type")+" "+m.getTo()+" "+m.getReceiveTime());
+					if(m.getReceiveTime()<SimClock.getTime())
+						forTuples.add(new Tuple<Message, Connection>(m,con));
+				}
+			}
+		}
+
+		return forTuples;
+	}
+
 	
 	/**
 	 * Tries to send all messages that this router is carrying to all

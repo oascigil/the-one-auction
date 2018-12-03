@@ -458,9 +458,9 @@ public class SimScenario implements Serializable {
 		for (Map.Entry<DTNHost, Coord> ap1 : apLocations.entrySet()) {			
 				for (Map.Entry<DTNHost, Coord> ap2 : apLocations2.entrySet()) {
 					if(ap1.getKey()!=ap2.getKey()) {
-					DTNHost.apLatencies.put(ap1.getKey().toString()+"to"+ap2.getKey().toString(), Integer.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
-					DTNHost.apLatencies.put(ap2.getKey().toString()+"to"+ap1.getKey().toString(), Integer.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
-					//System.out.println(ap1.getKey().toString()+"to"+ap2.getKey().toString()+" "+Integer.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
+					DTNHost.apLatencies.put(ap1.getKey().toString()+"to"+ap2.getKey().toString(), Double.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
+					DTNHost.apLatencies.put(ap2.getKey().toString()+"to"+ap1.getKey().toString(), Double.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
+					System.out.println(ap1.getKey().toString()+"to"+ap2.getKey().toString()+" "+Double.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
 					}
 				}
 		}

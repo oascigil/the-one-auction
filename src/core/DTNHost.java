@@ -28,7 +28,7 @@ public class DTNHost implements Comparable<DTNHost> {
     /** Mapping of application/service to a list of auctioneer APs */
     public static HashMap<Integer, List<DTNHost>> auctioneers;
     
-    public static HashMap<String, Integer> apLatencies;
+    public static HashMap<String, Double> apLatencies;
 
 	private int address;
 
@@ -55,7 +55,7 @@ public class DTNHost implements Comparable<DTNHost> {
 		reset();
         attachmentPoints = new HashMap<DTNHost, DTNHost>();
         auctioneers = new HashMap<Integer, List<DTNHost>>();
-        apLatencies = new HashMap<String, Integer>();
+        apLatencies = new HashMap<String, Double>();
 
 	}
 
