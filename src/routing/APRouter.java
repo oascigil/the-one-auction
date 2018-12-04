@@ -159,6 +159,33 @@ public class APRouter extends ActiveRouter {
 	}
 	
 	/**
+	 * Tries to send messages for the connections that are mentioned
+	 * in the Tuples in the order they are in the list until one of
+	 * the connections starts transferring or all tuples have been tried.
+	 * @param tuples The tuples to try
+	 * @return The tuple whose connection accepted the message or null if
+	 * none of the connections accepted the message that was meant for them.
+	 */
+	protected Tuple<Message, Connection> tryMessagesForConnected(
+			List<Tuple<Message, Connection>> tuples) {
+		if (tuples.size() == 0) {
+			return null;
+		}
+
+		for (Tuple<Message, Connection> t : tuples) {
+			Message m = t.getKey();
+			Connection con = t.getValue();
+			startTransfer(m, con);
+			/*if (startTransfer(m, con) == RCV_OK) {
+				return t;
+			}*/
+			if(con.isTransferring())con.finalizeTransfer();
+		}
+
+		return null;
+	}
+	
+	/**
 	 * Returns a list of connections this host currently has with other hosts.
 	 * @return a list of connections this host currently has with other hosts
 	 */

@@ -369,7 +369,7 @@ public abstract class MessageRouter {
 	public int receiveMessage(Message m, DTNHost from) {
 		Message newMessage = m.replicate();
 		//if(m.getProperty("type").equals("clientAuctionResponse"))
-		//System.out.println(getHost()+" message received type "+m.getProperty("type")+" "+m.getTo());
+		//System.out.println(SimClock.getTime()+" "+getHost()+" message received type "+m.getProperty("type")+" "+m.getTo());
 		this.putToIncomingBuffer(newMessage, from);
 		newMessage.addNodeOnPath(this.host);
 
@@ -411,7 +411,7 @@ public abstract class MessageRouter {
 		for (Application app : getApplications(incoming.getAppID())) {
 			// Note that the order of applications is significant
 			// since the next one gets the output of the previous.
-			System.out.println("App handle "+app);
+			//System.out.println("App handle "+app);
 			outgoing = app.handle(outgoing, this.host);
 			if (outgoing == null) break; // Some app wanted to drop the message
 		}

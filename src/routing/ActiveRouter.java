@@ -180,11 +180,13 @@ public abstract class ActiveRouter extends MessageRouter {
 		int retVal;
 
 		if (!con.isReadyForTransfer()) {
+			System.out.println("Try later busy from "+getHost()+" to "+con.getOtherNode(getHost()));
 			return TRY_LATER_BUSY;
 		}
 
 		if (!policy.acceptSending(getHost(),
 				con.getOtherNode(getHost()), con, m)) {
+			System.out.println("Denied policy "+getHost()+" to "+con.getOtherNode(getHost()));
 			return MessageRouter.DENIED_POLICY;
 		}
 
@@ -406,6 +408,7 @@ public abstract class ActiveRouter extends MessageRouter {
 	  */
 	protected Message tryAllMessages(Connection con, List<Message> messages) {
 		for (Message m : messages) {
+			//System.out.println(SimClock.getTime()+" Try message "+con.toString());
 			int retVal = startTransfer(m, con);
 			if (retVal == RCV_OK) {
 				return m;	// accepted a message, don't try others
