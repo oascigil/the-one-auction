@@ -147,7 +147,7 @@ public class ClientApp extends Application {
             Double elapsed = currTime - time;
             Double difference = elapsed - this.qos;
             if (this.debug)
-                System.out.println(currTime + " Client app " + host + " RTT difference " + difference + " from " + this.qos + " measured: " + elapsed + " to server" + this.server + "\n"); 
+                System.out.println(currTime + " Client app " + host + " RTT difference " + difference + " from " + this.qos + " measured: " + elapsed + " to server" + msg.getFrom() + "\n"); 
 			super.sendEventToListeners("SampleRTT", new Quartet(difference, host, msg.getFrom(), this.lastRequestedService), host);
             this.timeSent.remove(seqNo);
 		}
