@@ -35,6 +35,8 @@ public class ServerApp extends Application {
 	/** Application ID */
 	public static final String APP_ID = "ucl.ServerApp";
 	private int requestId=1;
+	private int		pongSize=1;
+    private boolean debug = true;
 	/**
 	 * Creates a new server application with the given settings.
 	 *
@@ -66,6 +68,8 @@ public class ServerApp extends Application {
         this.reqMsg = a.reqMsg;
         this.respMsgSize = a.respMsgSize;
         this.appId = a.appId;
+        this.pongSize = a.pongSize;
+        this.debug = a.debug;
      }
 	
     @Override
@@ -81,7 +85,8 @@ public class ServerApp extends Application {
 	 */
 	@Override
 	public Message handle(Message msg, DTNHost host) {
-		System.out.println(SimClock.getTime()+" Server app "+host+" received "+msg.getId()+" "+msg.getProperty("type")+" "+msg.getTo());
+        if (this.debug) 
+    		System.out.println(SimClock.getTime()+" Server app "+host+" received "+msg.getId()+" "+msg.getProperty("type")+" "+msg.getTo());
 		String type = (String)msg.getProperty("type");
 		if (type==null) return msg; 
 
@@ -105,6 +110,21 @@ public class ServerApp extends Application {
                 }
             }
         }
+		// Respond with pong if we're the recipient
+		if (msg.getTo()==host && type.equalsIgnoreCase("ping")) {
+			String id = "pong" + SimClock.getIntTime() + "-" +
+				host.getAddress();
+            Integer sequenceNumber = (Integer) msg.getProperty("seqNo");
+			Message m = new Message(host, msg.getFrom(), id, this.pongSize);
+            m.addProperty("seqNo", sequenceNumber);
+			m.addProperty("type", "pong");
+			m.setAppID(ClientApp.APP_ID);
+			host.createNewMessage(m);
+
+			// Send event to listeners
+			//super.sendEventToListeners("GotPing", null, host);
+			//super.sendEventToListeners("SentPong", null, host);
+		}
         host.getMessageCollection().remove(msg);
 
         return null;
@@ -125,7 +145,8 @@ public class ServerApp extends Application {
             m.setAppID(this.appId);
 			host.createNewMessage(m);
             m.setAppID(ClientApp.APP_ID);
-            System.out.println(SimClock.getTime()+" Server app "+host+" sent message "+m.getId()+" to "+m.getTo());
+            if (this.debug) 
+                System.out.println(SimClock.getTime()+" Server app "+host+" sent message "+m.getId()+" to "+m.getTo());
 			super.sendEventToListeners("SentExecResponse", null, host);
             this.isBusy = false;
         }
@@ -147,7 +168,8 @@ public class ServerApp extends Application {
                 m.addProperty("location", host.getLocation());
                 m.setAppID(AuctionApplication.APP_ID);
 	    		host.createNewMessage(m);
-	            System.out.println(SimClock.getTime()+" Server app "+host+" sent message "+m.getId()+" to "+m.getTo());
+                if (this.debug)
+	                System.out.println(SimClock.getTime()+" Server app "+host+" sent message "+m.getId()+" to "+m.getTo());
 		    	super.sendEventToListeners("SentServerAuctionRequest", null, host);
             }
         }

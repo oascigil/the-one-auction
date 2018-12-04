@@ -7,8 +7,10 @@ import core.Settings;
 import core.SimClock;
 import core.SimScenario;
 import core.World;
+import core.Quartet;
 import java.util.Random;
 import java.util.List;
+import java.util.HashMap;
 
 /**
  * Simple Client application to request tasks to be executed by Server Applications.
@@ -20,18 +22,31 @@ public class ClientApp extends Application {
     public static final String REQUEST_MSG_SIZE_S = "taskReqMsgSize";
     /** Request Sending Frequency (send one every x secs) */
     public static final String REQUEST_FREQUENCY_S = "taskReqFreq";
+	/** Ping generation interval */
+	public static final String PING_INTERVAL = "interval";
 	
 	/** Application ID */
 	public static final String APP_ID = "ucl.ClientApp";
+    /** Device that the client is currently assigned to */
+    public DTNHost server;
+    /** time of sent for ping */
+    HashMap <Integer, Double> timeSent; 
 
     // Private vars
-    private int reqMsgSize;
-    private int lastRequestedService=0;
-    private double reqSendingFreq;
-    private double lastReqSentTime;
-    private Random rng;
-    private int requestId = 1;
-    private int taskId = 1;
+    private int     reqMsgSize;
+    private int     lastRequestedService=0;
+    private double  reqSendingFreq;
+    private double  lastReqSentTime;
+    private Random  rng;
+    private int     requestId = 1;
+    private int     taskId = 1;
+    private double  pingInterval;
+	private int     pingSize=1;
+    private int     sequenceNumber = 0;
+	private double	lastPing = 0;
+    private Double  qos=0.0;
+    private boolean debug = true;
+
 
     public ClientApp(Settings s) {
         if (s.contains(REQUEST_MSG_SIZE_S)) {
@@ -45,11 +60,19 @@ public class ClientApp extends Application {
             this.reqSendingFreq = s.getDouble(REQUEST_MSG_SIZE_S);
         }
         else {
-            this.reqSendingFreq = 10;
+            this.reqSendingFreq = 10.0;
+        }
+		if (s.contains(PING_INTERVAL)){
+			this.pingInterval = s.getDouble(PING_INTERVAL);
+		}
+        else {
+            this.pingInterval = 5.0;
         }
 
         this.lastReqSentTime = 0.0;
         this.rng = new Random(Application.nrofServices);
+        this.server = null;
+        this.timeSent = new HashMap();
 		super.setAppID(APP_ID);
     }
 	
@@ -61,9 +84,16 @@ public class ClientApp extends Application {
      public ClientApp(ClientApp a) {
         super(a);
         this.rng = a.rng;
+		this.lastPing = a.lastPing;
+        this.pingInterval = a.pingInterval;
         this.reqMsgSize = a.reqMsgSize;
         this.reqSendingFreq = a.reqSendingFreq;
         this.lastReqSentTime = a.lastReqSentTime;
+        this.server = a.server;
+        this.sequenceNumber = a.sequenceNumber;
+        this.timeSent = new HashMap();
+        this.qos = a.qos;
+        this.debug = a.debug;
      }
 	
     @Override
@@ -79,16 +109,20 @@ public class ClientApp extends Application {
 	 */
     public Message handle(Message msg, DTNHost host) {
         double currTime = SimClock.getTime();
-		System.out.println(currTime + " Client app "+host+" received "+msg.getId()+" "+msg.getProperty("type")+" "+msg.getTo());
+        if (this.debug) 
+	    	System.out.println(currTime + " Client app "+host+" received "+msg.getId()+" "+msg.getProperty("type")+" "+msg.getTo());
 		String type = (String)msg.getProperty("type");
-        DTNHost serverHost = (DTNHost) msg.getProperty("auctionResult");
 		if (type==null) return msg; 
 
 		if (msg.getTo()==host && type.equalsIgnoreCase("clientAuctionResponse")) {
+            DTNHost serverHost = (DTNHost) msg.getProperty("auctionResult");
+            this.server = serverHost;
             if (serverHost == null) {
-                System.out.println(currTime + " Client app " + host + " assigned to Cloud");    
+                if (this.debug)
+                    System.out.println(currTime + " Client app " + host + " assigned to Cloud");    
             }
             else {
+                this.qos = (Double) msg.getProperty("QoS")/1000.0;
 			    String id = "TaskRequest"+serverHost.getAddress()+"-"+host+"-"+taskId;
     			taskId++;
                 Message m = new Message(host, serverHost, id, 1);
@@ -96,14 +130,27 @@ public class ClientApp extends Application {
                 m.addProperty("serviceType", this.lastRequestedService);
                 m.setAppID(ServerApp.APP_ID);
 	    		host.createNewMessage(m);
-                System.out.println(currTime + " Client app "+host+" sent message "+m.getId()+" to "+m.getTo());
+                if (this.debug)
+                    System.out.println(currTime + " Client app "+host+" sent message "+m.getId()+" to "+m.getTo());
 			    super.sendEventToListeners("GotAuctionResult", null, host);
     			super.sendEventToListeners("SentClientRequest", null, host);
             }
         }
 		if (msg.getTo()==host && type.equalsIgnoreCase("execResponse")) {
-        
+            this.server = null;
         }
+		// Received a pong reply
+		if (msg.getTo()==host && type.equalsIgnoreCase("pong")) {
+			// Send event to listeners
+            Integer seqNo = (Integer) msg.getProperty("seqNo");
+            Double time = this.timeSent.get(seqNo);
+            Double elapsed = currTime - time;
+            Double difference = elapsed - this.qos;
+            if (this.debug)
+                System.out.println(currTime + " Client app " + host + " RTT difference " + difference + " from " + this.qos + " measured: " + elapsed + " to server" + this.server + "\n"); 
+			super.sendEventToListeners("SampleRTT", new Quartet(difference, host, msg.getFrom(), this.lastRequestedService), host);
+            this.timeSent.remove(seqNo);
+		}
         host.getMessageCollection().remove(msg);
 
         return null;
@@ -116,8 +163,22 @@ public class ClientApp extends Application {
 	@Override
 	public void update(DTNHost host) {
         double currTime = SimClock.getTime();
+
+        if ( (currTime - this.lastPing > this.pingInterval) && (this.server != null) ) {
+            Message m = new Message(host, this.server, "ping" + SimClock.getIntTime() + "-" + host.getAddress(), this.pingSize);
+			m.addProperty("type", "ping");
+            m.addProperty("seqNo", this.sequenceNumber);
+			m.setAppID(ServerApp.APP_ID);
+            host.createNewMessage(m);
+            this.lastPing = currTime;
+			//super.sendEventToListeners("SentPing", msg, host);
+            this.timeSent.put(this.sequenceNumber, currTime);
+            if (this.timeSent.getOrDefault(this.sequenceNumber, null) != null) {
+			    //super.sendEventToListeners("SampleRTT", new Quartet(Double.POSITIVE_INFINITY, host, this.server, this.lastRequestedService), host);
+            }
+            this.sequenceNumber += 1;
+        }
         //Send a request to the auctionApp periodically for a random service type
-        // TODO implement popularity distributions for services (Dennis has Zipf dist. code)
         if ((this.lastReqSentTime == 0.0) || (this.lastReqSentTime - currTime > this.reqSendingFreq)) {
             this.lastRequestedService = this.rng.nextInt(Application.nrofServices);
             //System.out.println("Destlist for service "+this.lastRequestedService);
@@ -137,7 +198,8 @@ public class ClientApp extends Application {
             m.addProperty("location", host.getLocation());
             m.setAppID(AuctionApplication.APP_ID);
 			host.createNewMessage(m);
-            System.out.println(currTime+" Client app "+host+" sent message "+m.getId()+" to "+m.getTo());
+            if (this.debug) 
+                System.out.println(currTime+" Client app "+host+" sent message "+m.getId()+" to "+m.getTo());
 			super.sendEventToListeners("SentClientAuctionRequest", null, host);
             this.lastReqSentTime = currTime;
         }

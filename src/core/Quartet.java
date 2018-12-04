@@ -25,6 +25,17 @@ public class Quartet implements Comparable<Quartet> {
         return aQuartet.valuation.compareTo(this.valuation);
     }
 
+    public int hashCode() {
+        return (this.user.getName() + this.device.getName()).hashCode();
+    }
+
+    public boolean equals(Quartet other) {
+        if (this.hashCode() == other.hashCode()) 
+            return true;
+
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Val=" + this.valuation + " user=" + this.user + " device=" + this.device + " service=" + this.service + "\n";

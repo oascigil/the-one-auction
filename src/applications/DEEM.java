@@ -85,7 +85,40 @@ class DEEM{
 		allLLAvMatrix         = new HashMap();
 		markets               = new ArrayList<VEDAuction>();
 	}
-	//---------------------------------------Contructors
+	//---------------------------------------Contructor with p
+	public DEEM(HashMap<Integer,Double> q_minPerLLA,
+    HashMap<Integer,Double> q_maxPerLLA,
+    HashMap<Integer,ArrayList<DTNHost>>  LLAs_Users_Association,
+    HashMap<DTNHost,Integer> user_LLA_Association,
+    HashMap<Integer,ArrayList<DTNHost>>  LLAs_Devices_Association,
+    HashMap<DTNHost,ArrayList<Integer>> device_LLAs_Association, 
+    HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency,
+    HashMap<DTNHost, Double> p ){
+		this.q_minPerLLA = new HashMap(q_minPerLLA);
+		this.q_maxPerLLA = new HashMap(q_maxPerLLA);
+		this.LLAs_Users_Association  = new HashMap(LLAs_Users_Association);
+		this.user_LLA_Association = new HashMap(user_LLA_Association);
+		this.LLAs_Devices_Association  = new HashMap(LLAs_Devices_Association);
+		this.device_LLAs_Association = new HashMap(device_LLAs_Association);
+		this.user_device_Latency = new HashMap(user_device_Latency);
+		//p  = new HashMap();
+        this.p = p;
+		r  = new HashMap();
+        this.deviceUserAssociation = new HashMap();
+		for(Integer LLA_ID: this.LLAs_Devices_Association.keySet()){
+			for (DTNHost device_ID:this.LLAs_Devices_Association.get(LLA_ID)){
+                if (this.p.getOrDefault(device_ID, null) == null) {
+				    this.p.put(device_ID,0.0);
+                }
+				r.put(device_ID,0.0);
+                deviceUserAssociation.put(device_ID, null);
+			}
+		}
+		userDeviceAssociation = new HashMap();
+		deviceLLAExecution    = new HashMap();
+		allLLAvMatrix         = new HashMap();
+		markets               = new ArrayList<VEDAuction>();
+    }
 	//Functions-----------------------------------------
 	public void createMarkets(boolean controlMessageFlag) {
 		//create valuations
@@ -109,7 +142,7 @@ class DEEM{
                         if (device_ID == null) 
                             continue;
 					    QoSGainValuation  = user_Device_QoSGain(LLA_ID,user_ID,device_ID);
-					    p.put(device_ID,0.0);
+					    //p.put(device_ID,0.0);
 					    vMatrixForThisUser.put(device_ID,QoSGainValuation);
 				    }
                 }

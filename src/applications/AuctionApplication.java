@@ -42,10 +42,15 @@ public class AuctionApplication extends Application {
     public int auctionMsgSize;
     /** Frequency of auctions */
     public double auctionPeriod;
+    /**prices of devices */
+    public HashMap<DTNHost, Double> prices;
 
     // Static vars
 	/** Application ID */
 	public static final String APP_ID = "ucl.AuctionApplication";
+
+    /** Debug flag */
+    private boolean debug = true;
 
 	/**
 	 * Creates a new auction application with the given settings.
@@ -74,6 +79,7 @@ public class AuctionApplication extends Application {
         this.lastAuctionTime = 0.0;
         this.q_minPerLLA = new HashMap<Integer, Double>();
         this.q_maxPerLLA = new HashMap<Integer, Double>();
+        this.prices = null;
 		super.setAppID(APP_ID);
     }
 	
@@ -93,6 +99,8 @@ public class AuctionApplication extends Application {
         this.services = a.services;
         this.q_minPerLLA = a.q_minPerLLA;
         this.q_maxPerLLA = a.q_maxPerLLA;
+        this.prices = a.prices;
+        this.debug = a.debug;
     }
 	
     @Override
@@ -109,19 +117,22 @@ public class AuctionApplication extends Application {
 	@Override
 	public Message handle(Message msg, DTNHost host) {
 		String type = (String)msg.getProperty("type");
-		System.out.println(SimClock.getTime()+" Auction app "+host+" received "+msg.getId()+" "+msg.getProperty("type")+" from "+msg.getFrom());
+        if (this.debug)
+	    	System.out.println(SimClock.getTime()+" Auction app "+host+" received "+msg.getId()+" "+msg.getProperty("type")+" from "+msg.getFrom());
 		//System.out.println("Auction app received "+msg.getId()+" "+type);
 		if (type==null) return msg; // Not a ping/pong message
 
         if (type.equalsIgnoreCase("clientAuctionRequest")) {
-        	System.out.println(SimClock.getTime()+" New client request "+clientRequests.size());
+            if (this.debug)
+        	    System.out.println(SimClock.getTime()+" New client request "+clientRequests.size());
             Message clientMsg = msg.replicate();
             clientHostToMessage.put(clientMsg.getFrom(), clientMsg);
             clientRequests.add(clientMsg);
             super.sendEventToListeners("ReceivedClientAuctionRequest", (Object) clientMsg, host);
         }
         if (type.equalsIgnoreCase("serverAuctionRequest")) {
-        	System.out.println(SimClock.getTime()+" New server offer "+serverRequests.size());
+            if (this.debug)
+        	    System.out.println(SimClock.getTime()+" New server offer "+serverRequests.size());
             Message serverMsg = msg.replicate();
             serverHostToMessage.put(serverMsg.getFrom(), serverMsg);
             serverRequests.add(msg.replicate());
@@ -141,7 +152,8 @@ public class AuctionApplication extends Application {
 	public void update(DTNHost host) {
         double currTime = SimClock.getTime();
         if (currTime - this.lastAuctionTime > this.auctionPeriod) {
-            System.out.println("Executing auction at time: " + currTime + "Auction Period: " + this.auctionPeriod);
+            if (this.debug)
+                System.out.println("Executing auction at time: " + currTime + "Auction Period: " + this.auctionPeriod);
             execute_auction(host);
             this.lastAuctionTime = currTime;
         }
@@ -232,12 +244,19 @@ public class AuctionApplication extends Application {
                 clientDistances.put(serverHost, latency);
             }
         }
-        
-        DEEM mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency);
+        DEEM mechanism = null;
+        if (this.prices == null) { // cold start
+            mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency);
+        }
+        else { // warm start
+            mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency, this.prices);
+        }
     	mechanism.createMarkets(controlMessageFlag);
     	DEEM_Results results = mechanism.executeMechanism(controlMessageFlag,controlAuctionMessageFlag);
+        this.prices = new HashMap(results.p);
 
         super.sendEventToListeners("AuctionExecutionComplete", results, host);
+
         //Send the auction results back to the clients (null if they are assigned to the cloud)
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost client = entry.getKey();
@@ -246,11 +265,15 @@ public class AuctionApplication extends Application {
             Message clientMsg = this.clientHostToMessage.get(client);
             String msgId = new String("ClientAuctionResponse_" + client.getName());
             Message m = new Message(host, clientMsg.getFrom(), msgId, this.auctionMsgSize);
+            HashMap<DTNHost, Double> clientDistances = user_device_Latency.get(client);
+            Double latency = clientDistances.get(server);
             m.addProperty("type", "clientAuctionResponse");
             m.addProperty("auctionResult", server);
+            m.addProperty("QoS", latency);
             m.setAppID(ClientApp.APP_ID);
             host.createNewMessage(m);
-            System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
+            if (this.debug)
+                System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
         // Send the auction results back to the servers
@@ -265,7 +288,8 @@ public class AuctionApplication extends Application {
             m.addProperty("auctionResult", client);
             m.setAppID(ServerApp.APP_ID);
             host.createNewMessage(m);
-            System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
+            if (this.debug)
+                System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentServerAuctionResponse", null, host);
         }
 
