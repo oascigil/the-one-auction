@@ -34,9 +34,12 @@ public class ServerApp extends Application {
     public boolean isServerAuctionRequestSent;
 	/** Application ID */
 	public static final String APP_ID = "ucl.ServerApp";
+    /** Device that the client is currently assigned to */
+    public DTNHost client;
+    // private vars
 	private int requestId=1;
 	private int		pongSize=1;
-    private boolean debug = true;
+    private boolean debug = false;
 	/**
 	 * Creates a new server application with the given settings.
 	 *
@@ -54,6 +57,7 @@ public class ServerApp extends Application {
         this.respMsgSize = 1;
         this.appId = "ServerApp" + this.services;
         this.isServerAuctionRequestSent = false;
+        this.client = null;
 		super.setAppID(APP_ID);
     }
 	/**
@@ -63,13 +67,16 @@ public class ServerApp extends Application {
 	 */
      public ServerApp(ServerApp a) {
         super(a);
-        this.isBusy = a.isBusy;
+        this.isBusy = false;
         this.services = a.services;
         this.reqMsg = a.reqMsg;
         this.respMsgSize = a.respMsgSize;
         this.appId = a.appId;
         this.pongSize = a.pongSize;
         this.debug = a.debug;
+        this.client = a.client;
+        this.isServerAuctionRequestSent = false;
+
      }
 	
     @Override
@@ -95,6 +102,7 @@ public class ServerApp extends Application {
             int service = (int) msg.getProperty("serviceType");
             this.completionTime = SimClock.getTime() + Application.execTimes.get(service);
             this.isBusy = true;
+            this.client = msg.getFrom();
             this.isServerAuctionRequestSent = false;
             reqMsg = msg;
         }
@@ -103,10 +111,13 @@ public class ServerApp extends Application {
             DTNHost clientHost = (DTNHost) msg.getProperty("auctionResult");
             if(clientHost == null) { //serverApp was not assigned to any client
                 this.isServerAuctionRequestSent = false;
+                if (this.debug)
+                    System.out.println("ServerApp: " + host + " received null Auction Response");
             }
             else {
                 if (this.isBusy) {
                     System.out.println("Warning: This should not happen in ServerApp - Got an auction response while executing another task");
+                    System.out.println("Client in the Auction Response: " + clientHost + " current client: " + this.client); 
                 }
             }
         }
@@ -147,7 +158,7 @@ public class ServerApp extends Application {
             m.setAppID(ClientApp.APP_ID);
             if (this.debug) 
                 System.out.println(SimClock.getTime()+" Server app "+host+" sent message "+m.getId()+" to "+m.getTo());
-			super.sendEventToListeners("SentExecResponse", null, host);
+			//super.sendEventToListeners("SentExecResponse", null, host);
             this.isBusy = false;
         }
         if (!this.isBusy && !this.isServerAuctionRequestSent) {
@@ -156,7 +167,6 @@ public class ServerApp extends Application {
             //Send an offer for each auctioneer
             for (int s : this.services) {
                 List<DTNHost> destList = DTNHost.auctioneers.get(s);
-                
                 assert (destList != null ) : "Tried to use a service with no auctioneers: " + s;
                 //System.out.println("Auction server "+destList.get(0));
                 //TODO pick the closest one
@@ -170,7 +180,7 @@ public class ServerApp extends Application {
 	    		host.createNewMessage(m);
                 if (this.debug)
 	                System.out.println(SimClock.getTime()+" Server app "+host+" sent message "+m.getId()+" to "+m.getTo());
-		    	super.sendEventToListeners("SentServerAuctionRequest", null, host);
+		    	//super.sendEventToListeners("SentServerAuctionRequest", null, host);
             }
         }
     }

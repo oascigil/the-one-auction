@@ -45,7 +45,7 @@ public class ClientApp extends Application {
     private int     sequenceNumber = 0;
 	private double	lastPing = 0;
     private Double  qos=0.0;
-    private boolean debug = true;
+    private boolean debug = false;
 
 
     public ClientApp(Settings s) {
@@ -56,17 +56,17 @@ public class ClientApp extends Application {
             this.reqMsgSize = 1;
         }
 
-        if (s.contains(REQUEST_MSG_SIZE_S)) {
-            this.reqSendingFreq = s.getDouble(REQUEST_MSG_SIZE_S);
+        if (s.contains(REQUEST_FREQUENCY_S)) {
+            this.reqSendingFreq = s.getDouble(REQUEST_FREQUENCY_S);
         }
         else {
-            this.reqSendingFreq = 10.0;
+            this.reqSendingFreq = 2.0;
         }
 		if (s.contains(PING_INTERVAL)){
 			this.pingInterval = s.getDouble(PING_INTERVAL);
 		}
         else {
-            this.pingInterval = 5.0;
+            this.pingInterval = 2.0;
         }
 
         this.lastReqSentTime = 0.0;
@@ -132,8 +132,8 @@ public class ClientApp extends Application {
 	    		host.createNewMessage(m);
                 if (this.debug)
                     System.out.println(currTime + " Client app "+host+" sent message "+m.getId()+" to "+m.getTo());
-			    super.sendEventToListeners("GotAuctionResult", null, host);
-    			super.sendEventToListeners("SentClientRequest", null, host);
+			    //super.sendEventToListeners("GotAuctionResult", null, host);
+    			//super.sendEventToListeners("SentClientRequest", null, host);
             }
         }
 		if (msg.getTo()==host && type.equalsIgnoreCase("execResponse")) {
@@ -148,7 +148,8 @@ public class ClientApp extends Application {
             Double difference = elapsed - this.qos;
             if (this.debug)
                 System.out.println(currTime + " Client app " + host + " RTT difference " + difference + " from " + this.qos + " measured: " + elapsed + " to server" + msg.getFrom() + "\n"); 
-			super.sendEventToListeners("SampleRTT", new Quartet(difference, host, msg.getFrom(), this.lastRequestedService), host);
+            Quartet aQuartet = new Quartet(difference, host, msg.getFrom(), this.lastRequestedService);
+			super.sendEventToListeners("SampleRTT", aQuartet, host);
             this.timeSent.remove(seqNo);
 		}
         host.getMessageCollection().remove(msg);
@@ -179,7 +180,7 @@ public class ClientApp extends Application {
             this.sequenceNumber += 1;
         }
         //Send a request to the auctionApp periodically for a random service type
-        if ((this.lastReqSentTime == 0.0) || (this.lastReqSentTime - currTime > this.reqSendingFreq)) {
+        if ((this.lastReqSentTime == 0.0) || (currTime - this.lastReqSentTime) > this.reqSendingFreq) {
             this.lastRequestedService = this.rng.nextInt(Application.nrofServices);
             //System.out.println("Destlist for service "+this.lastRequestedService);
             List<DTNHost> destList = DTNHost.auctioneers.get(this.lastRequestedService);
@@ -200,7 +201,7 @@ public class ClientApp extends Application {
 			host.createNewMessage(m);
             if (this.debug) 
                 System.out.println(currTime+" Client app "+host+" sent message "+m.getId()+" to "+m.getTo());
-			super.sendEventToListeners("SentClientAuctionRequest", null, host);
+			//super.sendEventToListeners("SentClientAuctionRequest", null, host);
             this.lastReqSentTime = currTime;
         }
     }

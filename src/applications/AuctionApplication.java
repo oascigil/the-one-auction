@@ -50,7 +50,7 @@ public class AuctionApplication extends Application {
 	public static final String APP_ID = "ucl.AuctionApplication";
 
     /** Debug flag */
-    private boolean debug = true;
+    private boolean debug = false;
 
 	/**
 	 * Creates a new auction application with the given settings.
@@ -68,7 +68,7 @@ public class AuctionApplication extends Application {
             this.auctionPeriod = s.getDouble(AUCTION_PERIOD_S);
         }
         else {
-            this.auctionPeriod = 1000; //1 second 
+            this.auctionPeriod = 5.0; //5 seconds 
         }
         System.out.println("New Service types "+ this.services);
         this.clientRequests = new ArrayList<Message>();
@@ -253,7 +253,7 @@ public class AuctionApplication extends Application {
         }
     	mechanism.createMarkets(controlMessageFlag);
     	DEEM_Results results = mechanism.executeMechanism(controlMessageFlag,controlAuctionMessageFlag);
-        this.prices = new HashMap(results.p);
+        //this.prices = new HashMap(results.p);
 
         super.sendEventToListeners("AuctionExecutionComplete", results, host);
 

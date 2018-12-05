@@ -278,7 +278,7 @@ class DEEM{
 	}
 
 	//Estimate Users QoS Gain
-	private HashMap<DTNHost,Double> QoSGainPerUser(HashMap<DTNHost,DTNHost> userDeviceAssociation){
+	public HashMap<DTNHost,Double> QoSGainPerUser(HashMap<DTNHost,DTNHost> userDeviceAssociation){
 		HashMap<DTNHost,Double> QoSGainPerUser = new HashMap();
 		DTNHost deviceAssignedToTheUser;
 		Integer LLA_ID;
@@ -292,7 +292,7 @@ class DEEM{
 		}
 		return QoSGainPerUser;
 	}
-	private HashMap<DTNHost,Double> QoSPerUser(HashMap<DTNHost, DTNHost> userDeviceAssociation){
+	public HashMap<DTNHost,Double> QoSPerUser(HashMap<DTNHost, DTNHost> userDeviceAssociation){
 		HashMap<DTNHost,Double> QoSPerUser = new HashMap();
 		DTNHost deviceAssignedToTheUser;
 		Integer LLA_ID;

@@ -7,7 +7,7 @@ Scenario.name = default_scenario
 Scenario.simulateConnections = true
 Scenario.updateInterval = 0.001
 # 43200s == 12h
-Scenario.endTime = 3600
+Scenario.endTime = 180
 
 Events.nrof=0
 
@@ -184,7 +184,7 @@ Report.nrofReports = 1
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
 # default directory of reports (can be overridden per Report with output setting)
-Report.reportDir = reports/
+Report.reportDir = reports1/
 # Report classes to load
 Report.report1 = AuctionAppReporter
 
@@ -223,13 +223,13 @@ Scenario.nrofServices = 3
 Service0.executionTime = 30.0
 Service0.minQoS = 10.7979685819
 Service1.executionTime = 30.0
-Service1.minQoS = 79.5597494844
+Service1.minQoS = 49.5597494844
 Service2.executionTime = 30.0
 Service2.minQoS = 4.4363334798
 
 # auction app setttings
-auctionApp0.type = AuctionApplication
-auctionApp0.auctionPeriod = 2.0
+auctionApp0.type = GreedyPairingApp
+auctionApp0.auctionPeriod = 3.0
 auctionApp0.serviceTypes = 0,1,2
 
 # Server apps

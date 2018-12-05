@@ -1,6 +1,7 @@
 package report;
 
 import applications.AuctionApplication;
+import applications.ClientApp;
 import core.Application;
 import core.ApplicationListener; 
 import core.DTNHost;
@@ -30,6 +31,8 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
     HashMap<Integer, Integer> clientRequests; 
     /** Map user, device pair to QoS deviation from its value at Auction time */
     HashMap<Quartet, ArrayList<Double>> qosDeviation; 
+    /** Map auction run to number of user-device pairs assigned */
+    HashMap<Integer, Integer> assignedPairs; 
 
     /** The number of times the auction process have run so far */
     private int auctionRun=0;
@@ -43,6 +46,7 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
         this.serverRequests = new HashMap();
         this.clientServicePopularity = new HashMap();
         this.serverServicePopularity = new HashMap();
+        this.assignedPairs = new HashMap();
 
         this.auctionRun = 0;
         this.qosDeviation = new HashMap();
@@ -54,10 +58,10 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
         Integer service = (Integer) m.getProperty("serviceType");
         Integer numReqs = clientRequests.getOrDefault(auctionRun, null);
         if (numReqs == null) {
-            this.clientRequests.put(service, 1);
+            this.clientRequests.put(this.auctionRun, 1);
         }
         else {
-            this.clientRequests.put(service, numReqs+1);
+            this.clientRequests.put(this.auctionRun, numReqs+1);
         }
         numReqs = clientServicePopularity.getOrDefault(service, null);
         if (numReqs == null) {
@@ -70,12 +74,12 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
 
     private void serverAuctionRequest(Message m) {
         Integer service = (Integer) m.getProperty("serviceType");
-        Integer numReqs = serverRequests.getOrDefault(auctionRun, null);
+        Integer numReqs = serverRequests.getOrDefault(this.auctionRun, null);
         if (numReqs == null) {
-            this.serverRequests.put(service, 1);
+            this.serverRequests.put(this.auctionRun, 1);
         }
         else {
-            this.serverRequests.put(service, numReqs+1);
+            this.serverRequests.put(this.auctionRun, numReqs+1);
         }
         numReqs = serverServicePopularity.getOrDefault(service, null);
         if (numReqs == null) {
@@ -87,41 +91,62 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
     }
 
     private void auctionExecutionComplete(DEEM_Results results) {
-        this.auctionRun += 1;
         double totalPrice = 0;
+        int numPairs = 0;
         for (Map.Entry<DTNHost, Double> entry : results.p.entrySet()) {
             Double price = entry.getValue();
+            if (price == 0.0) 
+                continue;
+            numPairs += 1;
             totalPrice += price;
         }
-        double averagePrice = totalPrice/results.p.keySet().size();
+        double averagePrice = 0.0;
+        if(numPairs > 0)
+            averagePrice = totalPrice/numPairs;
+
         this.priceTime.put(this.auctionRun, averagePrice);
 
         double totalQosGain = 0;
         double totalQos = 0;
+        numPairs = 0;
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost user = entry.getKey();
             DTNHost device = entry.getValue();
+            if (user == null || device == null)
+                continue;
             totalQosGain += results.QoSGainPerUser.get(user);
             totalQos += results.QoSPerUser.get(user);
+            numPairs += 1;
         }
-        double averageQos = totalQos/results.userDeviceAssociation.keySet().size();
-        double averageQosGain = totalQosGain/results.userDeviceAssociation.keySet().size();
+        double averageQos=0.0, averageQosGain=0.0;
+        if (numPairs > 0) {
+            averageQos = totalQos/numPairs;
+            averageQosGain = totalQosGain/numPairs;
+        }
+        this.assignedPairs.put(this.auctionRun, numPairs);
         this.qosTime.put(this.auctionRun, averageQos);
         this.qosGainTime.put(this.auctionRun, averageQosGain);
+        
         //move to the next iteration
+        this.auctionRun += 1;
+        this.clientRequests.put(this.auctionRun, 0);
+        this.serverRequests.put(this.auctionRun, 0);
     }
 
     private void sampleRttMeasurement(Quartet q) {
         Double dev = q.valuation;
         ArrayList<Double> deviations = this.qosDeviation.getOrDefault(q, null);
+        // System.out.println("Received an RTT measurement for: " + " client: " + q.user + " server: " + q.device + " pingResult: " + q.valuation);
         if (deviations == null) {
             deviations = new ArrayList<Double>();
+            this.qosDeviation.put(q, deviations);
         }
         deviations.add(dev);
     }
 	
     public void gotEvent(String event, Object params, Application app, DTNHost host) {
-        if(!(app instanceof AuctionApplication)) {
+        if(!(app instanceof AuctionApplication) && !(app instanceof ClientApp)) {
+            System.out.println("Warning: received an event report from an application other than auction or client");
             return;
         }
         if(event.equalsIgnoreCase("ReceivedClientAuctionRequest")) {
@@ -139,8 +164,6 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
         if(event.equalsIgnoreCase("SampleRTT")) {
             Quartet q = (Quartet) params;
             sampleRttMeasurement(q);
-
-
         }
 
     }
@@ -162,44 +185,53 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
 		write("AuctionAppliation stats for scenario " + getScenarioName() +
 				"\nsim_time: " + format(getSimTime()));
 
-        write("AveragePricePerAuctionExecution:\n");
+        write("AveragePricePerAuctionExecution:");
         
         for (Map.Entry<Integer, Double> entry : this.priceTime.entrySet()) {
             Integer iter = entry.getKey();
             Double price = entry.getValue();
-            String stats = iter + "\t" + price + "\n";
+            String stats = iter + "\t" + price;
             write(stats);
         }
 
-        write("\n\nAverageQoSPerExecution:\n");
+        write("\n\nAverageQoSPerExecution:");
         for (Map.Entry<Integer, Double> entry : this.qosTime.entrySet()) {
             Integer iter = entry.getKey();
             Double qos = entry.getValue();
-            String stats = iter + "\t" + qos + "\n";
+            String stats = iter + "\t" + qos;
             write(stats);
         }
 
-        write("\n\nAverageQoSGainPerExecution:\n");
+        write("\n\nAverageQoSGainPerExecution:");
         for (Map.Entry<Integer, Double> entry : this.qosGainTime.entrySet()) {
             Integer iter = entry.getKey();
             Double qos = entry.getValue();
-            String stats = iter + "\t" + qos + "\n";
+            String stats = iter + "\t" + qos;
             write(stats);
         }
 
-        write("\n\nAverageQoSGainPerExecution:\n");
+        write("\n\nAverageQoSGainPerExecution:");
         for (Map.Entry<Integer, Double> entry : this.qosGainTime.entrySet()) {
             Integer iter = entry.getKey();
             Double qos = entry.getValue();
-            String stats = iter + "\t" + qos + "\n";
+            String stats = iter + "\t" + qos;
             write(stats);
         }
-        
+        write("\n\nClientRequestCount\tServerRequestCount\tNumPairsAssignedWithAuction:");
+        for (Map.Entry<Integer, Integer> entry : this.clientRequests.entrySet()) {
+            Integer iter = entry.getKey();
+            Integer clientCount = entry.getValue();
+            Integer serverCount = this.serverRequests.get(iter);
+            String stats = iter + "\t" + clientCount + "\t" + serverCount + "\t" + this.assignedPairs.get(iter);
+            write(stats);
+        }
+
+        write("\n\nQosDeviation:\n");
         for (Map.Entry<Quartet, ArrayList<Double>> entry : this.qosDeviation.entrySet()) {
             Quartet q = entry.getKey();
             ArrayList<Double> devList = entry.getValue();
             double average = AuctionAppReporter.calculateAverage(devList);
-            String stats = q.user.getName() + "\t" + q.device.getName() + "\t" + average + "\n";
+            String stats = q.user.getName() + "\t" + q.device.getName() + "\t" + average;
             write(stats);
         }
         super.done();

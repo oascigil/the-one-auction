@@ -20,6 +20,8 @@ public class GreedyPairingApp extends AuctionApplication {
 	/** Application ID */
 	public static final String APP_ID = "ucl.GreedyPairingApp";
 
+    private boolean debug=false;
+
 	/**
 	 * Creates a new auction application with the given settings.
 	 *
@@ -52,21 +54,26 @@ public class GreedyPairingApp extends AuctionApplication {
 	@Override
 	public Message handle(Message msg, DTNHost host) {
 		String type = (String)msg.getProperty("type");
-		System.out.println(SimClock.getTime()+" Auction app "+host+" received "+msg.getId()+" "+msg.getProperty("type")+" from "+msg.getFrom());
+        if (this.debug)
+    		System.out.println(SimClock.getTime()+" Auction app "+host+" received "+msg.getId()+" "+msg.getProperty("type")+" from "+msg.getFrom());
 		//System.out.println("Auction app received "+msg.getId()+" "+type);
 		if (type==null) return msg; // Not a ping/pong message
 
         if (type.equalsIgnoreCase("clientAuctionRequest")) {
-        	System.out.println(SimClock.getTime()+" New client request "+clientRequests.size());
+            if (this.debug)
+        	    System.out.println(SimClock.getTime()+" New client request "+clientRequests.size());
             Message clientMsg = msg.replicate();
             clientHostToMessage.put(clientMsg.getFrom(), clientMsg);
             clientRequests.add(clientMsg);
+            super.sendEventToListeners("ReceivedClientAuctionRequest", (Object) clientMsg, host);
         }
         if (type.equalsIgnoreCase("serverAuctionRequest")) {
-        	System.out.println(SimClock.getTime()+" New server offer "+serverRequests.size());
+            if (this.debug)
+        	    System.out.println(SimClock.getTime()+" New server offer "+serverRequests.size());
             Message serverMsg = msg.replicate();
             serverHostToMessage.put(serverMsg.getFrom(), serverMsg);
             serverRequests.add(msg.replicate());
+            super.sendEventToListeners("ReceivedServerAuctionRequest", (Object) serverMsg, host);
         }
         host.getMessageCollection().remove(msg);
 
@@ -82,7 +89,8 @@ public class GreedyPairingApp extends AuctionApplication {
 	public void update(DTNHost host) {
         double currTime = SimClock.getTime();
         if (currTime - this.lastAuctionTime > this.auctionPeriod) {
-            System.out.println("Executing greedy pairing at time: " + currTime + "Period: " + this.auctionPeriod);
+            if (this.debug)
+                System.out.println("Executing greedy pairing at time: " + currTime + "Period: " + this.auctionPeriod);
             execute_auction(host);
             this.lastAuctionTime = currTime;
         }
@@ -158,12 +166,15 @@ public class GreedyPairingApp extends AuctionApplication {
             Coord clientCoord = clientHost.getLocation();
             HashMap<DTNHost, Double> clientDistances = new HashMap();
             user_device_Latency.put(clientHost, clientDistances);
+            DTNHost apclient = DTNHost.attachmentPoints.get(clientHost);
             for(int i=0;i<serverRequests.size();i++) {
                 Message serverMsg = serverRequests.get(i);
                 DTNHost serverHost = serverMsg.getFrom();
-                Coord serverCoord = serverHost.getLocation();
-                double dist = clientCoord.distance(serverCoord);
-                double latency = dist/this.speedOfLight;
+                DTNHost apserver = DTNHost.attachmentPoints.get(serverHost);
+                double latency = serverHost.getLocalLatency() + clientHost.getLocalLatency();  
+                if(apserver!=apclient)
+                	latency +=(Integer)(DTNHost.apLatencies.get(apclient.toString()+"to"+apserver.toString())).intValue();
+
                 clientDistances.put(serverHost, latency);
             }
         }
@@ -185,6 +196,7 @@ public class GreedyPairingApp extends AuctionApplication {
                     ArrayList<Double> valArray = deviceValuations.getOrDefault(device, null);
                     if (valArray == null) {
                         valArray = new ArrayList<Double>();
+                        deviceValuations.put(device, valArray);
                     }
                     valArray.add(val);
                 }
@@ -213,6 +225,8 @@ public class GreedyPairingApp extends AuctionApplication {
                 results.p.put(aQuartet.device, price);
             }
         }
+        results.QoSGainPerUser = mechanism.QoSGainPerUser(results.userDeviceAssociation);
+        results.QoSPerUser = mechanism.QoSPerUser(results.userDeviceAssociation);
         super.sendEventToListeners("AuctionExecutionComplete", results, host);
 
         //Send the auction results back to the clients (null if they are assigned to the cloud)
@@ -225,9 +239,13 @@ public class GreedyPairingApp extends AuctionApplication {
             Message m = new Message(host, clientMsg.getFrom(), msgId, this.auctionMsgSize);
             m.addProperty("type", "clientAuctionResponse");
             m.addProperty("auctionResult", server);
+            HashMap<DTNHost, Double> clientDistances = user_device_Latency.get(client);
+            Double latency = clientDistances.get(server);
+            m.addProperty("QoS", latency);
             m.setAppID(ClientApp.APP_ID);
             host.createNewMessage(m);
-            System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
+            if (this.debug)
+                System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
         //Notify the unassigned clients 
@@ -239,9 +257,11 @@ public class GreedyPairingApp extends AuctionApplication {
             Message m = new Message(host, clientMsg.getFrom(), msgId, this.auctionMsgSize);
             m.addProperty("type", "clientAuctionResponse");
             m.addProperty("auctionResult", server);
+            m.addProperty("QoS", 0);
             m.setAppID(ClientApp.APP_ID);
             host.createNewMessage(m);
-            System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
+            if (this.debug)
+                System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
         // Notify also the unassigned servers
@@ -255,7 +275,8 @@ public class GreedyPairingApp extends AuctionApplication {
             m.addProperty("auctionResult", client);
             m.setAppID(ServerApp.APP_ID);
             host.createNewMessage(m);
-            System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
+            if (this.debug)
+                System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentServerAuctionResponse", null, host);
         }
 

@@ -10,8 +10,8 @@ public class DEEM_Results{
     public final HashMap<DTNHost,DTNHost> deviceUserAssociation;
     public final HashMap<DTNHost,Integer> deviceLLAExecution;//Assignment
     public final HashMap<DTNHost,Double> p;
-    public final HashMap<DTNHost,Double> QoSGainPerUser;
-    public final HashMap<DTNHost,Double> QoSPerUser;
+    public HashMap<DTNHost,Double> QoSGainPerUser;
+    public HashMap<DTNHost,Double> QoSPerUser;
     public DEEM_Results() {
         numberOfIterations     = 0;
         userDeviceAssociation  = new HashMap();
