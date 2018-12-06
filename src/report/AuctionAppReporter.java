@@ -73,7 +73,7 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
     }
 
     private void serverAuctionRequest(Message m) {
-        Integer service = (Integer) m.getProperty("serviceType");
+        //ArrayList<Integer> serviceTypes = (ArrayList<Integer>) m.getProperty("serviceType");
         Integer numReqs = serverRequests.getOrDefault(this.auctionRun, null);
         if (numReqs == null) {
             this.serverRequests.put(this.auctionRun, 1);
@@ -81,13 +81,14 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
         else {
             this.serverRequests.put(this.auctionRun, numReqs+1);
         }
+        /*
         numReqs = serverServicePopularity.getOrDefault(service, null);
         if (numReqs == null) {
             this.serverServicePopularity.put(service, 1);
         }
         else {
             this.serverServicePopularity.put(service, numReqs+1);
-        }
+        }*/
     }
 
     private void auctionExecutionComplete(DEEM_Results results) {

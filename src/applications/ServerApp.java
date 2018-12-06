@@ -164,24 +164,18 @@ public class ServerApp extends Application {
         if (!this.isBusy && !this.isServerAuctionRequestSent) {
             this.isServerAuctionRequestSent = true;
             double currTime = SimClock.getTime();
-            //Send an offer for each auctioneer
-            for (int s : this.services) {
-                List<DTNHost> destList = DTNHost.auctioneers.get(s);
-                assert (destList != null ) : "Tried to use a service with no auctioneers: " + s;
-                //System.out.println("Auction server "+destList.get(0));
-                //TODO pick the closest one
-                DTNHost dest = destList.get(0);
-                Message m = new Message(host, dest, "serverAuctionRequest" + host.getName()+"-"+requestId, 1);
-                requestId++;
-                m.addProperty("type", "serverAuctionRequest");
-                m.addProperty("serviceType", s);
-                m.addProperty("location", host.getLocation());
-                m.setAppID(AuctionApplication.APP_ID);
-	    		host.createNewMessage(m);
-                if (this.debug)
-	                System.out.println(SimClock.getTime()+" Server app "+host+" sent message "+m.getId()+" to "+m.getTo());
-		    	//super.sendEventToListeners("SentServerAuctionRequest", null, host);
-            }
+            List<DTNHost> destList = DTNHost.auctioneers.get(this.services.get(0));
+            DTNHost dest = destList.get(0);
+            Message m = new Message(host, dest, "serverAuctionRequest" + host.getName()+"-"+requestId, 1);
+            requestId++;
+            m.addProperty("type", "serverAuctionRequest");
+            m.addProperty("serviceType", this.services);
+            m.addProperty("location", host.getLocation());
+            m.setAppID(AuctionApplication.APP_ID);
+	        host.createNewMessage(m);
+            if (this.debug)
+	            System.out.println(SimClock.getTime()+" Server app "+host+" sent message "+m.getId()+" to "+m.getTo());
+		    //super.sendEventToListeners("SentServerAuctionRequest", null, host);
         }
     }
 }

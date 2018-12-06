@@ -133,13 +133,14 @@ public class AuctionApplication extends Application {
         if (type.equalsIgnoreCase("serverAuctionRequest")) {
             if (this.debug)
         	    System.out.println(SimClock.getTime()+" New server offer "+serverRequests.size());
-            Message serverMsg = msg.replicate();
-            serverHostToMessage.put(serverMsg.getFrom(), serverMsg);
-            serverRequests.add(msg.replicate());
-            super.sendEventToListeners("ReceivedServerAuctionRequest", (Object) serverMsg, host);
+            if(serverHostToMessage.getOrDefault(msg.getFrom(), null) == null) {
+                Message serverMsg = msg.replicate();
+                serverHostToMessage.put(serverMsg.getFrom(), serverMsg);
+                serverRequests.add(msg.replicate());    
+                super.sendEventToListeners("ReceivedServerAuctionRequest", (Object) serverMsg, host);       
+            }
         }
         host.getMessageCollection().remove(msg);
-
         return null;
     }
 
@@ -200,24 +201,27 @@ public class AuctionApplication extends Application {
         {
             Message serverMsg = serverRequests.get(i);
             DTNHost serverHost = serverMsg.getFrom();
-            int serviceType = (int) serverMsg.getProperty("serviceType");
-            ArrayList<DTNHost> devicesList = LLAs_Devices_Association.get(serviceType);
-            if (devicesList == null) {
-                devicesList = new ArrayList<DTNHost>();
-                devicesList.add(serverHost);
-                LLAs_Devices_Association.put(serviceType, devicesList);
-            }
-            else {
-                devicesList.add(serverHost);
-            }
-            ArrayList<Integer> deviceServices = device_LLAs_Association.get(serverHost);
-            if (deviceServices == null) {
-                deviceServices = new ArrayList<Integer>();
-                deviceServices.add(serviceType);
-                device_LLAs_Association.put(serverHost, deviceServices);
-            }
-            else {
-                deviceServices.add(serviceType);
+            ArrayList<Integer> serviceTypes = (ArrayList<Integer>) serverMsg.getProperty("serviceType");
+
+            for(Integer serviceType : serviceTypes) {
+                ArrayList<DTNHost> devicesList = LLAs_Devices_Association.get(serviceType);
+                if (devicesList == null) {
+                    devicesList = new ArrayList<DTNHost>();
+                    devicesList.add(serverHost);
+                    LLAs_Devices_Association.put(serviceType, devicesList);
+                }
+                else {
+                    devicesList.add(serverHost);
+                }
+                ArrayList<Integer> deviceServices = device_LLAs_Association.get(serverHost);
+                if (deviceServices == null) {
+                    deviceServices = new ArrayList<Integer>();
+                    deviceServices.add(serviceType);
+                    device_LLAs_Association.put(serverHost, deviceServices);
+                }
+                else {
+                    deviceServices.add(serviceType);
+                }
             }
         }
 
