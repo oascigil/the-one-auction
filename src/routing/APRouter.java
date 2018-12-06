@@ -7,6 +7,7 @@ package routing;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Iterator;
 
 import core.Connection;
 import core.DTNHost;
@@ -81,6 +82,22 @@ public class APRouter extends ActiveRouter {
 		// then try any/all message to any/all connection
 		//this.tryAllMessagesToAllConnections();
 		this.tryMessagestoAps();
+		
+		clearMessagesDisconnected();
+	}
+	
+	protected void clearMessagesDisconnected() {
+		  Iterator<Message> iterator = getMessageCollection().iterator();
+		    
+		    while(iterator.hasNext()){
+		      Message msg = iterator.next();
+			  DTNHost dest = DTNHost.attachmentPoints.get(msg.getTo());
+		      if(dest==null){
+		        iterator.remove();
+		      }
+		    }
+
+		
 	}
 	
 	protected Connection exchangeDeliverableMessages() {
