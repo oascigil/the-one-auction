@@ -299,6 +299,7 @@ public class AuctionApplication extends Application {
         }
 
         this.clientHostToMessage.clear();
+        this.serverHostToMessage.clear();
         this.clientRequests.clear();
         this.serverRequests.clear();
     }

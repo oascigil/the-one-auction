@@ -16,7 +16,8 @@ import java.util.List;
 public class ServerApp extends Application {
     /** Service types for the application  */
     public static final String SERVICE_TYPE_S = "serviceTypes";
-
+	/** Auction Request Timeout */
+    public static final Double REQUEST_TIMEOUT = 2.0;
     //private vars
     /** Completion time of the current task being executed */
     private double completionTime;
@@ -40,6 +41,7 @@ public class ServerApp extends Application {
 	private int requestId=1;
 	private int		pongSize=1;
     private boolean debug = false;
+    private double lastOfferSentTime = 0.0;
 	/**
 	 * Creates a new server application with the given settings.
 	 *
@@ -58,6 +60,7 @@ public class ServerApp extends Application {
         this.appId = "ServerApp" + this.services;
         this.isServerAuctionRequestSent = false;
         this.client = null;
+        this.lastOfferSentTime = 0.0;
 		super.setAppID(APP_ID);
     }
 	/**
@@ -76,7 +79,7 @@ public class ServerApp extends Application {
         this.debug = a.debug;
         this.client = a.client;
         this.isServerAuctionRequestSent = false;
-
+        this.lastOfferSentTime = 0.0;
      }
 	
     @Override
@@ -161,9 +164,13 @@ public class ServerApp extends Application {
 			//super.sendEventToListeners("SentExecResponse", null, host);
             this.isBusy = false;
         }
+        // Resend the auction request if request timed out
+        if (this.isServerAuctionRequestSent && ((time - this.lastOfferSentTime) > ServerApp.REQUEST_TIMEOUT)) {
+            this.isServerAuctionRequestSent = false;
+        }
         if (!this.isBusy && !this.isServerAuctionRequestSent) {
             this.isServerAuctionRequestSent = true;
-            double currTime = SimClock.getTime();
+            this.lastOfferSentTime = time;
             List<DTNHost> destList = DTNHost.auctioneers.get(this.services.get(0));
             DTNHost dest = destList.get(0);
             Message m = new Message(host, dest, "serverAuctionRequest" + host.getName()+"-"+requestId, 1);

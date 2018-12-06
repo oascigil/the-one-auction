@@ -304,6 +304,7 @@ public class GreedyPairingApp extends AuctionApplication {
         }
 
         this.clientHostToMessage.clear();
+        this.serverHostToMessage.clear();
         this.clientRequests.clear();
         this.serverRequests.clear();
     }
