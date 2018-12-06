@@ -92,11 +92,20 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
 
     private void auctionExecutionComplete(DEEM_Results results) {
         double totalPrice = 0;
-        int numPairs = 0;
-        for (Map.Entry<DTNHost, Double> entry : results.p.entrySet()) {
-            Double price = entry.getValue();
-            if (price == 0.0) 
+        int numPairs = 0, numAllPairs=0;
+        //for (Map.Entry<DTNHost, Double> entry : results.p.entrySet()) {
+        for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
+            DTNHost user = entry.getKey();
+            DTNHost device = entry.getValue();
+            Double price;
+            if (user == null)
                 continue;
+            if (device != null)
+                price = results.p.get(device);
+            else
+                price = 0.0;
+            //if (price == 0.0) 
+            //    continue;
             numPairs += 1;
             totalPrice += price;
         }
@@ -109,19 +118,29 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
         double totalQosGain = 0;
         double totalQos = 0;
         numPairs = 0;
+        numAllPairs = 0;
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost user = entry.getKey();
             DTNHost device = entry.getValue();
-            if (user == null || device == null)
+            if (user == null)
                 continue;
-            totalQosGain += results.QoSGainPerUser.get(user);
-            totalQos += results.QoSPerUser.get(user);
-            numPairs += 1;
+            if (user != null && device != null)
+                numPairs += 1;
+            if(device != null) {
+                totalQosGain += results.QoSGainPerUser.get(user);
+                totalQos += results.QoSPerUser.get(user);
+                System.out.println("User: " + user + " Device: " + device + " QoS: " + results.QoSPerUser.get(user) + " QoS_Gain: " + results.QoSGainPerUser.get(user) + " Price: " + results.p.get(device));
+            }
+            else {
+                totalQos += Application.minQoS.get(results.userLLAAssociation.get(user));
+                System.out.println("User: " + user + " Device: Cloud" + " QoS:  " + Application.minQoS.get(results.userLLAAssociation.get(user)) + " QoS_Gain: 0" + " Price: 0");
+            }
+            numAllPairs += 1;
         }
         double averageQos=0.0, averageQosGain=0.0;
-        if (numPairs > 0) {
-            averageQos = totalQos/numPairs;
-            averageQosGain = totalQosGain/numPairs;
+        if (numAllPairs > 0) {
+            averageQos = totalQos/numAllPairs;
+            averageQosGain = totalQosGain/numAllPairs;
         }
         this.assignedPairs.put(this.auctionRun, numPairs);
         this.qosTime.put(this.auctionRun, averageQos);
@@ -210,13 +229,6 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
             write(stats);
         }
 
-        write("\n\nAverageQoSGainPerExecution:");
-        for (Map.Entry<Integer, Double> entry : this.qosGainTime.entrySet()) {
-            Integer iter = entry.getKey();
-            Double qos = entry.getValue();
-            String stats = iter + "\t" + qos;
-            write(stats);
-        }
         write("\n\nClientRequestCount\tServerRequestCount\tNumPairsAssignedWithAuction:");
         for (Map.Entry<Integer, Integer> entry : this.clientRequests.entrySet()) {
             Integer iter = entry.getKey();

@@ -253,6 +253,7 @@ public class AuctionApplication extends Application {
         }
     	mechanism.createMarkets(controlMessageFlag);
     	DEEM_Results results = mechanism.executeMechanism(controlMessageFlag,controlAuctionMessageFlag);
+        results.userLLAAssociation = new HashMap(user_LLA_Association);
         //this.prices = new HashMap(results.p);
 
         super.sendEventToListeners("AuctionExecutionComplete", results, host);

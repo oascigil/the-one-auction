@@ -209,6 +209,7 @@ public class GreedyPairingApp extends AuctionApplication {
         HashSet<DTNHost> userSet = new HashSet(user_LLA_Association.keySet());
         HashSet<DTNHost> deviceSet = new HashSet(device_LLAs_Association.keySet());
         DEEM_Results results = new DEEM_Results();
+        results.userLLAAssociation = new HashMap(user_LLA_Association);
 
         for (Quartet aQuartet : allValuations) {
             if (userSet.contains(aQuartet.user) && deviceSet.contains(aQuartet.device)) {
@@ -216,18 +217,34 @@ public class GreedyPairingApp extends AuctionApplication {
                 userSet.remove(aQuartet.user);
                 deviceSet.remove(aQuartet.device);
                 ArrayList<Double> valArray = deviceValuations.get(aQuartet.device);
-                Collections.sort(valArray);
+                //Collections.sort(valArray).reverse();
+                Collections.sort(valArray, Collections.reverseOrder()); 
                 int indx = valArray.indexOf(aQuartet.valuation);
+                double price = valArray.get(indx);
+                double nextLowerPrice = price;
+                //get the next lower price 
+                indx++;
+                while(indx < valArray.size()-1) {
+                    nextLowerPrice = valArray.get(indx);
+                    if (nextLowerPrice != price)
+                        break;
+                    indx++;
+                }
+                if (nextLowerPrice == price)
+                    results.p.put(aQuartet.device, 0.0);
+                else
+                    results.p.put(aQuartet.device, nextLowerPrice);
+                /*
                 double price=0;
                 if (indx < valArray.size()-1) {
                     price = valArray.get(indx+1);   
                 }
                 results.p.put(aQuartet.device, price);
+                */
             }
         }
         results.QoSGainPerUser = mechanism.QoSGainPerUser(results.userDeviceAssociation);
         results.QoSPerUser = mechanism.QoSPerUser(results.userDeviceAssociation);
-        super.sendEventToListeners("AuctionExecutionComplete", results, host);
 
         //Send the auction results back to the clients (null if they are assigned to the cloud)
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
@@ -246,7 +263,7 @@ public class GreedyPairingApp extends AuctionApplication {
             host.createNewMessage(m);
             if (this.debug)
                 System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
-            super.sendEventToListeners("SentClientAuctionResponse", null, host);
+            //super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
         //Notify the unassigned clients 
         for(DTNHost client : userSet) {
@@ -260,10 +277,12 @@ public class GreedyPairingApp extends AuctionApplication {
             m.addProperty("QoS", 0);
             m.setAppID(ClientApp.APP_ID);
             host.createNewMessage(m);
+            results.userDeviceAssociation.put(client, null);
             if (this.debug)
                 System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
-            super.sendEventToListeners("SentClientAuctionResponse", null, host);
+            //super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
+        super.sendEventToListeners("AuctionExecutionComplete", results, host);
         // Notify also the unassigned servers
         for(DTNHost server : deviceSet) {
             DTNHost client = null;
@@ -277,7 +296,7 @@ public class GreedyPairingApp extends AuctionApplication {
             host.createNewMessage(m);
             if (this.debug)
                 System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
-            super.sendEventToListeners("SentServerAuctionResponse", null, host);
+            //super.sendEventToListeners("SentServerAuctionResponse", null, host);
         }
 
         this.clientHostToMessage.clear();
