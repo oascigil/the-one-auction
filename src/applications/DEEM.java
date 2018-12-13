@@ -163,9 +163,6 @@ class DEEM{
                         if (device_ID != userDevice_ID) {
                             QoSGainValuation    = (QoSGainValuation*(userRemainingTime-migrationOverhead)+(userDeviceQoSGainValuation-migrationParallelPrice)*migrationOverhead)/userRemainingTime;
                         }
-                        else {
-                            QoSGainValuation = QoSGainValuation*userRemainingTime;
-                        }
 					    //p.put(device_ID,0.0);
 					    vMatrixForThisUser.put(device_ID,QoSGainValuation);
 				    }

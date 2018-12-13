@@ -300,7 +300,7 @@ public class AuctionApplication extends Application {
                     device_LLAs_Association.put(serverHost, deviceServices);
                 }
                 else {
-                    if(deviceServices.contains(serverHost) == false) {
+                    if(deviceServices.contains(serviceType) == false) {
                         deviceServices.add(serviceType);
                     }
                 }
@@ -343,7 +343,6 @@ public class AuctionApplication extends Application {
                 clientDistances.put(device, latency);
             }
         }
-        
 
         DEEM mechanism = null;
         if (this.prices == null) { // cold start
