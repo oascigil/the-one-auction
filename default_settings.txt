@@ -23,10 +23,10 @@ Events.nrof=0
 wifiInterface.type = BSInterface
 # Transmit speed of 2 Mbps = 250kBps
 #wifiInterface.transmitSpeed = 6750k
-#wifiInterface.transmitRange = 30
+#wifiInterface.transmitRange = 30 91
 
 wifiInterface.transmitSpeeds = 6750k, 6750k, 6750k, 6000k, 6000k, 4500k, 3000k, 2250k, 1500k, 1125k, 750k, 250k, 125k
-wifiInterface.transmitRange = 91
+wifiInterface.transmitRange = 200
 
 # dummy speed
 wifiInterface.transmitSpeed = 0
