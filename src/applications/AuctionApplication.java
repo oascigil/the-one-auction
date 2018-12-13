@@ -130,8 +130,8 @@ public class AuctionApplication extends Application {
         this.lastAuctionTime = a.lastAuctionTime;
         this.clientRequests = a.clientRequests;
         this.serverRequests = a.serverRequests;
-        this.clientHostToMessage = a.clientHostToMessage;
-        this.serverHostToMessage = a.serverHostToMessage;
+        this.clientHostToMessage = new HashMap<DTNHost, Message>();
+        this.serverHostToMessage = new HashMap<DTNHost, Message>();
         this.services = a.services;
         this.q_minPerLLA = a.q_minPerLLA;
         this.q_maxPerLLA = a.q_maxPerLLA;
@@ -328,6 +328,7 @@ public class AuctionApplication extends Application {
         }*/
 
         // update user-device latencies  
+        System.out.println("AUCTION = number of users: " + this.user_LLA_Association.keySet().size() + " number of devices: " + this.device_LLAs_Association.keySet().size());
         HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency = new HashMap();
         for (DTNHost user : this.user_LLA_Association.keySet()) {
             HashMap<DTNHost, Double> clientDistances = new HashMap();
@@ -380,7 +381,7 @@ public class AuctionApplication extends Application {
                 System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
-        /* Send the auction results back to the servers
+        // Send the auction results back to the servers
         for (Map.Entry<DTNHost, DTNHost> entry : results.deviceUserAssociation.entrySet()) {
             DTNHost server = entry.getKey();
             DTNHost client = entry.getValue();
@@ -395,7 +396,7 @@ public class AuctionApplication extends Application {
             if (this.debug)
                 System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentServerAuctionResponse", null, host);
-        }*/
+        }
 
         //this.clientHostToMessage.clear();
         //this.serverHostToMessage.clear();

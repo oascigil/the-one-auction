@@ -70,9 +70,9 @@ public class GreedyPairingApp extends AuctionApplication {
         if (type.equalsIgnoreCase("serverAuctionRequest")) {
             if (this.debug)
         	    System.out.println(SimClock.getTime()+" New server offer "+serverRequests.size());
-            if(serverHostToMessage.getOrDefault(msg.getFrom(), null) == null) {
+            if(this.serverHostToMessage.getOrDefault(msg.getFrom(), null) == null) {
                 Message serverMsg = msg.replicate();
-                serverHostToMessage.put(serverMsg.getFrom(), serverMsg);
+                this.serverHostToMessage.put(serverMsg.getFrom(), serverMsg);
                 serverRequests.add(msg.replicate());
                 super.sendEventToListeners("ReceivedServerAuctionRequest", (Object) serverMsg, host);
             }
@@ -267,8 +267,10 @@ public class GreedyPairingApp extends AuctionApplication {
         Collections.sort(allValuations); //larger to smaller in terms of valuation
         //System.out.println("Sorted Valuations: " + allValuations);
         
+        /** Unassigned user and device sets */
         HashSet<DTNHost> userSet = new HashSet(user_LLA_Association.keySet());
         HashSet<DTNHost> deviceSet = new HashSet(device_LLAs_Association.keySet());
+
         DEEM_Results results = new DEEM_Results();
         results.userLLAAssociation = new HashMap(user_LLA_Association);
 
@@ -311,7 +313,7 @@ public class GreedyPairingApp extends AuctionApplication {
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost client = entry.getKey();
             DTNHost server = entry.getValue();
-            // Send a response back to a client
+            /** Send a response back to a client */
             Message clientMsg = this.clientHostToMessage.get(client);
             String msgId = new String("ClientAuctionResponse_" + client.getName());
             Message m = new Message(host, clientMsg.getFrom(), msgId, this.auctionMsgSize);
@@ -322,11 +324,17 @@ public class GreedyPairingApp extends AuctionApplication {
             m.addProperty("QoS", latency);
             m.setAppID(ClientApp.APP_ID);
             host.createNewMessage(m);
-            if (this.debug)
-                System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
-            //super.sendEventToListeners("SentClientAuctionResponse", null, host);
+            /** Send a response back to server */
+            Message serverMsg = this.serverHostToMessage.get(server);
+            msgId = new String("ServerAuctionResponse_" + server.getName());
+            m = new Message(host, serverMsg.getFrom(), msgId, this.auctionMsgSize);
+            m.addProperty("type", "serverAuctionResponse");
+            m.addProperty("auctionResult" , client);
+            m.setAppID(ServerApp.APP_ID);
+            host.createNewMessage(m);
         }
-        //Notify the unassigned clients 
+
+        /** Notify the unassigned clients  */
         for(DTNHost client : userSet) {
             DTNHost server = null;
             // Send a response back to a client
@@ -343,11 +351,8 @@ public class GreedyPairingApp extends AuctionApplication {
                 System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
             //super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
-        super.sendEventToListeners("AuctionExecutionComplete", results, host);
-        this.previousPrices = new HashMap(results.p);
-        this.previousUserDeviceAssociation = new HashMap(results.userDeviceAssociation);
-        // Notify also the unassigned servers
-        /*
+        
+        /** Notify also the unassigned servers */
         for(DTNHost server : deviceSet) {
             DTNHost client = null;
             // Send a response back to a server
@@ -361,7 +366,11 @@ public class GreedyPairingApp extends AuctionApplication {
             if (this.debug)
                 System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
             //super.sendEventToListeners("SentServerAuctionResponse", null, host);
-        }*/
+        }
+        
+        super.sendEventToListeners("AuctionExecutionComplete", results, host);
+        this.previousPrices = new HashMap(results.p);
+        this.previousUserDeviceAssociation = new HashMap(results.userDeviceAssociation);
 
         //this.clientHostToMessage.clear();
         //this.serverHostToMessage.clear();
