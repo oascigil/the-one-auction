@@ -6,6 +6,7 @@ date:   8th of November 2018, 07:04
 Notes: - update, values a auction execution, update auction
 */
 package applications;
+import core.SimClock;
 import core.DTNHost;
 
 import java.util.Arrays;
@@ -57,12 +58,12 @@ class DEEM{
 	}
 	//Constructor------------------
 	public DEEM(HashMap<Integer,Double> q_minPerLLA,
-    HashMap<Integer,Double> q_maxPerLLA,
-    HashMap<Integer,ArrayList<DTNHost>>  LLAs_Users_Association,
-    HashMap<DTNHost,Integer> user_LLA_Association,
-    HashMap<Integer,ArrayList<DTNHost>>  LLAs_Devices_Association,
-    HashMap<DTNHost,ArrayList<Integer>> device_LLAs_Association, 
-    HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency){
+                HashMap<Integer,Double> q_maxPerLLA,
+                HashMap<Integer,ArrayList<DTNHost>>  LLAs_Users_Association,
+                HashMap<DTNHost,Integer> user_LLA_Association,
+                HashMap<Integer,ArrayList<DTNHost>>  LLAs_Devices_Association,
+                HashMap<DTNHost,ArrayList<Integer>> device_LLAs_Association, 
+                HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency) {
 		this.q_minPerLLA = new HashMap(q_minPerLLA);
 		this.q_maxPerLLA = new HashMap(q_maxPerLLA);
 		this.LLAs_Users_Association  = new HashMap(LLAs_Users_Association);
@@ -87,13 +88,13 @@ class DEEM{
 	}
 	//---------------------------------------Contructor with p
 	public DEEM(HashMap<Integer,Double> q_minPerLLA,
-    HashMap<Integer,Double> q_maxPerLLA,
-    HashMap<Integer,ArrayList<DTNHost>>  LLAs_Users_Association,
-    HashMap<DTNHost,Integer> user_LLA_Association,
-    HashMap<Integer,ArrayList<DTNHost>>  LLAs_Devices_Association,
-    HashMap<DTNHost,ArrayList<Integer>> device_LLAs_Association, 
-    HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency,
-    HashMap<DTNHost, Double> p ){
+                HashMap<Integer,Double> q_maxPerLLA,
+                HashMap<Integer,ArrayList<DTNHost>>  LLAs_Users_Association,
+                HashMap<DTNHost,Integer> user_LLA_Association,
+                HashMap<Integer,ArrayList<DTNHost>>  LLAs_Devices_Association,
+                HashMap<DTNHost,ArrayList<Integer>> device_LLAs_Association, 
+                HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency,
+                HashMap<DTNHost, Double> p ) {
 		this.q_minPerLLA = new HashMap(q_minPerLLA);
 		this.q_maxPerLLA = new HashMap(q_maxPerLLA);
 		this.LLAs_Users_Association  = new HashMap(LLAs_Users_Association);
@@ -120,28 +121,51 @@ class DEEM{
 		markets               = new ArrayList<VEDAuction>();
     }
 	//Functions-----------------------------------------
-	public void createMarkets(boolean controlMessageFlag) {
+	//
+	
+	public void createMarkets(boolean controlMessageFlag, HashMap<DTNHost, Double> previousPrices, HashMap<Integer, Double> LLAmigrationOverhead, HashMap<DTNHost, Double> userCompletionTime) {
 		//create valuations
 		HashMap<DTNHost, HashMap<DTNHost, Double>> vMatrix; //HashMap<user_id, HashMap<LLA_instances_device, Valuation>>
 		HashMap<DTNHost, Double> vMatrixForThisUser;
 		VEDAuction newAppMarket;
-		double QoSGainValuation;
+        double QoSGainValuation,userDeviceQoSGainValuation,migrationParallelPrice,migrationOverhead;
 		Integer marketID;
 		DTNHost[] B;//bidders array, auxiliary data structure for coding clarity
 		DTNHost[] I;//items array, auxiliary data structure for coding clarity
 		HashMap<DTNHost,Double> market_prices           = new HashMap();
 		HashMap<DTNHost,Double> market_reserved_prices  = new HashMap();
+        DTNHost userDevice_ID;
+        Double currTime = SimClock.getTime();
 		for(Integer LLA_ID: LLAs_Users_Association.keySet()){//for each market
 			vMatrix  = new HashMap();//valuation matrix for this LLA
 			if(controlMessageFlag) System.out.println(LLA_ID);
 			for(DTNHost user_ID:LLAs_Users_Association.get(LLA_ID)){
+                userDevice_ID = userDeviceAssociation.getOrDefault(user_ID, null);
+                if (userDevice_ID != null) {
+                    userDeviceQoSGainValuation = user_Device_QoSGain(LLA_ID, user_ID, userDevice_ID);
+                    migrationParallelPrice     = previousPrices.get(userDevice_ID);
+                    migrationOverhead          = LLAmigrationOverhead.get(LLA_ID);
+                    p.put(userDevice_ID, migrationParallelPrice);
+                }
+                else {
+                    userDeviceQoSGainValuation = 0.0;
+                    migrationParallelPrice     = 0.0;
+                    migrationOverhead          = 0.0;
+                }
 				vMatrixForThisUser  = new HashMap();//for this user
                 ArrayList<DTNHost> devicesList = LLAs_Devices_Association.getOrDefault(LLA_ID, null);
                 if (devicesList != null) {
 				    for (DTNHost device_ID:devicesList){
                         if (device_ID == null) 
                             continue;
+                        double userRemainingTime = userCompletionTime.get(user_ID) - currTime;
 					    QoSGainValuation  = user_Device_QoSGain(LLA_ID,user_ID,device_ID);
+                        if (device_ID != userDevice_ID) {
+                            QoSGainValuation    = (QoSGainValuation*(userRemainingTime-migrationOverhead)+(userDeviceQoSGainValuation-migrationParallelPrice)*migrationOverhead)/userRemainingTime;
+                        }
+                        else {
+                            QoSGainValuation = QoSGainValuation*userRemainingTime;
+                        }
 					    //p.put(device_ID,0.0);
 					    vMatrixForThisUser.put(device_ID,QoSGainValuation);
 				    }
@@ -168,6 +192,13 @@ class DEEM{
 			markets.add(newAppMarket);
 			allLLAvMatrix.put(LLA_ID,vMatrix);
 		}
+        for(Integer LLA_ID: LLAs_Users_Association.keySet()){//create initial prices
+            for (DTNHost device_ID:LLAs_Devices_Association.get(LLA_ID)){
+                if (p.getOrDefault(device_ID, null)==null){
+                    p.put(device_ID,0.0);
+                }
+            }
+        }
 	}
 	//auxiliary functions----------
 	private double user_Device_QoSGain(Integer LLA_ID, DTNHost user_ID, DTNHost device_ID){

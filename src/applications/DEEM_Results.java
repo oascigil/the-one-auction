@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class DEEM_Results{
 	public final int numberOfIterations;
     public final HashMap<DTNHost,DTNHost> userDeviceAssociation;
+    public HashMap<DTNHost, DTNHost> previousUserDeviceAssociation;
     public final HashMap<DTNHost,DTNHost> deviceUserAssociation;
     public final HashMap<DTNHost,Integer> deviceLLAExecution;//Assignment
     public final HashMap<DTNHost,Double> p;

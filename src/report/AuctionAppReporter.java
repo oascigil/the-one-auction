@@ -33,6 +33,8 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
     HashMap<Quartet, ArrayList<Double>> qosDeviation; 
     /** Map auction run to number of user-device pairs assigned */
     HashMap<Integer, Integer> assignedPairs; 
+    /** Map auction run to number of migrations by the users */
+    HashMap<Integer, Integer> migrationTime;
 
     /** The number of times the auction process have run so far */
     private int auctionRun=0;
@@ -47,7 +49,7 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
         this.clientServicePopularity = new HashMap();
         this.serverServicePopularity = new HashMap();
         this.assignedPairs = new HashMap();
-
+        this.migrationTime = new HashMap();
         this.auctionRun = 0;
         this.qosDeviation = new HashMap();
         clientRequests.put(0,0);
@@ -92,8 +94,9 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
     }
 
     private void auctionExecutionComplete(DEEM_Results results) {
-        double totalPrice = 0;
-        int numPairs = 0, numAllPairs=0;
+        double totalPrice=0;
+        Integer numPairs=0, numAllPairs=0, numMigrations=0;
+        System.out.println("\n\nAuction Execution Complete:");
         //for (Map.Entry<DTNHost, Double> entry : results.p.entrySet()) {
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost user = entry.getKey();
@@ -109,6 +112,13 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
             //    continue;
             numPairs += 1;
             totalPrice += price;
+            if( (results.previousUserDeviceAssociation != null) && (results.previousUserDeviceAssociation.containsKey(user) == true)) {
+                DTNHost previousAssociation = results.previousUserDeviceAssociation.get(user);
+                DTNHost currentAssociation = device;
+                if (previousAssociation != currentAssociation) {
+                    numMigrations += 1;
+                }
+            }
         }
         double averagePrice = 0.0;
         if(numPairs > 0)
@@ -123,14 +133,16 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost user = entry.getKey();
             DTNHost device = entry.getValue();
-            if (user == null)
+            if (user == null) {
+                System.out.println("User NULL: " + user + " Device: " + device);
                 continue;
+            }
             if (user != null && device != null)
                 numPairs += 1;
             if(device != null) {
                 totalQosGain += results.QoSGainPerUser.get(user);
                 totalQos += results.QoSPerUser.get(user);
-                System.out.println("User: " + user + " Device: " + device + " QoS: " + results.QoSPerUser.get(user) + " QoS_Gain: " + results.QoSGainPerUser.get(user) + " Price: " + results.p.get(device));
+                System.out.println("User: " + user + " Device: " + device + " QoS: " + results.QoSPerUser.get(user) + " QoS_Gain: " + results.QoSGainPerUser.get(user) + " Price: " + results.p.get(device) + " service: " + results.userLLAAssociation.get(user));
             }
             else {
                 totalQos += Application.minQoS.get(results.userLLAAssociation.get(user));
@@ -146,6 +158,7 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
         this.assignedPairs.put(this.auctionRun, numPairs);
         this.qosTime.put(this.auctionRun, averageQos);
         this.qosGainTime.put(this.auctionRun, averageQosGain);
+        this.migrationTime.put(this.auctionRun, numMigrations);
         
         //move to the next iteration
         this.auctionRun += 1;
@@ -238,7 +251,16 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
             String stats = iter + "\t" + clientCount + "\t" + serverCount + "\t" + this.assignedPairs.get(iter);
             write(stats);
         }
+        write("\n\nNumber of migrations per auction run:");
+        for (Map.Entry<Integer, Integer> entry : this.migrationTime.entrySet()) {
+            Integer iter = entry.getKey();
+            Integer migrationCount = entry.getValue();
+            String stats = iter + "\t" + migrationCount;
+            write(stats);
+        }
+        
 
+        /*
         write("\n\nQosDeviation:\n");
         for (Map.Entry<Quartet, ArrayList<Double>> entry : this.qosDeviation.entrySet()) {
             Quartet q = entry.getKey();
@@ -246,7 +268,7 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
             double average = AuctionAppReporter.calculateAverage(devList);
             String stats = q.user.getName() + "\t" + q.device.getName() + "\t" + average;
             write(stats);
-        }
+        }*/
         super.done();
     }
 }

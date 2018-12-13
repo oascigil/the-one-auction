@@ -103,10 +103,26 @@ public class GreedyPairingApp extends AuctionApplication {
         double currTime = SimClock.getTime();
         this.lastAuctionTime = currTime;
 
-        HashMap<Integer, ArrayList<DTNHost>>  LLAs_Users_Association = new HashMap();
-        HashMap<DTNHost, Integer>  user_LLA_Association = new HashMap();
-        HashMap<Integer, ArrayList<DTNHost>> LLAs_Devices_Association = new HashMap();
-        HashMap<DTNHost, ArrayList<Integer>> device_LLAs_Association = new HashMap();
+        //HashMap<Integer, ArrayList<DTNHost>>  LLAs_Users_Association = new HashMap();
+        //HashMap<DTNHost, Integer>  user_LLA_Association = new HashMap();
+        //HashMap<Integer, ArrayList<DTNHost>> LLAs_Devices_Association = new HashMap();
+        //HashMap<DTNHost, ArrayList<Integer>> device_LLAs_Association = new HashMap();
+        if (this.LLAs_Users_Association == null) {
+            //HashMap<Integer, ArrayList<DTNHost>>  
+            this.LLAs_Users_Association = new HashMap();
+        }
+        if (this.user_LLA_Association == null) {
+            //HashMap<DTNHost, Integer>  
+            this.user_LLA_Association = new HashMap();
+        }
+        if (this.LLAs_Devices_Association == null) {
+            //HashMap<Integer, ArrayList<DTNHost>> 
+            this.LLAs_Devices_Association = new HashMap();
+        }
+        if (device_LLAs_Association == null) {
+            //HashMap<DTNHost, ArrayList<Integer>> 
+            this.device_LLAs_Association = new HashMap();
+        }
 
         assert (Application.nrofServices == Application.minQoS.size()) : "Discrepancy between nrofServices and minQoS size"; 
         boolean controlMessageFlag = false, controlAuctionMessageFlag = false;
@@ -117,20 +133,43 @@ public class GreedyPairingApp extends AuctionApplication {
             q_minPerLLA.put(indx, minQoS);
             q_maxPerLLA.put(indx, 100.0);
         }
+        
+        // TODO remove the stale userCompletion time entries (but removal should be done elsewhere)
+        for (Map.Entry<DTNHost, Double> entry : this.userCompletionTime.entrySet() ) {
+        // update user-LLA and LLAs-users mappings for completed engagement times
+            DTNHost user = entry.getKey();
+            Double completionTime = entry.getValue();
+            Integer LLA_ID = this.user_LLA_Association.getOrDefault(user, null);
+            if(LLA_ID != null && completionTime <= currTime) {
+                this.user_LLA_Association.remove(user);                 
+                ArrayList<DTNHost> l = this.LLAs_Users_Association.getOrDefault(LLA_ID, null);
+                if(l != null) {
+                    l.remove(user);
+                }
+            }
+        }
 
         for(int indx= 0; indx < clientRequests.size();indx++)
         {
             Message clientMsg = clientRequests.get(indx);
             DTNHost clientHost = clientMsg.getFrom();
             int serviceType = (int) clientMsg.getProperty("serviceType");
-            ArrayList<DTNHost> l = LLAs_Users_Association.get(serviceType);
-            if (l == null) {
-                l = new ArrayList<DTNHost>();
-                l.add(clientHost);
-                LLAs_Users_Association.put(serviceType, l);
+            Double completionTime = (Double) clientMsg.getProperty("completionTime");
+            if (completionTime == null) {
+                completionTime = currTime + Application.execTimes.get(serviceType);
+            }
+            this.userCompletionTime.put(clientHost, completionTime);
+            
+            ArrayList<DTNHost> usersList = this.LLAs_Users_Association.get(serviceType);
+            if (usersList == null) {
+                usersList = new ArrayList<DTNHost>();
+                usersList.add(clientHost);
+                LLAs_Users_Association.put(serviceType, usersList);
             }
             else {
-                l.add(clientHost);
+                if (!usersList.contains(clientHost)) {
+                    usersList.add(clientHost);
+                }
             }
             user_LLA_Association.put(clientHost, serviceType);
         }
@@ -148,7 +187,9 @@ public class GreedyPairingApp extends AuctionApplication {
                     LLAs_Devices_Association.put(serviceType, devicesList);
                 }
                 else {
-                    devicesList.add(serverHost);
+                    if(!devicesList.contains(serverHost)) {
+                        devicesList.add(serverHost);
+                    }
                 }
                 ArrayList<Integer> deviceServices = device_LLAs_Association.get(serverHost);
                 if (deviceServices == null) {
@@ -157,13 +198,29 @@ public class GreedyPairingApp extends AuctionApplication {
                     device_LLAs_Association.put(serverHost, deviceServices);
                 }
                 else {
-                    deviceServices.add(serviceType);
+                    if(!deviceServices.contains(serverHost)) {
+                        deviceServices.add(serviceType);
+                    }
                 }
             }
         }
 
         HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency = new HashMap();
+        for (DTNHost user : this.user_LLA_Association.keySet()) {
+            HashMap<DTNHost, Double> clientDistances = new HashMap();
+            user_device_Latency.put(user, clientDistances);
+            DTNHost apUser = DTNHost.attachmentPoints.get(user);
+            for (DTNHost device : this.device_LLAs_Association.keySet()) {
+                DTNHost apDevice = DTNHost.attachmentPoints.get(device);
+                double latency = device.getLocalLatency() + user.getLocalLatency();  
+                if(apDevice!=apUser) {
+                	latency +=(Double)(DTNHost.apLatencies.get(apUser.toString()+"to"+apDevice.toString())).doubleValue();
+                }
+                clientDistances.put(device, latency);
+            }
+        }
         
+        /*
         for(int indx= 0; indx < clientRequests.size();indx++) { 
             Message clientMsg = clientRequests.get(indx);
             DTNHost clientHost = clientMsg.getFrom();
@@ -181,11 +238,11 @@ public class GreedyPairingApp extends AuctionApplication {
 
                 clientDistances.put(serverHost, latency);
             }
-        }
+        }*/
         
         HashMap<DTNHost, ArrayList<Double>> deviceValuations = new HashMap();
         DEEM mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency);
-    	mechanism.createMarkets(controlMessageFlag);
+    	mechanism.createMarkets(controlMessageFlag, this.previousPrices, this.LLAmigrationOverhead, this.userCompletionTime);
         ArrayList<Quartet> allValuations = new ArrayList<Quartet>();
 
         for (Map.Entry<Integer ,HashMap<DTNHost, HashMap<DTNHost, Double>>> outerEntry : mechanism.allLLAvMatrix.entrySet()) {
@@ -287,7 +344,10 @@ public class GreedyPairingApp extends AuctionApplication {
             //super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
         super.sendEventToListeners("AuctionExecutionComplete", results, host);
+        this.previousPrices = new HashMap(results.p);
+        this.previousUserDeviceAssociation = new HashMap(results.userDeviceAssociation);
         // Notify also the unassigned servers
+        /*
         for(DTNHost server : deviceSet) {
             DTNHost client = null;
             // Send a response back to a server
@@ -301,10 +361,10 @@ public class GreedyPairingApp extends AuctionApplication {
             if (this.debug)
                 System.out.println(SimClock.getTime()+" Execute greedyPairing from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
             //super.sendEventToListeners("SentServerAuctionResponse", null, host);
-        }
+        }*/
 
-        this.clientHostToMessage.clear();
-        this.serverHostToMessage.clear();
+        //this.clientHostToMessage.clear();
+        //this.serverHostToMessage.clear();
         this.clientRequests.clear();
         this.serverRequests.clear();
     }

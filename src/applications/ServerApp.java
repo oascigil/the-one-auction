@@ -9,6 +9,7 @@ import core.SimScenario;
 import core.World;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 /**
  * Simple Server Application to run tasks for Client Applications.
 */
@@ -16,32 +17,35 @@ import java.util.List;
 public class ServerApp extends Application {
     /** Service types for the application  */
     public static final String SERVICE_TYPE_S = "serviceTypes";
+    /** Request Sending Frequency (send one every x secs) */
+    public static final String REQUEST_FREQUENCY_S = "taskReqFreq";
 	/** Auction Request Timeout */
-    public static final Double REQUEST_TIMEOUT = 2.0;
+    public static final Double REQUEST_TIMEOUT = 3.0;
     //private vars
     /** Completion time of the current task being executed */
     private double completionTime;
     /** Flag to indicate if the application is currently busy executing */
-    private boolean isBusy;
+    //private boolean isBusy;
     /** The services that this application provides to ClientApps */
     private ArrayList<Integer> services;
-    /** Request message that is currently being executed */
-    private Message reqMsg;
     /** Size of the response message */
     private int respMsgSize;
 	/** Application ID */
 	public String appId;
     /** Have we sent auction request */
-    public boolean isServerAuctionRequestSent;
 	/** Application ID */
 	public static final String APP_ID = "ucl.ServerApp";
     /** Device that the client is currently assigned to */
     public DTNHost client;
     // private vars
+    //private Random  rng;
+    //private double  reqSendingFreq;
+    //private double remainingEngagementTime;
 	private int requestId=1;
 	private int		pongSize=1;
     private boolean debug = false;
-    private double lastOfferSentTime = 0.0;
+    private boolean isAuctionRegistrationComplete;
+    private double lastOfferSentTime;
 	/**
 	 * Creates a new server application with the given settings.
 	 *
@@ -53,14 +57,20 @@ public class ServerApp extends Application {
             this.services = new ArrayList<Integer>();
             for(int d : array ) this.services.add(d);
         }
-        this.isBusy = false;
+        /*
+        if (s.contains(REQUEST_FREQUENCY_S)) {
+            this.reqSendingFreq = s.getDouble(REQUEST_FREQUENCY_S);
+        }
+        else {
+            this.reqSendingFreq = 2.0;
+        }*/
         this.completionTime = 0.0; 
-        this.reqMsg = null;
         this.respMsgSize = 1;
         this.appId = "ServerApp" + this.services;
-        this.isServerAuctionRequestSent = false;
         this.client = null;
-        this.lastOfferSentTime = 0.0;
+        this.lastOfferSentTime = -1*ServerApp.REQUEST_TIMEOUT;
+        this.isAuctionRegistrationComplete = false;
+        //this.rng = new Random();
 		super.setAppID(APP_ID);
     }
 	/**
@@ -70,17 +80,16 @@ public class ServerApp extends Application {
 	 */
      public ServerApp(ServerApp a) {
         super(a);
-        this.isBusy = false;
         this.services = a.services;
-        this.reqMsg = a.reqMsg;
         this.respMsgSize = a.respMsgSize;
         this.appId = a.appId;
         this.pongSize = a.pongSize;
         this.debug = a.debug;
         this.client = a.client;
-        this.isServerAuctionRequestSent = false;
-        this.lastOfferSentTime = 0.0;
-     }
+        this.lastOfferSentTime = a.lastOfferSentTime;
+        this.isAuctionRegistrationComplete = false;
+        //this.reqSendingFreq = a.reqSendingFreq;
+    }
 	
     @Override
 	public Application replicate() {
@@ -100,28 +109,20 @@ public class ServerApp extends Application {
 		String type = (String)msg.getProperty("type");
 		if (type==null) return msg; 
 
-        // Get the task execution request
+        /* Get the task execution request
 		if (msg.getTo()==host && type.equalsIgnoreCase("clientRequest")) {
             int service = (int) msg.getProperty("serviceType");
             this.completionTime = SimClock.getTime() + Application.execTimes.get(service);
             this.isBusy = true;
             this.client = msg.getFrom();
-            this.isServerAuctionRequestSent = false;
-            reqMsg = msg;
-        }
+        }*/
         // Get the auction result
         if (msg.getTo() == host && type.equalsIgnoreCase("serverAuctionResponse")) {
+            this.isAuctionRegistrationComplete = true;
             DTNHost clientHost = (DTNHost) msg.getProperty("auctionResult");
             if(clientHost == null) { //serverApp was not assigned to any client
-                this.isServerAuctionRequestSent = false;
                 if (this.debug)
                     System.out.println("ServerApp: " + host + " received null Auction Response");
-            }
-            else {
-                if (this.isBusy) {
-                    System.out.println("Warning: This should not happen in ServerApp - Got an auction response while executing another task");
-                    System.out.println("Client in the Auction Response: " + clientHost + " current client: " + this.client); 
-                }
             }
         }
 		// Respond with pong if we're the recipient
@@ -134,10 +135,6 @@ public class ServerApp extends Application {
 			m.addProperty("type", "pong");
 			m.setAppID(ClientApp.APP_ID);
 			host.createNewMessage(m);
-
-			// Send event to listeners
-			//super.sendEventToListeners("GotPing", null, host);
-			//super.sendEventToListeners("SentPong", null, host);
 		}
         host.getMessageCollection().remove(msg);
 
@@ -152,6 +149,7 @@ public class ServerApp extends Application {
 	@Override
 	public void update(DTNHost host) {
         double time = SimClock.getTime();
+        /*
         if (time >= this.completionTime && this.isBusy) {
             //Send a response back to the requestor
 			Message m = new Message(host, reqMsg.getFrom(), reqMsg.getId()+"Response", this.respMsgSize);
@@ -163,13 +161,10 @@ public class ServerApp extends Application {
                 System.out.println(SimClock.getTime()+" Server app "+host+" sent message "+m.getId()+" to "+m.getTo());
 			//super.sendEventToListeners("SentExecResponse", null, host);
             this.isBusy = false;
-        }
-        // Resend the auction request if request timed out
-        if (this.isServerAuctionRequestSent && ((time - this.lastOfferSentTime) > ServerApp.REQUEST_TIMEOUT)) {
-            this.isServerAuctionRequestSent = false;
-        }
-        if (!this.isBusy && !this.isServerAuctionRequestSent) {
-            this.isServerAuctionRequestSent = true;
+        }*/
+
+        // Register once with the Auction App 
+        if (this.isAuctionRegistrationComplete == false && ( (time-this.lastOfferSentTime) >= ServerApp.REQUEST_TIMEOUT) ) {
             this.lastOfferSentTime = time;
             List<DTNHost> destList = DTNHost.auctioneers.get(this.services.get(0));
             DTNHost dest = destList.get(0);

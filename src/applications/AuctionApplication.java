@@ -18,8 +18,9 @@ public class AuctionApplication extends Application {
     public static final String AUCTION_PERIOD_S = "auctionPeriod";
     /** Service types for the Auction  */
     public static final String SERVICE_TYPE_S = "serviceTypes";
-    /** Service types for the Auction  */
-    public static final double speedOfLight = 180000;
+    /** Migration overheads   */
+    public static final String MIGRATION_OVERHEAD_S = "migrationOverheads";
+    //public static final double speedOfLight = 180000;
     /** List of client request messages received during the current auctionPeriod */
     public ArrayList<Message> clientRequests;
     /** Mapping of client host to the last request message received during the current auctionPeriod */
@@ -28,6 +29,8 @@ public class AuctionApplication extends Application {
     public HashMap<DTNHost, Message> serverHostToMessage;
     /** List of server request messages received during the current auctionPeriod */
     public ArrayList<Message> serverRequests;
+    /** Device prices from the last (previous) invocation of the auction */
+    public HashMap<DTNHost, Double> previousPrices;
 
     //Private vars
     /** Minimum QoS Requirement of Services  */
@@ -44,14 +47,26 @@ public class AuctionApplication extends Application {
     public double auctionPeriod;
     /**prices of devices */
     public HashMap<DTNHost, Double> prices;
+    /** user engagement completion times */
+    public HashMap<DTNHost, Double> userCompletionTime;
+    /** migration overhead of services */
+    public HashMap<Integer, Double> LLAmigrationOverhead;
+    /** LLAs user association */
+    public HashMap<Integer, ArrayList<DTNHost>> LLAs_Users_Association;
+    /** user LLA association */
+    public HashMap<DTNHost, Integer> user_LLA_Association;
+    /** LLAs devices association */
+    public HashMap<Integer, ArrayList<DTNHost>> LLAs_Devices_Association;
+    /** device LLAs Association */
+    public HashMap<DTNHost, ArrayList<Integer>> device_LLAs_Association;
+	/** user device associations from previous auction (to track migrations) */
+    public HashMap<DTNHost, DTNHost> previousUserDeviceAssociation;
 
     // Static vars
 	/** Application ID */
 	public static final String APP_ID = "ucl.AuctionApplication";
-
     /** Debug flag */
     private boolean debug = false;
-
 	/**
 	 * Creates a new auction application with the given settings.
 	 *
@@ -62,7 +77,21 @@ public class AuctionApplication extends Application {
             this.services = s.getCsvInts(SERVICE_TYPE_S);
         }
         else {
-            System.out.println("Warning: Failed to set the service types in the AuctionApp");
+            System.out.println("Warning: Failed to set the service types in the AuctionApp.");
+        }
+        this.LLAmigrationOverhead = new HashMap();
+        if (s.contains(MIGRATION_OVERHEAD_S)) {
+            int n_services = this.services.length;
+            double [] overheads = s.getCsvDoubles(MIGRATION_OVERHEAD_S);
+            if (overheads.length != this.services.length) {
+                System.out.println("Warning: number of migration overheads do not match service population size.");
+            }
+            for (int i = 0; i < n_services; i++) {
+                this.LLAmigrationOverhead.put(i, overheads[i]);
+            }    
+        }
+        else {
+            System.out.println("Warning: Failed to set the migration overheads.");
         }
         if (s.contains(AUCTION_PERIOD_S)) {
             this.auctionPeriod = s.getDouble(AUCTION_PERIOD_S);
@@ -79,6 +108,13 @@ public class AuctionApplication extends Application {
         this.lastAuctionTime = 0.0;
         this.q_minPerLLA = new HashMap<Integer, Double>();
         this.q_maxPerLLA = new HashMap<Integer, Double>();
+        this.userCompletionTime = new HashMap();
+        this.LLAs_Users_Association = null;
+        this.user_LLA_Association = null;
+        this.LLAs_Devices_Association = null;
+        this.device_LLAs_Association = null;
+        this.previousUserDeviceAssociation = null;
+        this.previousPrices = null;
         this.prices = null;
 		super.setAppID(APP_ID);
     }
@@ -100,6 +136,14 @@ public class AuctionApplication extends Application {
         this.q_minPerLLA = a.q_minPerLLA;
         this.q_maxPerLLA = a.q_maxPerLLA;
         this.prices = a.prices;
+        this.LLAmigrationOverhead = a.LLAmigrationOverhead;
+        this.userCompletionTime = new HashMap();
+        this.LLAs_Users_Association = null;
+        this.user_LLA_Association = null;
+        this.LLAs_Devices_Association = null;
+        this.device_LLAs_Association = null;
+        this.previousUserDeviceAssociation = null;
+        this.previousPrices = null;
         this.debug = a.debug;
     }
 	
@@ -132,11 +176,11 @@ public class AuctionApplication extends Application {
         }
         if (type.equalsIgnoreCase("serverAuctionRequest")) {
             if (this.debug)
-        	    System.out.println(SimClock.getTime()+" New server offer "+serverRequests.size());
-            if(serverHostToMessage.getOrDefault(msg.getFrom(), null) == null) {
+        	    System.out.println(SimClock.getTime()+" New server offer "+ this.serverRequests.size());
+            if(this.serverHostToMessage.getOrDefault(msg.getFrom(), null) == null) {
                 Message serverMsg = msg.replicate();
-                serverHostToMessage.put(serverMsg.getFrom(), serverMsg);
-                serverRequests.add(msg.replicate());    
+                this.serverHostToMessage.put(serverMsg.getFrom(), serverMsg);
+                this.serverRequests.add(msg.replicate());    
                 super.sendEventToListeners("ReceivedServerAuctionRequest", (Object) serverMsg, host);       
             }
         }
@@ -152,7 +196,7 @@ public class AuctionApplication extends Application {
 	@Override
 	public void update(DTNHost host) {
         double currTime = SimClock.getTime();
-        if (currTime - this.lastAuctionTime > this.auctionPeriod) {
+        if (currTime - this.lastAuctionTime >= this.auctionPeriod) {
             if (this.debug)
                 System.out.println("Executing auction at time: " + currTime + "Auction Period: " + this.auctionPeriod);
             execute_auction(host);
@@ -165,10 +209,22 @@ public class AuctionApplication extends Application {
 		//System.out.println("Execute action "+clientRequests.size()+" "+serverRequests.size()+" "+len);
         double currTime = SimClock.getTime();
         this.lastAuctionTime = currTime;
-        HashMap<Integer, ArrayList<DTNHost>>  LLAs_Users_Association = new HashMap();
-        HashMap<DTNHost, Integer>  user_LLA_Association = new HashMap();
-        HashMap<Integer, ArrayList<DTNHost>> LLAs_Devices_Association = new HashMap();
-        HashMap<DTNHost, ArrayList<Integer>> device_LLAs_Association = new HashMap();
+        if (this.LLAs_Users_Association == null) {
+            //HashMap<Integer, ArrayList<DTNHost>>  
+            this.LLAs_Users_Association = new HashMap();
+        }
+        if (this.user_LLA_Association == null) {
+            //HashMap<DTNHost, Integer>  
+            this.user_LLA_Association = new HashMap();
+        }
+        if (this.LLAs_Devices_Association == null) {
+            //HashMap<Integer, ArrayList<DTNHost>> 
+            this.LLAs_Devices_Association = new HashMap();
+        }
+        if (device_LLAs_Association == null) {
+            //HashMap<DTNHost, ArrayList<Integer>> 
+            this.device_LLAs_Association = new HashMap();
+        }
 
         assert (Application.nrofServices == Application.minQoS.size()) : "Discrepancy between nrofServices and minQoS size"; 
         boolean controlMessageFlag = false, controlAuctionMessageFlag = false;
@@ -180,29 +236,51 @@ public class AuctionApplication extends Application {
             q_maxPerLLA.put(indx, 100.0);
         }
 
-        for(int indx= 0; indx < clientRequests.size();indx++)
+        // TODO remove the stale userCompletion time entries (but removal should be done elsewhere)
+        for (Map.Entry<DTNHost, Double> entry : this.userCompletionTime.entrySet() ) {
+        // update user-LLA and LLAs-users mappings for completed engagement times
+            DTNHost user = entry.getKey();
+            Double completionTime = entry.getValue();
+            Integer LLA_ID = this.user_LLA_Association.getOrDefault(user, null);
+            if(LLA_ID != null && completionTime <= currTime) {
+                this.user_LLA_Association.remove(user);                 
+                ArrayList<DTNHost> l = this.LLAs_Users_Association.getOrDefault(LLA_ID, null);
+                if(l != null) {
+                    l.remove(user);
+                }
+            }
+        }
+
+        for(int indx= 0; indx < this.clientRequests.size();indx++)
         {
-            Message clientMsg = clientRequests.get(indx);
+            Message clientMsg = this.clientRequests.get(indx);
             DTNHost clientHost = clientMsg.getFrom();
             int serviceType = (int) clientMsg.getProperty("serviceType");
-            ArrayList<DTNHost> l = LLAs_Users_Association.get(serviceType);
-            if (l == null) {
-                l = new ArrayList<DTNHost>();
-                l.add(clientHost);
-                LLAs_Users_Association.put(serviceType, l);
+            Double completionTime = (Double) clientMsg.getProperty("completionTime");
+            if (completionTime == null) {
+                completionTime = currTime + Application.execTimes.get(serviceType);
+            }
+            this.userCompletionTime.put(clientHost, completionTime);
+                
+            ArrayList<DTNHost> usersList = this.LLAs_Users_Association.getOrDefault(serviceType, null);
+            if (usersList == null) {
+                usersList = new ArrayList<DTNHost>();
+                usersList.add(clientHost);
+                LLAs_Users_Association.put(serviceType, usersList);
             }
             else {
-                l.add(clientHost);
+                if (!usersList.contains(clientHost)) {
+                    usersList.add(clientHost);
+                }
             }
             user_LLA_Association.put(clientHost, serviceType);
         }
 
-        for(int i=0;i<serverRequests.size();i++)
+        for(int i=0;i<this.serverRequests.size();i++)
         {
-            Message serverMsg = serverRequests.get(i);
+            Message serverMsg = this.serverRequests.get(i);
             DTNHost serverHost = serverMsg.getFrom();
             ArrayList<Integer> serviceTypes = (ArrayList<Integer>) serverMsg.getProperty("serviceType");
-
             for(Integer serviceType : serviceTypes) {
                 ArrayList<DTNHost> devicesList = LLAs_Devices_Association.get(serviceType);
                 if (devicesList == null) {
@@ -211,43 +289,61 @@ public class AuctionApplication extends Application {
                     LLAs_Devices_Association.put(serviceType, devicesList);
                 }
                 else {
-                    devicesList.add(serverHost);
+                    if(devicesList.contains(serverHost) == false) {
+                        devicesList.add(serverHost);
+                    }
                 }
-                ArrayList<Integer> deviceServices = device_LLAs_Association.get(serverHost);
+                ArrayList<Integer> deviceServices = device_LLAs_Association.getOrDefault(serverHost, null);
                 if (deviceServices == null) {
                     deviceServices = new ArrayList<Integer>();
                     deviceServices.add(serviceType);
                     device_LLAs_Association.put(serverHost, deviceServices);
                 }
                 else {
-                    deviceServices.add(serviceType);
+                    if(deviceServices.contains(serverHost) == false) {
+                        deviceServices.add(serviceType);
+                    }
                 }
             }
         }
 
-        HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency = new HashMap();
-        
-        for(int indx= 0; indx < clientRequests.size();indx++) { 
-            Message clientMsg = clientRequests.get(indx);
+        /*
+        for(int indx= 0; indx < this.clientRequests.size();indx++) { 
+            Message clientMsg = this.clientRequests.get(indx);
             DTNHost clientHost = clientMsg.getFrom();
-            Coord clientCoord = clientHost.getLocation();
+            //Coord clientCoord = clientHost.getLocation();
             HashMap<DTNHost, Double> clientDistances = new HashMap();
             user_device_Latency.put(clientHost, clientDistances);
             DTNHost apclient = DTNHost.attachmentPoints.get(clientHost);
-            for(int i=0;i<serverRequests.size();i++) {
-                Message serverMsg = serverRequests.get(i);
+            for(int i=0;i < this.serverRequests.size();i++) {
+                Message serverMsg = this.serverRequests.get(i);
                 DTNHost serverHost = serverMsg.getFrom();
                 DTNHost apserver = DTNHost.attachmentPoints.get(serverHost);
-                /*Coord serverCoord = serverHost.getLocation();
-                double dist = clientCoord.distance(serverCoord);
-                double latency = dist/this.speedOfLight;*/
                 double latency = serverHost.getLocalLatency() + clientHost.getLocalLatency();  
                 if(apserver!=apclient)
                 	latency +=(Integer)(DTNHost.apLatencies.get(apclient.toString()+"to"+apserver.toString())).intValue();
 
                 clientDistances.put(serverHost, latency);
             }
+        }*/
+
+        // update user-device latencies  
+        HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency = new HashMap();
+        for (DTNHost user : this.user_LLA_Association.keySet()) {
+            HashMap<DTNHost, Double> clientDistances = new HashMap();
+            user_device_Latency.put(user, clientDistances);
+            DTNHost apUser = DTNHost.attachmentPoints.get(user);
+            for (DTNHost device : this.device_LLAs_Association.keySet()) {
+                DTNHost apDevice = DTNHost.attachmentPoints.get(device);
+                double latency = device.getLocalLatency() + user.getLocalLatency();  
+                if(apDevice!=apUser) {
+                	latency +=(Double)(DTNHost.apLatencies.get(apUser.toString()+"to"+apDevice.toString())).doubleValue();
+                }
+                clientDistances.put(device, latency);
+            }
         }
+        
+
         DEEM mechanism = null;
         if (this.prices == null) { // cold start
             mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency);
@@ -255,12 +351,14 @@ public class AuctionApplication extends Application {
         else { // warm start
             mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency, this.prices);
         }
-    	mechanism.createMarkets(controlMessageFlag);
+    	mechanism.createMarkets(controlMessageFlag, this.previousPrices, this.LLAmigrationOverhead, this.userCompletionTime);
     	DEEM_Results results = mechanism.executeMechanism(controlMessageFlag,controlAuctionMessageFlag);
         results.userLLAAssociation = new HashMap(user_LLA_Association);
+        results.previousUserDeviceAssociation = this.previousUserDeviceAssociation;
+        this.previousPrices = new HashMap(results.p);
         //this.prices = new HashMap(results.p);
-
         super.sendEventToListeners("AuctionExecutionComplete", results, host);
+        this.previousUserDeviceAssociation = new HashMap(results.userDeviceAssociation);
 
         //Send the auction results back to the clients (null if they are assigned to the cloud)
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
@@ -275,13 +373,14 @@ public class AuctionApplication extends Application {
             m.addProperty("type", "clientAuctionResponse");
             m.addProperty("auctionResult", server);
             m.addProperty("QoS", latency);
+            m.addProperty("completionTime", this.userCompletionTime.get(client)); 
             m.setAppID(ClientApp.APP_ID);
             host.createNewMessage(m);
             if (this.debug)
                 System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
-        // Send the auction results back to the servers
+        /* Send the auction results back to the servers
         for (Map.Entry<DTNHost, DTNHost> entry : results.deviceUserAssociation.entrySet()) {
             DTNHost server = entry.getKey();
             DTNHost client = entry.getValue();
@@ -296,10 +395,10 @@ public class AuctionApplication extends Application {
             if (this.debug)
                 System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentServerAuctionResponse", null, host);
-        }
+        }*/
 
-        this.clientHostToMessage.clear();
-        this.serverHostToMessage.clear();
+        //this.clientHostToMessage.clear();
+        //this.serverHostToMessage.clear();
         this.clientRequests.clear();
         this.serverRequests.clear();
     }

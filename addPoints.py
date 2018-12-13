@@ -13,6 +13,7 @@ def RepresentsInt(s):
 
 
 # Usage ./addPoints -st locations.txt default_settings.txt num_services
+random.seed(100)
 num_services = 0
 if(len(sys.argv) >=3):
     filename = sys.argv[3]
@@ -78,7 +79,7 @@ with open((filename), 'r') as F:
             exec_time_low = 30.0
             exec_time_high = 30.0
             # Service Settings
-            nrofServices = 3
+            nrofServices = 10
             auction_apps = []
             server_apps = []
             services = range(nrofServices)
