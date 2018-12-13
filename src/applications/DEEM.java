@@ -136,10 +136,10 @@ class DEEM{
 		HashMap<DTNHost,Double> market_reserved_prices  = new HashMap();
         DTNHost userDevice_ID;
         Double currTime = SimClock.getTime();
-		for(Integer LLA_ID: LLAs_Users_Association.keySet()){//for each market
+		for(Integer LLA_ID: LLAs_Users_Association.keySet()) {//for each market
 			vMatrix  = new HashMap();//valuation matrix for this LLA
 			if(controlMessageFlag) System.out.println(LLA_ID);
-			for(DTNHost user_ID:LLAs_Users_Association.get(LLA_ID)){
+			for(DTNHost user_ID:LLAs_Users_Association.get(LLA_ID)) {
                 userDevice_ID = userDeviceAssociation.getOrDefault(user_ID, null);
                 if (userDevice_ID != null) {
                     userDeviceQoSGainValuation = user_Device_QoSGain(LLA_ID, user_ID, userDevice_ID);

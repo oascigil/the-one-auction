@@ -96,7 +96,7 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
     private void auctionExecutionComplete(DEEM_Results results) {
         double totalPrice=0;
         Integer numPairs=0, numAllPairs=0, numMigrations=0;
-        System.out.println("\n\nAuction Execution Complete:");
+        System.out.println("Auction Execution Complete:");
         //for (Map.Entry<DTNHost, Double> entry : results.p.entrySet()) {
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost user = entry.getKey();

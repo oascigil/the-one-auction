@@ -328,7 +328,7 @@ public class AuctionApplication extends Application {
         }*/
 
         // update user-device latencies  
-        System.out.println("AUCTION = number of users: " + this.user_LLA_Association.keySet().size() + " number of devices: " + this.device_LLAs_Association.keySet().size());
+        System.out.println("\n\nAUCTION = number of users: " + this.user_LLA_Association.keySet().size() + " number of devices: " + this.device_LLAs_Association.keySet().size());
         HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency = new HashMap();
         for (DTNHost user : this.user_LLA_Association.keySet()) {
             HashMap<DTNHost, Double> clientDistances = new HashMap();
@@ -338,7 +338,7 @@ public class AuctionApplication extends Application {
                 DTNHost apDevice = DTNHost.attachmentPoints.get(device);
                 double latency = device.getLocalLatency() + user.getLocalLatency();  
                 if(apDevice!=apUser) {
-                	latency +=(Double)(DTNHost.apLatencies.get(apUser.toString()+"to"+apDevice.toString())).doubleValue();
+                    latency +=(Double)(DTNHost.apLatencies.get(apUser.toString()+"to"+apDevice.toString())).doubleValue();
                 }
                 clientDistances.put(device, latency);
             }
