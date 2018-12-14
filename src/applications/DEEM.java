@@ -66,9 +66,11 @@ class DEEM{
                 HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency) {
 		this.q_minPerLLA = new HashMap(q_minPerLLA);
 		this.q_maxPerLLA = new HashMap(q_maxPerLLA);
-		this.LLAs_Users_Association  = new HashMap(LLAs_Users_Association);
+		//this.LLAs_Users_Association  = new HashMap(LLAs_Users_Association);
+		this.LLAs_Users_Association  = LLAs_Users_Association; //new HashMap(LLAs_Users_Association);
 		this.user_LLA_Association = new HashMap(user_LLA_Association);
-		this.LLAs_Devices_Association  = new HashMap(LLAs_Devices_Association);
+		//this.LLAs_Devices_Association  = new HashMap(LLAs_Devices_Association);
+		this.LLAs_Devices_Association  = LLAs_Devices_Association; //new HashMap(LLAs_Devices_Association);
 		this.device_LLAs_Association = new HashMap(device_LLAs_Association);
 		this.user_device_Latency = new HashMap(user_device_Latency);
 		p  = new HashMap();
@@ -97,9 +99,9 @@ class DEEM{
                 HashMap<DTNHost, Double> p ) {
 		this.q_minPerLLA = new HashMap(q_minPerLLA);
 		this.q_maxPerLLA = new HashMap(q_maxPerLLA);
-		this.LLAs_Users_Association  = new HashMap(LLAs_Users_Association);
+		this.LLAs_Users_Association  = LLAs_Users_Association; //new HashMap(LLAs_Users_Association);
 		this.user_LLA_Association = new HashMap(user_LLA_Association);
-		this.LLAs_Devices_Association  = new HashMap(LLAs_Devices_Association);
+		this.LLAs_Devices_Association  = LLAs_Devices_Association; //new HashMap(LLAs_Devices_Association);
 		this.device_LLAs_Association = new HashMap(device_LLAs_Association);
 		this.user_device_Latency = new HashMap(user_device_Latency);
 		//p  = new HashMap();
@@ -139,6 +141,7 @@ class DEEM{
 		for(Integer LLA_ID: LLAs_Users_Association.keySet()) {//for each market
 			vMatrix  = new HashMap();//valuation matrix for this LLA
 			if(controlMessageFlag) System.out.println(LLA_ID);
+            //System.out.println("LLA_ID: " + LLA_ID + " Users: " + LLAs_Users_Association.get(LLA_ID));
 			for(DTNHost user_ID:LLAs_Users_Association.get(LLA_ID)) {
                 userDevice_ID = userDeviceAssociation.getOrDefault(user_ID, null);
                 if (userDevice_ID != null) {
@@ -201,7 +204,19 @@ class DEEM{
 	private double user_Device_QoSGain(Integer LLA_ID, DTNHost user_ID, DTNHost device_ID){
 		double term1  = q_minPerLLA.get(LLA_ID)/q_maxPerLLA.get(LLA_ID);
 		double term2  = 1.0 - term1;
-		double latency  = user_device_Latency.get(user_ID).get(device_ID);
+        Double latency = 100.0; 
+        HashMap<DTNHost, Double> devicesMapping = user_device_Latency.getOrDefault(user_ID, null);
+        if (devicesMapping == null) {
+            System.out.println("Error1: user_Device_QoSGain() unable to find latency for user: " + user_ID + " device: " + device_ID);
+            devicesMapping.get(device_ID);
+            return latency;
+        }
+        latency = devicesMapping.getOrDefault(device_ID, null);
+        if (latency == null) {
+            System.out.println("Error2: user_Device_QoSGain() unable to find latency for user: " + user_ID + " device: " + device_ID);
+            return latency;
+        }
+		//Double latency  = user_device_Latency.get(user_ID).get(device_ID);
 		if (latency>maximumLatency){//if actual latency exceed the maximum predicted return 0 gain
 			return 0.0;
 		}

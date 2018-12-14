@@ -573,7 +573,19 @@ public class DTNHost implements Comparable<DTNHost> {
 	 * @return True if the hosts objects are the same object
 	 */
 	public boolean equals(DTNHost otherHost) {
-		return this == otherHost;
+		if (this == otherHost) { 
+            return true;
+        }
+        else {
+            if (this.toString().equals(otherHost.toString())) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        
+        //return this == otherHost;
 	}
 
 	/**

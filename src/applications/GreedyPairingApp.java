@@ -65,7 +65,7 @@ public class GreedyPairingApp extends AuctionApplication {
             Message clientMsg = msg.replicate();
             clientHostToMessage.put(clientMsg.getFrom(), clientMsg);
             clientRequests.add(clientMsg);
-            super.sendEventToListeners("ReceivedClientAuctionRequest", (Object) clientMsg, host);
+            //super.sendEventToListeners("ReceivedClientAuctionRequest", (Object) clientMsg, host);
         }
         if (type.equalsIgnoreCase("serverAuctionRequest")) {
             if (this.debug)
@@ -74,7 +74,7 @@ public class GreedyPairingApp extends AuctionApplication {
                 Message serverMsg = msg.replicate();
                 this.serverHostToMessage.put(serverMsg.getFrom(), serverMsg);
                 serverRequests.add(msg.replicate());
-                super.sendEventToListeners("ReceivedServerAuctionRequest", (Object) serverMsg, host);
+                //super.sendEventToListeners("ReceivedServerAuctionRequest", (Object) serverMsg, host);
             }
         }
         host.getMessageCollection().remove(msg);
@@ -153,8 +153,13 @@ public class GreedyPairingApp extends AuctionApplication {
         {
             Message clientMsg = clientRequests.get(indx);
             DTNHost clientHost = clientMsg.getFrom();
+            Double completionTime = this.userCompletionTime.getOrDefault(clientHost, null);
+            if(completionTime != null && completionTime > currTime) {
+                /** skip this message: user already part of auction  */
+                continue;
+            }
             int serviceType = (int) clientMsg.getProperty("serviceType");
-            Double completionTime = (Double) clientMsg.getProperty("completionTime");
+            completionTime = (Double) clientMsg.getProperty("completionTime");
             if (completionTime == null) {
                 completionTime = currTime + Application.execTimes.get(serviceType);
             }
@@ -205,6 +210,7 @@ public class GreedyPairingApp extends AuctionApplication {
             }
         }
 
+        System.out.println("\n\nAUCTION = number of users: " + this.user_LLA_Association.keySet().size() + " number of devices: " + this.device_LLAs_Association.keySet().size());
         HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency = new HashMap();
         for (DTNHost user : this.user_LLA_Association.keySet()) {
             HashMap<DTNHost, Double> clientDistances = new HashMap();
@@ -273,6 +279,7 @@ public class GreedyPairingApp extends AuctionApplication {
 
         DEEM_Results results = new DEEM_Results();
         results.userLLAAssociation = new HashMap(user_LLA_Association);
+        results.deviceLLAsAssociation = new HashMap(this.device_LLAs_Association);
 
         for (Quartet aQuartet : allValuations) {
             if (userSet.contains(aQuartet.user) && deviceSet.contains(aQuartet.device)) {
@@ -322,6 +329,7 @@ public class GreedyPairingApp extends AuctionApplication {
             HashMap<DTNHost, Double> clientDistances = user_device_Latency.get(client);
             Double latency = clientDistances.get(server);
             m.addProperty("QoS", latency);
+            m.addProperty("completionTime", this.userCompletionTime.get(client)); 
             m.setAppID(ClientApp.APP_ID);
             host.createNewMessage(m);
             /** Send a response back to server */
@@ -343,6 +351,7 @@ public class GreedyPairingApp extends AuctionApplication {
             Message m = new Message(host, clientMsg.getFrom(), msgId, this.auctionMsgSize);
             m.addProperty("type", "clientAuctionResponse");
             m.addProperty("auctionResult", server);
+            m.addProperty("completionTime", this.userCompletionTime.get(client)); 
             m.addProperty("QoS", 0);
             m.setAppID(ClientApp.APP_ID);
             host.createNewMessage(m);
@@ -368,6 +377,7 @@ public class GreedyPairingApp extends AuctionApplication {
             //super.sendEventToListeners("SentServerAuctionResponse", null, host);
         }
         
+        results.previousUserDeviceAssociation = this.previousUserDeviceAssociation;
         super.sendEventToListeners("AuctionExecutionComplete", results, host);
         this.previousPrices = new HashMap(results.p);
         this.previousUserDeviceAssociation = new HashMap(results.userDeviceAssociation);

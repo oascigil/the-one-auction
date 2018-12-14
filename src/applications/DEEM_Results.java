@@ -3,6 +3,7 @@ package applications;
 import core.DTNHost;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class DEEM_Results{
 	public final int numberOfIterations;
@@ -14,6 +15,7 @@ public class DEEM_Results{
     public HashMap<DTNHost,Double> QoSGainPerUser;
     public HashMap<DTNHost,Double> QoSPerUser;
     public HashMap<DTNHost, Integer> userLLAAssociation;
+    public HashMap<DTNHost, ArrayList<Integer>> deviceLLAsAssociation;
     public DEEM_Results() {
         numberOfIterations     = 0;
         userDeviceAssociation  = new HashMap();

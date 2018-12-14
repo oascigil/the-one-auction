@@ -97,7 +97,6 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
         double totalPrice=0;
         Integer numPairs=0, numAllPairs=0, numMigrations=0;
         System.out.println("Auction Execution Complete:");
-        //for (Map.Entry<DTNHost, Double> entry : results.p.entrySet()) {
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost user = entry.getKey();
             DTNHost device = entry.getValue();
@@ -156,6 +155,8 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
             averageQosGain = totalQosGain/numAllPairs;
         }
         this.assignedPairs.put(this.auctionRun, numPairs);
+        this.clientRequests.put(this.auctionRun, results.userLLAAssociation.size());
+        this.serverRequests.put(this.auctionRun, results.deviceLLAsAssociation.size());
         this.qosTime.put(this.auctionRun, averageQos);
         this.qosGainTime.put(this.auctionRun, averageQosGain);
         this.migrationTime.put(this.auctionRun, numMigrations);
@@ -217,58 +218,96 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
 	public void done() {
 		write("AuctionAppliation stats for scenario " + getScenarioName() +
 				"\nsim_time: " + format(getSimTime()));
+        
+        double averageOverallPrice, averageOverallQoS, averageOverallQoSGain, averageOverallMigrations, averageOverallPairs;
+        double sum = 0.0;
+        String stats;
 
         write("AveragePricePerAuctionExecution:");
         
         for (Map.Entry<Integer, Double> entry : this.priceTime.entrySet()) {
             Integer iter = entry.getKey();
             Double price = entry.getValue();
-            String stats = iter + "\t" + price;
+            sum += price;
+            stats = iter + "\t" + price;
             write(stats);
         }
+        averageOverallPrice = sum/(1.0*this.priceTime.size()-1);
+        stats = "\nOverall_average_Price: " + averageOverallPrice;
+        write(stats);
 
         write("\n\nAverageQoSPerExecution:");
+        sum = 0.0;
         for (Map.Entry<Integer, Double> entry : this.qosTime.entrySet()) {
             Integer iter = entry.getKey();
             Double qos = entry.getValue();
-            String stats = iter + "\t" + qos;
+            sum += qos;
+            stats = iter + "\t" + qos;
             write(stats);
         }
+        averageOverallQoS = sum/(1.0*this.qosTime.size());
+        stats = "\nOverall_average_QoS: " + averageOverallQoS;
+        write(stats);
 
         write("\n\nAverageQoSGainPerExecution:");
+        sum = 0.0;
         for (Map.Entry<Integer, Double> entry : this.qosGainTime.entrySet()) {
             Integer iter = entry.getKey();
             Double qos = entry.getValue();
-            String stats = iter + "\t" + qos;
+            sum += qos;
+            stats = iter + "\t" + qos;
             write(stats);
         }
+        averageOverallQoSGain = sum/(1.0*this.qosGainTime.size());
+        stats = "\nOverall_average_QoS_Gain: " + averageOverallQoSGain;
+        write(stats);
 
         write("\n\nClientRequestCount\tServerRequestCount\tNumPairsAssignedWithAuction:");
-        for (Map.Entry<Integer, Integer> entry : this.clientRequests.entrySet()) {
+        sum = 0.0;
+        for (Map.Entry<Integer, Integer> entry : this.assignedPairs.entrySet()) {
             Integer iter = entry.getKey();
-            Integer clientCount = entry.getValue();
+            Integer clientCount = this.clientRequests.get(iter);
             Integer serverCount = this.serverRequests.get(iter);
-            String stats = iter + "\t" + clientCount + "\t" + serverCount + "\t" + this.assignedPairs.get(iter);
+            stats = iter + "\t" + clientCount + "\t" + serverCount + "\t" + this.assignedPairs.get(iter);
+            if (clientCount == null || serverCount == null) {
+                System.out.println("Warning: invalid client-server counts in AuctionAppReporter: " + clientCount + " " + serverCount);   
+                continue;
+            }
+            double denominator = Math.min(clientCount, serverCount);
+            if (denominator != 0)
+               sum += (1.0*this.assignedPairs.get(iter))/(1.0*denominator);
             write(stats);
         }
+        averageOverallPairs = sum/(1.0*this.assignedPairs.size());
+        stats = "\nOverall_average_Pairing_Capability: " + averageOverallPairs;
+        write(stats);
+
         write("\n\nNumber of migrations per auction run:");
+        sum = 0.0;
         for (Map.Entry<Integer, Integer> entry : this.migrationTime.entrySet()) {
             Integer iter = entry.getKey();
             Integer migrationCount = entry.getValue();
-            String stats = iter + "\t" + migrationCount;
+            sum += migrationCount;
+            stats = iter + "\t" + migrationCount;
             write(stats);
         }
+        averageOverallMigrations = sum/(1.0*this.migrationTime.size());
+        stats = "\nOverall_average_migrations: " + averageOverallMigrations;
+        write(stats);
         
-
-        /*
         write("\n\nQosDeviation:\n");
+        sum = 0.0;
         for (Map.Entry<Quartet, ArrayList<Double>> entry : this.qosDeviation.entrySet()) {
             Quartet q = entry.getKey();
             ArrayList<Double> devList = entry.getValue();
             double average = AuctionAppReporter.calculateAverage(devList);
-            String stats = q.user.getName() + "\t" + q.device.getName() + "\t" + average;
-            write(stats);
-        }*/
+            sum += average;
+            //String stats = q.user.getName() + "\t" + q.device.getName() + "\t" + average;
+            //write(stats);
+        }
+        double averageOverallQoSDeviaton = sum / this.qosDeviation.size();
+        stats = "\nOverall_average_QoS_Deviation: " + averageOverallQoSDeviaton;
+        write(stats);
         super.done();
     }
 }

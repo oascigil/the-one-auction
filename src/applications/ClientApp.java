@@ -103,6 +103,7 @@ public class ClientApp extends Application {
         this.isAssigned = false;
         this.lastAuctionReqSentTime = 0.0;
         this.completionTime=0.0;
+        this.reqSendingFreq = a.reqSendingFreq;
         this.debug = a.debug;
     }
 	

@@ -20,11 +20,18 @@ ALPHA_S	src/routing/MaxPropRouter.java	/^	public static final String ALPHA_S = "
 APPCOUNT_S	src/core/SimScenario.java	/^	public static final String APPCOUNT_S = "nrofApplications";$/;"	f	class:SimScenario
 APPTYPE_NS	src/core/SimScenario.java	/^	public static final String APPTYPE_NS = "Application";$/;"	f	class:SimScenario
 APPTYPE_S	src/core/SimScenario.java	/^	public static final String APPTYPE_S = "type";$/;"	f	class:SimScenario
+APP_ID	src/applications/AuctionApplication.java	/^	public static final String APP_ID = "ucl.AuctionApplication";$/;"	f	class:AuctionApplication
+APP_ID	src/applications/ClientApp.java	/^	public static final String APP_ID = "ucl.ClientApp";$/;"	f	class:ClientApp
+APP_ID	src/applications/GreedyPairingApp.java	/^	public static final String APP_ID = "ucl.GreedyPairingApp";$/;"	f	class:GreedyPairingApp
 APP_ID	src/applications/PingApplication.java	/^	public static final String APP_ID = "fi.tkk.netlab.PingApplication";$/;"	f	class:PingApplication
+APP_ID	src/applications/ServerApp.java	/^	public static final String APP_ID = "ucl.ServerApp";$/;"	f	class:ServerApp
 APP_PACKAGE	src/core/SimScenario.java	/^	private static final String APP_PACKAGE = "applications.";$/;"	f	class:SimScenario	file:
+APRouter	src/routing/APRouter.java	/^	protected APRouter(APRouter r) {$/;"	m	class:APRouter
+APRouter	src/routing/APRouter.java	/^	public APRouter(Settings s) {$/;"	m	class:APRouter
+APRouter	src/routing/APRouter.java	/^public class APRouter extends ActiveRouter {$/;"	c
 AT_HOME_MODE	src/movement/HomeActivityMovement.java	/^	private static final int AT_HOME_MODE = 1;$/;"	f	class:HomeActivityMovement	file:
 AT_OFFICE_MODE	src/movement/OfficeActivityMovement.java	/^	private static final int AT_OFFICE_MODE = 1;$/;"	f	class:OfficeActivityMovement	file:
-AUCTION_PERIOD_S	src/core/SimScenario.java	/^    public static final String AUCTION_PERIOD_S = "auctionPeriod";$/;"	f	class:SimScenario
+AUCTION_PERIOD_S	src/applications/AuctionApplication.java	/^    public static final String AUCTION_PERIOD_S = "auctionPeriod";$/;"	f	class:AuctionApplication
 AUTO_REFRESH_DELAY	src/gui/NodeChooser.java	/^	private static final int AUTO_REFRESH_DELAY = 100;$/;"	f	class:NodeChooser	file:
 AUTO_REFRESH_DELAY	src/gui/RoutingInfoWindow.java	/^	private static final int AUTO_REFRESH_DELAY = 1000;$/;"	f	class:RoutingInfoWindow	file:
 AbstractRouterTest	src/test/AbstractRouterTest.java	/^public abstract class AbstractRouterTest extends TestCase {$/;"	c
@@ -45,6 +52,12 @@ Application	src/core/Application.java	/^public abstract class Application {$/;"	
 ApplicationListener	src/core/ApplicationListener.java	/^public interface ApplicationListener {$/;"	i
 ArithmeticCondition	src/core/ArithmeticCondition.java	/^	public ArithmeticCondition(String cond) {$/;"	m	class:ArithmeticCondition
 ArithmeticCondition	src/core/ArithmeticCondition.java	/^public class ArithmeticCondition {$/;"	c
+AuctionAppReporter	src/report/AuctionAppReporter.java	/^    public AuctionAppReporter() {$/;"	m	class:AuctionAppReporter
+AuctionAppReporter	src/report/AuctionAppReporter.java	/^public class AuctionAppReporter extends Report implements ApplicationListener {$/;"	c
+AuctionApplication	src/applications/AuctionApplication.java	/^    public AuctionApplication(AuctionApplication a) {$/;"	m	class:AuctionApplication
+AuctionApplication	src/applications/AuctionApplication.java	/^    public AuctionApplication(Settings s) {$/;"	m	class:AuctionApplication
+AuctionApplication	src/applications/AuctionApplication.java	/^public class AuctionApplication extends Application {$/;"	c
+B	src/applications/VEDAuction.java	/^	DTNHost B[];\/\/B: set of bidders. integer IDs$/;"	f	class:VEDAuction
 BATCH_MODE_FLAG	src/core/DTNSim.java	/^	public static final String BATCH_MODE_FLAG = "-b";$/;"	f	class:DTNSim
 BETA_S	src/routing/ProphetRouter.java	/^	public static final String BETA_S = "beta";$/;"	f	class:ProphetRouter
 BETA_S	src/routing/ProphetRouterWithEstimation.java	/^	public static final String BETA_S = "beta";$/;"	f	class:ProphetRouterWithEstimation
@@ -52,6 +65,9 @@ BETA_S	src/routing/ProphetV2Router.java	/^	public static final String BETA_S = "
 BG_COLOR	src/gui/playfield/MapGraphic.java	/^	private final Color BG_COLOR = Color.WHITE;$/;"	f	class:MapGraphic	file:
 BINARY_EXT	src/input/BinaryEventsReader.java	/^	public static final String BINARY_EXT = ".binee";$/;"	f	class:BinaryEventsReader
 BINARY_MODE	src/routing/SprayAndWaitRouter.java	/^	public static final String BINARY_MODE = "binaryMode";$/;"	f	class:SprayAndWaitRouter
+BSInterface	src/interfaces/BSInterface.java	/^    public BSInterface(BSInterface ni ) {$/;"	m	class:BSInterface
+BSInterface	src/interfaces/BSInterface.java	/^    public BSInterface(Settings s) {$/;"	m	class:BSInterface
+BSInterface	src/interfaces/BSInterface.java	/^public class BSInterface extends DistanceCapacityInterface {$/;"	c
 BUCKET_COUNT_SETTING	src/report/JumpSizeDistributionReport.java	/^	public static final String BUCKET_COUNT_SETTING = "bucketCount";$/;"	f	class:JumpSizeDistributionReport
 BUFFER_REPORT_INTERVAL	src/report/BufferOccupancyReport.java	/^	public static final String BUFFER_REPORT_INTERVAL = "occupancyInterval";$/;"	f	class:BufferOccupancyReport
 BUFFER_SIZE	src/test/AbstractRouterTest.java	/^	protected static final int BUFFER_SIZE = 100;$/;"	f	class:AbstractRouterTest
@@ -99,6 +115,9 @@ CUSTODY_S	src/routing/WaveRouter.java	/^	public static final String CUSTODY_S = 
 CarMovement	src/movement/CarMovement.java	/^	public CarMovement(CarMovement proto) {$/;"	m	class:CarMovement
 CarMovement	src/movement/CarMovement.java	/^	public CarMovement(Settings settings) {$/;"	m	class:CarMovement
 CarMovement	src/movement/CarMovement.java	/^public class CarMovement extends MapBasedMovement implements$/;"	c
+ClientApp	src/applications/ClientApp.java	/^    public ClientApp(ClientApp a) {$/;"	m	class:ClientApp
+ClientApp	src/applications/ClientApp.java	/^    public ClientApp(Settings s) {$/;"	m	class:ClientApp
+ClientApp	src/applications/ClientApp.java	/^public class ClientApp extends Application {$/;"	c
 ClusterMovement	src/movement/ClusterMovement.java	/^	private ClusterMovement(ClusterMovement cmv) {$/;"	m	class:ClusterMovement	file:
 ClusterMovement	src/movement/ClusterMovement.java	/^	public ClusterMovement(Settings s) {$/;"	m	class:ClusterMovement
 ClusterMovement	src/movement/ClusterMovement.java	/^public class ClusterMovement extends RandomWaypoint {$/;"	c
@@ -138,6 +157,12 @@ CreatedMessagesReport	src/report/CreatedMessagesReport.java	/^	public CreatedMes
 CreatedMessagesReport	src/report/CreatedMessagesReport.java	/^public class CreatedMessagesReport extends Report implements MessageListener {$/;"	c
 DAY_LENGTH	src/movement/HomeActivityMovement.java	/^	private static final int DAY_LENGTH = 86000;$/;"	f	class:HomeActivityMovement	file:
 DEBUG	src/core/Constants.java	/^	public static final boolean DEBUG = false;$/;"	f	class:Constants
+DEEM	src/applications/DEEM.java	/^	public DEEM(){$/;"	m	class:DEEM
+DEEM	src/applications/DEEM.java	/^	public DEEM(HashMap<Integer,Double> q_minPerLLA,$/;"	m	class:DEEM
+DEEM	src/applications/DEEM.java	/^class DEEM{$/;"	c
+DEEM_Results	src/applications/DEEM_Results.java	/^    public DEEM_Results() {$/;"	m	class:DEEM_Results
+DEEM_Results	src/applications/DEEM_Results.java	/^    public DEEM_Results(int numberOfIterations,HashMap<DTNHost,DTNHost> userDeviceAssociation,HashMap<DTNHost, DTNHost> deviceUserAssociation, HashMap<DTNHost,Integer> deviceLLAExecution,HashMap<DTNHost,Double> p,HashMap<DTNHost,Double> QoSGainPerUser,HashMap<DTNHost,Double> QoSPerUser) {$/;"	m	class:DEEM_Results
+DEEM_Results	src/applications/DEEM_Results.java	/^public class DEEM_Results{$/;"	c
 DEFAULT_ALPHA	src/routing/MaxPropRouter.java	/^	public static final double DEFAULT_ALPHA = 1.0;$/;"	f	class:MaxPropRouter
 DEFAULT_ALPHA	src/routing/MaxPropRouterWithEstimation.java	/^	public static final double DEFAULT_ALPHA = 1.0;$/;"	f	class:MaxPropRouterWithEstimation
 DEFAULT_BETA	src/routing/ProphetRouter.java	/^	public static final double DEFAULT_BETA = 0.25;$/;"	f	class:ProphetRouter
@@ -191,6 +216,9 @@ DTNSimTextUI	src/ui/DTNSimTextUI.java	/^public class DTNSimTextUI extends DTNSim
 DTNSimUI	src/ui/DTNSimUI.java	/^	public DTNSimUI() {$/;"	m	class:DTNSimUI
 DTNSimUI	src/ui/DTNSimUI.java	/^public abstract class DTNSimUI {$/;"	c
 Debug	src/core/Debug.java	/^public class Debug {$/;"	c
+DeliverToBS	src/routing/DeliverToBS.java	/^    public DeliverToBS (Settings s) {$/;"	m	class:DeliverToBS
+DeliverToBS	src/routing/DeliverToBS.java	/^    public DeliverToBS(DeliverToBS r) {$/;"	m	class:DeliverToBS
+DeliverToBS	src/routing/DeliverToBS.java	/^public class DeliverToBS extends ActiveRouter {$/;"	c
 DeliveredMessagesReport	src/report/DeliveredMessagesReport.java	/^	public DeliveredMessagesReport() {$/;"	m	class:DeliveredMessagesReport
 DeliveredMessagesReport	src/report/DeliveredMessagesReport.java	/^public class DeliveredMessagesReport extends Report implements MessageListener {$/;"	c
 DijkstraPathFinder	src/movement/map/DijkstraPathFinder.java	/^	public DijkstraPathFinder(int [] okMapNodes) {$/;"	m	class:DijkstraPathFinder
@@ -293,6 +321,7 @@ FONT_SIZE	src/gui/playfield/ScaleReferenceGraphic.java	/^	private final int FONT
 FONT_TYPE	src/gui/EventLogPanel.java	/^	private static final String FONT_TYPE = "monospaced";$/;"	f	class:EventLogPanel	file:
 FROM_RPOLICY_S	src/routing/util/MessageTransferAcceptPolicy.java	/^	public static final String FROM_RPOLICY_S = "fromReceivePolicy";$/;"	f	class:MessageTransferAcceptPolicy
 FROM_SPOLICY_S	src/routing/util/MessageTransferAcceptPolicy.java	/^	public static final String FROM_SPOLICY_S = "fromSendPolicy";$/;"	f	class:MessageTransferAcceptPolicy
+FindUnivAllocItems	src/applications/VEDAuction.java	/^	private ArrayList<DTNHost> FindUnivAllocItems(HashMap<DTNHost,ArrayList<DTNHost>> D,HashMap<DTNHost,DTNHost> X,boolean controlMessageFlag){$/;"	m	class:VEDAuction	file:
 FirstContactRouter	src/routing/FirstContactRouter.java	/^	protected FirstContactRouter(FirstContactRouter r) {$/;"	m	class:FirstContactRouter
 FirstContactRouter	src/routing/FirstContactRouter.java	/^	public FirstContactRouter(Settings s) {$/;"	m	class:FirstContactRouter
 FirstContactRouter	src/routing/FirstContactRouter.java	/^public class FirstContactRouter extends ActiveRouter {$/;"	c
@@ -315,6 +344,9 @@ GUIControls	src/gui/GUIControls.java	/^	public GUIControls(DTNSimGUI gui, PlayFi
 GUIControls	src/gui/GUIControls.java	/^public class GUIControls extends JPanel implements ActionListener, ChangeListener {$/;"	c
 GUI_NS	src/gui/MainWindow.java	/^	public static final String GUI_NS = "GUI";$/;"	f	class:MainWindow
 GUI_WIN_NS	src/gui/MainWindow.java	/^	public static final String GUI_WIN_NS = GUI_NS + ".window";$/;"	f	class:MainWindow
+GreedyPairingApp	src/applications/GreedyPairingApp.java	/^    public GreedyPairingApp(GreedyPairingApp a) {$/;"	m	class:GreedyPairingApp
+GreedyPairingApp	src/applications/GreedyPairingApp.java	/^    public GreedyPairingApp(Settings s) {$/;"	m	class:GreedyPairingApp
+GreedyPairingApp	src/applications/GreedyPairingApp.java	/^public class GreedyPairingApp extends AuctionApplication {$/;"	c
 GridCell	src/interfaces/ConnectivityGrid.java	/^		private GridCell() {$/;"	m	class:ConnectivityGrid.GridCell	file:
 GridCell	src/interfaces/ConnectivityGrid.java	/^	public class GridCell {$/;"	c	class:ConnectivityGrid
 GridLocation	src/movement/GridLocation.java	/^	public GridLocation(GridLocation proto) {$/;"	m	class:GridLocation
@@ -339,6 +371,7 @@ HOST_RANGE_S	src/input/MessageEventGenerator.java	/^	public static final String 
 HomeActivityMovement	src/movement/HomeActivityMovement.java	/^	public HomeActivityMovement(HomeActivityMovement proto) {$/;"	m	class:HomeActivityMovement
 HomeActivityMovement	src/movement/HomeActivityMovement.java	/^	public HomeActivityMovement(Settings settings) {$/;"	m	class:HomeActivityMovement
 HomeActivityMovement	src/movement/HomeActivityMovement.java	/^public class HomeActivityMovement extends MapBasedMovement$/;"	c
+I	src/applications/VEDAuction.java	/^	DTNHost I[];\/\/I: set of items, integer IDs$/;"	f	class:VEDAuction
 ICON_FFW	src/gui/GUIControls.java	/^	private static final String ICON_FFW = "FastForward16.gif";$/;"	f	class:GUIControls	file:
 ICON_PAUSE	src/gui/GUIControls.java	/^	private static final String ICON_PAUSE = "Pause16.gif";$/;"	f	class:GUIControls	file:
 ICON_PLAY	src/gui/GUIControls.java	/^	private static final String ICON_PLAY = "Play16.gif";$/;"	f	class:GUIControls	file:
@@ -386,6 +419,11 @@ JumpSizeDistributionReport	src/report/JumpSizeDistributionReport.java	/^public f
 LINEAR_FORMATION_NS	src/movement/LinearFormation.java	/^	public static final String LINEAR_FORMATION_NS = "LinearFormation.";$/;"	f	class:LinearFormation
 LINEAR_MOVEMENT_NS	src/movement/LinearMovement.java	/^	public static final String LINEAR_MOVEMENT_NS = "LinearMovement.";$/;"	f	class:LinearMovement
 LINESTRING	src/input/WKTReader.java	/^	public static final String LINESTRING = "LINESTRING";$/;"	f	class:WKTReader
+LLAmigrationOverhead	src/applications/AuctionApplication.java	/^    public HashMap<Integer, Double> LLAmigrationOverhead;$/;"	f	class:AuctionApplication
+LLAs_Devices_Association	src/applications/AuctionApplication.java	/^    public HashMap<Integer, ArrayList<DTNHost>> LLAs_Devices_Association;$/;"	f	class:AuctionApplication
+LLAs_Devices_Association	src/applications/DEEM.java	/^	HashMap<Integer, ArrayList<DTNHost>>  LLAs_Devices_Association;$/;"	f	class:DEEM
+LLAs_Users_Association	src/applications/AuctionApplication.java	/^    public HashMap<Integer, ArrayList<DTNHost>> LLAs_Users_Association;$/;"	f	class:AuctionApplication
+LLAs_Users_Association	src/applications/DEEM.java	/^	HashMap<Integer,ArrayList<DTNHost>>  LLAs_Users_Association;$/;"	f	class:DEEM
 LOCATION_S	src/movement/GridLocation.java	/^	public static final String LOCATION_S = "location";$/;"	f	class:GridLocation
 LOCATION_S	src/movement/StationaryMovement.java	/^	public static final String LOCATION_S = "nodeLocation";$/;"	f	class:StationaryMovement
 LOG_BUTTON_BG	src/gui/EventLogPanel.java	/^	private static final Color LOG_BUTTON_BG = Color.WHITE;$/;"	f	class:EventLogPanel	file:
@@ -423,6 +461,7 @@ MESSAGE_TIME_S	src/input/MessageEventGenerator.java	/^	public static final Strin
 MESSAGE_TRANS_DELIVERED	src/report/EventLogReport.java	/^	public static final String MESSAGE_TRANS_DELIVERED = "D";$/;"	f	class:EventLogReport
 MESSAGE_TRANS_DELIVERED_AGAIN	src/report/EventLogReport.java	/^	public static final String MESSAGE_TRANS_DELIVERED_AGAIN = "A";$/;"	f	class:EventLogReport
 MESSAGE_TRANS_RELAYED	src/report/EventLogReport.java	/^	public static final String MESSAGE_TRANS_RELAYED = "R";$/;"	f	class:EventLogReport
+MIGRATION_OVERHEAD_S	src/applications/AuctionApplication.java	/^    public static final String MIGRATION_OVERHEAD_S = "migrationOverheads";$/;"	f	class:AuctionApplication
 MIN_AHEAD_INTERVALS	src/movement/ExternalMovement.java	/^	private static final double MIN_AHEAD_INTERVALS = 2;$/;"	f	class:ExternalMovement	file:
 MIN_GROUP_SIZE_SETTING	src/movement/EveningActivityMovement.java	/^	public static final String MIN_GROUP_SIZE_SETTING = "minGroupSize";$/;"	f	class:EveningActivityMovement
 MIN_LENGTH	src/gui/playfield/ScaleReferenceGraphic.java	/^	private final int MIN_LENGTH = 30;$/;"	f	class:ScaleReferenceGraphic	file:
@@ -563,7 +602,6 @@ NROF_REPORT_S	src/ui/DTNSimUI.java	/^	public static final String NROF_REPORT_S =
 NROF_SERVICES_S	src/core/SimScenario.java	/^    public static final String NROF_SERVICES_S = "nrofServices";$/;"	f	class:SimScenario
 NROF_SETTING	src/input/EventQueueHandler.java	/^	public static final String NROF_SETTING = "nrof";$/;"	f	class:EventQueueHandler
 NROF_TST_NODES	src/test/WKTReaderTest.java	/^	private final int NROF_TST_NODES = 9;$/;"	f	class:WKTReaderTest	file:
-NROF_VM_S	src/core/SimScenario.java	/^	public static final String NROF_VM_S = "nrofVMs";$/;"	f	class:SimScenario
 NR_OF_MEETING_SPOTS_SETTING	src/movement/EveningActivityMovement.java	/^	public static final String NR_OF_MEETING_SPOTS_SETTING = "nrOfMeetingSpots";$/;"	f	class:EveningActivityMovement
 NR_OF_OFFICES_SETTING	src/movement/OfficeActivityMovement.java	/^	public static final String NR_OF_OFFICES_SETTING = "nrOfOffices";$/;"	f	class:OfficeActivityMovement
 NS_CMD_S	src/report/MovementNs2Report.java	/^	public static final String NS_CMD_S = "nsCmd";$/;"	f	class:MovementNs2Report
@@ -609,6 +647,7 @@ PAUSE_TEXT	src/gui/EventLogControlPanel.java	/^	private static final String PAUS
 PEncMax	src/routing/ProphetV2Router.java	/^	public static final double PEncMax = 0.5;$/;"	f	class:ProphetV2Router
 PINGPONG	src/movement/map/MapRoute.java	/^	public static final int PINGPONG = 2;$/;"	f	class:MapRoute
 PING_DEST_RANGE	src/applications/PingApplication.java	/^	public static final String PING_DEST_RANGE = "destinationRange";$/;"	f	class:PingApplication
+PING_INTERVAL	src/applications/ClientApp.java	/^	public static final String PING_INTERVAL = "interval";$/;"	f	class:ClientApp
 PING_INTERVAL	src/applications/PingApplication.java	/^	public static final String PING_INTERVAL = "interval";$/;"	f	class:PingApplication
 PING_OFFSET	src/applications/PingApplication.java	/^	public static final String PING_OFFSET = "offset";$/;"	f	class:PingApplication
 PING_PASSIVE	src/applications/PingApplication.java	/^	public static final String PING_PASSIVE = "passive";$/;"	f	class:PingApplication
@@ -676,6 +715,12 @@ ProphetV2Router	src/routing/ProphetV2Router.java	/^	public ProphetV2Router(Setti
 ProphetV2Router	src/routing/ProphetV2Router.java	/^public class ProphetV2Router extends ActiveRouter {$/;"	c
 Q_MODE_FIFO	src/routing/MessageRouter.java	/^	public static final int Q_MODE_FIFO = 2;$/;"	f	class:MessageRouter
 Q_MODE_RANDOM	src/routing/MessageRouter.java	/^	public static final int Q_MODE_RANDOM = 1;$/;"	f	class:MessageRouter
+QoSGainPerUser	src/applications/DEEM.java	/^	public HashMap<DTNHost,Double> QoSGainPerUser(HashMap<DTNHost,DTNHost> userDeviceAssociation){$/;"	m	class:DEEM
+QoSGainPerUser	src/applications/DEEM_Results.java	/^    public HashMap<DTNHost,Double> QoSGainPerUser;$/;"	f	class:DEEM_Results
+QoSPerUser	src/applications/DEEM.java	/^	public HashMap<DTNHost,Double> QoSPerUser(HashMap<DTNHost, DTNHost> userDeviceAssociation){$/;"	m	class:DEEM
+QoSPerUser	src/applications/DEEM_Results.java	/^    public HashMap<DTNHost,Double> QoSPerUser;$/;"	f	class:DEEM_Results
+Quartet	src/core/Quartet.java	/^    public Quartet(Double v, DTNHost u, DTNHost d, Integer s) {$/;"	m	class:Quartet
+Quartet	src/core/Quartet.java	/^public class Quartet implements Comparable<Quartet> {$/;"	c
 RANDOMIZE_UPDATES_S	src/core/World.java	/^	public static final String RANDOMIZE_UPDATES_S = "randomizeUpdateOrder";$/;"	f	class:World
 RANGE_DELIMETER	src/core/DTNSim.java	/^	public static final String RANGE_DELIMETER = ":";$/;"	f	class:DTNSim
 RANGE_ID	src/core/NetworkInterface.java	/^	public static final String RANGE_ID = "Network.radioRange";$/;"	f	class:NetworkInterface
@@ -690,6 +735,11 @@ REPORTED_NODES	src/report/SnapshotReport.java	/^	public static final String REPO
 REPORT_NS	src/report/Report.java	/^	public static final String REPORT_NS = "Report";$/;"	f	class:Report
 REPORT_PAC	src/ui/DTNSimUI.java	/^	private static final String REPORT_PAC = "report.";$/;"	f	class:DTNSimUI	file:
 REPORT_S	src/ui/DTNSimUI.java	/^	public static final String REPORT_S = "Report.report";$/;"	f	class:DTNSimUI
+REQUEST_FREQUENCY_S	src/applications/ClientApp.java	/^    public static final String REQUEST_FREQUENCY_S = "taskReqFreq";$/;"	f	class:ClientApp
+REQUEST_FREQUENCY_S	src/applications/ServerApp.java	/^    public static final String REQUEST_FREQUENCY_S = "taskReqFreq";$/;"	f	class:ServerApp
+REQUEST_MSG_SIZE_S	src/applications/ClientApp.java	/^    public static final String REQUEST_MSG_SIZE_S = "taskReqMsgSize";$/;"	f	class:ClientApp
+REQUEST_TIMEOUT	src/applications/ClientApp.java	/^    public static final Double REQUEST_TIMEOUT = 1.0;$/;"	f	class:ClientApp
+REQUEST_TIMEOUT	src/applications/ServerApp.java	/^    public static final Double REQUEST_TIMEOUT = 3.0;$/;"	f	class:ServerApp
 RESET_METHOD_NAME	src/core/DTNSim.java	/^	public static final String RESET_METHOD_NAME = "reset";$/;"	f	class:DTNSim
 RESPONSE_PREFIX	src/routing/ActiveRouter.java	/^	public static final String RESPONSE_PREFIX = "R_";$/;"	f	class:ActiveRouter
 RNG_SEED	src/movement/MovementModel.java	/^	public static final String RNG_SEED = "rngSeed";$/;"	f	class:MovementModel
@@ -716,6 +766,7 @@ Range	src/util/Range.java	/^	public Range(double min, double max) {$/;"	m	class:
 Range	src/util/Range.java	/^public class Range {$/;"	c
 Report	src/report/Report.java	/^	public Report(){$/;"	m	class:Report
 Report	src/report/Report.java	/^public abstract class Report {$/;"	c
+RepresentsInt	addPoints.py	/^def RepresentsInt(s):$/;"	f
 RoutingInfo	src/routing/util/RoutingInfo.java	/^	public RoutingInfo(Object o) {$/;"	m	class:RoutingInfo
 RoutingInfo	src/routing/util/RoutingInfo.java	/^	public RoutingInfo(String infoText) {$/;"	m	class:RoutingInfo
 RoutingInfo	src/routing/util/RoutingInfo.java	/^public class RoutingInfo {$/;"	c
@@ -736,7 +787,10 @@ SEND	src/input/StandardEventsReader.java	/^	public static final String SEND = "S
 SENDING	src/input/MessageRelayEvent.java	/^	public static final int SENDING = 1;$/;"	f	class:MessageRelayEvent
 SEND_QUEUE_MODE_S	src/routing/MessageRouter.java	/^	public static final String SEND_QUEUE_MODE_S = "sendQueue";$/;"	f	class:MessageRouter
 SERVICE_EXECTIME_S	src/core/SimScenario.java	/^	public static final String SERVICE_EXECTIME_S = "executionTime";$/;"	f	class:SimScenario
+SERVICE_MIN_QOS_S	src/core/SimScenario.java	/^	public static final String SERVICE_MIN_QOS_S = "minQoS";$/;"	f	class:SimScenario
 SERVICE_NS	src/core/SimScenario.java	/^	public static final String SERVICE_NS = "Service";$/;"	f	class:SimScenario
+SERVICE_TYPE_S	src/applications/AuctionApplication.java	/^    public static final String SERVICE_TYPE_S = "serviceTypes";$/;"	f	class:AuctionApplication
+SERVICE_TYPE_S	src/applications/ServerApp.java	/^    public static final String SERVICE_TYPE_S = "serviceTypes";$/;"	f	class:ServerApp
 SETTINGS_NAMESPACE	src/input/EventQueueHandler.java	/^	public static final String SETTINGS_NAMESPACE = "Events";$/;"	f	class:EventQueueHandler
 SETTINGS_NAMESPACE	src/input/ExternalEventsQueue.java	/^	public static final String SETTINGS_NAMESPACE = "ExternalEvents";$/;"	f	class:ExternalEventsQueue
 SETTING_OUTPUT_S	src/core/Settings.java	/^	public static final String SETTING_OUTPUT_S = "Settings.output";$/;"	f	class:Settings
@@ -782,6 +836,9 @@ ScheduleOracle	src/routing/schedule/ScheduleOracle.java	/^public class ScheduleO
 ScheduledUpdatesQueue	src/input/ScheduledUpdatesQueue.java	/^	public ScheduledUpdatesQueue(){$/;"	m	class:ScheduledUpdatesQueue
 ScheduledUpdatesQueue	src/input/ScheduledUpdatesQueue.java	/^public class ScheduledUpdatesQueue implements EventQueue {$/;"	c
 ScheduledUpdatesQueueTest	src/test/ScheduledUpdatesQueueTest.java	/^public class ScheduledUpdatesQueueTest extends TestCase {$/;"	c
+ServerApp	src/applications/ServerApp.java	/^	public ServerApp(Settings s) {$/;"	m	class:ServerApp
+ServerApp	src/applications/ServerApp.java	/^     public ServerApp(ServerApp a) {$/;"	m	class:ServerApp
+ServerApp	src/applications/ServerApp.java	/^public class ServerApp extends Application {$/;"	c
 Settings	src/core/Settings.java	/^	public Settings() {$/;"	m	class:Settings
 Settings	src/core/Settings.java	/^	public Settings(String namespace) {$/;"	m	class:Settings
 Settings	src/core/Settings.java	/^public class Settings {$/;"	c
@@ -911,8 +968,12 @@ UpdateListener	src/core/UpdateListener.java	/^public interface UpdateListener {$
 VALID_OPERATORS	src/core/ArithmeticCondition.java	/^	private static final String VALID_OPERATORS = "><=";$/;"	f	class:ArithmeticCondition	file:
 VBRConnection	src/core/VBRConnection.java	/^   public VBRConnection(DTNHost fromNode, NetworkInterface fromInterface,$/;"	m	class:VBRConnection
 VBRConnection	src/core/VBRConnection.java	/^public class VBRConnection extends Connection {$/;"	c
-VM	src/core/VM.java	/^    public VM() {$/;"	m	class:VM
-VM	src/core/VM.java	/^public class VM {$/;"	c
+VEDAuction	src/applications/VEDAuction.java	/^    public VEDAuction(){$/;"	m	class:VEDAuction
+VEDAuction	src/applications/VEDAuction.java	/^    public VEDAuction(DTNHost[] B, DTNHost[] I,HashMap<DTNHost, HashMap<DTNHost, Double>> vMatrix,HashMap<DTNHost,Double> p,HashMap<DTNHost, Double> r, double dp, Object defaulLocationIdentifier, Integer marketID){ $/;"	m	class:VEDAuction
+VEDAuction	src/applications/VEDAuction.java	/^class VEDAuction{$/;"	c
+VEDAuctionResult	src/applications/VEDAuctionResult.java	/^    public VEDAuctionResult() {$/;"	m	class:VEDAuctionResult
+VEDAuctionResult	src/applications/VEDAuctionResult.java	/^    public VEDAuctionResult(int numberOfIterations,HashMap<DTNHost, DTNHost> X,HashMap<DTNHost,Double> p) {$/;"	m	class:VEDAuctionResult
+VEDAuctionResult	src/applications/VEDAuctionResult.java	/^public class VEDAuctionResult {$/;"	c
 WAIT_TIME	src/movement/MovementModel.java	/^	public static final String WAIT_TIME = "waitTime";$/;"	f	class:MovementModel
 WALKING_HOME_MODE	src/movement/HomeActivityMovement.java	/^	private static final int WALKING_HOME_MODE = 0;$/;"	f	class:HomeActivityMovement	file:
 WALKING_TO_MEETING_SPOT_MODE	src/movement/EveningActivityMovement.java	/^	private static final int WALKING_TO_MEETING_SPOT_MODE = 0;$/;"	f	class:EveningActivityMovement	file:
@@ -942,6 +1003,7 @@ WorkingDayMovement	src/movement/WorkingDayMovement.java	/^public class WorkingDa
 World	src/core/World.java	/^	public World(List<DTNHost> hosts, int sizeX, int sizeY,$/;"	m	class:World
 World	src/core/World.java	/^public class World {$/;"	c
 WorldTest	src/test/WorldTest.java	/^public class WorldTest extends TestCase {$/;"	c
+X	src/applications/VEDAuctionResult.java	/^    public final HashMap<DTNHost, DTNHost> X;\/\/Assignment$/;"	f	class:VEDAuctionResult
 X_COUNT_SETTING	src/report/NodeDensityReport.java	/^	public static final String X_COUNT_SETTING = "xCount";$/;"	f	class:NodeDensityReport
 X_POS	src/gui/playfield/ScaleReferenceGraphic.java	/^	private final int X_POS = 20;$/;"	f	class:ScaleReferenceGraphic	file:
 Y_COUNT_SETTING	src/report/NodeDensityReport.java	/^	public static final String Y_COUNT_SETTING = "yCount";$/;"	f	class:NodeDensityReport
@@ -1038,6 +1100,7 @@ allEventsRead	src/input/ExternalEventsQueue.java	/^	private boolean allEventsRea
 allHomes	src/movement/HomeActivityMovement.java	/^	private List<Coord> allHomes;$/;"	f	class:HomeActivityMovement	file:
 allHosts	src/report/AdjacencyGraphvizReport.java	/^	private Collection<DTNHost> allHosts;$/;"	f	class:AdjacencyGraphvizReport	file:
 allHosts	src/test/TestUtils.java	/^	private List<DTNHost> allHosts;$/;"	f	class:TestUtils	file:
+allLLAvMatrix	src/applications/DEEM.java	/^	public HashMap<Integer ,HashMap<DTNHost, HashMap<DTNHost, Double>>> allLLAvMatrix; \/\/<LLA_ID,HashMap<user_id, HashMap<LLA_instances_device, Valuation>>>$/;"	f	class:DEEM
 allMembersPresent	src/movement/EveningTrip.java	/^	public boolean allMembersPresent() {$/;"	m	class:EveningTrip
 allNodes	src/gui/NodeChooser.java	/^	private List<DTNHost> allNodes;$/;"	f	class:NodeChooser	file:
 allOffices	src/movement/OfficeActivityMovement.java	/^	private List<Coord> allOffices;$/;"	f	class:OfficeActivityMovement	file:
@@ -1048,16 +1111,38 @@ allRoutes	src/movement/MapRouteMovement.java	/^	private List<MapRoute> allRoutes
 alpha	src/routing/MaxPropRouter.java	/^	private double alpha;$/;"	f	class:MaxPropRouter	file:
 alpha	src/routing/MaxPropRouterWithEstimation.java	/^	private double alpha;$/;"	f	class:MaxPropRouterWithEstimation	file:
 alpha	src/routing/maxprop/MeetingProbabilitySet.java	/^	private double alpha;$/;"	f	class:MeetingProbabilitySet	file:
+apLatencies	src/core/DTNHost.java	/^    public static HashMap<String, Double> apLatencies;$/;"	f	class:DTNHost
 appID	src/core/Application.java	/^	public String	appID	= null;$/;"	f	class:Application
 appID	src/core/Message.java	/^	private String	appID;$/;"	f	class:Message	file:
+appId	src/applications/ServerApp.java	/^	public String appId;$/;"	f	class:ServerApp
 appListeners	src/core/SimScenario.java	/^	private List<ApplicationListener> appListeners;$/;"	f	class:SimScenario	file:
+applications	src/applications/AuctionApplication.java	/^package applications;$/;"	p
+applications	src/applications/ClientApp.java	/^package applications;$/;"	p
+applications	src/applications/DEEM.java	/^package applications;$/;"	p
+applications	src/applications/DEEM_Results.java	/^package applications;$/;"	p
+applications	src/applications/GreedyPairingApp.java	/^package applications;$/;"	p
 applications	src/applications/PingApplication.java	/^package applications;$/;"	p
+applications	src/applications/ServerApp.java	/^package applications;$/;"	p
+applications	src/applications/VEDAuction.java	/^package applications;$/;"	p
+applications	src/applications/VEDAuctionResult.java	/^package applications;$/;"	p
 applications	src/routing/MessageRouter.java	/^	private HashMap<String, Collection<Application>> applications = null;$/;"	f	class:MessageRouter	file:
 areDisconnected	src/report/ContactsDuringAnICTReport.java	/^	private boolean[][] areDisconnected;$/;"	f	class:ContactsDuringAnICTReport	file:
 assertNrofUpdates	src/test/WorldTest.java	/^	private void assertNrofUpdates(int nrof) {$/;"	m	class:WorldTest	file:
 assertValidRange	src/core/Settings.java	/^	public void assertValidRange(int range[], String sname)$/;"	m	class:Settings
-auctionPeriod	src/core/DTNHost.java	/^    public static double auctionPeriod = 10.0;$/;"	f	class:DTNHost
-auctionPeriod	src/core/SimScenario.java	/^    double auctionPeriod;$/;"	f	class:SimScenario
+assignedPairs	src/report/AuctionAppReporter.java	/^    HashMap<Integer, Integer> assignedPairs; $/;"	f	class:AuctionAppReporter
+attachmentPoint	src/routing/DeliverToBS.java	/^    public static HashMap<DTNHost, DTNHost> attachmentPoint;$/;"	f	class:DeliverToBS
+attachmentPoints	src/core/DTNHost.java	/^    public static HashMap<DTNHost, DTNHost> attachmentPoints;$/;"	f	class:DTNHost
+auctionApp	addPoints.py	/^                    auctionApp = random.choice(auction_apps)$/;"	v
+auctionExecution	src/applications/VEDAuction.java	/^	public VEDAuctionResult auctionExecution(boolean controlMessageFlag){$/;"	m	class:VEDAuction
+auctionExecutionComplete	src/report/AuctionAppReporter.java	/^    private void auctionExecutionComplete(DEEM_Results results) {$/;"	m	class:AuctionAppReporter	file:
+auctionMsgSize	src/applications/AuctionApplication.java	/^    public int auctionMsgSize;$/;"	f	class:AuctionApplication
+auctionPeriod	addPoints.py	/^            auctionPeriod = 10.0$/;"	v
+auctionPeriod	src/applications/AuctionApplication.java	/^    public double auctionPeriod;$/;"	f	class:AuctionApplication
+auctionPeriod	src/core/Application.java	/^    public static int auctionPeriod;$/;"	f	class:Application
+auctionRun	src/report/AuctionAppReporter.java	/^    private int auctionRun=0;$/;"	f	class:AuctionAppReporter	file:
+auction_apps	addPoints.py	/^            auction_apps = []$/;"	v
+auctioneers	src/core/DTNHost.java	/^    public static HashMap<Integer, List<DTNHost>> auctioneers;$/;"	f	class:DTNHost
+augmenting_paths_bfs	src/applications/VEDAuction.java	/^	private boolean augmenting_paths_bfs(HashMap<DTNHost,ArrayList<DTNHost>> D,ArrayList<DTNHost> E,HashMap<DTNHost, DTNHost> X_temp,boolean controlMessageFlag){$/;"	m	class:VEDAuction	file:
 autoClear	src/gui/playfield/PlayField.java	/^	private void autoClear() {$/;"	m	class:PlayField	file:
 autoClearOverlay	src/gui/SimMenuBar.java	/^	private JCheckBoxMenuItem autoClearOverlay;$/;"	f	class:SimMenuBar	file:
 autoClearOverlay	src/gui/playfield/PlayField.java	/^	private boolean autoClearOverlay;	\/\/ automatically clear overlay graphics$/;"	f	class:PlayField	file:
@@ -1106,6 +1191,7 @@ cachedMap	src/movement/MapBasedMovement.java	/^	private static SimMap cachedMap 
 cachedMapFiles	src/movement/MapBasedMovement.java	/^	private static List<String> cachedMapFiles = null;$/;"	f	class:MapBasedMovement	file:
 calcThreshold	src/routing/MaxPropRouter.java	/^	public int calcThreshold() {$/;"	m	class:MaxPropRouter
 calcThreshold	src/routing/MaxPropRouterWithEstimation.java	/^	public int calcThreshold() {$/;"	m	class:MaxPropRouterWithEstimation
+calculateAverage	src/report/AuctionAppReporter.java	/^    private static double calculateAverage(ArrayList <Double> values) {$/;"	m	class:AuctionAppReporter	file:
 calculateEndTarget	src/movement/LinearMovement.java	/^	private Coord calculateEndTarget(LinearMovement proto, Coord initLoc) {$/;"	m	class:LinearMovement	file:
 calculateInitLocation	src/movement/LinearFormation.java	/^	private Coord calculateInitLocation(LinearFormation proto) {$/;"	m	class:LinearFormation	file:
 calculateLocation	src/movement/LinearMovement.java	/^	private Coord calculateLocation(LinearMovement proto, boolean isEven) {$/;"	m	class:LinearMovement	file:
@@ -1151,6 +1237,7 @@ checkTransferStart	src/test/AbstractRouterTest.java	/^	protected void checkTrans
 checkTuples	src/test/ExternalMovementReaderTest.java	/^	private void checkTuples(List<Tuple<String, Coord>> list, String[] ids,$/;"	m	class:ExternalMovementReaderTest	file:
 checkValues	src/test/ContactTimesReportTest.java	/^	private void checkValues(String[] ctValues, String[] ictValues)$/;"	m	class:ContactTimesReportTest	file:
 checkValues	src/test/TotalContactTimeReportTest.java	/^	private void checkValues(String[] values) throws Exception {$/;"	m	class:TotalContactTimeReportTest	file:
+check_distance_with_existing	writePoints.py	/^def check_distance_with_existing(x_new, y_new, points, distance):$/;"	f
 chooser	src/gui/SimMenuBar.java	/^	private NodeChooser chooser;$/;"	f	class:SimMenuBar	file:
 chooserPanel	src/gui/NodeChooser.java	/^	private JPanel chooserPanel;$/;"	f	class:NodeChooser	file:
 clearFilters	src/gui/NodeChooser.java	/^	public void clearFilters() {$/;"	m	class:NodeChooser
@@ -1158,6 +1245,12 @@ clearMsgOnFly	src/core/Connection.java	/^	protected void clearMsgOnFly() {$/;"	m
 clearNodeFilters	src/gui/SimMenuBar.java	/^	private JMenuItem clearNodeFilters;$/;"	f	class:SimMenuBar	file:
 clearOverlay	src/gui/SimMenuBar.java	/^	private JMenuItem clearOverlay;$/;"	f	class:SimMenuBar	file:
 clearOverlays	src/gui/playfield/PlayField.java	/^	public void clearOverlays() {$/;"	m	class:PlayField
+client	src/applications/ServerApp.java	/^    public DTNHost client;$/;"	f	class:ServerApp
+clientAuctionRequest	src/report/AuctionAppReporter.java	/^    private void clientAuctionRequest(Message m) {$/;"	m	class:AuctionAppReporter	file:
+clientHostToMessage	src/applications/AuctionApplication.java	/^    public HashMap<DTNHost, Message> clientHostToMessage;$/;"	f	class:AuctionApplication
+clientRequests	src/applications/AuctionApplication.java	/^    public ArrayList<Message> clientRequests;$/;"	f	class:AuctionApplication
+clientRequests	src/report/AuctionAppReporter.java	/^    HashMap<Integer, Integer> clientRequests; $/;"	f	class:AuctionAppReporter
+clientServicePopularity	src/report/AuctionAppReporter.java	/^    HashMap<Integer, Integer> clientServicePopularity; $/;"	f	class:AuctionAppReporter
 clock	src/core/SimClock.java	/^	private static SimClock clock = null;$/;"	f	class:SimClock	file:
 clock	src/test/AbstractRouterTest.java	/^	protected SimClock clock;$/;"	f	class:AbstractRouterTest
 clock	src/test/ActivenessHandlerTest.java	/^	private SimClock clock;$/;"	f	class:ActivenessHandlerTest	file:
@@ -1194,10 +1287,12 @@ comparePaths	src/test/ScheduleDijkstraTest.java	/^	private void comparePaths(int
 compareTo	src/core/Coord.java	/^	public int compareTo(Coord other) {$/;"	m	class:Coord
 compareTo	src/core/DTNHost.java	/^	public int compareTo(DTNHost h) {$/;"	m	class:DTNHost
 compareTo	src/core/Message.java	/^	public int compareTo(Message m) {$/;"	m	class:Message
+compareTo	src/core/Quartet.java	/^    public int compareTo(Quartet aQuartet) {$/;"	m	class:Quartet
 compareTo	src/input/ExternalEvent.java	/^	public int compareTo(ExternalEvent other) {$/;"	m	class:ExternalEvent
 compareTo	src/movement/map/MapNode.java	/^	public int compareTo(MapNode o) {$/;"	m	class:MapNode
 compareTo	src/report/AdjacencyGraphvizReport.java	/^		public int compareTo(Object o) {$/;"	m	class:AdjacencyGraphvizReport.ConnectionInfo
-completionTime	src/core/VM.java	/^    private double completionTime;$/;"	f	class:VM	file:
+completionTime	src/applications/ClientApp.java	/^    private Double  completionTime;$/;"	f	class:ClientApp	file:
+completionTime	src/applications/ServerApp.java	/^    private double completionTime;$/;"	f	class:ServerApp	file:
 con	src/test/ConnectionTest.java	/^	private void con(DTNHost from, DTNHost to) {$/;"	m	class:ConnectionTest	file:
 conColor	src/gui/playfield/NodeGraphic.java	/^	private static Color conColor = Color.BLACK;$/;"	f	class:NodeGraphic	file:
 conCount	src/test/ConnectionTest.java	/^	private int conCount;$/;"	f	class:ConnectionTest	file:
@@ -1207,6 +1302,7 @@ conUpCheck	src/gui/EventLogPanel.java	/^	private EventLogControl conUpCheck;$/;"
 connect	src/core/DTNHost.java	/^	public void connect(DTNHost h) {$/;"	m	class:DTNHost
 connect	src/core/NetworkInterface.java	/^	protected void connect(Connection con, NetworkInterface anotherInterface) {$/;"	m	class:NetworkInterface
 connect	src/core/NetworkInterface.java	/^	public abstract void connect(NetworkInterface anotherInterface);$/;"	m	class:NetworkInterface
+connect	src/interfaces/BSInterface.java	/^	public void connect(NetworkInterface anotherInterface) {$/;"	m	class:BSInterface
 connect	src/interfaces/DistanceCapacityInterface.java	/^	public void connect(NetworkInterface anotherInterface) {$/;"	m	class:DistanceCapacityInterface
 connect	src/interfaces/InterferenceLimitedInterface.java	/^	public void connect(NetworkInterface anotherInterface) {$/;"	m	class:InterferenceLimitedInterface
 connect	src/interfaces/SimpleBroadcastInterface.java	/^	public void connect(NetworkInterface anotherInterface) {$/;"	m	class:SimpleBroadcastInterface
@@ -1258,6 +1354,7 @@ core	src/core/ModuleCommunicationBus.java	/^package core;$/;"	p
 core	src/core/ModuleCommunicationListener.java	/^package core;$/;"	p
 core	src/core/MovementListener.java	/^package core;$/;"	p
 core	src/core/NetworkInterface.java	/^package core;$/;"	p
+core	src/core/Quartet.java	/^package core;$/;"	p
 core	src/core/Settings.java	/^package core;$/;"	p
 core	src/core/SettingsError.java	/^package core;$/;"	p
 core	src/core/SimClock.java	/^package core;$/;"	p
@@ -1265,12 +1362,11 @@ core	src/core/SimError.java	/^package core;$/;"	p
 core	src/core/SimScenario.java	/^package core;$/;"	p
 core	src/core/UpdateListener.java	/^package core;$/;"	p
 core	src/core/VBRConnection.java	/^package core;$/;"	p
-core	src/core/VM.java	/^package core;$/;"	p
 core	src/core/World.java	/^package core;$/;"	p
 costsForMessages	src/routing/MaxPropRouter.java	/^	private Map<Integer, Double> costsForMessages;$/;"	f	class:MaxPropRouter	file:
 costsForMessages	src/routing/MaxPropRouterWithEstimation.java	/^	private Map<Integer, Double> costsForMessages;$/;"	f	class:MaxPropRouterWithEstimation	file:
-count	addPoints.py	/^				count = count + 1$/;"	v
-count	addPoints.py	/^			count = 0$/;"	v
+count	addPoints.py	/^                count = count + 1$/;"	v
+count	addPoints.py	/^            count = 0$/;"	v
 countRange	src/routing/LifeRouter.java	/^	private int countRange[];$/;"	f	class:LifeRouter	file:
 createCheckItem	src/gui/SimMenuBar.java	/^	private JCheckBoxMenuItem createCheckItem(Container c,String txt,$/;"	m	class:SimMenuBar	file:
 createConnection	src/core/NetworkInterface.java	/^	public abstract void createConnection(NetworkInterface anotherInterface);$/;"	m	class:NetworkInterface
@@ -1288,6 +1384,7 @@ createHosts	src/core/SimScenario.java	/^	protected void createHosts() {$/;"	m	cl
 createHosts	src/test/WorldTest.java	/^		protected void createHosts() {$/;"	m	class:WorldTest.TestScenario
 createImageIcon	src/gui/GUIControls.java	/^	private ImageIcon createImageIcon(String path) {$/;"	m	class:GUIControls	file:
 createIntializedObject	src/core/Settings.java	/^	public Object createIntializedObject(String className) {$/;"	m	class:Settings
+createMarkets	src/applications/DEEM.java	/^	public void createMarkets(boolean controlMessageFlag, HashMap<DTNHost, Double> previousPrices, HashMap<Integer, Double> LLAmigrationOverhead, HashMap<DTNHost, Double> userCompletionTime) {$/;"	m	class:DEEM
 createMenuItem	src/gui/SimMenuBar.java	/^	private JMenuItem createMenuItem(Container c, String txt) {$/;"	m	class:SimMenuBar	file:
 createNewMessage	src/core/DTNHost.java	/^	public void createNewMessage(Message m) {$/;"	m	class:DTNHost
 createNewMessage	src/routing/ActiveRouter.java	/^	public boolean createNewMessage(Message m) {$/;"	m	class:ActiveRouter
@@ -1323,9 +1420,15 @@ currentspeed	src/core/VBRConnection.java	/^	private int currentspeed = 0;$/;"	f	
 custodyFraction	src/routing/WaveRouter.java	/^	private double custodyFraction;$/;"	f	class:WaveRouter	file:
 custodyMessages	src/routing/WaveRouter.java	/^	private Map<String, Double> custodyMessages;$/;"	f	class:WaveRouter	file:
 d	src/test/ScheduleDijkstraTest.java	/^	ScheduleDijkstra d;$/;"	f	class:ScheduleDijkstraTest
-data	addPoints.py	/^	data = F.readlines()$/;"	v
+data	addPoints.py	/^    data = F.readlines()$/;"	v
+debug	src/applications/AuctionApplication.java	/^    private boolean debug = false;$/;"	f	class:AuctionApplication	file:
+debug	src/applications/ClientApp.java	/^    private boolean debug = false;$/;"	f	class:ClientApp	file:
+debug	src/applications/GreedyPairingApp.java	/^    private boolean debug=false;$/;"	f	class:GreedyPairingApp	file:
+debug	src/applications/ServerApp.java	/^    private boolean debug = false;$/;"	f	class:ServerApp	file:
 debug	toolkit/Common.pm	/^sub debug {$/;"	s
 debugLevel	src/core/Debug.java	/^	private static int debugLevel = 0;$/;"	f	class:Debug	file:
+defaulLocationIdentifier	src/applications/DEEM.java	/^	static Object defaulLocationIdentifier  = null; \/\/"veryVeryDistantCloud";$/;"	f	class:DEEM
+defaulLocationIdentifier	src/applications/VEDAuction.java	/^	Object defaulLocationIdentifier;\/\/defaultLocationIdentifier: -1$/;"	f	class:VEDAuction
 delays	src/report/MessageDelayReport.java	/^	private List<Double> delays;$/;"	f	class:MessageDelayReport	file:
 deleteAckedMessages	src/routing/MaxPropRouter.java	/^	private void deleteAckedMessages() {$/;"	m	class:MaxPropRouter	file:
 deleteAckedMessages	src/routing/MaxPropRouterWithEstimation.java	/^	private void deleteAckedMessages() {$/;"	m	class:MaxPropRouterWithEstimation	file:
@@ -1344,12 +1447,20 @@ destMin	src/applications/PingApplication.java	/^	private int		destMin=0;$/;"	f	c
 destination	src/core/DTNHost.java	/^	private Coord destination;	\/\/ where is it going$/;"	f	class:DTNHost	file:
 destination	src/movement/EveningTrip.java	/^	private Coord destination;$/;"	f	class:EveningTrip	file:
 destroyConnection	src/core/NetworkInterface.java	/^	public void destroyConnection(NetworkInterface anotherInterface) {$/;"	m	class:NetworkInterface
+device	src/core/Quartet.java	/^    public DTNHost device;$/;"	f	class:Quartet
+deviceLLAExecution	src/applications/DEEM.java	/^	HashMap<DTNHost, Integer> deviceLLAExecution;$/;"	f	class:DEEM
+deviceLLAExecution	src/applications/DEEM_Results.java	/^    public final HashMap<DTNHost,Integer> deviceLLAExecution;\/\/Assignment$/;"	f	class:DEEM_Results
+deviceUserAssociation	src/applications/DEEM.java	/^	HashMap<DTNHost, DTNHost> deviceUserAssociation;$/;"	f	class:DEEM
+deviceUserAssociation	src/applications/DEEM_Results.java	/^    public final HashMap<DTNHost,DTNHost> deviceUserAssociation;$/;"	f	class:DEEM_Results
+device_LLAs_Association	src/applications/AuctionApplication.java	/^    public HashMap<DTNHost, ArrayList<Integer>> device_LLAs_Association;$/;"	f	class:AuctionApplication
+device_LLAs_Association	src/applications/DEEM.java	/^	HashMap<DTNHost, ArrayList<Integer>>  device_LLAs_Association;$/;"	f	class:DEEM
 dijkstra	src/routing/MaxPropRouter.java	/^	private MaxPropDijkstra dijkstra;$/;"	f	class:MaxPropRouter	file:
 dijkstra	src/routing/MaxPropRouterWithEstimation.java	/^	private MaxPropDijkstra dijkstra;$/;"	f	class:MaxPropRouterWithEstimation	file:
 disc	src/test/TotalContactTimeReportTest.java	/^	private void disc(DTNHost host) {$/;"	m	class:TotalContactTimeReportTest	file:
 disconnect	src/core/NetworkInterface.java	/^	protected void disconnect(Connection con,$/;"	m	class:NetworkInterface
 disconnect	src/test/AbstractRouterTest.java	/^	protected static void disconnect(DTNHost node) {$/;"	m	class:AbstractRouterTest
 disconnectLocation	src/test/AbstractRouterTest.java	/^	protected static final Coord disconnectLocation = new Coord(900000,900000);$/;"	f	class:AbstractRouterTest
+dist	writePoints.py	/^def dist(x1, y1, x2, y2):$/;"	f
 distance	src/core/Coord.java	/^	public double distance(Coord other) {$/;"	m	class:Coord
 distance	src/movement/HomeActivityMovement.java	/^	private int distance;$/;"	f	class:HomeActivityMovement	file:
 distance	src/movement/OfficeActivityMovement.java	/^	private int distance;$/;"	f	class:OfficeActivityMovement	file:
@@ -1363,6 +1474,7 @@ doEveningActivityProb	src/movement/WorkingDayMovement.java	/^	private double doE
 doRelay	src/test/ProphetRouterTest.java	/^	private void doRelay() {$/;"	m	class:ProphetRouterTest	file:
 done	src/input/WKTReader.java	/^	private boolean done;$/;"	f	class:WKTReader	file:
 done	src/report/AdjacencyGraphvizReport.java	/^	public void done() {$/;"	m	class:AdjacencyGraphvizReport
+done	src/report/AuctionAppReporter.java	/^	public void done() {$/;"	m	class:AuctionAppReporter
 done	src/report/ContactTimesReport.java	/^	public void done() {$/;"	m	class:ContactTimesReport
 done	src/report/ContactsDuringAnICTReport.java	/^	public void done() {$/;"	m	class:ContactsDuringAnICTReport
 done	src/report/ContactsPerHourReport.java	/^	public void done() {$/;"	m	class:ContactsPerHourReport
@@ -1385,6 +1497,8 @@ done	src/report/UniqueEncountersReport.java	/^	public void done() {$/;"	m	class:
 done	src/test/TotalContactTimeReportTest.java	/^	private void done() throws Exception {$/;"	m	class:TotalContactTimeReportTest	file:
 done	src/ui/DTNSimUI.java	/^	public void done() {$/;"	m	class:DTNSimUI
 doneTiming	src/core/Debug.java	/^	public static void doneTiming() {$/;"	m	class:Debug
+dp	src/applications/DEEM.java	/^	static double dp              = 1.0;$/;"	f	class:DEEM
+dp	src/applications/VEDAuction.java	/^	double dp;\/\/dp: price increment in price adjustment$/;"	f	class:VEDAuction
 draw	src/gui/playfield/MapGraphic.java	/^	public void draw(Graphics2D g2) {$/;"	m	class:MapGraphic
 draw	src/gui/playfield/MessageGraphic.java	/^	public void draw(Graphics2D g2) {$/;"	m	class:MessageGraphic
 draw	src/gui/playfield/NodeGraphic.java	/^	public void draw(Graphics2D g2) {$/;"	m	class:NodeGraphic
@@ -1429,6 +1543,7 @@ eqHandler	src/core/SimScenario.java	/^	private EventQueueHandler eqHandler;$/;"	
 equals	src/core/Coord.java	/^	public boolean equals(Coord c) {$/;"	m	class:Coord
 equals	src/core/Coord.java	/^	public boolean equals(Object o) {$/;"	m	class:Coord
 equals	src/core/DTNHost.java	/^	public boolean equals(DTNHost otherHost) {$/;"	m	class:DTNHost
+equals	src/core/Quartet.java	/^    public boolean equals(Quartet other) {$/;"	m	class:Quartet
 equals	src/report/AdjacencyGraphvizReport.java	/^		public boolean equals(Object o) {$/;"	m	class:AdjacencyGraphvizReport.ConnectionInfo
 equals	src/report/ContactTimesReport.java	/^		public boolean equals(Object other) {$/;"	m	class:ContactTimesReport.ConnectionInfo
 error	src/input/DTN2Events.java	/^		public boolean error(String reason, Exception exception,$/;"	m	class:DTN2Events.ParserHandler
@@ -1447,19 +1562,26 @@ eventsLeft	src/input/BinaryEventsReader.java	/^	private int eventsLeft;$/;"	f	cl
 eventsLeftInBuffer	src/input/ExternalEventsQueue.java	/^	public int eventsLeftInBuffer() {$/;"	m	class:ExternalEventsQueue
 example	toolkit/getStats.pl	/^example:$/;"	l
 example	toolkit/messageLocationAnimator.pl	/^example:$/;"	l
+excessSupplyIdentification	src/applications/VEDAuction.java	/^	private void excessSupplyIdentification(HashMap<DTNHost,ArrayList<DTNHost>> D,HashMap<DTNHost, DTNHost> X, ArrayList<DTNHost> S,boolean controlMessageFlag){$/;"	m	class:VEDAuction	file:
+exchangeDeliverableMessages	src/routing/APRouter.java	/^	protected Connection exchangeDeliverableMessages() {$/;"	m	class:APRouter
 exchangeDeliverableMessages	src/routing/ActiveRouter.java	/^	protected Connection exchangeDeliverableMessages() {$/;"	m	class:ActiveRouter
-execTimes	src/core/DTNHost.java	/^    public static List<Double> execTimes;$/;"	f	class:DTNHost
+execTimes	src/core/Application.java	/^    public static ArrayList<Double> execTimes;$/;"	f	class:Application
+exec_time_high	addPoints.py	/^            exec_time_high = 30.0$/;"	v
+exec_time_low	addPoints.py	/^            exec_time_low = 30.0$/;"	v
+executeMechanism	src/applications/DEEM.java	/^	public DEEM_Results executeMechanism(boolean controlMessageFlag,boolean controlAuctionMessageFlag){$/;"	m	class:DEEM
+execute_auction	src/applications/AuctionApplication.java	/^    public void execute_auction(DTNHost host) {$/;"	m	class:AuctionApplication
+execute_auction	src/applications/GreedyPairingApp.java	/^    public void execute_auction(DTNHost host) {$/;"	m	class:GreedyPairingApp
 farAway	src/test/AbstractRouterTest.java	/^	protected Coord farAway = new Coord(100000,100000);$/;"	f	class:AbstractRouterTest
 ffwButton	src/gui/GUIControls.java	/^	private JButton ffwButton;$/;"	f	class:GUIControls	file:
 field	src/gui/DTNSimGUI.java	/^	private PlayField field;$/;"	f	class:DTNSimGUI	file:
 field	src/gui/SimMenuBar.java	/^	private PlayField field;$/;"	f	class:SimMenuBar	file:
-filename	addPoints.py	/^	filename = "Manchester_test"$/;"	v
-filename	addPoints.py	/^	filename = sys.argv[3]$/;"	v
+filename	addPoints.py	/^    filename = "Manchester_test"$/;"	v
 filename	writePoints.py	/^            filename = sys.argv[2]$/;"	v
 filterNode	src/gui/nodefilter/NodeFilter.java	/^	public boolean filterNode(DTNHost node);$/;"	m	interface:NodeFilter
 filterNode	src/gui/nodefilter/NodeMessageFilter.java	/^	public boolean filterNode(DTNHost node) {$/;"	m	class:NodeMessageFilter
 filters	src/gui/NodeChooser.java	/^	private Vector<NodeFilter> filters;$/;"	f	class:NodeChooser	file:
 finalizeTransfer	src/core/Connection.java	/^	public void finalizeTransfer() {$/;"	m	class:Connection
+findTheDemandCorrespondence	src/applications/VEDAuction.java	/^	private void findTheDemandCorrespondence(HashMap<DTNHost,ArrayList<DTNHost>> D,boolean controlMessageFlag){$/;"	m	class:VEDAuction	file:
 firstStopIndex	src/movement/MapRouteMovement.java	/^	private int firstStopIndex = -1;$/;"	f	class:MapRouteMovement	file:
 fix	src/report/MovementNs2Report.java	/^	private String fix(double val) {$/;"	m	class:MovementNs2Report	file:
 fixFile	src/test/PointsOfInterestTest.java	/^	private String fixFile(String fileName) {$/;"	m	class:PointsOfInterestTest	file:
@@ -1468,6 +1590,7 @@ focusOnClick	src/gui/SimMenuBar.java	/^	private JCheckBoxMenuItem focusOnClick;$
 focusOnClick	src/gui/playfield/PlayField.java	/^	private boolean focusOnClick;$/;"	f	class:PlayField	file:
 font	src/gui/EventLogPanel.java	/^	private Font font;	\/\/ font used in log entries$/;"	f	class:EventLogPanel	file:
 forceConnection	src/core/DTNHost.java	/^	public void forceConnection(DTNHost anotherHost, String interfaceId,$/;"	m	class:DTNHost
+ford_Fulkerson	src/applications/VEDAuction.java	/^	private void ford_Fulkerson(HashMap<DTNHost,ArrayList<DTNHost>> D,$/;"	m	class:VEDAuction	file:
 format	src/report/Report.java	/^	protected String format(double value) {$/;"	m	class:Report
 from	src/core/Message.java	/^	private DTNHost from;$/;"	f	class:Message	file:
 from	src/gui/playfield/MessageGraphic.java	/^	private DTNHost from;$/;"	f	class:MessageGraphic	file:
@@ -1510,6 +1633,7 @@ getAllHosts	src/test/TestUtils.java	/^	public List<DTNHost> getAllHosts() {$/;"	
 getAllInterfaces	src/interfaces/ConnectivityGrid.java	/^	public Collection<NetworkInterface> getAllInterfaces() {$/;"	m	class:ConnectivityGrid
 getAllInterfaces	src/interfaces/ConnectivityOptimizer.java	/^	abstract public Collection<NetworkInterface> getAllInterfaces();$/;"	m	class:ConnectivityOptimizer
 getAllProbs	src/routing/maxprop/MeetingProbabilitySet.java	/^	public Map<Integer, Double> getAllProbs() {$/;"	m	class:MeetingProbabilitySet
+getApConnected	src/routing/APRouter.java	/^	protected List<Connection> getApConnected() {$/;"	m	class:APRouter
 getAppID	src/core/Application.java	/^	public String getAppID() {$/;"	m	class:Application
 getAppID	src/core/Message.java	/^	public String getAppID() {$/;"	m	class:Message
 getAppListeners	src/core/Application.java	/^	public List<ApplicationListener> getAppListeners(){$/;"	m	class:Application
@@ -1530,7 +1654,6 @@ getClass	src/core/Settings.java	/^	private Class<?> getClass(String name) {$/;"	
 getClosestCoordinate	src/movement/BusTravellerMovement.java	/^	private static Coord getClosestCoordinate(List<Coord> allCoords,$/;"	m	class:BusTravellerMovement	file:
 getComBus	src/core/DTNHost.java	/^	public ModuleCommunicationBus getComBus() {$/;"	m	class:DTNHost
 getComBus	src/movement/MovementModel.java	/^	public ModuleCommunicationBus getComBus() {$/;"	m	class:MovementModel
-getCompletionTime	src/core/VM.java	/^    public double getCompletionTime()$/;"	m	class:VM
 getCondition	src/core/Settings.java	/^	public ArithmeticCondition getCondition(String name) {$/;"	m	class:Settings
 getConnected	src/routing/schedule/ScheduleOracle.java	/^	public List<ScheduleEntry> getConnected(int from, double time) {$/;"	m	class:ScheduleOracle
 getConnectionTime	src/report/ContactTimesReport.java	/^		public double getConnectionTime() {$/;"	m	class:ContactTimesReport.ConnectionInfo
@@ -1659,6 +1782,7 @@ getLastUpdateTime	src/routing/maxprop/MeetingProbabilitySet.java	/^	public doubl
 getLeftParams	src/movement/RandomDirection.java	/^    private double[] getLeftParams( final double x0, final double y0,$/;"	m	class:RandomDirection	file:
 getLoc1	src/report/DistanceDelayReport.java	/^		public Coord getLoc1() {$/;"	m	class:DistanceDelayReport.InfoTuple
 getLoc2	src/report/DistanceDelayReport.java	/^		public Coord getLoc2() {$/;"	m	class:DistanceDelayReport.InfoTuple
+getLocalLatency	src/core/DTNHost.java	/^	public double getLocalLatency() {$/;"	m	class:DTNHost
 getLocation	src/core/DTNHost.java	/^	public Coord getLocation() {$/;"	m	class:DTNHost
 getLocation	src/core/NetworkInterface.java	/^	public Coord getLocation() {$/;"	m	class:NetworkInterface
 getLocation	src/movement/BusTravellerMovement.java	/^	public Coord getLocation() {$/;"	m	class:BusTravellerMovement
@@ -1693,6 +1817,8 @@ getMessage	src/core/Connection.java	/^	public Message getMessage() {$/;"	m	class
 getMessage	src/routing/MessageRouter.java	/^	protected Message getMessage(String id) {$/;"	m	class:MessageRouter
 getMessageCollection	src/core/DTNHost.java	/^	public Collection<Message> getMessageCollection() {$/;"	m	class:DTNHost
 getMessageCollection	src/routing/MessageRouter.java	/^	public Collection<Message> getMessageCollection() {$/;"	m	class:MessageRouter
+getMessagesForApConnected	src/routing/APRouter.java	/^	protected List<Tuple<Message, Connection>> getMessagesForApConnected() {$/;"	m	class:APRouter
+getMessagesForConnected	src/routing/APRouter.java	/^	protected List<Tuple<Message, Connection>> getMessagesForConnected() {$/;"	m	class:APRouter
 getMessagesForConnected	src/routing/ActiveRouter.java	/^	protected List<Tuple<Message, Connection>> getMessagesForConnected() {$/;"	m	class:ActiveRouter
 getMessagesWithCopiesLeft	src/routing/SprayAndWaitRouter.java	/^	protected List<Message> getMessagesWithCopiesLeft() {$/;"	m	class:SprayAndWaitRouter
 getMinBound	src/movement/map/SimMap.java	/^	public Coord getMinBound() {$/;"	m	class:SimMap
@@ -1706,6 +1832,7 @@ getMinY	src/input/ExternalPathMovementReader.java	/^	public double getMinY() {$/
 getMoreInfo	src/routing/util/RoutingInfo.java	/^	public List<RoutingInfo> getMoreInfo() {$/;"	m	class:RoutingInfo
 getMovementModel	src/core/DTNHost.java	/^    public MovementModel getMovementModel() {$/;"	m	class:DTNHost
 getMultiplier	src/core/Settings.java	/^	private int getMultiplier(String value) {$/;"	m	class:Settings	file:
+getName	src/core/DTNHost.java	/^    public String getName() {$/;"	m	class:DTNHost
 getName	src/core/SimScenario.java	/^	public String getName() {$/;"	m	class:SimScenario
 getNameSpace	src/core/Settings.java	/^	public String getNameSpace() {$/;"	m	class:Settings
 getNearInterfaces	src/interfaces/ConnectivityGrid.java	/^	public Collection<NetworkInterface> getNearInterfaces($/;"	m	class:ConnectivityGrid
@@ -1801,6 +1928,8 @@ getScale	src/gui/playfield/PlayFieldGraphic.java	/^	public static double getScal
 getScenarioName	src/report/Report.java	/^	protected String getScenarioName() {$/;"	m	class:Report
 getSecondaryNameSpace	src/core/Settings.java	/^	public String getSecondaryNameSpace() {$/;"	m	class:Settings
 getSeed	src/applications/PingApplication.java	/^	public int getSeed() {$/;"	m	class:PingApplication
+getService	src/core/Message.java	/^    public int getService() {$/;"	m	class:Message
+getServiceTypes	src/applications/AuctionApplication.java	/^    public int [] getServiceTypes() {$/;"	m	class:AuctionApplication
 getSetting	src/core/Settings.java	/^	public String getSetting(String name) {$/;"	m	class:Settings
 getSetting	src/core/Settings.java	/^	public String getSetting(String name, String defaultValue) {$/;"	m	class:Settings
 getSettings	src/report/Report.java	/^	protected Settings getSettings() {$/;"	m	class:Report
@@ -1858,25 +1987,26 @@ getWorldSizeY	src/core/SimScenario.java	/^	public int getWorldSizeY() {$/;"	m	cl
 getWorldSizeY	src/test/WorldTest.java	/^		public int getWorldSizeY() {$/;"	m	class:WorldTest.TestScenario
 getX	src/core/Coord.java	/^	public double getX() {$/;"	m	class:Coord
 getY	src/core/Coord.java	/^	public double getY() {$/;"	m	class:Coord
-getnrofServices	src/core/DTNHost.java	/^    public static int getnrofServices() {$/;"	m	class:DTNHost
 ginterfaces	src/interfaces/ConnectivityGrid.java	/^	private HashMap<NetworkInterface, GridCell> ginterfaces;$/;"	f	class:ConnectivityGrid	file:
-gn	addPoints.py	/^				gn = gn + 1 $/;"	v
-gn	addPoints.py	/^			gn = (int)(groups)$/;"	v
+gn	addPoints.py	/^                gn = gn + 1 $/;"	v
+gn	addPoints.py	/^            gn = (int)(groups) $/;"	v
 gnuplot	src/report/NodeDensityReport.java	/^	private final boolean gnuplot;$/;"	f	class:NodeDensityReport	file:
 gnuplotFileExtension	src/report/NodeDensityReport.java	/^	private final String gnuplotFileExtension;$/;"	f	class:NodeDensityReport	file:
 gnuplotTerminal	src/report/NodeDensityReport.java	/^	private final String gnuplotTerminal;$/;"	f	class:NodeDensityReport	file:
 gotEvent	src/core/ApplicationListener.java	/^	public void gotEvent(String event, Object params, Application app,$/;"	m	interface:ApplicationListener
+gotEvent	src/report/AuctionAppReporter.java	/^    public void gotEvent(String event, Object params, Application app, DTNHost host) {$/;"	m	class:AuctionAppReporter
 gotEvent	src/report/PingAppReporter.java	/^	public void gotEvent(String event, Object params, Application app,$/;"	m	class:PingAppReporter
 granularity	src/report/ContactTimesReport.java	/^	protected double granularity;$/;"	f	class:ContactTimesReport
 granularity	src/report/MessageLocationReport.java	/^	protected final int granularity;$/;"	f	class:MessageLocationReport
 granularity	src/report/SnapshotReport.java	/^	protected final int granularity;$/;"	f	class:SnapshotReport
 gridobjects	src/interfaces/ConnectivityGrid.java	/^	static HashMap<Integer,ConnectivityGrid> gridobjects;$/;"	f	class:ConnectivityGrid
-group	addPoints.py	/^				group = "Group" + (str)(gn) + "."$/;"	v
+group	addPoints.py	/^                group = "Group" + (str)(gn) + "."$/;"	v
 groupChooser	src/gui/NodeChooser.java	/^	private JComboBox groupChooser;$/;"	f	class:NodeChooser	file:
 groupId	src/test/TestUtils.java	/^	private String groupId = "h";$/;"	f	class:TestUtils	file:
-groups	addPoints.py	/^			groups = d$/;"	v
-groups	addPoints.py	/^			groups = groups.split()$/;"	v
-groups	addPoints.py	/^			groups = groups[2]$/;"	v
+group_number	addPoints.py	/^                        group_number = int(x[2])$/;"	v
+groups	addPoints.py	/^            groups = d$/;"	v
+groups	addPoints.py	/^            groups = groups.split()$/;"	v
+groups	addPoints.py	/^            groups = groups[2]$/;"	v
 gui	src/gui/DTNSimGUI.java	/^package gui;$/;"	p
 gui	src/gui/EventLogControl.java	/^package gui;$/;"	p
 gui	src/gui/EventLogControlPanel.java	/^package gui;$/;"	p
@@ -1922,12 +2052,18 @@ h3	src/test/TotalContactTimeReportTest.java	/^	private DTNHost h1, h2, h3;$/;"	f
 h4	src/test/AbstractRouterTest.java	/^	protected DTNHost h4;$/;"	f	class:AbstractRouterTest
 h5	src/test/AbstractRouterTest.java	/^	protected DTNHost h5;$/;"	f	class:AbstractRouterTest
 h6	src/test/AbstractRouterTest.java	/^	protected DTNHost h6;$/;"	f	class:AbstractRouterTest
+handle	src/applications/AuctionApplication.java	/^	public Message handle(Message msg, DTNHost host) {$/;"	m	class:AuctionApplication
+handle	src/applications/ClientApp.java	/^    public Message handle(Message msg, DTNHost host) {$/;"	m	class:ClientApp
+handle	src/applications/GreedyPairingApp.java	/^	public Message handle(Message msg, DTNHost host) {$/;"	m	class:GreedyPairingApp
 handle	src/applications/PingApplication.java	/^	public Message handle(Message msg, DTNHost host) {$/;"	m	class:PingApplication
+handle	src/applications/ServerApp.java	/^	public Message handle(Message msg, DTNHost host) {$/;"	m	class:ServerApp
 handle	src/core/Application.java	/^	public abstract Message handle(Message msg, DTNHost host);$/;"	m	class:Application
 hasEnergy	src/routing/ActiveRouter.java	/^	public boolean hasEnergy() {$/;"	m	class:ActiveRouter
 hasMessage	src/routing/MessageRouter.java	/^	public boolean hasMessage(String id) {$/;"	m	class:MessageRouter
 hasNext	src/movement/Path.java	/^	public boolean hasNext() {$/;"	m	class:Path
 hashCode	src/core/Coord.java	/^	public int hashCode() {$/;"	m	class:Coord
+hashCode	src/core/DTNHost.java	/^    public int hashCode() {$/;"	m	class:DTNHost
+hashCode	src/core/Quartet.java	/^    public int hashCode() {$/;"	m	class:Quartet
 hashCode	src/report/AdjacencyGraphvizReport.java	/^		public int hashCode() {$/;"	m	class:AdjacencyGraphvizReport.ConnectionInfo
 hashCode	src/report/ContactTimesReport.java	/^		public int hashCode() {$/;"	m	class:ContactTimesReport.ConnectionInfo
 headingFont	src/gui/EventLogControlPanel.java	/^	private Font headingFont = new Font("sans",Font.BOLD,11);$/;"	f	class:EventLogControlPanel	file:
@@ -1945,7 +2081,6 @@ hopCounts	src/report/MessageStatsReport.java	/^	private List<Integer> hopCounts;
 horizontalCount	src/report/NodeDensityReport.java	/^	private final int horizontalCount;$/;"	f	class:NodeDensityReport	file:
 host	src/core/DTN2Manager.java	/^		public DTNHost	host;$/;"	f	class:DTN2Manager.EIDHost
 host	src/core/NetworkInterface.java	/^	protected DTNHost host = null;$/;"	f	class:NetworkInterface
-host	src/core/VM.java	/^    private DTNHost host;$/;"	f	class:VM	file:
 host	src/gui/RoutingInfoWindow.java	/^	private DTNHost host;$/;"	f	class:RoutingInfoWindow	file:
 host	src/movement/MovementModel.java	/^	protected DTNHost host;$/;"	f	class:MovementModel
 host	src/routing/MessageRouter.java	/^	private DTNHost host;$/;"	f	class:MessageRouter	file:
@@ -2082,8 +2217,8 @@ input	src/input/StandardEventsReader.java	/^package input;$/;"	p
 input	src/input/WKTMapReader.java	/^package input;$/;"	p
 input	src/input/WKTReader.java	/^package input;$/;"	p
 inputFileName	src/movement/ExternalMovement.java	/^	private static String inputFileName;$/;"	f	class:ExternalMovement	file:
-instantiateService	src/core/VM.java	/^    public void instantiateService(int service) {$/;"	m	class:VM
 interfaceId	src/input/ConnectionEvent.java	/^	protected String interfaceId;$/;"	f	class:ConnectionEvent
+interfaces	src/interfaces/BSInterface.java	/^	package interfaces;$/;"	p
 interfaces	src/interfaces/ConnectivityGrid.java	/^		private ArrayList<NetworkInterface> interfaces;$/;"	f	class:ConnectivityGrid.GridCell	file:
 interfaces	src/interfaces/ConnectivityGrid.java	/^package interfaces;$/;"	p
 interfaces	src/interfaces/ConnectivityOptimizer.java	/^package interfaces;$/;"	p
@@ -2104,6 +2239,8 @@ isActive	src/movement/MovementModel.java	/^	public boolean isActive() {$/;"	m	cl
 isActive	src/test/StationaryMovement.java	/^	public boolean isActive() {$/;"	m	class:StationaryMovement
 isActive	src/util/ActivenessHandler.java	/^	public boolean isActive() {$/;"	m	class:ActivenessHandler
 isActive	src/util/ActivenessHandler.java	/^	public boolean isActive(int offset) {$/;"	m	class:ActivenessHandler
+isAssigned	src/applications/ClientApp.java	/^    private boolean isAssigned=false;$/;"	f	class:ClientApp	file:
+isAuctionRegistrationComplete	src/applications/ServerApp.java	/^    private boolean isAuctionRegistrationComplete;$/;"	f	class:ServerApp	file:
 isBinary	src/routing/SprayAndWaitRouter.java	/^	protected boolean isBinary;$/;"	f	class:SprayAndWaitRouter
 isBinaryEeFile	src/input/BinaryEventsReader.java	/^	public static boolean isBinaryEeFile(File file) {$/;"	m	class:BinaryEventsReader
 isBlacklistedMessage	src/routing/MessageRouter.java	/^	protected boolean isBlacklistedMessage(String id) {$/;"	m	class:MessageRouter
@@ -2145,6 +2282,7 @@ isReg	src/input/DTN2Events.java	/^	private boolean isReg(Bundle bundle) {$/;"	m	
 isResponse	src/core/Message.java	/^	public boolean isResponse() {$/;"	m	class:Message
 isScanning	src/core/NetworkInterface.java	/^	public boolean isScanning() {$/;"	m	class:NetworkInterface
 isSending	src/routing/ActiveRouter.java	/^	public boolean isSending(String msgId) {$/;"	m	class:ActiveRouter
+isStationary	src/core/DTNHost.java	/^    public boolean isStationary;$/;"	f	class:DTNHost
 isTracked	src/report/MessageLocationReport.java	/^	protected boolean isTracked(Message m) {$/;"	m	class:MessageLocationReport
 isTransferring	src/core/Connection.java	/^	public boolean isTransferring() {$/;"	m	class:Connection
 isTransferring	src/core/NetworkInterface.java	/^	public boolean isTransferring() {$/;"	m	class:NetworkInterface
@@ -2159,14 +2297,13 @@ isUp	src/input/ConnectionEvent.java	/^	protected boolean isUp;$/;"	f	class:Conne
 isWarmup	src/report/Report.java	/^	protected boolean isWarmup() {$/;"	m	class:Report
 isWarmupID	src/report/Report.java	/^	protected boolean isWarmupID(String id) {$/;"	m	class:Report
 isWithinRange	src/core/NetworkInterface.java	/^	protected boolean isWithinRange(NetworkInterface anotherInterface) {$/;"	m	class:NetworkInterface
-is_idle	src/core/VM.java	/^    public boolean is_idle(){$/;"	m	class:VM
-is_stationary	src/core/DTNHost.java	/^    public boolean is_stationary;$/;"	f	class:DTNHost
 k	src/util/ParetoRNG.java	/^	private double k; \/\/ coefficient$/;"	f	class:ParetoRNG	file:
 key	src/util/Tuple.java	/^	private K key;$/;"	f	class:Tuple	file:
 lastAgeUpdate	src/routing/ProphetRouter.java	/^	private double lastAgeUpdate;$/;"	f	class:ProphetRouter	file:
 lastAgeUpdate	src/routing/ProphetRouterWithEstimation.java	/^	private double lastAgeUpdate;$/;"	f	class:ProphetRouterWithEstimation	file:
 lastAgeUpdate	src/routing/ProphetV2Router.java	/^	private double lastAgeUpdate;$/;"	f	class:ProphetV2Router	file:
-lastAuctionPeriod	src/core/DTNHost.java	/^    public static double lastAuctionPeriod = 0.0;$/;"	f	class:DTNHost
+lastAuctionReqSentTime	src/applications/ClientApp.java	/^    private double  lastAuctionReqSentTime=0.0;$/;"	f	class:ClientApp	file:
+lastAuctionTime	src/applications/AuctionApplication.java	/^    public double lastAuctionTime;$/;"	f	class:AuctionApplication
 lastCostFrom	src/routing/MaxPropRouter.java	/^	private DTNHost lastCostFrom;$/;"	f	class:MaxPropRouter	file:
 lastCostFrom	src/routing/MaxPropRouterWithEstimation.java	/^	private DTNHost lastCostFrom;$/;"	f	class:MaxPropRouterWithEstimation	file:
 lastDropped	src/test/MessageChecker.java	/^	private Boolean lastDropped;$/;"	f	class:MessageChecker	file:
@@ -2178,13 +2315,16 @@ lastIndex	src/movement/LinearMovement.java	/^	private int lastIndex; \/** index 
 lastLine	src/input/ExternalMovementReader.java	/^	private String lastLine;$/;"	f	class:ExternalMovementReader	file:
 lastMapNode	src/movement/MapBasedMovement.java	/^	protected MapNode lastMapNode;$/;"	f	class:MapBasedMovement
 lastMsg	src/test/MessageChecker.java	/^	private Message lastMsg;$/;"	f	class:MessageChecker	file:
+lastOfferSentTime	src/applications/ServerApp.java	/^    private double lastOfferSentTime;$/;"	f	class:ServerApp	file:
 lastOutputSuffix	src/report/Report.java	/^	private int lastOutputSuffix;$/;"	f	class:Report	file:
+lastPing	src/applications/ClientApp.java	/^	private double	lastPing = 0;$/;"	f	class:ClientApp	file:
 lastPing	src/applications/PingApplication.java	/^	private double	lastPing = 0;$/;"	f	class:PingApplication	file:
 lastPreloadTime	src/movement/ExternalMovement.java	/^	private static double lastPreloadTime;$/;"	f	class:ExternalMovement	file:
 lastRecord	src/report/BufferOccupancyReport.java	/^	private double lastRecord = Double.MIN_VALUE;$/;"	f	class:BufferOccupancyReport	file:
 lastRecord	src/report/SamplingReport.java	/^	private double lastRecord = Double.MIN_VALUE;$/;"	f	class:SamplingReport	file:
 lastReportTime	src/report/Report.java	/^	private double lastReportTime;$/;"	f	class:Report	file:
 lastReportedTime	src/report/TotalContactTimeReport.java	/^	private double lastReportedTime;$/;"	f	class:TotalContactTimeReport	file:
+lastRequestedService	src/applications/ClientApp.java	/^    private int     lastRequestedService=0;$/;"	f	class:ClientApp	file:
 lastScanTime	src/core/NetworkInterface.java	/^	private double lastScanTime;$/;"	f	class:NetworkInterface	file:
 lastSimTime	src/gui/GUIControls.java	/^	private double lastSimTime;$/;"	f	class:GUIControls	file:
 lastTimeStamp	src/input/ExternalMovementReader.java	/^	private double lastTimeStamp = -1;$/;"	f	class:ExternalMovementReader	file:
@@ -2214,9 +2354,9 @@ latestPath	src/movement/ExternalMovement.java	/^	private Path latestPath;$/;"	f	
 latestPathStartTime	src/movement/ExternalMovement.java	/^	private double latestPathStartTime;$/;"	f	class:ExternalMovement	file:
 layout	src/gui/EventLogControlPanel.java	/^	private GridBagLayout layout;$/;"	f	class:EventLogControlPanel	file:
 layout	src/gui/EventLogPanel.java	/^	private GridLayout layout;$/;"	f	class:EventLogPanel	file:
-li	addPoints.py	/^				li = li.split()$/;"	v
-lines	addPoints.py	/^				lines = SF.readlines()$/;"	v
-lines	addPoints.py	/^			lines =[]$/;"	v
+li	addPoints.py	/^                li = li.split()$/;"	v
+lines	addPoints.py	/^                lines = SF.readlines()$/;"	v
+lines	addPoints.py	/^            lines =[]$/;"	v
 listeners	src/core/ModuleCommunicationBus.java	/^	private HashMap<String, List<ModuleCommunicationListener>> listeners;$/;"	f	class:ModuleCommunicationBus	file:
 loadObject	src/core/Settings.java	/^	private Object loadObject(String className, Class<?>[] argsClass,$/;"	m	class:Settings	file:
 loc	src/movement/GridLocation.java	/^	private Coord loc;$/;"	f	class:GridLocation	file:
@@ -2225,6 +2365,7 @@ loc	src/movement/StationaryMovement.java	/^	private Coord loc; \/** The location
 loc	src/test/StationaryMovement.java	/^	private Coord loc;$/;"	f	class:StationaryMovement	file:
 loc1	src/report/DistanceDelayReport.java	/^		private Coord loc1;$/;"	f	class:DistanceDelayReport.InfoTuple	file:
 loc2	src/report/DistanceDelayReport.java	/^		private Coord loc2;$/;"	f	class:DistanceDelayReport.InfoTuple	file:
+localLatency	src/core/DTNHost.java	/^    double localLatency = 10.0;$/;"	f	class:DTNHost
 location	src/core/DTNHost.java	/^	private Coord location; 	\/\/ where is the host$/;"	f	class:DTNHost	file:
 location	src/movement/BusTravellerMovement.java	/^	private Coord location;$/;"	f	class:BusTravellerMovement	file:
 location	src/movement/EveningTrip.java	/^	private Coord location;$/;"	f	class:EveningTrip	file:
@@ -2247,6 +2388,8 @@ map	src/test/MapBasedMovementTest.java	/^	private SimMap map;$/;"	f	class:MapBas
 map	src/test/MapNodeTest.java	/^	private SimMap map;$/;"	f	class:MapNodeTest	file:
 mapGraphic	src/gui/playfield/PlayField.java	/^	private MapGraphic mapGraphic;$/;"	f	class:PlayField	file:
 mapping	src/test/MaxPropDijkstraTest.java	/^	private Map<Integer, MeetingProbabilitySet> mapping;$/;"	f	class:MaxPropDijkstraTest	file:
+marketID	src/applications/VEDAuction.java	/^	Integer marketID;$/;"	f	class:VEDAuction
+markets	src/applications/DEEM.java	/^	ArrayList<VEDAuction> markets;$/;"	f	class:DEEM
 math	writePoints.py	/^import math$/;"	i
 max	src/util/Range.java	/^	private double max;$/;"	f	class:Range	file:
 maxBound	src/movement/map/SimMap.java	/^	private Coord maxBound;$/;"	f	class:SimMap	file:
@@ -2269,6 +2412,7 @@ maxX	src/movement/MovementModel.java	/^	private int maxX;$/;"	f	class:MovementMo
 maxY	src/input/ExternalMovementReader.java	/^	private double maxY;$/;"	f	class:ExternalMovementReader	file:
 maxY	src/input/ExternalPathMovementReader.java	/^	private double maxY;$/;"	f	class:ExternalPathMovementReader	file:
 maxY	src/movement/MovementModel.java	/^	private int maxY;$/;"	f	class:MovementModel	file:
+maximumLatency	src/applications/DEEM.java	/^	static double maximumLatency  = 100.0;\/\/in ms$/;"	f	class:DEEM
 mbm	src/test/MapBasedMovementTest.java	/^	private MapBasedMovement mbm;$/;"	f	class:MapBasedMovementTest	file:
 mc	src/test/AbstractRouterTest.java	/^	protected MessageChecker mc;$/;"	f	class:AbstractRouterTest
 mcl	src/test/ModuleCommunicationBusTest.java	/^	private ModuleCommunicationListener mcl;$/;"	f	class:ModuleCommunicationBusTest	file:
@@ -2335,7 +2479,9 @@ messageTransferred	src/report/MessageDeliveryReport.java	/^	public void messageT
 messageTransferred	src/report/MessageGraphvizReport.java	/^	public void messageTransferred(Message m, DTNHost from,$/;"	m	class:MessageGraphvizReport
 messageTransferred	src/report/MessageReport.java	/^	public void messageTransferred(Message m, DTNHost from, DTNHost to,$/;"	m	class:MessageReport
 messageTransferred	src/report/MessageStatsReport.java	/^	public void messageTransferred(Message m, DTNHost from, DTNHost to,$/;"	m	class:MessageStatsReport
+messageTransferred	src/routing/APRouter.java	/^	public Message messageTransferred(String id, DTNHost from) {$/;"	m	class:APRouter
 messageTransferred	src/routing/ActiveRouter.java	/^	public Message messageTransferred(String id, DTNHost from) {$/;"	m	class:ActiveRouter
+messageTransferred	src/routing/DeliverToBS.java	/^	public Message messageTransferred(String id, DTNHost from) {$/;"	m	class:DeliverToBS
 messageTransferred	src/routing/EpidemicOracleRouter.java	/^	public Message messageTransferred(String id, DTNHost from) {$/;"	m	class:EpidemicOracleRouter
 messageTransferred	src/routing/MaxPropRouter.java	/^	public Message messageTransferred(String id, DTNHost from) {$/;"	m	class:MaxPropRouter
 messageTransferred	src/routing/MaxPropRouterWithEstimation.java	/^	public Message messageTransferred(String id, DTNHost from) {$/;"	m	class:MaxPropRouterWithEstimation
@@ -2345,11 +2491,13 @@ messageTransferred	src/routing/WaveRouter.java	/^	public Message messageTransfer
 messageTransferred	src/test/MessageChecker.java	/^	public void messageTransferred(Message m, DTNHost from, DTNHost to,$/;"	m	class:MessageChecker
 messageTransferred	src/test/TestDTNHost.java	/^	public void messageTransferred(String id, DTNHost from) {$/;"	m	class:TestDTNHost
 messages	src/routing/MessageRouter.java	/^	private HashMap<String, Message> messages;$/;"	f	class:MessageRouter	file:
+migrationTime	src/report/AuctionAppReporter.java	/^    HashMap<Integer, Integer> migrationTime;$/;"	f	class:AuctionAppReporter
 min	src/util/Range.java	/^	private double min;$/;"	f	class:Range	file:
 minBound	src/movement/map/SimMap.java	/^	private Coord minBound;$/;"	f	class:SimMap	file:
 minDistance	src/movement/RandomWalk.java	/^	private double minDistance;$/;"	f	class:RandomWalk	file:
 minGroupSize	src/movement/EveningActivityMovement.java	/^	private int minGroupSize;$/;"	f	class:EveningActivityMovement	file:
 minPathLength	src/movement/MapBasedMovement.java	/^	protected int minPathLength = 10;$/;"	f	class:MapBasedMovement
+minQoS	src/core/Application.java	/^    public static ArrayList<Double> minQoS;$/;"	f	class:Application
 minSpeed	src/movement/MovementModel.java	/^	protected double minSpeed;$/;"	f	class:MovementModel
 minTime	src/input/ExternalMovementReader.java	/^	private double minTime;$/;"	f	class:ExternalMovementReader	file:
 minTime	src/input/ExternalPathMovementReader.java	/^	private double minTime;$/;"	f	class:ExternalPathMovementReader	file:
@@ -2358,6 +2506,7 @@ minX	src/input/ExternalMovementReader.java	/^	private double minX;$/;"	f	class:E
 minX	src/input/ExternalPathMovementReader.java	/^	private double minX;$/;"	f	class:ExternalPathMovementReader	file:
 minY	src/input/ExternalMovementReader.java	/^	private double minY;$/;"	f	class:ExternalMovementReader	file:
 minY	src/input/ExternalPathMovementReader.java	/^	private double minY;$/;"	f	class:ExternalPathMovementReader	file:
+minimumLatency	src/applications/DEEM.java	/^	static double minimumLatency  = 0.0;\/\/in ms$/;"	f	class:DEEM
 mirror	src/movement/map/SimMap.java	/^	public void mirror() {$/;"	m	class:SimMap
 ml	src/test/DistanceDelayReportTest.java	/^	private Vector<MessageListener> ml;$/;"	f	class:DistanceDelayReportTest	file:
 mode	src/movement/EveningActivityMovement.java	/^	private int mode;$/;"	f	class:EveningActivityMovement	file:
@@ -2495,7 +2644,7 @@ newMessage	src/test/MessageChecker.java	/^	public void newMessage(Message m) {$/
 newNode	src/test/DijkstraPathFinderTest.java	/^	private MapNode newNode(double x, double y) {$/;"	m	class:DijkstraPathFinderTest	file:
 newOrders	src/movement/ExtendedMovementModel.java	/^	public abstract boolean newOrders();$/;"	m	class:ExtendedMovementModel
 newOrders	src/movement/WorkingDayMovement.java	/^	public boolean newOrders() {$/;"	m	class:WorkingDayMovement
-newfile	addPoints.py	/^			newfile = filename + "_st_" + str(num) + ".txt"$/;"	v
+newfile	addPoints.py	/^            newfile = filename + "_st_" + str(num) + ".txt"$/;"	v
 newfile	writePoints.py	/^            newfile = sys.argv[5]$/;"	v
 next	src/test/MessageChecker.java	/^	public boolean next() {$/;"	m	class:MessageChecker
 nextAddress	src/core/DTNHost.java	/^	private static int nextAddress = 0;$/;"	f	class:DTNHost	file:
@@ -2541,7 +2690,7 @@ nextTrips	src/movement/EveningActivityControlSystem.java	/^	private EveningTrip[
 nextType	src/input/WKTReader.java	/^	protected String nextType() throws IOException {$/;"	m	class:WKTReader
 nextUniqueId	src/core/Message.java	/^	private static int nextUniqueId;$/;"	f	class:Message	file:
 nextWpIndex	src/movement/Path.java	/^	private int nextWpIndex;$/;"	f	class:Path	file:
-nf	addPoints.py	/^			nf = open(newfile,'w')$/;"	v
+nf	addPoints.py	/^            nf = open(newfile,'w')$/;"	v
 node	src/gui/playfield/NodeGraphic.java	/^	private DTNHost node;$/;"	f	class:NodeGraphic	file:
 nodeArray	src/report/MovementNs2Report.java	/^	private String nodeArray;$/;"	f	class:MovementNs2Report	file:
 nodeCount	src/movement/GridLocation.java	/^	private int nodeCount;$/;"	f	class:GridLocation	file:
@@ -2573,6 +2722,7 @@ nrofCreated	src/report/MessageDelayReport.java	/^	private int nrofCreated;$/;"	f
 nrofCreated	src/report/MessageStatsReport.java	/^	private int nrofCreated;$/;"	f	class:MessageStatsReport	file:
 nrofDelivered	src/report/MessageStatsReport.java	/^	private int nrofDelivered;$/;"	f	class:MessageStatsReport	file:
 nrofDropped	src/report/MessageStatsReport.java	/^	private int nrofDropped;$/;"	f	class:MessageStatsReport	file:
+nrofGroups	addPoints.py	/^    nrofGroups = 0$/;"	v
 nrofGroups	src/core/SimScenario.java	/^	int nrofGroups;$/;"	f	class:SimScenario
 nrofHosts	src/report/MessageAvailabilityReport.java	/^	private int nrofHosts;$/;"	f	class:MessageAvailabilityReport	file:
 nrofMapFilesRead	src/movement/MapBasedMovement.java	/^	private int nrofMapFilesRead = 0;$/;"	f	class:MapBasedMovement	file:
@@ -2586,16 +2736,19 @@ nrofResponseReqCreated	src/report/MessageStatsReport.java	/^	private int nrofRes
 nrofSamples	src/routing/ProphetRouterWithEstimation.java	/^	private int nrofSamples;$/;"	f	class:ProphetRouterWithEstimation	file:
 nrofSamplesENC	src/routing/MaxPropRouterWithEstimation.java	/^	private int nrofSamplesENC;$/;"	f	class:MaxPropRouterWithEstimation	file:
 nrofSamplesIET	src/routing/MaxPropRouterWithEstimation.java	/^	private int nrofSamplesIET;$/;"	f	class:MaxPropRouterWithEstimation	file:
-nrofServices	src/core/DTNHost.java	/^    private static int nrofServices = 0;$/;"	f	class:DTNHost	file:
+nrofServices	addPoints.py	/^            nrofServices = 10$/;"	v
+nrofServices	src/core/Application.java	/^    public static int nrofServices;$/;"	f	class:Application
 nrofServices	src/core/SimScenario.java	/^	int nrofServices;$/;"	f	class:SimScenario
 nrofStarted	src/report/MessageStatsReport.java	/^	private int nrofStarted;$/;"	f	class:MessageStatsReport	file:
 nrofTotENC	src/routing/MaxPropRouterWithEstimation.java	/^	private int nrofTotENC;$/;"	f	class:MaxPropRouterWithEstimation	file:
 nrofUpdate	src/test/TestDTNHost.java	/^	public int nrofUpdate = 0;$/;"	f	class:TestDTNHost
-nrofVMs	src/core/DTNHost.java	/^    private int nrofVMs;$/;"	f	class:DTNHost	file:
 nsCmd	src/report/MovementNs2Report.java	/^	private String nsCmd;$/;"	f	class:MovementNs2Report	file:
-num	addPoints.py	/^			num = len(lines)$/;"	v
+num	addPoints.py	/^            num = len(lines)$/;"	v
 num	writePoints.py	/^            num = int(sys.argv[4])$/;"	v
+num_services	addPoints.py	/^num_services = 0$/;"	v
 number	src/core/ArithmeticCondition.java	/^	private double number;$/;"	f	class:ArithmeticCondition	file:
+numberOfIterations	src/applications/DEEM_Results.java	/^	public final int numberOfIterations;$/;"	f	class:DEEM_Results
+numberOfIterations	src/applications/VEDAuctionResult.java	/^	public final int numberOfIterations;$/;"	f	class:VEDAuctionResult
 numberOfTransmissions	src/interfaces/InterferenceLimitedInterface.java	/^	protected int numberOfTransmissions;$/;"	f	class:InterferenceLimitedInterface
 officeLocation	src/movement/OfficeActivityMovement.java	/^	private Coord officeLocation;$/;"	f	class:OfficeActivityMovement	file:
 officeMaxWaitTime	src/movement/OfficeActivityMovement.java	/^	private double officeMaxWaitTime;$/;"	f	class:OfficeActivityMovement	file:
@@ -2642,6 +2795,10 @@ outputRawData	src/report/JumpSizeDistributionReport.java	/^	private final boolea
 outputSetting	src/core/Settings.java	/^	private static void outputSetting(String setting) {$/;"	m	class:Settings	file:
 overlayGraphics	src/gui/playfield/PlayField.java	/^	private List<PlayFieldGraphic> overlayGraphics;$/;"	f	class:PlayField	file:
 ownCarProb	src/movement/WorkingDayMovement.java	/^	private double ownCarProb;$/;"	f	class:WorkingDayMovement	file:
+p	src/applications/DEEM.java	/^	HashMap<DTNHost, Double> p;\/\/device prices$/;"	f	class:DEEM
+p	src/applications/DEEM_Results.java	/^    public final HashMap<DTNHost,Double> p;$/;"	f	class:DEEM_Results
+p	src/applications/VEDAuction.java	/^	HashMap<DTNHost,Double> p;\/\/p: price array for each item$/;"	f	class:VEDAuction
+p	src/applications/VEDAuctionResult.java	/^    public final HashMap<DTNHost,Double> p;$/;"	f	class:VEDAuctionResult
 p	src/core/Debug.java	/^	public static void p(String txt) {$/;"	m	class:Debug
 p	src/core/Debug.java	/^	public static void p(String txt, int level) {$/;"	m	class:Debug
 p	src/core/Debug.java	/^	public static void p(String txt, int level, boolean timestamp) {$/;"	m	class:Debug
@@ -2682,6 +2839,8 @@ pauseAllCheck	src/gui/EventLogControlPanel.java	/^	private JCheckBox pauseAllChe
 pauseOnEvent	src/gui/EventLogControl.java	/^	public boolean pauseOnEvent() {$/;"	m	class:EventLogControl
 paused	src/gui/GUIControls.java	/^	private boolean paused;$/;"	f	class:GUIControls	file:
 pf	src/gui/GUIControls.java	/^	private PlayField pf;$/;"	f	class:GUIControls	file:
+pingInterval	src/applications/ClientApp.java	/^    private double  pingInterval;$/;"	f	class:ClientApp	file:
+pingSize	src/applications/ClientApp.java	/^	private int     pingSize=1;$/;"	f	class:ClientApp	file:
 pingSize	src/applications/PingApplication.java	/^	private int		pingSize=1;$/;"	f	class:PingApplication	file:
 pingsReceived	src/report/PingAppReporter.java	/^	private int pingsSent=0, pingsReceived=0;$/;"	f	class:PingAppReporter	file:
 pingsSent	src/report/PingAppReporter.java	/^	private int pingsSent=0, pingsReceived=0;$/;"	f	class:PingAppReporter	file:
@@ -2697,9 +2856,10 @@ pois	src/movement/ShortestPathMapBasedMovement.java	/^	private PointsOfInterest 
 pois	src/test/PointsOfInterestTest.java	/^	private PointsOfInterest pois;$/;"	f	class:PointsOfInterestTest	file:
 policy	src/routing/ActiveRouter.java	/^	private MessageTransferAcceptPolicy policy;$/;"	f	class:ActiveRouter	file:
 pongSize	src/applications/PingApplication.java	/^	private int		pongSize=1;$/;"	f	class:PingApplication	file:
+pongSize	src/applications/ServerApp.java	/^	private int		pongSize=1;$/;"	f	class:ServerApp	file:
 pongsReceived	src/report/PingAppReporter.java	/^	private int pongsSent=0, pongsReceived=0;$/;"	f	class:PingAppReporter	file:
 pongsSent	src/report/PingAppReporter.java	/^	private int pongsSent=0, pongsReceived=0;$/;"	f	class:PingAppReporter	file:
-pos	addPoints.py	/^			pos =[[0 for x in range(2)] for y in range((int)(num))]$/;"	v
+pos	addPoints.py	/^            pos =[[0 for x in range(2)] for y in range((int)(num))]$/;"	v
 pos	writePoints.py	/^                pos = parseWKT(filename)$/;"	v
 precision	src/report/Report.java	/^	private int precision;$/;"	f	class:Report	file:
 preds	src/routing/ProphetRouter.java	/^	private Map<DTNHost, Double> preds;$/;"	f	class:ProphetRouter	file:
@@ -2710,6 +2870,12 @@ prevHops	src/routing/schedule/ScheduleDijkstra.java	/^	private Map<Integer, Sche
 prevNodes	src/movement/map/DijkstraPathFinder.java	/^	private Map<MapNode, MapNode> prevNodes;$/;"	f	class:DijkstraPathFinder	file:
 prevNodes	src/routing/maxprop/MaxPropDijkstra.java	/^	private Map<Integer, Integer> prevNodes;$/;"	f	class:MaxPropDijkstra	file:
 previousLocations	src/report/JumpSizeDistributionReport.java	/^	private final Coord[] previousLocations;$/;"	f	class:JumpSizeDistributionReport	file:
+previousPrices	src/applications/AuctionApplication.java	/^    public HashMap<DTNHost, Double> previousPrices;$/;"	f	class:AuctionApplication
+previousUserDeviceAssociation	src/applications/AuctionApplication.java	/^    public HashMap<DTNHost, DTNHost> previousUserDeviceAssociation;$/;"	f	class:AuctionApplication
+previousUserDeviceAssociation	src/applications/DEEM_Results.java	/^    public HashMap<DTNHost, DTNHost> previousUserDeviceAssociation;$/;"	f	class:DEEM_Results
+priceTime	src/report/AuctionAppReporter.java	/^    HashMap<Integer, Double> priceTime;$/;"	f	class:AuctionAppReporter
+prices	src/applications/AuctionApplication.java	/^    public HashMap<DTNHost, Double> prices;$/;"	f	class:AuctionApplication
+pricesForThisMarket	src/applications/DEEM.java	/^	private HashMap<DTNHost,Double> pricesForThisMarket(Integer LLA_ID){$/;"	m	class:DEEM	file:
 print	src/core/DTNSim.java	/^	private static void print(String txt) {$/;"	m	class:DTNSim	file:
 print	src/ui/DTNSimTextUI.java	/^	private void print(String txt) {$/;"	m	class:DTNSimTextUI	file:
 printHeader	src/report/DistanceDelayReport.java	/^	private void printHeader() {$/;"	m	class:DistanceDelayReport	file:
@@ -2741,9 +2907,19 @@ put	src/routing/schedule/ScheduleDijkstra.java	/^		public void put(Integer node,
 putSetting	src/test/TestSettings.java	/^	public void putSetting(String key, String value) {$/;"	m	class:TestSettings
 putToIncomingBuffer	src/routing/MessageRouter.java	/^	protected void putToIncomingBuffer(Message m, DTNHost from) {$/;"	m	class:MessageRouter
 putToQueue	src/input/ScheduledUpdatesQueue.java	/^	private void putToQueue(ExternalEvent ee) {$/;"	m	class:ScheduledUpdatesQueue	file:
+q_maxPerLLA	src/applications/AuctionApplication.java	/^    public HashMap<Integer, Double> q_maxPerLLA; \/\/ = new HashMap();$/;"	f	class:AuctionApplication
+q_maxPerLLA	src/applications/DEEM.java	/^	HashMap<Integer, Double> q_maxPerLLA;$/;"	f	class:DEEM
+q_minPerLLA	src/applications/AuctionApplication.java	/^    public HashMap<Integer, Double> q_minPerLLA; \/\/ = new HashMap();$/;"	f	class:AuctionApplication
+q_minPerLLA	src/applications/DEEM.java	/^	HashMap<Integer, Double> q_minPerLLA;$/;"	f	class:DEEM
+qos	src/applications/ClientApp.java	/^    private Double  qos=0.0;$/;"	f	class:ClientApp	file:
+qosDeviation	src/report/AuctionAppReporter.java	/^    HashMap<Quartet, ArrayList<Double>> qosDeviation; $/;"	f	class:AuctionAppReporter
+qosGainTime	src/report/AuctionAppReporter.java	/^    HashMap<Integer, Double> qosGainTime;  $/;"	f	class:AuctionAppReporter
+qosTime	src/report/AuctionAppReporter.java	/^    HashMap<Integer, Double> qosTime;  $/;"	f	class:AuctionAppReporter
 queue	src/input/ExternalEventsQueue.java	/^	private List<ExternalEvent> queue;$/;"	f	class:ExternalEventsQueue	file:
 queue	src/test/MessageChecker.java	/^	private ArrayList<MsgCheckerEvent> queue;$/;"	f	class:MessageChecker	file:
 queues	src/input/EventQueueHandler.java	/^	private List<EventQueue> queues;$/;"	f	class:EventQueueHandler	file:
+r	src/applications/DEEM.java	/^	HashMap<DTNHost, Double> r;\/\/device reserved prices$/;"	f	class:DEEM
+r	src/applications/VEDAuction.java	/^	HashMap<DTNHost, Double> r;\/\/r: reserved price array for each item$/;"	f	class:VEDAuction
 r	src/test/AdjacencyGraphvizReportTest.java	/^	private AdjacencyGraphvizReport r;$/;"	f	class:AdjacencyGraphvizReportTest	file:
 r	src/test/DijkstraPathFinderTest.java	/^	private DijkstraPathFinder r;$/;"	f	class:DijkstraPathFinderTest	file:
 r	src/test/DistanceDelayReportTest.java	/^	private DistanceDelayReport r;$/;"	f	class:DistanceDelayReportTest	file:
@@ -2754,12 +2930,15 @@ r1	src/test/MaxPropRouterTest.java	/^	private MaxPropRouter r1,r2,r3,r4;$/;"	f	c
 r2	src/test/MaxPropRouterTest.java	/^	private MaxPropRouter r1,r2,r3,r4;$/;"	f	class:MaxPropRouterTest	file:
 r3	src/test/MaxPropRouterTest.java	/^	private MaxPropRouter r1,r2,r3,r4;$/;"	f	class:MaxPropRouterTest	file:
 r4	src/test/MaxPropRouterTest.java	/^	private MaxPropRouter r1,r2,r3,r4;$/;"	f	class:MaxPropRouterTest	file:
+random	addPoints.py	/^import random$/;"	i
 random	writePoints.py	/^import random$/;"	i
 randomCoord	src/movement/ClusterMovement.java	/^	protected Coord randomCoord() {$/;"	m	class:ClusterMovement
 randomCoord	src/movement/RandomWaypoint.java	/^	protected Coord randomCoord() {$/;"	m	class:RandomWaypoint
 randomGenerator	src/routing/ProphetV2Router.java	/^	Random randomGenerator = new Random();$/;"	f	class:ProphetV2Router
 randomHost	src/applications/PingApplication.java	/^	private DTNHost randomHost() {$/;"	m	class:PingApplication	file:
+random_subset	addPoints.py	/^                random_subset = [services[j] for j in sorted(random.sample(xrange(len(services)), random.randint(1, len(services))))]$/;"	v
 rangeColor	src/gui/playfield/NodeGraphic.java	/^	private static Color rangeColor = Color.GREEN;$/;"	f	class:NodeGraphic	file:
+re	addPoints.py	/^import re $/;"	i
 readEvents	src/input/BinaryEventsReader.java	/^	public List<ExternalEvent> readEvents(int nrof) {$/;"	m	class:BinaryEventsReader
 readEvents	src/input/ExternalEventsQueue.java	/^	private List<ExternalEvent> readEvents(int nrof) {$/;"	m	class:ExternalEventsQueue	file:
 readEvents	src/input/ExternalEventsReader.java	/^	public List<ExternalEvent> readEvents(int nrof);$/;"	m	interface:ExternalEventsReader
@@ -2786,6 +2965,7 @@ ready	src/movement/EveningActivityMovement.java	/^	private boolean ready;$/;"	f	
 ready	src/movement/OfficeActivityMovement.java	/^	private boolean ready;;$/;"	f	class:OfficeActivityMovement	file:
 readyToShop	src/movement/EveningActivityMovement.java	/^	private boolean readyToShop;$/;"	f	class:EveningActivityMovement	file:
 receiveMessage	src/core/DTNHost.java	/^	public int receiveMessage(Message m, DTNHost from) {$/;"	m	class:DTNHost
+receiveMessage	src/routing/APRouter.java	/^	public int receiveMessage(Message m, DTNHost from) {$/;"	m	class:APRouter
 receiveMessage	src/routing/ActiveRouter.java	/^	public int receiveMessage(Message m, DTNHost from) {$/;"	m	class:ActiveRouter
 receiveMessage	src/routing/MessageRouter.java	/^	public int receiveMessage(Message m, DTNHost from) {$/;"	m	class:MessageRouter
 receiveMessage	src/routing/SprayAndWaitRouter.java	/^	public int receiveMessage(Message m, DTNHost from) {$/;"	m	class:SprayAndWaitRouter
@@ -2816,10 +2996,15 @@ removeFromMessages	src/routing/MessageRouter.java	/^	protected Message removeFro
 removeInterface	src/interfaces/ConnectivityGrid.java	/^		public void removeInterface(NetworkInterface ni) {$/;"	m	class:ConnectivityGrid.GridCell
 removeInterface	src/interfaces/ConnectivityGrid.java	/^	public void removeInterface(NetworkInterface ni) {$/;"	m	class:ConnectivityGrid
 removeWarmupID	src/report/Report.java	/^	protected void removeWarmupID(String id) {$/;"	m	class:Report
+replicate	src/applications/AuctionApplication.java	/^	public Application replicate() {$/;"	m	class:AuctionApplication
+replicate	src/applications/ClientApp.java	/^	public Application replicate() {$/;"	m	class:ClientApp
+replicate	src/applications/GreedyPairingApp.java	/^	public Application replicate() {$/;"	m	class:GreedyPairingApp
 replicate	src/applications/PingApplication.java	/^	public Application replicate() {$/;"	m	class:PingApplication
+replicate	src/applications/ServerApp.java	/^	public Application replicate() {$/;"	m	class:ServerApp
 replicate	src/core/Application.java	/^	public abstract Application replicate();$/;"	m	class:Application
 replicate	src/core/Message.java	/^	public Message replicate() {$/;"	m	class:Message
 replicate	src/core/NetworkInterface.java	/^	abstract public NetworkInterface replicate();$/;"	m	class:NetworkInterface
+replicate	src/interfaces/BSInterface.java	/^    public NetworkInterface replicate()	{$/;"	m	class:BSInterface
 replicate	src/interfaces/DistanceCapacityInterface.java	/^	public NetworkInterface replicate()	{$/;"	m	class:DistanceCapacityInterface
 replicate	src/interfaces/InterferenceLimitedInterface.java	/^	public NetworkInterface replicate() {$/;"	m	class:InterferenceLimitedInterface
 replicate	src/interfaces/SimpleBroadcastInterface.java	/^	public NetworkInterface replicate()	{$/;"	m	class:SimpleBroadcastInterface
@@ -2845,6 +3030,8 @@ replicate	src/movement/ShortestPathMapBasedMovement.java	/^	public ShortestPathM
 replicate	src/movement/StationaryMovement.java	/^	public StationaryMovement replicate() {$/;"	m	class:StationaryMovement
 replicate	src/movement/WorkingDayMovement.java	/^	public MovementModel replicate() {$/;"	m	class:WorkingDayMovement
 replicate	src/movement/map/MapRoute.java	/^	public MapRoute replicate() {$/;"	m	class:MapRoute
+replicate	src/routing/APRouter.java	/^	public APRouter replicate() {$/;"	m	class:APRouter
+replicate	src/routing/DeliverToBS.java	/^	public DeliverToBS replicate() {$/;"	m	class:DeliverToBS
 replicate	src/routing/DirectDeliveryRouter.java	/^	public DirectDeliveryRouter replicate() {$/;"	m	class:DirectDeliveryRouter
 replicate	src/routing/EpidemicOracleRouter.java	/^	public EpidemicOracleRouter replicate() {$/;"	m	class:EpidemicOracleRouter
 replicate	src/routing/EpidemicRouter.java	/^	public EpidemicRouter replicate() {$/;"	m	class:EpidemicRouter
@@ -2864,6 +3051,7 @@ replicate	src/routing/util/EnergyModel.java	/^	public EnergyModel replicate() {$
 replicate	src/test/StationaryMovement.java	/^	public StationaryMovement replicate() {$/;"	m	class:StationaryMovement
 replicate	src/test/TestInterface.java	/^	public NetworkInterface replicate() {$/;"	m	class:TestInterface
 report	src/report/AdjacencyGraphvizReport.java	/^package report;$/;"	p
+report	src/report/AuctionAppReporter.java	/^package report;$/;"	p
 report	src/report/BufferOccupancyReport.java	/^package report;$/;"	p
 report	src/report/ConnectivityDtnsim2Report.java	/^package report;$/;"	p
 report	src/report/ConnectivityONEReport.java	/^package report;$/;"	p
@@ -2905,10 +3093,15 @@ reportedMessages	src/report/MessageLocationReport.java	/^	protected HashSet<Stri
 reportedNodes	src/report/SnapshotReport.java	/^	protected HashSet<Integer> reportedNodes;$/;"	f	class:SnapshotReport
 reporter	src/core/DTN2Manager.java	/^	private static DTN2Reporter				reporter = null;$/;"	f	class:DTN2Manager	file:
 reports	src/ui/DTNSimUI.java	/^	protected Vector<Report> reports;$/;"	f	class:DTNSimUI
+reqMsgSize	src/applications/ClientApp.java	/^    private int     reqMsgSize;$/;"	f	class:ClientApp	file:
+reqSendingFreq	src/applications/ClientApp.java	/^    private double  reqSendingFreq;$/;"	f	class:ClientApp	file:
 requestDeliverableMessages	src/core/DTNHost.java	/^	public boolean requestDeliverableMessages(Connection con) {$/;"	m	class:DTNHost
 requestDeliverableMessages	src/routing/ActiveRouter.java	/^	public boolean requestDeliverableMessages(Connection con) {$/;"	m	class:ActiveRouter
 requestDeliverableMessages	src/routing/MessageRouter.java	/^	public boolean requestDeliverableMessages(Connection con) {$/;"	m	class:MessageRouter
+requestId	src/applications/ClientApp.java	/^    private int     requestId = 1;$/;"	f	class:ClientApp	file:
+requestId	src/applications/ServerApp.java	/^	private int requestId=1;$/;"	f	class:ServerApp	file:
 requestMsg	src/core/Message.java	/^	private Message requestMsg;$/;"	f	class:Message	file:
+reservedPricesForThisMarket	src/applications/DEEM.java	/^	private HashMap<DTNHost,Double> reservedPricesForThisMarket(Integer LLA_ID) {$/;"	m	class:DEEM	file:
 reset	src/core/DTNHost.java	/^	public static void reset() {$/;"	m	class:DTNHost
 reset	src/core/Message.java	/^	public static void reset() {$/;"	m	class:Message
 reset	src/core/NetworkInterface.java	/^	public static void reset() {$/;"	m	class:NetworkInterface
@@ -2927,13 +3120,16 @@ reset	src/test/MessageChecker.java	/^	public void reset() {$/;"	m	class:MessageC
 resetForNextRun	src/core/DTNSim.java	/^	private static void resetForNextRun() {$/;"	m	class:DTNSim	file:
 resetList	src/core/DTNSim.java	/^	private static List<Class<?>> resetList = new ArrayList<Class<?>>();$/;"	f	class:DTNSim	file:
 resetState	src/movement/BusTravellerMovement.java	/^		private void resetState() {$/;"	m	class:BusTravellerMovement.ContinueBusTripDecider	file:
+respMsgSize	src/applications/ServerApp.java	/^    private int respMsgSize;$/;"	f	class:ServerApp	file:
 responseSize	src/core/Message.java	/^	private int responseSize;$/;"	f	class:Message	file:
 responseSize	src/input/MessageCreateEvent.java	/^	private int responseSize;$/;"	f	class:MessageCreateEvent	file:
 restoreNameSpace	src/core/Settings.java	/^	public void restoreNameSpace() {$/;"	m	class:Settings
 restoreSecondaryNamespace	src/core/Settings.java	/^	public void restoreSecondaryNamespace() {$/;"	m	class:Settings
 restoreSubNameSpace	src/core/Settings.java	/^	public void restoreSubNameSpace() {$/;"	m	class:Settings
+returnMarketID	src/applications/VEDAuction.java	/^	public Integer returnMarketID(){\/\/market ID equivelant to LLA ID$/;"	m	class:VEDAuction
 rintx	writePoints.py	/^                    rintx = random.randint(0,sizex)$/;"	v
 rinty	writePoints.py	/^                    rinty = random.randint(0,sizey)$/;"	v
+rng	src/applications/ClientApp.java	/^    private Random  rng;$/;"	f	class:ClientApp	file:
 rng	src/applications/PingApplication.java	/^	private Random	rng;$/;"	f	class:PingApplication	file:
 rng	src/core/NetworkInterface.java	/^	private static Random rng;$/;"	f	class:NetworkInterface	file:
 rng	src/input/MessageEventGenerator.java	/^	protected Random rng;$/;"	f	class:MessageEventGenerator
@@ -2947,7 +3143,9 @@ rng	src/util/ParetoRNG.java	/^	private Random rng;$/;"	f	class:ParetoRNG	file:
 route	src/movement/MapRouteMovement.java	/^	private MapRoute route;$/;"	f	class:MapRouteMovement	file:
 router	src/core/DTNHost.java	/^	private MessageRouter router;$/;"	f	class:DTNHost	file:
 routerProto	src/test/AbstractRouterTest.java	/^	protected MessageRouter routerProto;$/;"	f	class:AbstractRouterTest
+routing	src/routing/APRouter.java	/^package routing;$/;"	p
 routing	src/routing/ActiveRouter.java	/^package routing;$/;"	p
+routing	src/routing/DeliverToBS.java	/^package routing;$/;"	p
 routing	src/routing/DirectDeliveryRouter.java	/^package routing;$/;"	p
 routing	src/routing/EpidemicOracleRouter.java	/^package routing;$/;"	p
 routing	src/routing/EpidemicRouter.java	/^package routing;$/;"	p
@@ -2981,6 +3179,7 @@ runSim	src/gui/DTNSimGUI.java	/^	protected void runSim() {$/;"	m	class:DTNSimGUI
 runSim	src/ui/DTNSimTextUI.java	/^	protected void runSim() {$/;"	m	class:DTNSimTextUI
 runSim	src/ui/DTNSimUI.java	/^	protected abstract void runSim();$/;"	m	class:DTNSimUI
 runTestPoiSelection	src/test/PointsOfInterestTest.java	/^	public void runTestPoiSelection(double[] poiProbs, int rngSeed) throws Exception {$/;"	m	class:PointsOfInterestTest
+s	addPoints.py	/^            s = set()$/;"	v
 s	src/test/MapBasedMovementTest.java	/^	private TestSettings s;$/;"	f	class:MapBasedMovementTest	file:
 s	src/test/SettingsTest.java	/^	private Settings s;$/;"	f	class:SettingsTest	file:
 sample	src/report/JumpSizeDistributionReport.java	/^	protected void sample(final List <DTNHost> hosts) {$/;"	m	class:JumpSizeDistributionReport
@@ -2989,6 +3188,7 @@ sample	src/report/RadiusOfGyrationReport.java	/^	protected void sample(List<DTNH
 sample	src/report/SamplingReport.java	/^	protected abstract void sample(final List<DTNHost> hosts);$/;"	m	class:SamplingReport
 sampleCounts	src/report/JumpSizeDistributionReport.java	/^	private final int[] sampleCounts;$/;"	f	class:JumpSizeDistributionReport	file:
 sampleCounts	src/report/RadiusOfGyrationReport.java	/^	private final int[] sampleCounts;$/;"	f	class:RadiusOfGyrationReport	file:
+sampleRttMeasurement	src/report/AuctionAppReporter.java	/^    private void sampleRttMeasurement(Quartet q) {$/;"	m	class:AuctionAppReporter	file:
 samples	src/report/JumpSizeDistributionReport.java	/^	private final double[][] samples;$/;"	f	class:JumpSizeDistributionReport	file:
 samples	src/report/NodeDensityReport.java	/^	private final List<int[][]> samples;$/;"	f	class:NodeDensityReport	file:
 samples	src/report/RadiusOfGyrationReport.java	/^	private final double[][][] samples;$/;"	f	class:RadiusOfGyrationReport	file:
@@ -3028,9 +3228,21 @@ sendQueueMode	src/routing/MessageRouter.java	/^	private int sendQueueMode;$/;"	f
 sendingConnections	src/routing/ActiveRouter.java	/^	protected ArrayList<Connection> sendingConnections;$/;"	f	class:ActiveRouter
 sentMessages	src/routing/MaxPropRouter.java	/^	private Map<DTNHost, Set<String>> sentMessages;$/;"	f	class:MaxPropRouter	file:
 sepsField	src/gui/GUIControls.java	/^	private JLabel sepsField;	\/\/ simulated events per second field$/;"	f	class:GUIControls	file:
+sequenceNumber	src/applications/ClientApp.java	/^    private int     sequenceNumber = 0;$/;"	f	class:ClientApp	file:
 serialVersionUID	src/routing/schedule/ScheduleEntry.java	/^	private static final long serialVersionUID = 42L;$/;"	f	class:ScheduleEntry	file:
 serialVersionUID	src/routing/schedule/ScheduleOracle.java	/^	private static final long serialVersionUID = 42L;$/;"	f	class:ScheduleOracle	file:
-service	src/core/VM.java	/^    private int service;$/;"	f	class:VM	file:
+server	src/applications/ClientApp.java	/^    public DTNHost server;$/;"	f	class:ClientApp
+serverAuctionRequest	src/report/AuctionAppReporter.java	/^    private void serverAuctionRequest(Message m) {$/;"	m	class:AuctionAppReporter	file:
+serverHostToMessage	src/applications/AuctionApplication.java	/^    public HashMap<DTNHost, Message> serverHostToMessage;$/;"	f	class:AuctionApplication
+serverRequests	src/applications/AuctionApplication.java	/^    public ArrayList<Message> serverRequests;$/;"	f	class:AuctionApplication
+serverRequests	src/report/AuctionAppReporter.java	/^    HashMap<Integer, Integer> serverRequests; $/;"	f	class:AuctionAppReporter
+serverServicePopularity	src/report/AuctionAppReporter.java	/^    HashMap<Integer, Integer> serverServicePopularity; $/;"	f	class:AuctionAppReporter
+server_apps	addPoints.py	/^            server_apps = []$/;"	v
+service	src/core/Message.java	/^    private int service;$/;"	f	class:Message	file:
+service	src/core/Quartet.java	/^    public Integer service;$/;"	f	class:Quartet
+services	addPoints.py	/^            services = range(nrofServices)$/;"	v
+services	src/applications/AuctionApplication.java	/^    public int [] services;$/;"	f	class:AuctionApplication
+services	src/applications/ServerApp.java	/^    private ArrayList<Integer> services;$/;"	f	class:ServerApp	file:
 setAllHosts	src/report/AdjacencyGraphvizReport.java	/^	public void setAllHosts(Collection<DTNHost> hosts) {$/;"	m	class:AdjacencyGraphvizReport
 setAlpha	src/routing/maxprop/MeetingProbabilitySet.java	/^	public void setAlpha(double alpha) {$/;"	m	class:MeetingProbabilitySet
 setAppID	src/core/Application.java	/^	public void setAppID(String appID) {$/;"	m	class:Application
@@ -3123,6 +3335,7 @@ setScale	src/gui/playfield/PlayField.java	/^	public void setScale(double scale) 
 setScale	src/gui/playfield/PlayFieldGraphic.java	/^	public static void setScale(double newScale) {$/;"	m	class:PlayFieldGraphic
 setSecondaryNamespace	src/core/Settings.java	/^	public void setSecondaryNamespace(String namespace) {$/;"	m	class:Settings
 setSeed	src/applications/PingApplication.java	/^	public void setSeed(int seed) {$/;"	m	class:PingApplication
+setService	src/core/Message.java	/^    public void setService(int service) {$/;"	m	class:Message
 setShowEvent	src/gui/EventLogControl.java	/^	public void setShowEvent(boolean show) {$/;"	m	class:EventLogControl
 setShowMapGraphic	src/gui/playfield/PlayField.java	/^	public void setShowMapGraphic(boolean show) {$/;"	m	class:PlayField
 setSimTime	src/gui/GUIControls.java	/^	public void setSimTime(double time) {$/;"	m	class:GUIControls
@@ -3164,7 +3377,6 @@ setUpWith	src/test/PointsOfInterestTest.java	/^	protected void setUpWith(double[
 setUpWith	src/test/WKTReaderTest.java	/^	private WKTMapReader setUpWith(Reader input) {$/;"	m	class:WKTReaderTest	file:
 setUpWithGranularity	src/test/ContactTimesReportTest.java	/^	private void setUpWithGranularity(double gran) throws IOException {$/;"	m	class:ContactTimesReportTest	file:
 setWaitTimeAtEnd	src/movement/EveningTrip.java	/^	public void setWaitTimeAtEnd(double waitTimeAtEnd) {$/;"	m	class:EveningTrip
-setnrofServices	src/core/DTNHost.java	/^    public static void setnrofServices(int nrofServices) {$/;"	m	class:DTNHost
 settings	src/test/TestUtils.java	/^	private TestSettings settings;$/;"	f	class:TestUtils	file:
 setup	src/core/DTN2Manager.java	/^	public static void setup(World world) {$/;"	m	class:DTN2Manager
 setupHost	src/test/MapBasedMovementTest.java	/^	private DTNHost setupHost() {$/;"	m	class:MapBasedMovementTest	file:
@@ -3233,7 +3445,7 @@ startTransfer	src/core/Connection.java	/^	public abstract int startTransfer(DTNH
 startTransfer	src/core/VBRConnection.java	/^	public int startTransfer(DTNHost from, Message m) {$/;"	m	class:VBRConnection
 startTransfer	src/routing/ActiveRouter.java	/^	protected int startTransfer(Message m, Connection con) {$/;"	m	class:ActiveRouter
 startedWorkingTime	src/movement/OfficeActivityMovement.java	/^	private int startedWorkingTime;$/;"	f	class:OfficeActivityMovement	file:
-stat_filename	addPoints.py	/^			stat_filename = sys.argv[2]$/;"	v
+stat_filename	addPoints.py	/^            stat_filename = sys.argv[2]$/;"	v
 state	src/movement/BusTravellerMovement.java	/^		private int state;$/;"	f	class:BusTravellerMovement.ContinueBusTripDecider	file:
 state	src/movement/BusTravellerMovement.java	/^	private int state;$/;"	f	class:BusTravellerMovement	file:
 stateChanged	src/gui/GUIControls.java	/^	public void stateChanged(ChangeEvent e) {$/;"	m	class:GUIControls
@@ -3245,6 +3457,7 @@ stops	src/movement/BusMovement.java	/^	private List<Coord> stops;$/;"	f	class:Bu
 stops	src/movement/map/MapRoute.java	/^	private List<MapNode> stops;$/;"	f	class:MapRoute	file:
 storeToBinaryFile	src/input/BinaryEventsReader.java	/^	public static void storeToBinaryFile(String fileName,$/;"	m	class:BinaryEventsReader
 subscribe	src/core/ModuleCommunicationBus.java	/^	public void subscribe(String key, ModuleCommunicationListener module) {$/;"	m	class:ModuleCommunicationBus
+subset	addPoints.py	/^                subset = ','.join(map(str, random_subset)) $/;"	v
 suite	src/test/AllTests.java	/^	public static Test suite() {$/;"	m	class:AllTests
 suq	src/test/ScheduledUpdatesQueueTest.java	/^	private ScheduledUpdatesQueue suq;$/;"	f	class:ScheduledUpdatesQueueTest	file:
 switchFfw	src/gui/GUIControls.java	/^	private void switchFfw() {$/;"	m	class:GUIControls	file:
@@ -3256,6 +3469,9 @@ takeScreenShot	src/gui/GUIControls.java	/^	private void takeScreenShot() {$/;"	m
 targetType	src/movement/LinearMovement.java	/^	private int targetType;$/;"	f	class:LinearMovement	file:
 targetdir	compile.bat	/^set targetdir=target$/;"	v
 targets	src/test/MaxPropDijkstraTest.java	/^	private Set<Integer> targets;$/;"	f	class:MaxPropDijkstraTest	file:
+taskFreq	addPoints.py	/^            taskFreq = 10.0$/;"	v
+taskId	src/applications/ClientApp.java	/^    private int     taskId = 1;$/;"	f	class:ClientApp	file:
+taskReqMsgSz	addPoints.py	/^            taskReqMsgSz = 100$/;"	v
 tearDown	src/test/SettingsTest.java	/^	protected void tearDown() throws Exception {$/;"	m	class:SettingsTest
 tearDownAfterClass	src/test/DTNHostTest.java	/^  public static void tearDownAfterClass()$/;"	m	class:DTNHostTest
 tearDownAfterClass	src/test/MovementListenerTest.java	/^	public static void tearDownAfterClass()$/;"	m	class:MovementListenerTest
@@ -3416,6 +3632,7 @@ time	src/routing/schedule/ScheduleEntry.java	/^	private double time;$/;"	f	class
 timeCreated	src/core/Message.java	/^	private double timeCreated;$/;"	f	class:Message	file:
 timeDiffSTD	src/movement/HomeActivityMovement.java	/^	private int timeDiffSTD;$/;"	f	class:HomeActivityMovement	file:
 timeDifference	src/movement/HomeActivityMovement.java	/^	private int timeDifference;$/;"	f	class:HomeActivityMovement	file:
+timePingSent	src/applications/ClientApp.java	/^    HashMap <Integer, Double> timePingSent; $/;"	f	class:ClientApp
 timeReceived	src/core/Message.java	/^	private double timeReceived;$/;"	f	class:Message	file:
 times	src/routing/schedule/ScheduleDijkstra.java	/^	private TimeMap times;$/;"	f	class:ScheduleDijkstra	file:
 times	src/test/ExternalMovementReaderTest.java	/^	private static final double [] times = {10,20,30};$/;"	f	class:ExternalMovementReaderTest	file:
@@ -3445,6 +3662,7 @@ toString	src/core/DTNHost.java	/^	public String toString() {$/;"	m	class:DTNHost
 toString	src/core/Message.java	/^	public String toString () {$/;"	m	class:Message
 toString	src/core/ModuleCommunicationBus.java	/^	public String toString() {$/;"	m	class:ModuleCommunicationBus
 toString	src/core/NetworkInterface.java	/^	public String toString() {$/;"	m	class:NetworkInterface
+toString	src/core/Quartet.java	/^    public String toString() {$/;"	m	class:Quartet
 toString	src/core/Settings.java	/^	public String toString() {$/;"	m	class:Settings
 toString	src/core/SimClock.java	/^	public String toString() {$/;"	m	class:SimClock
 toString	src/gui/EventLogPanel.java	/^	public String toString() {$/;"	m	class:EventLogPanel
@@ -3457,6 +3675,7 @@ toString	src/input/MessageDeleteEvent.java	/^	public String toString() {$/;"	m	c
 toString	src/input/MessageEvent.java	/^	public String toString() {$/;"	m	class:MessageEvent
 toString	src/input/MessageRelayEvent.java	/^	public String toString() {$/;"	m	class:MessageRelayEvent
 toString	src/input/ScheduledUpdatesQueue.java	/^	public String toString() {$/;"	m	class:ScheduledUpdatesQueue
+toString	src/interfaces/BSInterface.java	/^	public String toString() {$/;"	m	class:BSInterface
 toString	src/interfaces/ConnectivityGrid.java	/^		public String toString() {$/;"	m	class:ConnectivityGrid.GridCell
 toString	src/interfaces/ConnectivityGrid.java	/^	public String toString() {$/;"	m	class:ConnectivityGrid
 toString	src/interfaces/DistanceCapacityInterface.java	/^	public String toString() {$/;"	m	class:DistanceCapacityInterface
@@ -3509,15 +3728,17 @@ treePane	src/gui/RoutingInfoWindow.java	/^	private JScrollPane treePane;$/;"	f	c
 trip	src/movement/EveningActivityMovement.java	/^	private EveningTrip trip;$/;"	f	class:EveningActivityMovement	file:
 tryAllMessages	src/routing/ActiveRouter.java	/^	protected Message tryAllMessages(Connection con, List<Message> messages) {$/;"	m	class:ActiveRouter
 tryAllMessagesToAllConnections	src/routing/ActiveRouter.java	/^	protected Connection tryAllMessagesToAllConnections(){$/;"	m	class:ActiveRouter
+tryMessagesForConnected	src/routing/APRouter.java	/^	protected Tuple<Message, Connection> tryMessagesForConnected($/;"	m	class:APRouter
 tryMessagesForConnected	src/routing/ActiveRouter.java	/^	protected Tuple<Message, Connection> tryMessagesForConnected($/;"	m	class:ActiveRouter
 tryMessagesToConnections	src/routing/ActiveRouter.java	/^	protected Connection tryMessagesToConnections(List<Message> messages,$/;"	m	class:ActiveRouter
+tryMessagestoAps	src/routing/APRouter.java	/^	protected Connection tryMessagestoAps(){$/;"	m	class:APRouter
 tryOtherMessages	src/routing/MaxPropRouter.java	/^	private Tuple<Message, Connection> tryOtherMessages() {$/;"	m	class:MaxPropRouter	file:
 tryOtherMessages	src/routing/MaxPropRouterWithEstimation.java	/^	private Tuple<Message, Connection> tryOtherMessages() {$/;"	m	class:MaxPropRouterWithEstimation	file:
 tryOtherMessages	src/routing/ProphetRouter.java	/^	private Tuple<Message, Connection> tryOtherMessages() {$/;"	m	class:ProphetRouter	file:
 tryOtherMessages	src/routing/ProphetRouterWithEstimation.java	/^	private Tuple<Message, Connection> tryOtherMessages() {$/;"	m	class:ProphetRouterWithEstimation	file:
 tryOtherMessages	src/routing/ProphetV2Router.java	/^	private Tuple<Message, Connection> tryOtherMessages() {$/;"	m	class:ProphetV2Router	file:
 ts	src/test/AbstractRouterTest.java	/^	protected static TestSettings ts = new TestSettings();$/;"	f	class:AbstractRouterTest
-type	addPoints.py	/^		type = sys.argv[1]$/;"	v
+type	addPoints.py	/^        type = sys.argv[1]$/;"	v
 type	src/movement/map/MapNode.java	/^	private int type;$/;"	f	class:MapNode	file:
 type	src/movement/map/MapRoute.java	/^	private int type; \/\/ type of the route$/;"	f	class:MapRoute	file:
 type	src/test/MessageChecker.java	/^		private String type;$/;"	f	class:MessageChecker.MsgCheckerEvent	file:
@@ -3536,7 +3757,11 @@ unvisited	src/routing/maxprop/MaxPropDijkstra.java	/^	private Queue<Integer> unv
 unvisited	src/routing/schedule/ScheduleDijkstra.java	/^	private Queue<Integer> unvisited;$/;"	f	class:ScheduleDijkstra	file:
 upInterval	src/test/WorldTest.java	/^	private double upInterval = 0.1;$/;"	f	class:WorldTest	file:
 upMinMax	toolkit/transimsParser.pl	/^sub upMinMax {$/;"	s
+update	src/applications/AuctionApplication.java	/^	public void update(DTNHost host) {$/;"	m	class:AuctionApplication
+update	src/applications/ClientApp.java	/^	public void update(DTNHost host) {$/;"	m	class:ClientApp
+update	src/applications/GreedyPairingApp.java	/^	public void update(DTNHost host) {$/;"	m	class:GreedyPairingApp
 update	src/applications/PingApplication.java	/^	public void update(DTNHost host) {$/;"	m	class:PingApplication
+update	src/applications/ServerApp.java	/^	public void update(DTNHost host) {$/;"	m	class:ServerApp
 update	src/core/Application.java	/^	public abstract void update(DTNHost host);$/;"	m	class:Application
 update	src/core/Connection.java	/^	public void update() {};$/;"	m	class:Connection
 update	src/core/DTNHost.java	/^	public void update(boolean simulateConnections) {$/;"	m	class:DTNHost
@@ -3544,10 +3769,13 @@ update	src/core/NetworkInterface.java	/^	abstract public void update();$/;"	m	cl
 update	src/core/VBRConnection.java	/^	public void update() {$/;"	m	class:VBRConnection
 update	src/core/World.java	/^	public void update () {$/;"	m	class:World
 update	src/gui/DTNSimGUI.java	/^    public void update(boolean forcedUpdate) {$/;"	m	class:DTNSimGUI
+update	src/interfaces/BSInterface.java	/^	public void update() {$/;"	m	class:BSInterface
 update	src/interfaces/DistanceCapacityInterface.java	/^	public void update() {$/;"	m	class:DistanceCapacityInterface
 update	src/interfaces/InterferenceLimitedInterface.java	/^	public void update() {$/;"	m	class:InterferenceLimitedInterface
 update	src/interfaces/SimpleBroadcastInterface.java	/^	public void update() {$/;"	m	class:SimpleBroadcastInterface
+update	src/routing/APRouter.java	/^	public void update() {$/;"	m	class:APRouter
 update	src/routing/ActiveRouter.java	/^	public void update() {$/;"	m	class:ActiveRouter
+update	src/routing/DeliverToBS.java	/^    public void update() {$/;"	m	class:DeliverToBS
 update	src/routing/DirectDeliveryRouter.java	/^	public void update() {$/;"	m	class:DirectDeliveryRouter
 update	src/routing/EpidemicOracleRouter.java	/^	public void update() {$/;"	m	class:EpidemicOracleRouter
 update	src/routing/EpidemicRouter.java	/^	public void update() {$/;"	m	class:EpidemicRouter
@@ -3586,6 +3814,7 @@ updateLocation	src/interfaces/ConnectivityGrid.java	/^	public void updateLocatio
 updateLocation	src/interfaces/ConnectivityOptimizer.java	/^	abstract public void updateLocation(NetworkInterface ni);$/;"	m	class:ConnectivityOptimizer
 updateLogView	src/gui/EventLogPanel.java	/^	private void updateLogView() {$/;"	m	class:EventLogPanel	file:
 updateMap	src/input/WKTMapReader.java	/^	private void updateMap(List<Coord> coords) {$/;"	m	class:WKTMapReader	file:
+updateMarketParticipants	src/applications/VEDAuction.java	/^	public void updateMarketParticipants(DTNHost[] B, DTNHost[] I, HashMap<DTNHost, HashMap<DTNHost, Double>> vMatrix, HashMap<DTNHost,Double> p,HashMap<DTNHost, Double> r){$/;"	m	class:VEDAuction
 updateMeetingProbFor	src/routing/maxprop/MeetingProbabilitySet.java	/^	public void updateMeetingProbFor(Integer index) {$/;"	m	class:MeetingProbabilitySet
 updateMeetingProbFor	src/routing/maxprop/MeetingProbabilitySet.java	/^	public void updateMeetingProbFor(Integer index, double iet)	{$/;"	m	class:MeetingProbabilitySet
 updateOrder	src/core/World.java	/^	private ArrayList<DTNHost> updateOrder;$/;"	f	class:World	file:
@@ -3594,7 +3823,9 @@ updateParams	src/routing/ProphetRouterWithEstimation.java	/^	private void update
 updatePlayfieldSettings	src/gui/SimMenuBar.java	/^	private void updatePlayfieldSettings() {$/;"	m	class:SimMenuBar	file:
 updateProperty	src/core/Message.java	/^	public void updateProperty(String key, Object value) throws SimError {$/;"	m	class:Message
 updateProperty	src/core/ModuleCommunicationBus.java	/^	public void updateProperty(String key, Object value) throws SimError {$/;"	m	class:ModuleCommunicationBus
+updateReservedPrices	src/applications/VEDAuction.java	/^	public void updateReservedPrices(HashMap<DTNHost, Double> r){\/\/market ID equivelant to LLA ID$/;"	m	class:VEDAuction
 updateShownNodes	src/gui/NodeChooser.java	/^	private void updateShownNodes() {$/;"	m	class:NodeChooser	file:
+updateTemporalAssignment	src/applications/VEDAuction.java	/^	private void updateTemporalAssignment(DTNHost destItemID,HashMap<DTNHost,DTNHost> X_temp,HashMap<DTNHost,DTNHost> BidderLabels,HashMap<DTNHost,DTNHost> ItemLabels){$/;"	m	class:VEDAuction	file:
 updateTransferredBytesAvg	src/routing/MaxPropRouter.java	/^	private void updateTransferredBytesAvg(int newValue) {$/;"	m	class:MaxPropRouter	file:
 updateTransferredBytesAvg	src/routing/MaxPropRouterWithEstimation.java	/^	private void updateTransferredBytesAvg(int newValue) {$/;"	m	class:MaxPropRouterWithEstimation	file:
 updateTransitivePreds	src/routing/ProphetRouter.java	/^	private void updateTransitivePreds(DTNHost host) {$/;"	m	class:ProphetRouter	file:
@@ -3630,6 +3861,15 @@ usage	toolkit/messageLocationAnimator.pl	/^usage: -name <name of the animation>$
 usage	toolkit/splotEnergy.pl	/^usage: -name <output file name> [-every <value>] [-term <gnuplot terminal>]$/;"	l
 usageCount	src/routing/schedule/ScheduleEntry.java	/^	private int usageCount;$/;"	f	class:ScheduleEntry	file:
 useHourDisplay	src/gui/GUIControls.java	/^	private boolean useHourDisplay = false;$/;"	f	class:GUIControls	file:
+user	src/core/Quartet.java	/^    public DTNHost user;$/;"	f	class:Quartet
+userCompletionTime	src/applications/AuctionApplication.java	/^    public HashMap<DTNHost, Double> userCompletionTime;$/;"	f	class:AuctionApplication
+userDeviceAssociation	src/applications/DEEM.java	/^	HashMap<DTNHost, DTNHost> userDeviceAssociation;$/;"	f	class:DEEM
+userDeviceAssociation	src/applications/DEEM_Results.java	/^    public final HashMap<DTNHost,DTNHost> userDeviceAssociation;$/;"	f	class:DEEM_Results
+userLLAAssociation	src/applications/DEEM_Results.java	/^    public HashMap<DTNHost, Integer> userLLAAssociation;$/;"	f	class:DEEM_Results
+user_Device_QoSGain	src/applications/DEEM.java	/^	private double user_Device_QoSGain(Integer LLA_ID, DTNHost user_ID, DTNHost device_ID){$/;"	m	class:DEEM	file:
+user_LLA_Association	src/applications/AuctionApplication.java	/^    public HashMap<DTNHost, Integer> user_LLA_Association;$/;"	f	class:AuctionApplication
+user_LLA_Association	src/applications/DEEM.java	/^	HashMap<DTNHost,Integer>  user_LLA_Association;$/;"	f	class:DEEM
+user_device_Latency	src/applications/DEEM.java	/^	HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency;$/;"	f	class:DEEM
 util	src/util/ActivenessHandler.java	/^package util;$/;"	p
 util	src/util/ParetoRNG.java	/^package util;$/;"	p
 util	src/util/Range.java	/^package util;$/;"	p
@@ -3638,6 +3878,8 @@ utils	src/test/AbstractRouterTest.java	/^	protected TestUtils utils;$/;"	f	class
 utils	src/test/AdjacencyGraphvizReportTest.java	/^	private TestUtils utils;$/;"	f	class:AdjacencyGraphvizReportTest	file:
 utils	src/test/DistanceDelayReportTest.java	/^	private TestUtils utils;$/;"	f	class:DistanceDelayReportTest	file:
 utils	src/test/MessageGraphvizReportTest.java	/^	private TestUtils utils;$/;"	f	class:MessageGraphvizReportTest	file:
+vMatrix	src/applications/VEDAuction.java	/^	HashMap<DTNHost, HashMap<DTNHost, Double>> vMatrix;\/\/vMatrix: user valuation$/;"	f	class:VEDAuction
+valuation	src/core/Quartet.java	/^    public Double valuation;$/;"	f	class:Quartet
 value	src/util/Tuple.java	/^	private V value;$/;"	f	class:Tuple	file:
 valueFillString	src/core/Settings.java	/^	public String valueFillString(String input) {$/;"	m	class:Settings
 values	src/core/ModuleCommunicationBus.java	/^	private HashMap<String, Object> values;$/;"	f	class:ModuleCommunicationBus	file:
@@ -3646,7 +3888,6 @@ via	src/routing/schedule/ScheduleEntry.java	/^	private int via;$/;"	f	class:Sche
 visited	src/movement/map/DijkstraPathFinder.java	/^	private Set<MapNode> visited;$/;"	f	class:DijkstraPathFinder	file:
 visited	src/routing/maxprop/MaxPropDijkstra.java	/^	private Set<Integer> visited;$/;"	f	class:MaxPropDijkstra	file:
 visited	src/routing/schedule/ScheduleDijkstra.java	/^	private Set<Integer> visited;$/;"	f	class:ScheduleDijkstra	file:
-vms	src/core/DTNHost.java	/^    private List<VM> vms;$/;"	f	class:DTNHost	file:
 w	src/gui/playfield/PlayField.java	/^	private World w;$/;"	f	class:PlayField	file:
 wait	src/gui/DTNSimGUI.java	/^	private void wait(int ms) {$/;"	m	class:DTNSimGUI	file:
 waitTimeAtEnd	src/movement/EveningTrip.java	/^	private double waitTimeAtEnd;$/;"	f	class:EveningTrip	file:
@@ -3674,6 +3915,7 @@ writeSnapshot	src/report/SnapshotReport.java	/^	abstract protected void writeSna
 writeToFile	src/test/MapBasedMovementTest.java	/^	private void writeToFile(String path) throws IOException {$/;"	m	class:MapBasedMovementTest	file:
 writeToNewFile	src/test/MapBasedMovementTest.java	/^	private String writeToNewFile() throws IOException {$/;"	m	class:MapBasedMovementTest	file:
 writtenSettings	src/core/Settings.java	/^	private static Set<String> writtenSettings = new HashSet<String>();$/;"	f	class:Settings	file:
+x	addPoints.py	/^                    x = re.split(r'(\\Group+|\\.+|]+)', d)$/;"	v
 x	src/core/Coord.java	/^	private double x;$/;"	f	class:Coord	file:
 x	src/input/ExternalPathMovementReader.java	/^		public double x;$/;"	f	class:ExternalPathMovementReader.Entry
 xm	src/util/ParetoRNG.java	/^	private double xm; \/\/ min value (Xm)$/;"	f	class:ParetoRNG	file:
