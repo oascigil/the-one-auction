@@ -227,7 +227,7 @@ public class AuctionApplication extends Application {
         }
 
         assert (Application.nrofServices == Application.minQoS.size()) : "Discrepancy between nrofServices and minQoS size"; 
-        boolean controlMessageFlag = false, controlAuctionMessageFlag = false;
+        boolean controlMessageFlag = true, controlAuctionMessageFlag = true;
 
         for(int indx : this.services)
         {
@@ -360,7 +360,7 @@ public class AuctionApplication extends Application {
         else { // warm start
             mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, this.LLAs_Users_Association, this.user_LLA_Association, this.LLAs_Devices_Association, this.device_LLAs_Association, user_device_Latency, this.prices);
         }
-    	mechanism.createMarkets(controlMessageFlag, this.previousPrices, this.LLAmigrationOverhead, this.userCompletionTime);
+    	mechanism.createMarkets(controlMessageFlag, this.previousPrices, this.LLAmigrationOverhead, this.userCompletionTime, this.previousUserDeviceAssociation);
     	DEEM_Results results = mechanism.executeMechanism(controlMessageFlag,controlAuctionMessageFlag);
         
         results.userLLAAssociation = new HashMap(this.user_LLA_Association);

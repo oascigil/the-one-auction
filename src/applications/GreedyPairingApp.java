@@ -248,7 +248,7 @@ public class GreedyPairingApp extends AuctionApplication {
         
         HashMap<DTNHost, ArrayList<Double>> deviceValuations = new HashMap();
         DEEM mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency);
-    	mechanism.createMarkets(controlMessageFlag, this.previousPrices, this.LLAmigrationOverhead, this.userCompletionTime);
+    	mechanism.createMarkets(controlMessageFlag, this.previousPrices, this.LLAmigrationOverhead, this.userCompletionTime, this.previousUserDeviceAssociation);
         ArrayList<Quartet> allValuations = new ArrayList<Quartet>();
 
         for (Map.Entry<Integer ,HashMap<DTNHost, HashMap<DTNHost, Double>>> outerEntry : mechanism.allLLAvMatrix.entrySet()) {

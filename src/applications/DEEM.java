@@ -125,7 +125,7 @@ class DEEM{
 	//Functions-----------------------------------------
 	//
 	
-	public void createMarkets(boolean controlMessageFlag, HashMap<DTNHost, Double> previousPrices, HashMap<Integer, Double> LLAmigrationOverhead, HashMap<DTNHost, Double> userCompletionTime) {
+	public void createMarkets(boolean controlMessageFlag, HashMap<DTNHost, Double> previousPrices, HashMap<Integer, Double> LLAmigrationOverhead, HashMap<DTNHost, Double> userCompletionTime, HashMap<DTNHost, DTNHost> previousUserDeviceAssociation) {
 		//create valuations
 		HashMap<DTNHost, HashMap<DTNHost, Double>> vMatrix; //HashMap<user_id, HashMap<LLA_instances_device, Valuation>>
 		HashMap<DTNHost, Double> vMatrixForThisUser;
@@ -143,7 +143,11 @@ class DEEM{
 			if(controlMessageFlag) System.out.println(LLA_ID);
             //System.out.println("LLA_ID: " + LLA_ID + " Users: " + LLAs_Users_Association.get(LLA_ID));
 			for(DTNHost user_ID:LLAs_Users_Association.get(LLA_ID)) {
-                userDevice_ID = userDeviceAssociation.getOrDefault(user_ID, null);
+                userDevice_ID = null;
+                if (previousUserDeviceAssociation != null) {
+                    userDevice_ID = previousUserDeviceAssociation.getOrDefault(user_ID, null);
+                    if (controlMessageFlag) System.out.println("Previous device association for user: " + user_ID + " is " + userDevice_ID);
+                }
                 if (userDevice_ID != null) {
                     userDeviceQoSGainValuation = user_Device_QoSGain(LLA_ID, user_ID, userDevice_ID);
                     migrationParallelPrice     = previousPrices.get(userDevice_ID);
