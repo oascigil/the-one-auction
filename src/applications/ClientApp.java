@@ -228,6 +228,7 @@ public class ClientApp extends Application {
             if (randNumber < (1.0/(1000.0*Application.execTimes.get(0)))) {
                 this.lastRequestedService = this.rng.nextInt(Application.nrofServices);
                 List<DTNHost> destList = DTNHost.auctioneers.get(this.lastRequestedService);
+                //System.out.println("Destlist "+DTNHost.auctioneers.size());
                 DTNHost dest = destList.get(0);
                 Message m = new Message(host, dest, "clientAuctionRequest" + host.getName()+"-"+requestId, 1);
                 requestId++;

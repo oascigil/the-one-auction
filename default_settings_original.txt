@@ -7,7 +7,7 @@ Scenario.name = default_scenario
 Scenario.simulateConnections = true
 Scenario.updateInterval = 0.001
 # 43200s == 12h
-Scenario.endTime = 43200
+Scenario.endTime = 600
 
 Events.nrof=0
 
@@ -26,7 +26,7 @@ wifiInterface.type = BSInterface
 #wifiInterface.transmitRange = 30
 
 wifiInterface.transmitSpeeds = 6750k, 6750k, 6750k, 6000k, 6000k, 4500k, 3000k, 2250k, 1500k, 1125k, 750k, 250k, 125k
-wifiInterface.transmitRange = 91
+wifiInterface.transmitRange = 500
 
 # dummy speed
 wifiInterface.transmitSpeed = 0
@@ -97,32 +97,32 @@ Group.nrofHosts = 20
 
 
 # group1 (pedestrians) specific settings
-Group1.groupID = p
+Group1.groupID = x
 
-Group2.groupID = p
+Group2.groupID = b
 
-Group3.groupID = p
+Group3.groupID = c
 
-Group4.groupID = p
+Group4.groupID = d
 
-Group5.groupID = p
+Group5.groupID = e
 
-Group6.groupID = p
+Group6.groupID = f
 
-Group7.groupID = p
+Group7.groupID = g
 
-Group8.groupID = p
+Group8.groupID = h
 
-Group9.groupID = p
+Group9.groupID = i
 
-Group10.groupID = p
+Group10.groupID = j
 
-Group11.groupID = p
+Group11.groupID = k
 
-Group12.groupID = p
+Group12.groupID = l
 
 # group13 specific settings
-Group13.groupID = c
+Group13.groupID = m
 # cars can drive only on roads
 Group13.okMaps = 1
 # 10-50 km/h
@@ -144,7 +144,7 @@ Group15.nrofHosts = 2
 #Group15.interface1 = btInterface
 #Group15.interface2 = highspeedInterface
 
-Group16.groupID = t
+Group16.groupID = q
 Group16.bufferSize = 50M
 Group16.movementModel = MapRouteMovement
 Group16.routeFile = data/tram4.wkt
@@ -153,7 +153,7 @@ Group16.waitTime = 10, 30
 Group16.speed = 7, 10
 Group16.nrofHosts = 2
 
-Group17.groupID = t
+Group17.groupID = r
 Group17.bufferSize = 50M
 Group17.movementModel = MapRouteMovement
 Group17.routeFile = data/tram10.wkt

@@ -69,9 +69,9 @@ with open((filename), 'r') as F:
                         group_number = int(x[2])
                         if group_number not in s:
                             s.add(group_number)  
-                            nf.write("Group" + str(group_number) + ".nrofApplications = 2\n")
+                            nf.write("Group" + str(group_number) + ".nrofApplications = 1\n")
                             nf.write("Group" + str(group_number) + ".application1 = clientApp" + str(group_number) + "\n")
-                            nf.write("Group" + str(group_number) + ".application2 = serverApp" + str(group_number) + "\n")
+                            #nf.write("Group" + str(group_number) + ".application2 = serverApp" + str(group_number) + "\n")
                             nrofGroups += 1
             nf.write("\n")
             # Application Settings
@@ -87,8 +87,10 @@ with open((filename), 'r') as F:
             taskFreq = 10.0
             taskReqMsgSz = 100
             
-            nf.write("# service setttings\n")
-            nf.write("Scenario.nrofServices = " + str(nrofServices) + "\n")
+            #nf.write("# service setttings\n")
+            #nf.write("Scenario.nrofServices = 1\n")
+            #nf.write("serverApp0.type = ServerApp\n")
+            #nf.write("serverApp0.serviceTypes = 0,1,2,3,4,5,6,7,8,9\n")
             for i in range(nrofServices):
                 nf.write("Service" + str(i) + ".executionTime = " + str(random.uniform(exec_time_low, exec_time_high)) + "\n")
                 nf.write("Service" + str(i) + ".minQoS = " + str(random.uniform(0, 100)) + "\n");
@@ -107,11 +109,13 @@ with open((filename), 'r') as F:
             nf.write("\n\n")
             
             nf.write("# Server apps\n")
-            for i in range(nrofGroups):
+            for i in range(4):
+            #for i in range(nrofGroups):
                 nf.write("serverApp" + repr(i+1) + ".type = ServerApp\n")
-                random_subset = [services[j] for j in sorted(random.sample(xrange(len(services)), random.randint(1, len(services))))]
-                subset = ','.join(map(str, random_subset)) 
-                nf.write("serverApp" + repr(i+1) + ".serviceTypes = " + subset + "\n") 
+                #random_subset = [services[j] for j in sorted(random.sample(xrange(len(services)), random.randint(1, len(services))))]
+                #subset = ','.join(map(str, random_subset)) 
+                #nf.write("serverApp" + repr(i+1) + ".serviceTypes = " + subset + "\n")
+                nf.write("serverApp" + repr(i+1) + ".serviceTypes = 0,1,2,3,4,5,6,7,8,9\n")  
                 server_apps.append("serverApp" + str(i+1))
                 nf.write("\n")
 
@@ -135,15 +139,25 @@ with open((filename), 'r') as F:
                 nf.write(group + "interface1 = wifiInterface\n")
                 nf.write(group + "interface2 = backhaul\n")
                 nf.write(group + "router = APRouter\n")
-                if len(auction_apps) > 0:
-                    nf.write(group + "nrofApplications = 1\n")
-                    auctionApp = random.choice(auction_apps)
-                    auction_apps.remove(auctionApp)
-                    nf.write(group + "application1 = " + auctionApp + "\n")
-                else:
-                    nf.write(group + "nrofApplications = 0\n")
-                    
+                nf.write(group + "nrofApplications = 5\n")
+                nf.write(group + "application1 = auctionApp0\n")
+                nf.write(group + "application2 = serverApp1\n")
+                nf.write(group + "application3 = serverApp2\n")
+                nf.write(group + "application4 = serverApp3\n")
+                nf.write(group + "application5 = serverApp4\n")
                 nf.write("\n")              
+
+                #    auctionApp = random.choice(auction_apps)
+                #    auction_apps.remove(auctionApp)
+                #    nf.write(group + "application1 = " + auctionApp + "\n")
+                #if len(auction_apps) > 0:
+                #    nf.write(group + "nrofApplications = 1\n")
+                #    auctionApp = random.choice(auction_apps)
+                #    auction_apps.remove(auctionApp)
+                #    nf.write(group + "application1 = " + auctionApp + "\n")
+                #else:
+                #    nf.write(group + "nrofApplications = 0\n")
+                    
                 
         elif(type == '-so'):
             print("Source")
