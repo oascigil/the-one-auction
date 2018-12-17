@@ -61,7 +61,7 @@ public class APRouter extends ActiveRouter {
 		if (recvCheck != RCV_OK) {
 			return recvCheck;
 		}*/
-		//System.out.println(SimClock.getTime() +" APRouter Message received at host "+this.getHost()+" with id "+m.getId());
+		System.out.println(SimClock.getTime() +" APRouter Message received at host "+this.getHost()+" with id "+m.getId());
 
 		// seems OK, start receiving the message
 		return super.receiveMessage(m, from);
@@ -214,14 +214,19 @@ public class APRouter extends ActiveRouter {
 		List<Tuple<Message, Connection>> forTuples =
 			new ArrayList<Tuple<Message, Connection>>();
 		for (Message m : getMessageCollection()) {
-			for (Connection con : getConnections()) {
-				DTNHost to = con.getOtherNode(getHost());
-				DTNHost msgTo = getHost().attachmentPoints.get(m.getTo());
-				if(msgTo==to&&to.isStationary) {
-					//System.out.println(getHost()+" APRouter send message "+m.getId()+" type "+m.getProperty("type")+" "+m.getTo());
-					forTuples.add(new Tuple<Message, Connection>(m,con));
+
+			DTNHost msgTo = getHost().attachmentPoints.get(m.getTo());
+			if(msgTo!=null) {
+				for (Connection con : getConnections()) {
+					DTNHost to = con.getOtherNode(getHost());
+					if (msgTo==to&&to.isStationary) {
+					//if(msgTo==to&&to.isStationary||m.getTo()==getHost()&&m.getTo().isStationary) {
+						//System.out.println(getHost()+" APRouter send message "+m.getId()+" type "+m.getProperty("type")+" "+m.getTo());
+						forTuples.add(new Tuple<Message, Connection>(m,con));
+					}
 				}
 			}
+			
 		}
 
 		return forTuples;

@@ -66,7 +66,7 @@ public class AuctionApplication extends Application {
 	/** Application ID */
 	public static final String APP_ID = "ucl.AuctionApplication";
     /** Debug flag */
-    private boolean debug = false;
+    private boolean debug = true;
 	/**
 	 * Creates a new auction application with the given settings.
 	 *
