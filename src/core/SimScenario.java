@@ -419,11 +419,11 @@ public class SimScenario implements Serializable {
 					protoApp.setAppListeners(this.appListeners);
 					// Set the proto application in proto router
 					//mRouterProto.setApplication(protoApp);
-					System.out.println("Server: "+protoApp.appID);
+					/*System.out.println("Server: "+protoApp.appID);
 					if (protoApp instanceof AuctionApplication) {
 						//System.out.println("HERE");
 						System.out.println("Add app "+((AuctionApplication) protoApp).getServiceTypes());
-					}
+					}*/
 					mRouterProto.addApplication(protoApp);
 				} catch (SettingsError se) {
 					// Failed to create an application for this group
@@ -460,7 +460,7 @@ public class SimScenario implements Serializable {
 					if(ap1.getKey()!=ap2.getKey()) {
 					DTNHost.apLatencies.put(ap1.getKey().toString()+"to"+ap2.getKey().toString(), Double.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
 					DTNHost.apLatencies.put(ap2.getKey().toString()+"to"+ap1.getKey().toString(), Double.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
-					System.out.println(ap1.getKey().toString()+"to"+ap2.getKey().toString()+" "+Double.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
+					//System.out.println(ap1.getKey().toString()+"to"+ap2.getKey().toString()+" "+Double.valueOf((int)ap1.getValue().distance(ap2.getValue()))/30);
 					}
 				}
 		}

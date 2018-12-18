@@ -278,23 +278,27 @@ Service9.executionTime = 30.0
 Service9.minQoS = 34.7004453615
 
 # auction app setttings
-auctionApp0.type = AuctionApplication
+auctionApp0.type = AuctionApplicationEdge
 auctionApp0.auctionPeriod = 10.0
 auctionApp0.migrationOverheads = 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3
 auctionApp0.serviceTypes = 0,1,2,3,4,5,6,7,8,9
 
 # Server apps
-serverApp1.type = ServerApp
+serverApp1.type = ServerAppEdge
 serverApp1.serviceTypes = 0,1,2,3,4,5,6,7,8,9
+serverApp1.name = ServerApp1
 
-serverApp2.type = ServerApp
+serverApp2.type = ServerAppEdge
 serverApp2.serviceTypes = 0,1,2,3,4,5,6,7,8,9
+serverApp2.name = ServerApp2
 
-serverApp3.type = ServerApp
+serverApp3.type = ServerAppEdge
 serverApp3.serviceTypes = 0,1,2,3,4,5,6,7,8,9
+serverApp3.name = ServerApp3
 
-serverApp4.type = ServerApp
+serverApp4.type = ServerAppEdge
 serverApp4.serviceTypes = 0,1,2,3,4,5,6,7,8,9
+serverApp4.name = ServerApp4
 
 # Client apps
 clientApp1.type = ClientApp

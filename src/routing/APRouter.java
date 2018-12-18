@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import core.Application;
 import core.Connection;
 import core.DTNHost;
 import core.Message;
@@ -61,7 +62,7 @@ public class APRouter extends ActiveRouter {
 		if (recvCheck != RCV_OK) {
 			return recvCheck;
 		}*/
-		System.out.println(SimClock.getTime() +" APRouter Message received at host "+this.getHost()+" with id "+m.getId());
+		//System.out.println(SimClock.getTime() +" APRouter Message received at host "+this.getHost()+" with id "+m.getId());
 
 		// seems OK, start receiving the message
 		return super.receiveMessage(m, from);
@@ -69,6 +70,21 @@ public class APRouter extends ActiveRouter {
 	@Override
 	public void update() {
 		super.update();
+		
+		List<Message> mList = new ArrayList<Message>();
+		for (Message m : getMessageCollection()) {
+			if((m.getTo()==m.getFrom())&&(m.getTo()==getHost())){
+				mList.add(m);
+			}
+
+		}
+		for(Message m : mList) {
+			for (Application app : getApplications(m.getAppID())) {
+				app.handle(m, getHost());
+				//if (m == null) break; // Some app wanted to drop the message
+			}
+			this.messages.remove(m.getId());
+		}
 		if (isTransferring() || !canStartTransfer()) {
 			return; // transferring, don't try other connections yet
 		}

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import core.Application;
 import applications.AuctionApplication;
+import applications.AuctionApplicationEdge;
 import core.Connection;
 import core.DTNHost;
 import core.Message;
@@ -88,7 +89,7 @@ public abstract class MessageRouter {
 	/** The messages being transferred with msgID_hostName keys */
 	private HashMap<String, Message> incomingMessages;
 	/** The messages this router is carrying */
-	private HashMap<String, Message> messages;
+	protected HashMap<String, Message> messages;
 	/** The messages this router has received as the final recipient */
 	private HashMap<String, Message> deliveredMessages;
 	/** The messages that Applications on this router have blacklisted */
@@ -192,6 +193,20 @@ public abstract class MessageRouter {
 		
 		            DTNHost.auctioneers.put(service, l);
 		            */
+		        }
+				if (app instanceof AuctionApplicationEdge) {
+		            //System.out.println("HERE");
+		            int [] services = ((AuctionApplicationEdge) app).getServiceTypes();
+		            //System.out.println("Add auction type "+service);
+                    for (int s : services) {
+		                List<DTNHost> l = (List<DTNHost>) DTNHost.auctioneers.get(s);
+                        if (l == null) {
+                            l = new ArrayList<DTNHost>();
+                        }
+                        l.add(this.getHost());
+		                DTNHost.auctioneers.put(s, l);
+                    }
+                  
 		        }
 			}
 		}
