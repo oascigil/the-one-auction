@@ -52,7 +52,7 @@ public class ClientApp extends Application {
     private int     sequenceNumber = 0;
 	private double	lastPing = 0;
     private Double  qos=0.0;
-    private boolean debug = false;
+    private boolean debug = true;
 
     public ClientApp(Settings s) {
         if (s.contains(REQUEST_MSG_SIZE_S)) {
@@ -228,7 +228,6 @@ public class ClientApp extends Application {
             if (randNumber < (1.0/(1000.0*Application.execTimes.get(0)))) {
                 this.lastRequestedService = this.rng.nextInt(Application.nrofServices);
                 List<DTNHost> destList = DTNHost.auctioneers.get(this.lastRequestedService);
-                //System.out.println("Destlist "+DTNHost.auctioneers.size());
                 DTNHost dest = destList.get(0);
                 Message m = new Message(host, dest, "clientAuctionRequest" + host.getName()+"-"+requestId, 1);
                 requestId++;

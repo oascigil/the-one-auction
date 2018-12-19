@@ -121,7 +121,7 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
         }
         double averagePrice = 0.0;
         if(numPairs > 0)
-            averagePrice = totalPrice/numPairs;
+            averagePrice = totalPrice/(1.0*numPairs);
 
         this.priceTime.put(this.auctionRun, averagePrice);
 
@@ -232,7 +232,7 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
             stats = iter + "\t" + price;
             write(stats);
         }
-        averageOverallPrice = sum/(1.0*this.priceTime.size()-1);
+        averageOverallPrice = sum/(1.0*this.priceTime.size());
         stats = "\nOverall_average_Price: " + averageOverallPrice;
         write(stats);
 

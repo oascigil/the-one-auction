@@ -66,7 +66,7 @@ public class AuctionApplication extends Application {
 	/** Application ID */
 	public static final String APP_ID = "ucl.AuctionApplication";
     /** Debug flag */
-    private boolean debug = true;
+    private boolean debug = false;
 	/**
 	 * Creates a new auction application with the given settings.
 	 *
@@ -227,7 +227,7 @@ public class AuctionApplication extends Application {
         }
 
         assert (Application.nrofServices == Application.minQoS.size()) : "Discrepancy between nrofServices and minQoS size"; 
-        boolean controlMessageFlag = true, controlAuctionMessageFlag = true;
+        boolean controlMessageFlag = false, controlAuctionMessageFlag = false;
 
         for(int indx : this.services)
         {
@@ -371,7 +371,7 @@ public class AuctionApplication extends Application {
         super.sendEventToListeners("AuctionExecutionComplete", results, host);
         this.previousUserDeviceAssociation = new HashMap(results.userDeviceAssociation);
 
-        /*Send the auction results back to the clients (null if they are assigned to the cloud)
+        /**Send the auction results back to the clients (null if they are assigned to the cloud) */
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost client = entry.getKey();
             DTNHost server = entry.getValue();
@@ -391,7 +391,7 @@ public class AuctionApplication extends Application {
                 System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
-        // Send the auction results back to the servers
+        /** Send the auction results back to the servers */
         for (Map.Entry<DTNHost, DTNHost> entry : results.deviceUserAssociation.entrySet()) {
             DTNHost server = entry.getKey();
             DTNHost client = entry.getValue();
@@ -406,7 +406,7 @@ public class AuctionApplication extends Application {
             if (this.debug)
                 System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
             super.sendEventToListeners("SentServerAuctionResponse", null, host);
-        }*/
+        }
 
         //this.clientHostToMessage.clear();
         //this.serverHostToMessage.clear();
