@@ -43,7 +43,7 @@ public class ServerApp extends Application {
     //private double remainingEngagementTime;
 	private int requestId=1;
 	private int		pongSize=1;
-    private boolean debug = true;
+    private boolean debug = false;
     private boolean isAuctionRegistrationComplete;
     private double lastOfferSentTime;
 	/**
@@ -89,7 +89,7 @@ public class ServerApp extends Application {
         this.lastOfferSentTime = a.lastOfferSentTime;
         this.isAuctionRegistrationComplete = false;
         //this.reqSendingFreq = a.reqSendingFreq;
-    }
+     }
 	
     @Override
 	public Application replicate() {
