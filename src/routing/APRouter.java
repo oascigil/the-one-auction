@@ -75,6 +75,7 @@ public class APRouter extends ActiveRouter {
 		for (Message m : getMessageCollection()) {
 			if((m.getTo()==m.getFrom())&&(m.getTo()==getHost())){
 				mList.add(m);
+				System.out.println("Same host message");
 			}
 
 		}
