@@ -12,13 +12,14 @@ def RepresentsInt(s):
         return False
 
 
-# Usage ./addPoints -st locations.txt default_settings.txt num_services
+# Usage ./addPoints -st locations.txt default_settings.txt num_services num_vm
 random.seed(100)
 num_services = 0
 if(len(sys.argv) >=3):
     filename = sys.argv[3]
     if (len(sys.argv) >= 4):
         nrofServices = int(sys.argv[4])
+        nrofVMs = int(sys.argv[5])
 else:
     filename = "Manchester_test"
 with open((filename), 'r') as F:
@@ -61,6 +62,8 @@ with open((filename), 'r') as F:
             print("Writing to: " + newfile)
             nf = open(newfile,'w')
             s = set()
+            nf.write("Scenario.nrofHostGroups = "+repr(17+len(pos))+"\n")
+            nf.write("\n")
             for d in data:
                 nf.write(d)
                 if "Group" in d and "#" not in d: 
@@ -97,7 +100,7 @@ with open((filename), 'r') as F:
             nf.write("\n")
             
             nf.write("# auction app setttings\n")
-            nf.write("auctionApp0.type = AuctionApplication\n")
+            nf.write("auctionApp0.type = AuctionApplicationEdge\n")
             nf.write("auctionApp0.auctionPeriod = " + repr(auctionPeriod) + "\n")
             nf.write("auctionApp0.migrationOverheads = 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3\n")
             nf.write("auctionApp0.serviceTypes = ")
@@ -109,15 +112,16 @@ with open((filename), 'r') as F:
             nf.write("\n\n")
             
             nf.write("# Server apps\n")
-            for i in range(4):
             #for i in range(nrofGroups):
-                nf.write("serverApp" + repr(i+1) + ".type = ServerApp\n")
-                #random_subset = [services[j] for j in sorted(random.sample(xrange(len(services)), random.randint(1, len(services))))]
-                #subset = ','.join(map(str, random_subset)) 
-                #nf.write("serverApp" + repr(i+1) + ".serviceTypes = " + subset + "\n")
-                nf.write("serverApp" + repr(i+1) + ".serviceTypes = 0,1,2,3,4,5,6,7,8,9\n")  
-                server_apps.append("serverApp" + str(i+1))
-                nf.write("\n")
+            nf.write("serverApp1.type = ServerAppEdge\n")
+            #random_subset = [services[j] for j in sorted(random.sample(xrange(len(services)), random.randint(1, len(services))))]
+            #subset = ','.join(map(str, random_subset))
+            #nf.write("serverApp" + repr(i+1) + ".serviceTypes = " + subset + "\n")
+            nf.write("serverApp1.serviceTypes = 0,1,2,3,4,5,6,7,8,9\n")
+            nf.write("serverApp1.name = ServerApp1 \n")
+            nf.write("serverApp1.vms = " + repr(nrofVMs) +"\n")
+            server_apps.append("serverApp1")
+            nf.write("\n")
 
             nf.write("# Client apps\n")
             for i in range(nrofGroups):
@@ -126,7 +130,7 @@ with open((filename), 'r') as F:
                 nf.write("clientApp" + str(i+1) + ".taskReqMsgSize = " + str(taskReqMsgSz) + "\n")
                 nf.write("\n")
 
-            gn = (int)(groups) 
+            gn = (int)(groups)
             for p in pos:
                 #print(p[0])
                 gn = gn + 1 
@@ -139,14 +143,10 @@ with open((filename), 'r') as F:
                 nf.write(group + "interface1 = wifiInterface\n")
                 nf.write(group + "interface2 = backhaul\n")
                 nf.write(group + "router = APRouter\n")
-                nf.write(group + "nrofApplications = 5\n")
+                nf.write(group + "nrofApplications = 2 \n")
                 nf.write(group + "application1 = auctionApp0\n")
-                nf.write(group + "application2 = serverApp1\n")
-                nf.write(group + "application3 = serverApp2\n")
-                nf.write(group + "application4 = serverApp3\n")
-                nf.write(group + "application5 = serverApp4\n")
-                nf.write("\n")              
-
+                nf.write(group + "application2 = serverApp1 \n")
+                nf.write("\n")
                 #    auctionApp = random.choice(auction_apps)
                 #    auction_apps.remove(auctionApp)
                 #    nf.write(group + "application1 = " + auctionApp + "\n")

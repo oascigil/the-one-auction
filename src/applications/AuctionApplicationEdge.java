@@ -160,14 +160,17 @@ public class AuctionApplicationEdge extends Application {
             //super.sendEventToListeners("ReceivedClientAuctionRequest", (Object) clientMsg, host);
         }
         if (type.equalsIgnoreCase("serverAuctionRequest")) {
-            if (this.debug)
-        	    System.out.println(SimClock.getTime()+" New server offer "+ this.serverRequests.size());
+        	
             if(this.serverHostToMessage.getOrDefault(msg.getFrom(), null) == null) {
                 Message serverMsg = msg.replicate();
                 this.serverHostToMessage.put(serverMsg.getFrom(), serverMsg);
-                this.serverRequests.add(msg.replicate());    
+                for(int i = 0;i<(int) msg.getProperty("vm");i++)
+                	this.serverRequests.add(msg.replicate());    
                 //super.sendEventToListeners("ReceivedServerAuctionRequest", (Object) serverMsg, host);       
             }
+            if (this.debug)
+        	    System.out.println(host+" "+SimClock.getTime()+" New server offer "+ this.serverRequests.size());
+          
         }
         host.getMessageCollection().remove(msg);
         return null;
@@ -191,7 +194,7 @@ public class AuctionApplicationEdge extends Application {
 
     public void execute_auction(DTNHost host) {
         //int len = Math.min(clientRequests.size(), serverRequests.size());
-		//System.out.println("Execute action "+clientRequests.size()+" "+serverRequests.size()+" "+len);
+		System.out.println("Execute action "+clientRequests.size()+" "+serverRequests.size());
         double currTime = SimClock.getTime();
         this.lastAuctionTime = currTime;
         
@@ -254,6 +257,7 @@ public class AuctionApplicationEdge extends Application {
         for (Map.Entry<String, DTNHost> entry : deviceUserAssociation.entrySet()) {
             DTNHost server = host;
             DTNHost client = entry.getValue();
+            //System.out.println(host+" "+SimClock.getTime()+" "+serverHostToMessage.size());;
             // Send a response back to a server
             Message serverMsg = this.serverHostToMessage.get(server);
             String msgId = new String("serverAuctionResponse_" + server.getName());

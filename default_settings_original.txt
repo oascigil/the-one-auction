@@ -38,7 +38,7 @@ backhaul.transmitSpeed = 1G
 backhaul.transmitRange = 10000
 
 # Define 6 different node groups
-Scenario.nrofHostGroups = 17
+#Scenario.nrofHostGroups = 17
 
 ## Group-specific settings:
 # groupID : Group's identifier. Used as the prefix of host names

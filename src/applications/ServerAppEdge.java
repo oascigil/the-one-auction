@@ -22,6 +22,8 @@ public class ServerAppEdge extends Application {
     
     public static final String APP_NAME = "name";
 
+    public static final String NUM_VMS = "vms";
+
 	/** Auction Request Timeout */
     public static final Double REQUEST_TIMEOUT = 3.0;
     //private vars
@@ -49,6 +51,7 @@ public class ServerAppEdge extends Application {
     private boolean debug = false;
     private boolean isAuctionRegistrationComplete;
     private double lastOfferSentTime;
+    private int vms=4;
 	/**
 	 * Creates a new server application with the given settings.
 	 *
@@ -62,6 +65,10 @@ public class ServerAppEdge extends Application {
         }
         if(s.contains(APP_NAME)) {
         	this.appId = s.getSetting(APP_NAME);
+        //	System.out.println("Name "+this.appId+" "+s.getSetting(APP_NAME));
+        }
+        if(s.contains(NUM_VMS)) {
+        	this.vms = s.getInt(NUM_VMS);
         //	System.out.println("Name "+this.appId+" "+s.getSetting(APP_NAME));
         }
         /*
@@ -95,6 +102,7 @@ public class ServerAppEdge extends Application {
         this.client = a.client;
         this.lastOfferSentTime = a.lastOfferSentTime;
         this.isAuctionRegistrationComplete = false;
+        this.vms = a.vms;
         //this.reqSendingFreq = a.reqSendingFreq;
     }
 	
@@ -176,10 +184,11 @@ public class ServerAppEdge extends Application {
             //List<DTNHost> destList = DTNHost.auctioneers.get(this.services.get(0));
             //DTNHost dest = destList.get(0);
             Message m = new Message(host, host, this.appId+"Request"+ host.getName()+"-"+requestId, 1);
-            requestId++;
+            //requestId++;
             m.addProperty("type", "serverAuctionRequest");
             m.addProperty("serviceType", this.services);
             m.addProperty("location", host.getLocation());
+            m.addProperty("vm", this.vms);
             m.setAppID(AuctionApplication.APP_ID);
 	        host.createNewMessage(m);
             if (this.debug)
