@@ -166,9 +166,16 @@ class DEEM{
                         if (device_ID == null) 
                             continue;
                         double userRemainingTime = userCompletionTime.get(user_ID) - currTime;
+                        assert (userRemainingTime > 0): "Service remaining time must be positive";
+                        if(userRemainingTime <= 0) {
+                            System.out.println("Warning: service remaining time is <= 0");
+                        }
 					    QoSGainValuation  = user_Device_QoSGain(LLA_ID,user_ID,device_ID);
                         if (device_ID != userDevice_ID) {
                             QoSGainValuation    = (QoSGainValuation*(userRemainingTime-migrationOverhead)+(userDeviceQoSGainValuation-migrationParallelPrice)*migrationOverhead)/userRemainingTime;
+                            if (QoSGainValuation < 0) {
+                                QoSGainValuation = 0.0;
+                            }
                         }
 					    //p.put(device_ID,0.0);
 					    vMatrixForThisUser.put(device_ID,QoSGainValuation);
@@ -268,7 +275,7 @@ class DEEM{
 		Integer LLA_ID;
 		int numberOfIterations=1;
 		boolean nextMarketExecutionIteration;
-		do{
+		do {
 			nextMarketExecutionIteration  = false;
 			for (int marketIndex=0; marketIndex<markets.size(); marketIndex++){//for each market
 				//Execute the auction mechanism---------------------
@@ -312,7 +319,7 @@ class DEEM{
 				}
 			}
 			numberOfIterations  += 1;
-		}while(nextMarketExecutionIteration);
+		} while(nextMarketExecutionIteration);
 		//Estimate the QoS and QoS gains of current assignment
 		QoSGainPerUser  = QoSGainPerUser(userDeviceAssociation);
 		QoSPerUser      = QoSPerUser(userDeviceAssociation);

@@ -52,7 +52,7 @@ public class ClientApp extends Application {
     private int     sequenceNumber = 0;
 	private double	lastPing = 0;
     private Double  qos=0.0;
-    private boolean debug = true;
+    private boolean debug = false;
 
     public ClientApp(Settings s) {
         if (s.contains(REQUEST_MSG_SIZE_S)) {

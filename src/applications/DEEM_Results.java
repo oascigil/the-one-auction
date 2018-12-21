@@ -16,6 +16,7 @@ public class DEEM_Results{
     public HashMap<DTNHost,Double> QoSPerUser;
     public HashMap<DTNHost, Integer> userLLAAssociation;
     public HashMap<DTNHost, ArrayList<Integer>> deviceLLAsAssociation;
+    public ArrayList<DTNHost> newUserRequests;
     public DEEM_Results() {
         numberOfIterations     = 0;
         userDeviceAssociation  = new HashMap();

@@ -7,6 +7,7 @@ import core.ApplicationListener;
 import core.DTNHost;
 import core.Message;
 import core.Quartet;
+import core.SimClock;
 import applications.DEEM_Results;
 
 import java.util.HashMap;
@@ -35,6 +36,8 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
     HashMap<Integer, Integer> assignedPairs; 
     /** Map auction run to number of migrations by the users */
     HashMap<Integer, Integer> migrationTime;
+    /** Map auction run to number of requests that arrived since last auction */
+    HashMap<Integer, Integer> newClientRequests;
 
     /** The number of times the auction process have run so far */
     private int auctionRun=0;
@@ -49,6 +52,7 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
         this.clientServicePopularity = new HashMap();
         this.serverServicePopularity = new HashMap();
         this.assignedPairs = new HashMap();
+        this.newClientRequests = new HashMap();
         this.migrationTime = new HashMap();
         this.auctionRun = 0;
         this.qosDeviation = new HashMap();
@@ -94,8 +98,9 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
     }
 
     private void auctionExecutionComplete(DEEM_Results results) {
+        double currTime = SimClock.getTime();
         double totalPrice=0;
-        Integer numPairs=0, numAllPairs=0, numMigrations=0;
+        Integer numPairs=0, numAllPairs=0, numMigrations=0, numCloudToDeviceMigrations=0, numDeviceToCloudMigrations=0;
         System.out.println("Auction Execution Complete:");
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost user = entry.getKey();
@@ -111,10 +116,22 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
             //    continue;
             numPairs += 1;
             totalPrice += price;
-            if( (results.previousUserDeviceAssociation != null) && (results.previousUserDeviceAssociation.containsKey(user) == true)) {
+            /** Migration checks below */
+            if (results.newUserRequests.contains(user)) {
+               /** user just assigned and starting fresh request, so do not count migration */
+               continue;
+            }
+            else if( (results.previousUserDeviceAssociation != null) && (results.previousUserDeviceAssociation.containsKey(user) == true)) {
                 DTNHost previousAssociation = results.previousUserDeviceAssociation.get(user);
                 DTNHost currentAssociation = device;
+                if (previousAssociation == null && currentAssociation != null) {
+                    numCloudToDeviceMigrations += 1;
+                }
+                if (currentAssociation == null && previousAssociation != null) {
+                    numDeviceToCloudMigrations += 1;
+                }
                 if (previousAssociation != currentAssociation) {
+                    System.out.println("User: " + user + " migrated from: " + previousAssociation + " to " + currentAssociation);
                     numMigrations += 1;
                 }
             }
@@ -127,7 +144,7 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
 
         double totalQosGain = 0;
         double totalQos = 0;
-        numPairs = 0;
+        Integer numNewPairs = 0;
         numAllPairs = 0;
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost user = entry.getKey();
@@ -136,8 +153,11 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
                 System.out.println("User NULL: " + user + " Device: " + device);
                 continue;
             }
-            if (user != null && device != null)
-                numPairs += 1;
+            if (user != null && device != null) {
+                if (results.newUserRequests.contains(user)) {
+                    numNewPairs += 1;
+                }
+            }
             if(device != null) {
                 totalQosGain += results.QoSGainPerUser.get(user);
                 totalQos += results.QoSPerUser.get(user);
@@ -154,12 +174,13 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
             averageQos = totalQos/numAllPairs;
             averageQosGain = totalQosGain/numAllPairs;
         }
-        this.assignedPairs.put(this.auctionRun, numPairs);
+        this.assignedPairs.put(this.auctionRun, numNewPairs);
         this.clientRequests.put(this.auctionRun, results.userLLAAssociation.size());
         this.serverRequests.put(this.auctionRun, results.deviceLLAsAssociation.size());
         this.qosTime.put(this.auctionRun, averageQos);
         this.qosGainTime.put(this.auctionRun, averageQosGain);
         this.migrationTime.put(this.auctionRun, numMigrations);
+        this.newClientRequests.put(this.auctionRun, results.newUserRequests.size());
         
         //move to the next iteration
         this.auctionRun += 1;
@@ -266,7 +287,8 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
         sum = 0.0;
         for (Map.Entry<Integer, Integer> entry : this.assignedPairs.entrySet()) {
             Integer iter = entry.getKey();
-            Integer clientCount = this.clientRequests.get(iter);
+            //Integer clientCount = this.clientRequests.get(iter);
+            Integer clientCount = this.newClientRequests.get(iter);
             Integer serverCount = this.serverRequests.get(iter);
             stats = iter + "\t" + clientCount + "\t" + serverCount + "\t" + this.assignedPairs.get(iter);
             if (clientCount == null || serverCount == null) {
@@ -295,7 +317,7 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
         stats = "\nOverall_average_migrations: " + averageOverallMigrations;
         write(stats);
         
-        write("\n\nQosDeviation:\n");
+        //write("\n\nQosDeviation:\n");
         sum = 0.0;
         for (Map.Entry<Quartet, ArrayList<Double>> entry : this.qosDeviation.entrySet()) {
             Quartet q = entry.getKey();

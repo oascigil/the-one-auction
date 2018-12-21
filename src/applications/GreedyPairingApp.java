@@ -154,14 +154,24 @@ public class GreedyPairingApp extends AuctionApplication {
             Message clientMsg = clientRequests.get(indx);
             DTNHost clientHost = clientMsg.getFrom();
             Double completionTime = this.userCompletionTime.getOrDefault(clientHost, null);
+            int serviceType = (int) clientMsg.getProperty("serviceType");
             if(completionTime != null && completionTime > currTime) {
                 /** skip this message: user already part of auction  */
                 continue;
             }
-            int serviceType = (int) clientMsg.getProperty("serviceType");
-            completionTime = (Double) clientMsg.getProperty("completionTime");
-            if (completionTime == null) {
-                completionTime = currTime + Application.execTimes.get(serviceType);
+            else if (completionTime == null || completionTime <= currTime)
+            {
+                completionTime = this.lastAuctionTime + this.auctionPeriod + Application.execTimes.get(serviceType);
+                this.newUserRequests.add(clientMsg.getFrom());
+            }
+            //completionTime = (Double) clientMsg.getProperty("completionTime");
+            //if (completionTime == null) {
+                //completionTime = currTime + Application.execTimes.get(serviceType);
+            //    completionTime = this.lastAuctionTime + this.auctionPeriod + Application.execTimes.get(serviceType);
+            //}
+            /** Delayed requests that are already expired*/
+            if(completionTime <= currTime) {
+                continue;
             }
             this.userCompletionTime.put(clientHost, completionTime);
             
@@ -378,6 +388,7 @@ public class GreedyPairingApp extends AuctionApplication {
         }
         
         results.previousUserDeviceAssociation = this.previousUserDeviceAssociation;
+        results.newUserRequests = this.newUserRequests;
         super.sendEventToListeners("AuctionExecutionComplete", results, host);
         this.previousPrices = new HashMap(results.p);
         this.previousUserDeviceAssociation = new HashMap(results.userDeviceAssociation);
@@ -386,6 +397,7 @@ public class GreedyPairingApp extends AuctionApplication {
         //this.serverHostToMessage.clear();
         this.clientRequests.clear();
         this.serverRequests.clear();
+        this.newUserRequests.clear();
     }
 
 }

@@ -61,6 +61,8 @@ public class AuctionApplication extends Application {
     public HashMap<DTNHost, ArrayList<Integer>> device_LLAs_Association;
 	/** user device associations from previous auction (to track migrations) */
     public HashMap<DTNHost, DTNHost> previousUserDeviceAssociation;
+    /** Users whose request arrived after last auction */
+    public ArrayList<DTNHost> newUserRequests;
 
     // Static vars
 	/** Application ID */
@@ -116,6 +118,7 @@ public class AuctionApplication extends Application {
         this.previousUserDeviceAssociation = null;
         this.previousPrices = null;
         this.prices = null;
+        this.newUserRequests = new ArrayList<DTNHost>();
 		super.setAppID(APP_ID);
     }
 	
@@ -144,6 +147,7 @@ public class AuctionApplication extends Application {
         this.device_LLAs_Association = null;
         this.previousUserDeviceAssociation = null;
         this.previousPrices = null;
+        this.newUserRequests = new ArrayList();
         this.debug = a.debug;
     }
 	
@@ -205,7 +209,6 @@ public class AuctionApplication extends Application {
     }
 
     public void execute_auction(DTNHost host) {
-        //int len = Math.min(clientRequests.size(), serverRequests.size());
 		//System.out.println("Execute action "+clientRequests.size()+" "+serverRequests.size()+" "+len);
         double currTime = SimClock.getTime();
         this.lastAuctionTime = currTime;
@@ -257,14 +260,24 @@ public class AuctionApplication extends Application {
             Message clientMsg = this.clientRequests.get(indx);
             DTNHost clientHost = clientMsg.getFrom();
             Double completionTime = this.userCompletionTime.getOrDefault(clientHost, null);
+            int serviceType = (int) clientMsg.getProperty("serviceType");
             if(completionTime != null && completionTime > currTime) {
                 /** skip this message: user already part of auction  */
                 continue;
             }
-            int serviceType = (int) clientMsg.getProperty("serviceType");
-            completionTime = (Double) clientMsg.getProperty("completionTime");
-            if (completionTime == null) {
-                completionTime = currTime + Application.execTimes.get(serviceType);
+            else if (completionTime == null || completionTime <= currTime)
+            {
+                completionTime = this.lastAuctionTime + this.auctionPeriod + Application.execTimes.get(serviceType);
+                this.newUserRequests.add(clientMsg.getFrom());
+            }
+            //completionTime = (Double) clientMsg.getProperty("completionTime");
+            //if (completionTime == null) {
+                //completionTime = currTime + Application.execTimes.get(serviceType);
+            //    completionTime = this.lastAuctionTime + this.auctionPeriod + Application.execTimes.get(serviceType);
+            //}
+            /** Delayed requests that are already expired*/
+            if(completionTime <= currTime) {
+                continue;
             }
             this.userCompletionTime.put(clientHost, completionTime);
             //System.out.println("Number of mappings in userCompletionTime: " + this.userCompletionTime.size());
@@ -366,8 +379,9 @@ public class AuctionApplication extends Application {
         results.userLLAAssociation = new HashMap(this.user_LLA_Association);
         results.deviceLLAsAssociation = new HashMap(this.device_LLAs_Association);
         results.previousUserDeviceAssociation = this.previousUserDeviceAssociation;
+        results.newUserRequests = this.newUserRequests;
         this.previousPrices = new HashMap(results.p);
-        //this.prices = new HashMap(results.p);
+        //this.prices = new HashMap(results.p); //XXX warm start
         super.sendEventToListeners("AuctionExecutionComplete", results, host);
         this.previousUserDeviceAssociation = new HashMap(results.userDeviceAssociation);
 
@@ -389,7 +403,7 @@ public class AuctionApplication extends Application {
             host.createNewMessage(m);
             if (this.debug)
                 System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
-            super.sendEventToListeners("SentClientAuctionResponse", null, host);
+            //super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
         /** Send the auction results back to the servers */
         for (Map.Entry<DTNHost, DTNHost> entry : results.deviceUserAssociation.entrySet()) {
@@ -405,13 +419,14 @@ public class AuctionApplication extends Application {
             host.createNewMessage(m);
             if (this.debug)
                 System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
-            super.sendEventToListeners("SentServerAuctionResponse", null, host);
+            //super.sendEventToListeners("SentServerAuctionResponse", null, host);
         }
 
         //this.clientHostToMessage.clear();
         //this.serverHostToMessage.clear();
         this.clientRequests.clear();
         this.serverRequests.clear();
+        this.newUserRequests.clear();
     }
 
     public int [] getServiceTypes() {
