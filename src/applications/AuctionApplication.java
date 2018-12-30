@@ -239,7 +239,7 @@ public class AuctionApplication extends Application {
             q_maxPerLLA.put(indx, 100.0);
         }
 
-        // TODO remove the stale userCompletion time entries (but removal should be done elsewhere)
+        ArrayList<DTNHost> entriesToRemove = new ArrayList();
         for (Map.Entry<DTNHost, Double> entry : this.userCompletionTime.entrySet() ) {
         // update user-LLA and LLAs-users mappings for completed engagement times
             DTNHost user = entry.getKey();
@@ -251,8 +251,16 @@ public class AuctionApplication extends Application {
                     l.remove(user);
                     //System.out.println("Removing a stale user: " + user + " from user_LLA_Association for LLA_ID: " + LLA_ID);
                 }
-                this.user_LLA_Association.remove(user);                 
+                this.user_LLA_Association.remove(user);     
+                entriesToRemove.add(user);
+                if (this.previousUserDeviceAssociation != null) {
+                    this.previousUserDeviceAssociation.remove(user);
+                }
             }
+        }
+        /** Remove expired user requests */
+        for(DTNHost h : entriesToRemove) {
+            this.userCompletionTime.remove(h);
         }
 
         for(int indx= 0; indx < this.clientRequests.size();indx++)
@@ -261,22 +269,12 @@ public class AuctionApplication extends Application {
             DTNHost clientHost = clientMsg.getFrom();
             Double completionTime = this.userCompletionTime.getOrDefault(clientHost, null);
             int serviceType = (int) clientMsg.getProperty("serviceType");
-            if(completionTime != null && completionTime > currTime) {
-                /** skip this message: user already part of auction  */
-                continue;
-            }
-            else if (completionTime == null || completionTime <= currTime)
-            {
-                completionTime = this.lastAuctionTime + this.auctionPeriod + Application.execTimes.get(serviceType);
+            if (completionTime == null) {
+                completionTime = currTime + Application.execTimes.get(serviceType);
                 this.newUserRequests.add(clientMsg.getFrom());
             }
-            //completionTime = (Double) clientMsg.getProperty("completionTime");
-            //if (completionTime == null) {
-                //completionTime = currTime + Application.execTimes.get(serviceType);
-            //    completionTime = this.lastAuctionTime + this.auctionPeriod + Application.execTimes.get(serviceType);
-            //}
-            /** Delayed requests that are already expired*/
-            if(completionTime <= currTime) {
+            else if(completionTime > currTime) {
+                /** Delayed requests that are already expired*/
                 continue;
             }
             this.userCompletionTime.put(clientHost, completionTime);

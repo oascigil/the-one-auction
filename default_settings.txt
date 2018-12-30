@@ -7,7 +7,7 @@ Scenario.name = auction_with_low_migration_cost_scenario
 Scenario.simulateConnections = true
 Scenario.updateInterval = 0.001
 # 43200s == 12h
-Scenario.endTime = 121
+Scenario.endTime = 180
 
 Events.nrof=0
 

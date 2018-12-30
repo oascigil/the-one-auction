@@ -83,6 +83,7 @@ class VEDAuction{
 	public void updateReservedPrices(HashMap<DTNHost, Double> r){//market ID equivelant to LLA ID
 		this.r=r;
         if (r != null) {
+            
     		for (DTNHost itemID:r.keySet()){
 	    		if (p.get(itemID)<r.get(itemID)){
 		    		p.put(itemID,r.get(itemID));

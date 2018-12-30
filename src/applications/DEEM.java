@@ -144,14 +144,22 @@ class DEEM{
             //System.out.println("LLA_ID: " + LLA_ID + " Users: " + LLAs_Users_Association.get(LLA_ID));
 			for(DTNHost user_ID:LLAs_Users_Association.get(LLA_ID)) {
                 userDevice_ID = null;
+                boolean isAssigned = false;
                 if (previousUserDeviceAssociation != null) {
+                    if(previousUserDeviceAssociation.containsKey(user_ID)) {
+                        isAssigned = true;
+                    }
                     userDevice_ID = previousUserDeviceAssociation.getOrDefault(user_ID, null);
                     if (controlMessageFlag) System.out.println("Previous device association for user: " + user_ID + " is " + userDevice_ID);
                 }
-                if (userDevice_ID != null) {
+                //if (userDevice_ID != null) {
+                if (isAssigned) {
                     userDeviceQoSGainValuation = user_Device_QoSGain(LLA_ID, user_ID, userDevice_ID);
-                    migrationParallelPrice     = previousPrices.get(userDevice_ID);
                     migrationOverhead          = LLAmigrationOverhead.get(LLA_ID);
+                    migrationParallelPrice = 0.0;
+                    if(userDevice_ID != null) {
+                        migrationParallelPrice     = previousPrices.get(userDevice_ID);
+                    }
                     p.put(userDevice_ID, migrationParallelPrice);
                 }
                 else {
@@ -163,8 +171,8 @@ class DEEM{
                 ArrayList<DTNHost> devicesList = LLAs_Devices_Association.getOrDefault(LLA_ID, null);
                 if (devicesList != null) {
 				    for (DTNHost device_ID:devicesList){
-                        if (device_ID == null) 
-                            continue;
+                        //if (device_ID == null) XXX  
+                        //    continue;
                         double userRemainingTime = userCompletionTime.get(user_ID) - currTime;
                         assert (userRemainingTime > 0): "Service remaining time must be positive";
                         if(userRemainingTime <= 0) {
@@ -173,9 +181,9 @@ class DEEM{
 					    QoSGainValuation  = user_Device_QoSGain(LLA_ID,user_ID,device_ID);
                         if (device_ID != userDevice_ID) {
                             QoSGainValuation    = (QoSGainValuation*(userRemainingTime-migrationOverhead)+(userDeviceQoSGainValuation-migrationParallelPrice)*migrationOverhead)/userRemainingTime;
-                            if (QoSGainValuation < 0) {
-                                QoSGainValuation = 0.0;
-                            }
+                            //if (QoSGainValuation < 0) {
+                            //    QoSGainValuation = 0.0;
+                            //}
                         }
 					    //p.put(device_ID,0.0);
 					    vMatrixForThisUser.put(device_ID,QoSGainValuation);
@@ -212,7 +220,7 @@ class DEEM{
         }
 	}
 	//auxiliary functions----------
-	private double user_Device_QoSGain(Integer LLA_ID, DTNHost user_ID, DTNHost device_ID){
+	private double user_Device_QoSGain(Integer LLA_ID, DTNHost user_ID, DTNHost device_ID) {
 		double term1  = q_minPerLLA.get(LLA_ID)/q_maxPerLLA.get(LLA_ID);
 		double term2  = 1.0 - term1;
         Double latency = 100.0; 
@@ -221,6 +229,10 @@ class DEEM{
             System.out.println("Error1: user_Device_QoSGain() unable to find latency for user: " + user_ID + " device: " + device_ID);
             devicesMapping.get(device_ID);
             return latency;
+        }
+        if (device_ID == null) { 
+            /** device is cloud so return 0 gain */
+            return 0.0;
         }
         latency = devicesMapping.getOrDefault(device_ID, null);
         if (latency == null) {

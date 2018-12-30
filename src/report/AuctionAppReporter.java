@@ -130,7 +130,8 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
                 if (currentAssociation == null && previousAssociation != null) {
                     numDeviceToCloudMigrations += 1;
                 }
-                if (previousAssociation != currentAssociation) {
+                if (previousAssociation != currentAssociation && previousAssociation != null && currentAssociation != null) { 
+                    //XXX this does not count cloud-to-device and device-to-cloud migrations
                     System.out.println("User: " + user + " migrated from: " + previousAssociation + " to " + currentAssociation);
                     numMigrations += 1;
                 }
@@ -165,7 +166,7 @@ public class AuctionAppReporter extends Report implements ApplicationListener {
             }
             else {
                 totalQos += Application.minQoS.get(results.userLLAAssociation.get(user));
-                System.out.println("User: " + user + " Device: Cloud" + " QoS:  " + Application.minQoS.get(results.userLLAAssociation.get(user)) + " QoS_Gain: 0" + " Price: 0");
+                System.out.println("User: " + user + " Device: Cloud" + " QoS:  " + Application.minQoS.get(results.userLLAAssociation.get(user)) + " QoS_Gain: 0" + " Price: 0" + " service: " + results.userLLAAssociation.get(user));
             }
             numAllPairs += 1;
         }

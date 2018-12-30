@@ -7,7 +7,7 @@ Scenario.name = greedy_pairing_scenario
 Scenario.simulateConnections = true
 Scenario.updateInterval = 0.001
 # 43200s == 12h
-Scenario.endTime = 600
+Scenario.endTime = 360
 
 Events.nrof=0
 
@@ -273,30 +273,30 @@ GUI.EventLogPanel.nrofEvents = 100
 
 # service setttings
 Scenario.nrofServices = 10
-Service0.executionTime = 60.0
+Service0.executionTime = 120.0
 Service0.minQoS = 45.4927004514
-Service1.executionTime = 60.0
+Service1.executionTime = 120.0
 Service1.minQoS = 70.5513226934
-Service2.executionTime = 60.0
+Service2.executionTime = 120.0
 Service2.minQoS = 43.3514434895
-Service3.executionTime = 60.0
+Service3.executionTime = 120.0
 Service3.minQoS = 53.2901414643
-Service4.executionTime = 60.0
+Service4.executionTime = 120.0
 Service4.minQoS = 45.5945881184
-Service5.executionTime = 60.0
+Service5.executionTime = 120.0
 Service5.minQoS = 93.2962400075
-Service6.executionTime = 60.0
+Service6.executionTime = 120.0
 Service6.minQoS = 33.535077594
-Service7.executionTime = 60.0
+Service7.executionTime = 120.0
 Service7.minQoS = 76.8018148745
-Service8.executionTime = 60.0
+Service8.executionTime = 120.0
 Service8.minQoS = 17.8460762954
-Service9.executionTime = 60.0
+Service9.executionTime = 120.0
 Service9.minQoS = 34.7004453615
 
 # auction app setttings
 auctionApp0.type = GreedyPairingApp
-auctionApp0.auctionPeriod = 30.0
+auctionApp0.auctionPeriod = 45.0
 auctionApp0.migrationOverheads = 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3
 auctionApp0.serviceTypes = 0,1,2,3,4,5,6,7,8,9
 
