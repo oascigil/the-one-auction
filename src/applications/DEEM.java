@@ -159,11 +159,12 @@ class DEEM{
                     migrationParallelPrice = 0.0;
                     if(userDevice_ID != null) {
                         migrationParallelPrice     = previousPrices.get(userDevice_ID);
+                       p.put(userDevice_ID, migrationParallelPrice);
                     }
-                    p.put(userDevice_ID, migrationParallelPrice);
                 }
                 else {
-                    userDeviceQoSGainValuation = 0.0;
+                    //userDeviceQoSGainValuation = 0.0;
+                    userDeviceQoSGainValuation = user_Device_QoSGain(LLA_ID, user_ID, userDevice_ID);
                     migrationParallelPrice     = 0.0;
                     migrationOverhead          = 0.0;
                 }
@@ -180,7 +181,7 @@ class DEEM{
                         }
 					    QoSGainValuation  = user_Device_QoSGain(LLA_ID,user_ID,device_ID);
                         if (device_ID != userDevice_ID) {
-                            QoSGainValuation    = (QoSGainValuation*(userRemainingTime-migrationOverhead)+(userDeviceQoSGainValuation-migrationParallelPrice)*migrationOverhead)/userRemainingTime;
+                            QoSGainValuation    = Math.floor((QoSGainValuation*(userRemainingTime-migrationOverhead)+(userDeviceQoSGainValuation-migrationParallelPrice)*migrationOverhead)/userRemainingTime);
                             //if (QoSGainValuation < 0) {
                             //    QoSGainValuation = 0.0;
                             //}
@@ -245,7 +246,7 @@ class DEEM{
 		}
 		double term3  = 1.0-(latency-minimumLatency)/maximumLatency;
 		double power  = 0.9;//the convexity power equals 0.9 instead of 0.2
-		return Math.round((term1+term2*Math.pow(term3,1.0/power))*q_maxPerLLA.get(LLA_ID)-q_minPerLLA.get(LLA_ID));
+		return Math.floor((term1+term2*Math.pow(term3,1.0/power))*q_maxPerLLA.get(LLA_ID)-q_minPerLLA.get(LLA_ID));
 	}
 	private HashMap<DTNHost,Double> pricesForThisMarket(Integer LLA_ID){
         

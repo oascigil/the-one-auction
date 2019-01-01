@@ -349,6 +349,28 @@ public class AuctionApplication extends Application {
 
         // update user-device latencies  
         System.out.println("\n\nAUCTION = number of users: " + this.user_LLA_Association.keySet().size() + " number of devices: " + this.device_LLAs_Association.keySet().size());
+        /*
+        for (Integer market : this.LLAs_Users_Association.keySet()) {
+            ArrayList<DTNHost> users = this.LLAs_Users_Association.getOrDefault(market, null);
+            if (users == null) {
+                System.out.println("No users for market: " + market);
+                continue;
+            }
+            System.out.println("Users for market: " + market);
+            for (DTNHost user : users) {
+                System.out.println(user);
+                System.out.println("User to LLA mapping: " + this.user_LLA_Association.getOrDefault(user, null));
+            }
+        }
+        for (Integer market : this.LLAs_Devices_Association.keySet()) {
+            ArrayList<DTNHost> devices = this.LLAs_Devices_Association.getOrDefault(market, null);
+            System.out.println("Devices for market: " + market);
+            for (DTNHost device : devices) {
+                System.out.println(device);
+                System.out.println("Device to LLA mapping: " + this.device_LLAs_Association.getOrDefault(device, null));
+            }
+        }*/
+
         HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency = new HashMap();
         for (DTNHost user : this.user_LLA_Association.keySet()) {
             HashMap<DTNHost, Double> clientDistances = new HashMap();
@@ -363,7 +385,6 @@ public class AuctionApplication extends Application {
                 clientDistances.put(device, latency);
             }
         }
-
         DEEM mechanism = null;
         if (this.prices == null) { // cold start
             mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, this.LLAs_Users_Association, this.user_LLA_Association, this.LLAs_Devices_Association, this.device_LLAs_Association, user_device_Latency);

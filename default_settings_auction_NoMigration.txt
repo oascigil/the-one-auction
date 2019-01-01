@@ -7,7 +7,7 @@ Scenario.name = auction_with_high_migration_cost
 Scenario.simulateConnections = true
 Scenario.updateInterval = 0.001
 # 43200s == 12h
-Scenario.endTime = 360
+Scenario.endTime = 361
 
 Events.nrof=0
 
