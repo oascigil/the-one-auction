@@ -76,7 +76,7 @@ public class ClientApp extends Application {
             this.pingInterval = 2.0;
         }
 
-        this.rng = new Random(Application.nrofServices);
+        this.rng = new Random();
         this.server = null;
         this.completionTime=0.0;
         this.timePingSent = new HashMap();
@@ -111,6 +111,29 @@ public class ClientApp extends Application {
 	public Application replicate() {
 		return new ClientApp(this);
 	}
+    private int getOneNumber(double r) {
+        double[] probs = {
+            0.02, // 0
+            0.04, // 1
+            0.06, // 2
+            0.08, // 3
+            0.10, //4 
+            0.12, //5 
+            0.13, //6
+            0.14, //7
+            0.15, //8
+            0.16  //9
+        };
+        for (int j = 0; j < probs.length; j++) {
+            if (r <= probs[j]) {
+                //System.out.println("r = " + r + " returning: " + j);
+                return j;
+            }
+            r -= probs[j];
+        }
+        throw new RuntimeException("probabilities should sum to 1");
+    }
+
 	
     /**
 	 * Handles an incoming message. If the message is a ServerResponse message, then report.
@@ -226,13 +249,13 @@ public class ClientApp extends Application {
         if (!this.isAssigned) {
             Double randNumber = this.rng.nextDouble();
             if (randNumber < (1.0/(1000.0*Application.execTimes.get(0)))) {
-                this.lastRequestedService = this.rng.nextInt(Application.nrofServices);
+                this.lastRequestedService = getOneNumber(this.rng.nextDouble()); // this.rng.nextInt(Application.nrofServices);
                 List<DTNHost> destList = DTNHost.auctioneers.get(this.lastRequestedService);
                 DTNHost dest = destList.get(0);
                 Message m = new Message(host, dest, "clientAuctionRequest" + host.getName()+"-"+requestId, 1);
                 requestId++;
                 m.addProperty("type", "clientAuctionRequest");
-                m.addProperty("serviceType", lastRequestedService);
+                m.addProperty("serviceType", this.lastRequestedService);
                 m.addProperty("completionTime" , null);
                 m.addProperty("location", host.getLocation());
                 m.setAppID(AuctionApplication.APP_ID);

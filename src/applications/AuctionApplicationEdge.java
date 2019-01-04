@@ -226,7 +226,6 @@ public class AuctionApplicationEdge extends Application {
 	        	deviceUserAssociation.put(serverRequests.get(i).getId(), msg.getFrom());
         	}
         	i++;
-        	
         }
 
 

@@ -47,7 +47,7 @@ public abstract class ActiveRouter extends MessageRouter {
 	private double lastTtlCheck;
 
 	private MessageTransferAcceptPolicy policy;
-	private EnergyModel energy;
+	//private EnergyModel energy;
 
 	/**
 	 * Constructor. Creates a new message router based on the settings in
@@ -62,9 +62,9 @@ public abstract class ActiveRouter extends MessageRouter {
 		this.deleteDelivered = s.getBoolean(DELETE_DELIVERED_S, false);
 
 		if (s.contains(EnergyModel.INIT_ENERGY_S)) {
-            //System.out.println("Here");
 			this.energy = new EnergyModel(s);
 		} else {
+            System.out.println("Warning: Energy is not modelled");
 			this.energy = null; /* no energy model */
 		}
 	}
@@ -662,5 +662,9 @@ public abstract class ActiveRouter extends MessageRouter {
 		}
 		return top;
 	}
+
+    //public EnergyModel getEnergyModel() {
+    //    return this.energy;
+    //}
 
 }

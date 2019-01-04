@@ -147,12 +147,17 @@ public class GreedyPairingApp extends AuctionApplication {
                     l.remove(user);
                 }
                 entriesToRemove.add(user);
+                if (this.previousUserDeviceAssociation != null) {
+                    this.previousUserDeviceAssociation.remove(user);
+                }
             }
         }
         /** Remove expired user requests */
         for(DTNHost h : entriesToRemove) {
             this.userCompletionTime.remove(h);
         }
+
+        /** Remove devices that are out of energy */
 
         for(int indx= 0; indx < clientRequests.size();indx++)
         {
@@ -183,7 +188,7 @@ public class GreedyPairingApp extends AuctionApplication {
                     usersList.add(clientHost);
                 }
             }
-            user_LLA_Association.put(clientHost, serviceType);
+            this.user_LLA_Association.put(clientHost, serviceType);
         }
 
         for(int i=0;i<serverRequests.size();i++)
@@ -254,7 +259,7 @@ public class GreedyPairingApp extends AuctionApplication {
         }*/
         
         HashMap<DTNHost, ArrayList<Double>> deviceValuations = new HashMap();
-        DEEM mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, LLAs_Users_Association, user_LLA_Association, LLAs_Devices_Association, device_LLAs_Association, user_device_Latency);
+        DEEM mechanism  = new DEEM(q_minPerLLA, q_maxPerLLA, this.LLAs_Users_Association, this.user_LLA_Association, this.LLAs_Devices_Association, device_LLAs_Association, user_device_Latency);
     	mechanism.createMarkets(controlMessageFlag, this.previousPrices, this.LLAmigrationOverhead, this.userCompletionTime, this.previousUserDeviceAssociation);
         ArrayList<Quartet> allValuations = new ArrayList<Quartet>();
 
@@ -287,9 +292,11 @@ public class GreedyPairingApp extends AuctionApplication {
         DEEM_Results results = new DEEM_Results();
         results.userLLAAssociation = new HashMap(user_LLA_Association);
         results.deviceLLAsAssociation = new HashMap(this.device_LLAs_Association);
-
+        HashMap <Integer, Double> lowestPricePerService = new HashMap();  
         for (Quartet aQuartet : allValuations) {
             if (userSet.contains(aQuartet.user) && deviceSet.contains(aQuartet.device)) {
+                if (aQuartet.device.getRouter().energy.getEnergy() <= 0.0 )
+                    continue;
                 results.userDeviceAssociation.put(aQuartet.user, aQuartet.device);
                 userSet.remove(aQuartet.user);
                 deviceSet.remove(aQuartet.device);
@@ -307,10 +314,23 @@ public class GreedyPairingApp extends AuctionApplication {
                         break;
                     indx++;
                 }
+                Double currentPrice;
                 if (nextLowerPrice == price)
-                    results.p.put(aQuartet.device, 0.0);
+                    currentPrice = 0.0;
+                //    results.p.put(aQuartet.device, 0.0);
                 else
-                    results.p.put(aQuartet.device, nextLowerPrice);
+                    currentPrice = nextLowerPrice;
+                //    results.p.put(aQuartet.device, nextLowerPrice);
+
+                //Double currentPrice = results.p.get(aQuartet.device);
+                Double lowPrice = lowestPricePerService.getOrDefault(aQuartet.service, null);
+                if (lowPrice == null) {
+                    lowestPricePerService.put(aQuartet.service, currentPrice); 
+                }
+                else if (lowPrice > currentPrice) {
+                    lowestPricePerService.put(aQuartet.service, currentPrice);
+                }
+
                 /*
                 double price=0;
                 if (indx < valArray.size()-1) {
@@ -323,11 +343,17 @@ public class GreedyPairingApp extends AuctionApplication {
         results.QoSGainPerUser = mechanism.QoSGainPerUser(results.userDeviceAssociation);
         results.QoSPerUser = mechanism.QoSPerUser(results.userDeviceAssociation);
 
-        //Send the auction results back to the clients (null if they are assigned to the cloud)
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost client = entry.getKey();
             DTNHost server = entry.getValue();
-            /** Send a response back to a client */
+            Integer service = this.user_LLA_Association.get(client);
+            results.p.put(server, lowestPricePerService.get(service));
+            /** deduct the energy spent for execution from the devices */
+            if (server != null) {
+                server.getRouter().energy.reduceExecEnergy();
+            }
+            /** Send the auction results back to the clients - 
+             * null if they are assigned to the cloud */
             Message clientMsg = this.clientHostToMessage.get(client);
             String msgId = new String("ClientAuctionResponse_" + client.getName());
             Message m = new Message(host, clientMsg.getFrom(), msgId, this.auctionMsgSize);

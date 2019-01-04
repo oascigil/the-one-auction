@@ -25,6 +25,7 @@ import core.SimClock;
 import core.SimError;
 import routing.util.RoutingInfo;
 import util.Tuple;
+import routing.util.EnergyModel; //XXX Added
 
 /**
  * Superclass for message routers.
@@ -105,6 +106,8 @@ public abstract class MessageRouter {
 
 	/** applications attached to the host */
 	private HashMap<String, Collection<Application>> applications = null;
+    
+    public EnergyModel energy; //XXX added
 
 	/**
 	 * Constructor. Creates a new message router based on the settings in

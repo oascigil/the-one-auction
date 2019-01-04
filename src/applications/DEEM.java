@@ -37,6 +37,7 @@ class DEEM{
 	static double maximumLatency  = 100.0;//in ms
 	static double dp              = 1.0;
 	static Object defaulLocationIdentifier  = null; //"veryVeryDistantCloud";
+	//static String debuggingDevice  = "f10";
 	//-----------------------------Class Data Structures
 	//Contructors---------------------------------------
 	//Default constructor----------
@@ -57,13 +58,7 @@ class DEEM{
 		markets             = new ArrayList<VEDAuction>();
 	}
 	//Constructor------------------
-	public DEEM(HashMap<Integer,Double> q_minPerLLA,
-                HashMap<Integer,Double> q_maxPerLLA,
-                HashMap<Integer,ArrayList<DTNHost>>  LLAs_Users_Association,
-                HashMap<DTNHost,Integer> user_LLA_Association,
-                HashMap<Integer,ArrayList<DTNHost>>  LLAs_Devices_Association,
-                HashMap<DTNHost,ArrayList<Integer>> device_LLAs_Association, 
-                HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency) {
+	public DEEM(HashMap<Integer,Double> q_minPerLLA,HashMap<Integer,Double> q_maxPerLLA,HashMap<Integer,ArrayList<DTNHost>>  LLAs_Users_Association,HashMap<DTNHost,Integer> user_LLA_Association,HashMap<Integer,ArrayList<DTNHost>>  LLAs_Devices_Association,HashMap<DTNHost,ArrayList<Integer>> device_LLAs_Association, HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency) {
 		this.q_minPerLLA = new HashMap(q_minPerLLA);
 		this.q_maxPerLLA = new HashMap(q_maxPerLLA);
 		//this.LLAs_Users_Association  = new HashMap(LLAs_Users_Association);
@@ -89,14 +84,7 @@ class DEEM{
 		markets               = new ArrayList<VEDAuction>();
 	}
 	//---------------------------------------Contructor with p
-	public DEEM(HashMap<Integer,Double> q_minPerLLA,
-                HashMap<Integer,Double> q_maxPerLLA,
-                HashMap<Integer,ArrayList<DTNHost>>  LLAs_Users_Association,
-                HashMap<DTNHost,Integer> user_LLA_Association,
-                HashMap<Integer,ArrayList<DTNHost>>  LLAs_Devices_Association,
-                HashMap<DTNHost,ArrayList<Integer>> device_LLAs_Association, 
-                HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency,
-                HashMap<DTNHost, Double> p ) {
+	public DEEM(HashMap<Integer,Double> q_minPerLLA,HashMap<Integer,Double> q_maxPerLLA,HashMap<Integer,ArrayList<DTNHost>>  LLAs_Users_Association,HashMap<DTNHost,Integer> user_LLA_Association,HashMap<Integer,ArrayList<DTNHost>>  LLAs_Devices_Association,HashMap<DTNHost,ArrayList<Integer>> device_LLAs_Association, HashMap<DTNHost, HashMap<DTNHost, Double>> user_device_Latency,HashMap<DTNHost, Double> p ) {
 		this.q_minPerLLA = new HashMap(q_minPerLLA);
 		this.q_maxPerLLA = new HashMap(q_maxPerLLA);
 		this.LLAs_Users_Association  = LLAs_Users_Association; //new HashMap(LLAs_Users_Association);
@@ -123,8 +111,6 @@ class DEEM{
 		markets               = new ArrayList<VEDAuction>();
     }
 	//Functions-----------------------------------------
-	//
-	
 	public void createMarkets(boolean controlMessageFlag, HashMap<DTNHost, Double> previousPrices, HashMap<Integer, Double> LLAmigrationOverhead, HashMap<DTNHost, Double> userCompletionTime, HashMap<DTNHost, DTNHost> previousUserDeviceAssociation) {
 		//create valuations
 		HashMap<DTNHost, HashMap<DTNHost, Double>> vMatrix; //HashMap<user_id, HashMap<LLA_instances_device, Valuation>>
@@ -138,6 +124,7 @@ class DEEM{
 		HashMap<DTNHost,Double> market_reserved_prices  = new HashMap();
         DTNHost userDevice_ID;
         Double currTime = SimClock.getTime();
+        //main mechanism execution
 		for(Integer LLA_ID: LLAs_Users_Association.keySet()) {//for each market
 			vMatrix  = new HashMap();//valuation matrix for this LLA
 			if(controlMessageFlag) System.out.println(LLA_ID);
@@ -159,11 +146,10 @@ class DEEM{
                     migrationParallelPrice = 0.0;
                     if(userDevice_ID != null) {
                         migrationParallelPrice     = previousPrices.get(userDevice_ID);
-                       p.put(userDevice_ID, migrationParallelPrice);
+                    	p.put(userDevice_ID, migrationParallelPrice);
                     }
                 }
                 else {
-                    //userDeviceQoSGainValuation = 0.0;
                     userDeviceQoSGainValuation = user_Device_QoSGain(LLA_ID, user_ID, userDevice_ID);
                     migrationParallelPrice     = 0.0;
                     migrationOverhead          = 0.0;
@@ -220,6 +206,11 @@ class DEEM{
             }
         }
 	}
+
+	private void devices_initialisation(){
+
+	}
+
 	//auxiliary functions----------
 	private double user_Device_QoSGain(Integer LLA_ID, DTNHost user_ID, DTNHost device_ID) {
 		double term1  = q_minPerLLA.get(LLA_ID)/q_maxPerLLA.get(LLA_ID);
@@ -229,7 +220,7 @@ class DEEM{
         if (devicesMapping == null) {
             System.out.println("Error1: user_Device_QoSGain() unable to find latency for user: " + user_ID + " device: " + device_ID);
             devicesMapping.get(device_ID);
-            return latency;
+            return Math.floor(latency);
         }
         if (device_ID == null) { 
             /** device is cloud so return 0 gain */
@@ -238,7 +229,7 @@ class DEEM{
         latency = devicesMapping.getOrDefault(device_ID, null);
         if (latency == null) {
             System.out.println("Error2: user_Device_QoSGain() unable to find latency for user: " + user_ID + " device: " + device_ID);
-            return latency;
+            return Math.floor(latency);
         }
 		//Double latency  = user_device_Latency.get(user_ID).get(device_ID);
 		if (latency>maximumLatency){//if actual latency exceed the maximum predicted return 0 gain
@@ -247,6 +238,7 @@ class DEEM{
 		double term3  = 1.0-(latency-minimumLatency)/maximumLatency;
 		double power  = 0.9;//the convexity power equals 0.9 instead of 0.2
 		return Math.floor((term1+term2*Math.pow(term3,1.0/power))*q_maxPerLLA.get(LLA_ID)-q_minPerLLA.get(LLA_ID));
+		//return Math.round((term1+term2*Math.pow(term3,1.0/power))*q_maxPerLLA.get(LLA_ID)-q_minPerLLA.get(LLA_ID));
 	}
 	private HashMap<DTNHost,Double> pricesForThisMarket(Integer LLA_ID){
         
@@ -288,6 +280,23 @@ class DEEM{
 		Integer LLA_ID;
 		int numberOfIterations=1;
 		boolean nextMarketExecutionIteration;
+        //initialise reserved prices
+        for (DTNHost device_ID:device_LLAs_Association.keySet()){
+        	r.put(device_ID,0.0);
+        	//r.put(device_ID, device_ID.getRouter().energy.getEnergy());
+        	p.put(device_ID,0.0);
+        	device_LLAs_Association.put(device_ID,null);
+        	deviceUserAssociation.put(device_ID,null);
+        	deviceLLAExecution.put(device_ID,null);
+        }
+		if (controlMessageFlag){
+    		System.out.println("------------------Devices Update------------------");
+    		System.out.println("Prices: "+p.toString());
+    		System.out.println("Reserved Prices: "+r.toString());
+    		System.out.println("Device-LLA associations: "+deviceLLAExecution.toString());
+    		System.out.println("User-Device associations: "+userDeviceAssociation.toString());
+    		System.out.println("--------------------------------------------------");
+		}
 		do {
 			nextMarketExecutionIteration  = false;
 			for (int marketIndex=0; marketIndex<markets.size(); marketIndex++){//for each market
@@ -310,8 +319,13 @@ class DEEM{
 				p_market        = auctionResult.p;//prices of devices from this market
                 if (p_market != null) {
     				for (DTNHost device_ID:p_market.keySet()){
+    					//if (device_ID.toString().trim().equals(debuggingDevice)){
+    						//System.out.println("device's: "+device_ID+", price so far: "+String.valueOf(p.get(device_ID))+", price in this market: "+String.valueOf(p_market.get(device_ID)));
+    						//System.out.println(nextMarketExecutionIteration);
+    					//}
 	    				if (p_market.get(device_ID)>p.get(device_ID)){//if the price of this device is higher than the one achieved in other markets and the item is assigned to a user
 		    				if (!setOfDevicesAssignedInTheMarket.contains(device_ID)){//if the device is not assigned
+			    				if (controlMessageFlag) System.out.println("device's: "+device_ID+" has not been assigned");
 			    				continue;//go to next
 				    		}
 					    	p.put(device_ID,p_market.get(device_ID));//update price
@@ -320,6 +334,9 @@ class DEEM{
 		    				nextMarketExecutionIteration  = true;//re-execute the mechanism for each market
 			    			if (controlMessageFlag) System.out.println("device's: "+device_ID+", price increased to: "+String.valueOf(p.get(device_ID)));
 				    	}
+				    	//if (device_ID.toString().trim().equals(debuggingDevice)){
+    					//	System.out.println(nextMarketExecutionIteration);
+    					//}
 				    }
                 }
 				if (controlMessageFlag){
@@ -374,132 +391,4 @@ class DEEM{
 		return QoSPerUser;
 	}
 	//-----------------------------------------Functions
-	/*Main----------------------------------------------
-    public static void main(String[] args){
-    	//LLA QoS------------------------------------------
-    	//Minimum QoS for each LLA
-    	HashMap<Integer,Double> q_minPerLLA = new HashMap();
-    	q_minPerLLA.put("LLA_A",0.0);
-    	q_minPerLLA.put("LLA_B",50.0);
-    	//Maximum QoS for each LLA
-    	HashMap<Integer,Double> q_maxPerLLA = new HashMap();
-    	q_maxPerLLA.put("LLA_A",100.0);
-    	q_maxPerLLA.put("LLA_B",100.0);
-    	//Users per LLAs-----------------------------------
-    	HashMap<Integer ,ArrayList<DTNHost>>  LLAs_Users_Association = new HashMap();
-    	//LLA_A
-    	ArrayList<DTNHost> LLA_A_users  = new ArrayList<DTNHost>();
-    	LLA_A_users.add("User1");
-    	LLA_A_users.add("User2");
-    	LLA_A_users.add("User3");
-    	LLAs_Users_Association.put("LLA_A",LLA_A_users);
-    	//LLA_B
-    	ArrayList<DTNHost> LLA_B_users  = new ArrayList<DTNHost>();
-    	LLA_B_users.add("User4");
-    	LLA_B_users.add("User5");
-    	LLA_B_users.add("User6");
-    	LLAs_Users_Association.put("LLA_B",LLA_B_users);
-    	//Users-LLAs associations--------------------------
-    	HashMap<DTNHost,Integer>  user_LLA_Association = new HashMap();
-    	user_LLA_Association.put("User1","LLA_A");
-    	user_LLA_Association.put("User2","LLA_A");
-    	user_LLA_Association.put("User3","LLA_A");
-    	user_LLA_Association.put("User4","LLA_B");
-    	user_LLA_Association.put("User5","LLA_B");
-    	user_LLA_Association.put("User6","LLA_B");
-    	//Devices per LLAs---------------------------------
-    	HashMap<Integer,ArrayList<DTNHost>>  LLAs_Devices_Association = new HashMap();
-    	//LLA_A
-    	ArrayList<DTNHost> LLA_A_Devices  = new ArrayList<DTNHost>();
-    	LLA_A_Devices.add("Dev1");
-    	LLA_A_Devices.add("Dev2");
-    	LLA_A_Devices.add("Dev3");
-    	LLA_A_Devices.add("Dev4");
-    	LLAs_Devices_Association.put("LLA_A",LLA_A_Devices);
-    	//LLA_B
-    	ArrayList<DTNHost> LLA_B_Devices  = new ArrayList<DTNHost>();
-    	LLA_B_Devices.add("Dev1");
-    	LLA_B_Devices.add("Dev2");
-    	LLA_B_Devices.add("Dev3");
-    	LLA_B_Devices.add("Dev5");
-    	LLAs_Devices_Association.put("LLA_B",LLA_B_Devices);
-    	//Devices' association to LLAs---------------------
-    	HashMap<DTNHost,ArrayList<Integer>>  device_LLAs_Association = new HashMap();
-    	//Device 1
-    	ArrayList<Integer> dev1Apps  = new ArrayList<Integer>();
-    	dev1Apps.add("LLA_A");
-    	dev1Apps.add("LLA_B");
-    	device_LLAs_Association.put("Dev1",dev1Apps);
-    	//Device 2
-    	ArrayList<String> dev2Apps  = new ArrayList<String>();
-    	dev2Apps.add("LLA_A");
-    	dev2Apps.add("LLA_B");
-    	device_LLAs_Association.put("Dev2",dev2Apps);
-    	//Device 3
-    	ArrayList<String> dev3Apps  = new ArrayList<String>();
-    	dev3Apps.add("LLA_A");
-    	dev3Apps.add("LLA_B");
-    	device_LLAs_Association.put("Dev3",dev3Apps);
-    	//Device 4
-    	ArrayList<String> dev4Apps  = new ArrayList<String>();
-    	dev4Apps.add("LLA_A");
-    	device_LLAs_Association.put("Dev4",dev4Apps);
-    	//Device 5
-    	ArrayList<String> dev5Apps  = new ArrayList<String>();
-    	dev5Apps.add("LLA_B");
-    	device_LLAs_Association.put("Dev5",dev5Apps);
-    	//Users-devices latency association----------------
-    	HashMap<String, HashMap<String, Double>> user_device_Latency = new HashMap();
-    	//User 1---- the aim is to allocated in Dev1
-    	HashMap<String, Double> user1DevicesLatencies  = new HashMap();
-    	user1DevicesLatencies.put("Dev1",10.0);
-    	user1DevicesLatencies.put("Dev2",20.0);
-    	user1DevicesLatencies.put("Dev3",30.0);
-    	user1DevicesLatencies.put("Dev4",40.0);
-    	user_device_Latency.put("User1",user1DevicesLatencies);
-    	//User 2---- the aim is to allocated in Dev4
-    	HashMap<String, Double> user2DevicesLatencies  = new HashMap();
-    	user2DevicesLatencies.put("Dev1",70.0);
-    	user2DevicesLatencies.put("Dev2",60.0);
-    	user2DevicesLatencies.put("Dev3",50.0);
-    	user2DevicesLatencies.put("Dev4",40.0);
-    	user_device_Latency.put("User2",user2DevicesLatencies);
-    	//User 3---- the aim is to allocated to the cloud
-    	HashMap<String, Double> user3DevicesLatencies  = new HashMap();
-    	user3DevicesLatencies.put("Dev1",90.0);
-    	user3DevicesLatencies.put("Dev2",91.0);
-    	user3DevicesLatencies.put("Dev3",92.0);
-    	user3DevicesLatencies.put("Dev4",93.0);
-    	user_device_Latency.put("User3",user3DevicesLatencies);
-    	//User 4---- the aim is to allocated in Dev5
-    	HashMap<String, Double> user4DevicesLatencies  = new HashMap();
-    	user4DevicesLatencies.put("Dev1",10.0);
-    	user4DevicesLatencies.put("Dev2",20.0);
-    	user4DevicesLatencies.put("Dev3",5.0);
-    	user4DevicesLatencies.put("Dev5",15.0);
-    	user_device_Latency.put("User4",user4DevicesLatencies);
-    	//User 5---- the aim is to allocated in Dev2
-    	HashMap<String, Double> user5DevicesLatencies  = new HashMap();
-    	user5DevicesLatencies.put("Dev1",15.0);
-    	user5DevicesLatencies.put("Dev2",5.0);
-    	user5DevicesLatencies.put("Dev3",20.0);
-    	user5DevicesLatencies.put("Dev5",40.0);
-    	user_device_Latency.put("User5",user5DevicesLatencies);
-    	//User 6---- the aim is to allocated in Dev3
-    	HashMap<String, Double> user6DevicesLatencies  = new HashMap();
-    	user6DevicesLatencies.put("Dev1",15.0);
-    	user6DevicesLatencies.put("Dev2",10.0);
-    	user6DevicesLatencies.put("Dev3",20.0);
-    	user6DevicesLatencies.put("Dev5",40.0);
-    	user_device_Latency.put("User6",user6DevicesLatencies);
-    	//execute mechanism--------------------------------
-    	boolean controlMessageFlag = true;
-    	boolean controlAuctionMessageFlag  = true;
-    	DEEM mechanism  = new DEEM(q_minPerLLA,q_maxPerLLA,LLAs_Users_Association,user_LLA_Association,LLAs_Devices_Association,device_LLAs_Association,user_device_Latency);
-    	mechanism.createMarkets(controlMessageFlag);
-    	mechanism.executeMechanism(controlMessageFlag,controlAuctionMessageFlag);
-    	//mechanism.executeMechanism(controlMessageFlag);
-    }
-	//----------------------------------------------Main
-    */
 }

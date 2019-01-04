@@ -31,6 +31,8 @@ public class EnergyModel implements ModuleCommunicationListener {
 	 * -setting id ({@value}). */
 	public static final String TRANSMIT_ENERGY_S = "transmitEnergy";
 
+    public static final String EXEC_ENERGY_S = "execEnergy";
+
 	/** Energy update warmup period -setting id ({@value}). Defines the
 	 * simulation time after which the energy level starts to decrease due to
 	 * scanning, transmissions, etc. Default value = 0. If value of "-1" is
@@ -58,6 +60,8 @@ public class EnergyModel implements ModuleCommunicationListener {
 	private double lastUpdate;
 	private ModuleCommunicationBus comBus;
 	private static Random rng = null;
+	/** energy usage per execution of service at a device (at each auction period) */
+    public double execEnergy;
 
 	/**
 	 * Constructor. Creates a new message router based on the settings in
@@ -66,6 +70,7 @@ public class EnergyModel implements ModuleCommunicationListener {
 	 */
 	public EnergyModel(Settings s) {
 		this.initEnergy = s.getCsvDoubles(INIT_ENERGY_S);
+        this.execEnergy = s.getDouble(EXEC_ENERGY_S);
 
 		if (this.initEnergy.length != 1 && this.initEnergy.length != 2) {
 			throw new SettingsError(INIT_ENERGY_S + " setting must have " +
@@ -163,6 +168,14 @@ public class EnergyModel implements ModuleCommunicationListener {
 	 */
 	public void reduceDiscoveryEnergy() {
 		reduceEnergy(this.scanResponseEnergy);
+	}
+	
+    /**
+	 * Reduces the energy reserve for the amount that is used when a host
+	 * executes a service
+	 */
+	public void reduceExecEnergy() {
+		reduceEnergy(this.execEnergy);
 	}
 
 	/**

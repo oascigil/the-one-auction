@@ -69,12 +69,13 @@ Group.waitTime = 0, 120
 # All nodes have the bluetooth interface
 Group.nrofInterfaces = 1
 Group.interface1 = wifiInterface
-# Walking speeds
-Group.speed = 0.5, 1.5
+# Walking speeds Group.speed = 0.5, 1.5
+Group.speed = 2.7, 10.0
 # Message TTL of 300 minutes (5 hours)
 Group.msgTtl = 300
 
 Group.initialEnergy = 100
+Group.execEnergy = 0.0
 Group.scanEnergy = 0.1
 Group.scanResponseEnergy = 0.001
 Group.transmitEnergy = 0.01
@@ -82,7 +83,7 @@ Group.transmitEnergy = 0.01
 Group.Energy.value = 100
 
 
-Group.nrofHosts = 2
+Group.nrofHosts = 20
 
 # group1 (pedestrians) specific settings
 # Group1.groupID = a
@@ -98,120 +99,94 @@ Group.nrofHosts = 2
 
 # group1 (pedestrians) specific settings
 Group1.groupID = x
-Group1.nrofApplications = 2
+Group1.nrofApplications = 1
 Group1.application1 = clientApp1
-Group1.application2 = serverApp1
 
 Group2.groupID = b
-Group2.nrofApplications = 2
-Group2.application1 = clientApp2
-Group2.application2 = serverApp2
+Group2.nrofApplications = 1
+Group2.application1 = serverApp1
+Group2.nrofHosts = 5
 
 Group3.groupID = c
-Group3.nrofApplications = 2
-Group3.application1 = clientApp3
-Group3.application2 = serverApp3
+Group3.nrofApplications = 1
+Group3.application1 = clientApp2
 
 Group4.groupID = d
-Group4.nrofApplications = 2
-Group4.application1 = clientApp4
-Group4.application2 = serverApp4
+Group4.nrofApplications = 1
+Group4.application1 = serverApp2
+Group4.nrofHosts = 5
 
 Group5.groupID = e
-Group5.nrofApplications = 2
-Group5.application1 = clientApp5
-Group5.application2 = serverApp5
+Group5.nrofApplications = 1
+Group5.application1 = clientApp3
 
 Group6.groupID = f
-Group6.nrofApplications = 2
-Group6.application1 = clientApp6
-Group6.application2 = serverApp6
+Group6.nrofApplications = 1
+Group6.application1 = serverApp3
+Group6.nrofHosts = 5
 
 Group7.groupID = g
-Group7.nrofApplications = 2
-Group7.application1 = clientApp7
-Group7.application2 = serverApp7
+Group7.nrofApplications = 1
+Group7.application1 = clientApp4
 
 Group8.groupID = h
-Group8.nrofApplications = 2
-Group8.application1 = clientApp8
-Group8.application2 = serverApp8
+Group8.nrofApplications = 1
+Group8.application1 = serverApp4
+Group8.nrofHosts = 5
 
 Group9.groupID = i
-Group9.nrofApplications = 2
-Group9.application1 = clientApp9
-Group9.application2 = serverApp9
+Group9.nrofApplications = 1
+Group9.application1 = clientApp5
 
 Group10.groupID = j
-Group10.nrofApplications = 2
-Group10.application1 = clientApp10
-Group10.application2 = serverApp10
+Group10.nrofApplications = 1
+Group10.application1 = serverApp5
+Group10.nrofHosts = 5
 
 Group11.groupID = k
-Group11.nrofApplications = 2
-Group11.application1 = clientApp11
-Group11.application2 = serverApp11
+Group11.nrofApplications = 1
+Group11.application1 = clientApp6
 
 Group12.groupID = l
-Group12.nrofApplications = 2
-Group12.application1 = clientApp12
-Group12.application2 = serverApp12
+Group12.nrofApplications = 1
+Group12.application1 = serverApp6
+Group12.nrofHosts = 5
 
-# group13 specific settings
 Group13.groupID = m
-Group13.nrofApplications = 2
-Group13.application1 = clientApp13
-Group13.application2 = serverApp13
-# cars can drive only on roads
-Group13.okMaps = 1
-# 10-50 km/h
-Group13.speed = 2.7, 13.9
+Group13.nrofApplications = 1
+Group13.application1 = clientApp7
 
-# another group of pedestrians
-Group14.groupID = w
+Group14.groupID = l
 Group14.nrofApplications = 1
-Group14.nrofHosts = 120
-Group14.application1 = clientApp14
+Group14.application1 = serverApp7
+Group14.nrofHosts = 5
 
-# The Tram groups
-Group15.groupID = t
-Group15.nrofApplications = 2
-Group15.application1 = clientApp15
-Group15.application2 = serverApp15
-Group15.bufferSize = 50M
-Group15.movementModel = MapRouteMovement
-Group15.routeFile = data/tram3.wkt
-Group15.routeType = 1
-Group15.waitTime = 10, 30
-Group15.speed = 7, 10
-Group15.nrofHosts = 2
-#Group15.nrofInterfaces = 2
-#Group15.interface1 = btInterface
-#Group15.interface2 = highspeedInterface
+Group15.groupID = n
+Group15.nrofApplications = 1
+Group15.application1 = clientApp8
 
-Group16.groupID = q
-Group16.nrofApplications = 2
-Group16.application1 = clientApp16
-Group16.application2 = serverApp16
-Group16.bufferSize = 50M
-Group16.movementModel = MapRouteMovement
-Group16.routeFile = data/tram4.wkt
-Group16.routeType = 2
-Group16.waitTime = 10, 30
-Group16.speed = 7, 10
-Group16.nrofHosts = 2
+Group16.groupID = o
+Group16.nrofApplications = 1
+Group16.application1 = serverApp8
+Group16.nrofHosts = 5
 
-Group17.groupID = r
-Group17.nrofApplications = 2
-Group17.application1 = clientApp17
-Group17.application2 = serverApp17
-Group17.bufferSize = 50M
-Group17.movementModel = MapRouteMovement
-Group17.routeFile = data/tram10.wkt
-Group17.routeType = 2
-Group17.waitTime = 10, 30
-Group17.speed = 7, 10
-Group17.nrofHosts = 2
+Group17.groupID = p
+Group17.nrofApplications = 1
+Group17.application1 = clientApp9
+
+Group18.groupID = q
+Group18.nrofApplications = 1
+Group18.application1 = serverApp9
+Group18.nrofHosts = 5
+
+Group19.groupID = r
+Group19.nrofApplications = 1
+Group19.application1 = clientApp10
+
+Group20.groupID = s
+Group20.nrofApplications = 1
+Group20.application1 = serverApp10
+Group20.nrofHosts = 5
 
 
 ## Movement model settings
@@ -274,25 +249,25 @@ GUI.EventLogPanel.nrofEvents = 100
 # service setttings
 Scenario.nrofServices = 10
 Service0.executionTime = 120.0
-Service0.minQoS = 45.4927004514
+Service0.minQoS = 1.0
 Service1.executionTime = 120.0
-Service1.minQoS = 70.5513226934
+Service1.minQoS = 10.0
 Service2.executionTime = 120.0
-Service2.minQoS = 43.3514434895
+Service2.minQoS = 15.0
 Service3.executionTime = 120.0
-Service3.minQoS = 53.2901414643
+Service3.minQoS = 20.0
 Service4.executionTime = 120.0
-Service4.minQoS = 45.5945881184
+Service4.minQoS = 22.0
 Service5.executionTime = 120.0
-Service5.minQoS = 93.2962400075
+Service5.minQoS = 25.0
 Service6.executionTime = 120.0
-Service6.minQoS = 33.535077594
+Service6.minQoS = 28.0
 Service7.executionTime = 120.0
-Service7.minQoS = 76.8018148745
+Service7.minQoS = 31.0
 Service8.executionTime = 120.0
-Service8.minQoS = 17.8460762954
+Service8.minQoS = 33.0
 Service9.executionTime = 120.0
-Service9.minQoS = 34.7004453615
+Service9.minQoS = 35.0
 
 # auction app setttings
 auctionApp0.type = AuctionApplication
@@ -302,55 +277,34 @@ auctionApp0.serviceTypes = 0,1,2,3,4,5,6,7,8,9
 
 # Server apps
 serverApp1.type = ServerApp
-serverApp1.serviceTypes = 0,1,3,4,5,7,9
+serverApp1.serviceTypes = 0,1,2,3,4,5,6,7,8,9
 
 serverApp2.type = ServerApp
-serverApp2.serviceTypes = 0,1,3,5,6,7,8
+serverApp2.serviceTypes = 0,1,2,3,4,5,6,7,8
 
 serverApp3.type = ServerApp
-serverApp3.serviceTypes = 0,1,2,3,4,5,6,7,8,9
+serverApp3.serviceTypes = 0,1,2,3,4,5,6,7
 
 serverApp4.type = ServerApp
-serverApp4.serviceTypes = 1,2,4,5,8,9
+serverApp4.serviceTypes = 1,2,3,4,5,6
 
 serverApp5.type = ServerApp
-serverApp5.serviceTypes = 1,4,7,8,9
+serverApp5.serviceTypes = 1,2,3,4,5
 
 serverApp6.type = ServerApp
-serverApp6.serviceTypes = 0,1,2,3,4,5,6,8,9
+serverApp6.serviceTypes = 0,1,2,3,4
 
 serverApp7.type = ServerApp
-serverApp7.serviceTypes = 6,7
+serverApp7.serviceTypes = 0,1,2,3
 
 serverApp8.type = ServerApp
-serverApp8.serviceTypes = 0,5
+serverApp8.serviceTypes = 0,1,2
 
 serverApp9.type = ServerApp
-serverApp9.serviceTypes = 3,5,8
+serverApp9.serviceTypes = 0,1
 
 serverApp10.type = ServerApp
-serverApp10.serviceTypes = 0,1,2,3,4,5,6,7
-
-serverApp11.type = ServerApp
-serverApp11.serviceTypes = 3,4,5,9
-
-serverApp12.type = ServerApp
-serverApp12.serviceTypes = 0,1,4,5,7,8,9
-
-serverApp13.type = ServerApp
-serverApp13.serviceTypes = 0,2
-
-serverApp14.type = ServerApp
-serverApp14.serviceTypes = 1,6
-
-serverApp15.type = ServerApp
-serverApp15.serviceTypes = 9
-
-serverApp16.type = ServerApp
-serverApp16.serviceTypes = 1,2,3,4,5
-
-serverApp17.type = ServerApp
-serverApp17.serviceTypes = 1,2,5,6,8,9
+serverApp10.serviceTypes = 0
 
 # Client apps
 clientApp1.type = ClientApp
@@ -393,65 +347,6 @@ clientApp10.type = ClientApp
 clientApp10.taskReqFreq = 10.0
 clientApp10.taskReqMsgSize = 100
 
-clientApp11.type = ClientApp
-clientApp11.taskReqFreq = 10.0
-clientApp11.taskReqMsgSize = 100
-
-clientApp12.type = ClientApp
-clientApp12.taskReqFreq = 10.0
-clientApp12.taskReqMsgSize = 100
-
-clientApp13.type = ClientApp
-clientApp13.taskReqFreq = 10.0
-clientApp13.taskReqMsgSize = 100
-
-clientApp14.type = ClientApp
-clientApp14.taskReqFreq = 10.0
-clientApp14.taskReqMsgSize = 100
-
-clientApp15.type = ClientApp
-clientApp15.taskReqFreq = 10.0
-clientApp15.taskReqMsgSize = 100
-
-clientApp16.type = ClientApp
-clientApp16.taskReqFreq = 10.0
-clientApp16.taskReqMsgSize = 100
-
-clientApp17.type = ClientApp
-clientApp17.taskReqFreq = 10.0
-clientApp17.taskReqMsgSize = 100
-
-Group18.groupID = a
-Group18.nrofHosts = 1
-Group18.movementModel = StationaryMovement
-Group18.nodeLocation = 2551175,6671566
-Group18.nrofInterfaces = 2
-Group18.interface1 = wifiInterface
-Group18.interface2 = backhaul
-Group18.router = APRouter
-Group18.nrofApplications = 1
-Group18.application1 = auctionApp0
-
-Group19.groupID = a
-Group19.nrofHosts = 1
-Group19.movementModel = StationaryMovement
-Group19.nodeLocation = 2550678,6671626
-Group19.nrofInterfaces = 2
-Group19.interface1 = wifiInterface
-Group19.interface2 = backhaul
-Group19.router = APRouter
-Group19.nrofApplications = 0
-
-Group20.groupID = a
-Group20.nrofHosts = 1
-Group20.movementModel = StationaryMovement
-Group20.nodeLocation = 2550955,6671748
-Group20.nrofInterfaces = 2
-Group20.interface1 = wifiInterface
-Group20.interface2 = backhaul
-Group20.router = APRouter
-Group20.nrofApplications = 0
-
 Group21.groupID = a
 Group21.nrofHosts = 1
 Group21.movementModel = StationaryMovement
@@ -460,7 +355,8 @@ Group21.nrofInterfaces = 2
 Group21.interface1 = wifiInterface
 Group21.interface2 = backhaul
 Group21.router = APRouter
-Group21.nrofApplications = 0
+Group21.nrofApplications = 1
+Group21.application1 = auctionApp0
 
 Group22.groupID = a
 Group22.nrofHosts = 1

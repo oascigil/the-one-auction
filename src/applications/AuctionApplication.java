@@ -404,11 +404,15 @@ public class AuctionApplication extends Application {
         super.sendEventToListeners("AuctionExecutionComplete", results, host);
         this.previousUserDeviceAssociation = new HashMap(results.userDeviceAssociation);
 
-        /**Send the auction results back to the clients (null if they are assigned to the cloud) */
         for (Map.Entry<DTNHost, DTNHost> entry : results.userDeviceAssociation.entrySet()) {
             DTNHost client = entry.getKey();
             DTNHost server = entry.getValue();
-            // Send a response back to a client
+            /** deduct the energy spent for execution from the devices */
+            if (server != null) {
+                server.getRouter().energy.reduceExecEnergy();
+            }
+            /**Send the auction results back to the clients 
+             *  - null if they are assigned to the cloud */
             Message clientMsg = this.clientHostToMessage.get(client);
             String msgId = new String("ClientAuctionResponse_" + client.getName());
             Message m = new Message(host, clientMsg.getFrom(), msgId, this.auctionMsgSize);
@@ -424,11 +428,11 @@ public class AuctionApplication extends Application {
                 System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
             //super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
-        /** Send the auction results back to the servers */
         for (Map.Entry<DTNHost, DTNHost> entry : results.deviceUserAssociation.entrySet()) {
             DTNHost server = entry.getKey();
             DTNHost client = entry.getValue();
             // Send a response back to a server
+            /** Send the auction results back to the servers */
             Message serverMsg = this.serverHostToMessage.get(server);
             String msgId = new String("serverAuctionResponse_" + server.getName());
             Message m = new Message(host, serverMsg.getFrom(), msgId, this.auctionMsgSize);
