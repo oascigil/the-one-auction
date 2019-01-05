@@ -11,7 +11,9 @@ import core.Coord;
 import static java.lang.Math.min;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class AuctionApplicationEdge extends Application {
     /** Auction period length */
@@ -45,13 +47,37 @@ public class AuctionApplicationEdge extends Application {
     public int auctionMsgSize;
     /** Frequency of auctions */
     public double auctionPeriod;
-    
-
-    // Static vars
-	/** Application ID */
-	public static final String APP_ID = "ucl.AuctionApplication";
     /** Debug flag */
     private boolean debug = true;
+    /** VM completion times */
+    public HashMap<Integer, Double> vmCompletionTime;
+    /** number of VMS */
+    private int numOfVMs=0;
+    /** VM user association */
+    public HashMap<Integer, DTNHost> vmUserAssociation;
+    /** free VMs */
+    public Set<Integer> freeVMsSet=null; 
+    /** user VM association */
+    public HashMap<DTNHost,Integer> userVMAssociation;
+    /** Users whose request arrived after last auction */
+    public ArrayList<DTNHost> newUserRequests;
+
+    // Static vars
+    /** user engagement completion times */
+    public static HashMap<DTNHost, Double> userCompletionTime;
+    /** user LLA Associations */
+    public static HashMap<DTNHost, Integer> userLLAAssociation;
+    /** global user device associations */
+    //public static HashMap<DTNHost, DTNHost> globalUserDeviceAssociation;
+	/** Application ID */
+	public static final String APP_ID = "ucl.AuctionApplication";
+
+    static {
+        //globalUserDeviceAssociation = new HashMap<DTNHost, DTNHost>();
+        userCompletionTime = new HashMap<DTNHost, Double>();
+        userLLAAssociation = new HashMap<DTNHost, Integer>();
+    }
+
 	/**
 	 * Creates a new auction application with the given settings.
 	 *
@@ -89,18 +115,23 @@ public class AuctionApplicationEdge extends Application {
         this.serverRequests = new ArrayList<Message>();
         this.clientHostToMessage = new HashMap<DTNHost, Message>();
         this.serverHostToMessage = new HashMap<DTNHost, Message>();
+        this.vmUserAssociation = new HashMap<Integer, DTNHost>();
+        this.userVMAssociation = new HashMap<DTNHost, Integer> ();
         this.auctionMsgSize = 10; //TODO read this from Settings
         this.lastAuctionTime = 0.0;
         this.q_minPerLLA = new HashMap<Integer, Double>();
         this.q_maxPerLLA = new HashMap<Integer, Double>();
-        /*this.userCompletionTime = new HashMap();
+        /*
         this.LLAs_Users_Association = null;
         this.user_LLA_Association = null;
         this.LLAs_Devices_Association = null;
-        this.device_LLAs_Association = null;
-        this.previousUserDeviceAssociation = null;*/
-        this.previousPrices = null;
+        this.device_LLAs_Association = null; */
+        //this.previousUserDeviceAssociation = null;
+        //this.previousPrices = null;
         //this.prices = null;
+        this.vmCompletionTime = new HashMap<Integer, Double>();
+        this.numOfVMs = 0;
+        this.newUserRequests = new ArrayList<DTNHost>();
 		super.setAppID(APP_ID);
     }
 	
@@ -128,7 +159,12 @@ public class AuctionApplicationEdge extends Application {
         this.LLAs_Devices_Association = null;
         this.device_LLAs_Association = null;
         this.previousUserDeviceAssociation = null;*/
+        this.vmCompletionTime = new HashMap<Integer, Double>();
+        this.vmUserAssociation = new HashMap<Integer, DTNHost>();
+        this.userVMAssociation = new HashMap<DTNHost, Integer> ();
         this.previousPrices = null;
+        this.newUserRequests = new ArrayList<DTNHost>();
+        this.numOfVMs = 0;
         this.debug = a.debug;
     }
 	
@@ -164,13 +200,17 @@ public class AuctionApplicationEdge extends Application {
             if(this.serverHostToMessage.getOrDefault(msg.getFrom(), null) == null) {
                 Message serverMsg = msg.replicate();
                 this.serverHostToMessage.put(serverMsg.getFrom(), serverMsg);
-                for(int i = 0;i<(int) msg.getProperty("vm");i++)
-                	this.serverRequests.add(msg.replicate());    
+                this.serverRequests.add(msg.replicate());    
+                this.numOfVMs = (int) msg.getProperty("vm");
+                this.freeVMsSet = new HashSet<Integer>();
+                for (Integer indx = 0; indx < this.numOfVMs; indx++) {          
+                    this.freeVMsSet.add(indx);
+                }
+                //for(int i = 0;i<(int) msg.getProperty("vm");i++)
                 //super.sendEventToListeners("ReceivedServerAuctionRequest", (Object) serverMsg, host);       
             }
             if (this.debug)
         	    System.out.println(host+" "+SimClock.getTime()+" New server offer "+ this.serverRequests.size());
-          
         }
         host.getMessageCollection().remove(msg);
         return null;
@@ -197,43 +237,75 @@ public class AuctionApplicationEdge extends Application {
 		System.out.println("Execute action "+clientRequests.size()+" "+serverRequests.size());
         double currTime = SimClock.getTime();
         this.lastAuctionTime = currTime;
-        
-        
-        HashMap<DTNHost,String> userDeviceAssociation = new HashMap <DTNHost,String>();
-        HashMap<String,DTNHost> deviceUserAssociation = new HashMap <String,DTNHost>();
 
-        HashMap<DTNHost, Double> userCompletionTime = new HashMap <DTNHost,Double>();
-
-        int i = 0;
-        for (Message msg : clientRequests)
-        {
-            Double completionTime = userCompletionTime.getOrDefault(msg.getFrom(), null);
-            if(completionTime != null && completionTime > currTime) {
-                /** skip this message: user already part of auction  */
-                continue;
+        /** no VMs to allocate */
+        if (this.numOfVMs == 0) {
+            return;
+        }
+        ArrayList<Integer> entriesToRemove = new ArrayList<Integer>();
+        for (Map.Entry<Integer, Double> entry : this.vmCompletionTime.entrySet() ) {
+            Integer vm = entry.getKey();
+            Double completionTime = entry.getValue();
+            if (currTime >= completionTime)
+            {
+                entriesToRemove.add(vm);
+                DTNHost user = this.vmUserAssociation.get(vm);
+                AuctionApplicationEdge.userCompletionTime.remove(user);
+                this.vmUserAssociation.remove(vm);
+                this.userVMAssociation.remove(user);
+                this.freeVMsSet.add(vm);
             }
-            int serviceType = (int) msg.getProperty("serviceType");
-            completionTime = (Double) msg.getProperty("completionTime");
-            if (completionTime == null) {
-                completionTime = currTime + Application.execTimes.get(serviceType);
-            }
-            userCompletionTime.put(msg.getFrom(), completionTime);
-        	if(i>=serverRequests.size()) { 
-        		userDeviceAssociation.put(msg.getFrom(), null);
-	        	//deviceUserAssociation.put(serverRequests.get(i).getId(), msg.getFrom());
-        	} else {
-	        	userDeviceAssociation.put(msg.getFrom(), serverRequests.get(i).getId());
-	        	deviceUserAssociation.put(serverRequests.get(i).getId(), msg.getFrom());
-        	}
-        	i++;
+        }
+        
+        /** Remove expired user requests */
+        for(Integer vm : entriesToRemove) {
+            this.vmCompletionTime.remove(vm);
         }
 
+        if(this.vmCompletionTime.size() == this.numOfVMs) {
+            /** there are no VMs available */
+            //XXX call reporter
+            return;
+        }
+        else if (this.vmCompletionTime.size() > this.numOfVMs) {
+            System.out.println("Warning: Number of VMS: " + this.numOfVMs + " is less than occupied VMs: " + this.vmCompletionTime.size());
+        }
+        
+        for (Message msg : clientRequests)
+        {
+            Double completionTime = AuctionApplicationEdge.userCompletionTime.getOrDefault(msg.getFrom(), null);
+            DTNHost user = msg.getFrom();
+            int serviceType = (int) msg.getProperty("serviceType");
+            if (completionTime == null) {
+                completionTime = currTime + Application.execTimes.get(serviceType);
+                this.newUserRequests.add(user);
+            }
+            else if(completionTime > currTime) {
+                /** Delayed requests that are already expired*/
+                continue;
+            }
+            userLLAAssociation.put(user, serviceType);
+
+        	if(this.vmCompletionTime.size() < this.numOfVMs) { 
+	        	//deviceUserAssociation.put(serverRequests.get(i).getId(), msg.getFrom());
+                AuctionApplicationEdge.userCompletionTime.put(user, completionTime);
+                Integer vm = this.freeVMsSet.iterator().next(); 
+                this.userVMAssociation.put(user, vm);
+                this.vmCompletionTime.put(vm, completionTime);
+                this.vmUserAssociation.put(vm, user);
+                this.freeVMsSet.remove(vm);
+        	} 
+            else {
+                this.userVMAssociation.put(user, null);
+        	}
+        }
+
+        super.sendEventToListeners("EdgeAuctionExecutionComplete", userVMAssociation, host);
 
         /**Send the auction results back to the clients (null if they are assigned to the cloud) */
-        for (Map.Entry<DTNHost, String> entry : userDeviceAssociation.entrySet()) {
-           
+        for (Map.Entry<DTNHost, Integer> entry : this.userVMAssociation.entrySet()) {
         	DTNHost client = entry.getKey();
-        	String hostId = entry.getValue();
+        	Integer hostId = entry.getValue();
             DTNHost server = host;
             // Send a response back to a client
             Message clientMsg = this.clientHostToMessage.get(client);
@@ -242,18 +314,20 @@ public class AuctionApplicationEdge extends Application {
             //HashMap<DTNHost, Double> clientDistances = user_device_Latency.get(client);
             //Double latency = clientDistances.get(server);
             m.addProperty("type", "clientAuctionResponse");
-            if(hostId==null)m.addProperty("auctionResult", null);
-            else m.addProperty("auctionResult", server);
+            if(hostId==null)
+                m.addProperty("auctionResult", null);
+            else 
+                m.addProperty("auctionResult", server);
             m.addProperty("QoS", client.getLocalLatency());
             m.addProperty("completionTime", userCompletionTime.get(client)); 
             m.setAppID(ClientApp.APP_ID);
             host.createNewMessage(m);
             if (this.debug)
                 System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ client+" with result "+server+" "+ msgId+" "+host.getMessageCollection().size());
-            super.sendEventToListeners("SentClientAuctionResponse", null, host);
+            //super.sendEventToListeners("SentClientAuctionResponse", null, host);
         }
         /** Send the auction results back to the servers */
-        for (Map.Entry<String, DTNHost> entry : deviceUserAssociation.entrySet()) {
+        for (Map.Entry<Integer, DTNHost> entry : vmUserAssociation.entrySet()) {
             DTNHost server = host;
             DTNHost client = entry.getValue();
             //System.out.println(host+" "+SimClock.getTime()+" "+serverHostToMessage.size());;
@@ -267,13 +341,14 @@ public class AuctionApplicationEdge extends Application {
             host.createNewMessage(m);
             if (this.debug)
                 System.out.println(SimClock.getTime()+" Execute auction from "+host+" to "+ server+" with result "+client+" "+ msgId+" "+host.getMessageCollection().size());
-            super.sendEventToListeners("SentServerAuctionResponse", null, host);
+            //super.sendEventToListeners("SentServerAuctionResponse", null, host);
         }
 
         //this.clientHostToMessage.clear();
         //this.serverHostToMessage.clear();
         this.clientRequests.clear();
         this.serverRequests.clear();
+        this.newUserRequests.clear();
     }
 
     public int [] getServiceTypes() {

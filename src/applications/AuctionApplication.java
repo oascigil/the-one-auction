@@ -263,9 +263,10 @@ public class AuctionApplication extends Application {
             this.userCompletionTime.remove(h);
         }
 
-        for(int indx= 0; indx < this.clientRequests.size();indx++)
+        //for(int indx= 0; indx < this.clientRequests.size();indx++)
+        for (Message clientMsg : clientRequests)
         {
-            Message clientMsg = this.clientRequests.get(indx);
+            //Message clientMsg = this.clientRequests.get(indx);
             DTNHost clientHost = clientMsg.getFrom();
             Double completionTime = this.userCompletionTime.getOrDefault(clientHost, null);
             int serviceType = (int) clientMsg.getProperty("serviceType");

@@ -207,10 +207,6 @@ class DEEM{
         }
 	}
 
-	private void devices_initialisation(){
-
-	}
-
 	//auxiliary functions----------
 	private double user_Device_QoSGain(Integer LLA_ID, DTNHost user_ID, DTNHost device_ID) {
 		double term1  = q_minPerLLA.get(LLA_ID)/q_maxPerLLA.get(LLA_ID);
